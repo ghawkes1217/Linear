@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- The following adds MathJax to render LaTeX notation -->
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../site-scripts.js"></script>
+<script> 
+ MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+  }
+</script>
+</head>
+<style>
+
+
+
+  #blank {
+    position: relative;
+  }
+
+  #outer {
+    position: absolute;
+    height: 400px;
+    width: 400px;
+    left: 0px;
+    top: 160px;
+    background-color: white;
+    text-align: center;
+    border: 9px solid #d3d3d3;}
+
+   
+  #bluetip {
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    left: 90px;
+    top: 90px;
+    background-color: grey;}
+    
+  #greentip {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 390px;
+    top: 90px;
+    background-color: grey;}
+
+  #redtip {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 240px;
+    top: 90px;
+    background-color: grey;}
+    
+  #matrix {
+    position: absolute;
+    height: 110px;
+    width: 330px;
+    left: 10px;
+    top: 10px;
+    background-color: rgb(168, 168, 168);
+    text-align: center;
+    border: 9px solid #d3d3d3;}
+
+
+
+    
+  #U1 {
+    position: absolute;
+    height: 20px;
+    width: 70px;
+    left: 10px;
+    top: 20px;
+    background-color: green;
+    text-align: center;}
+    
+  #U2 {
+    position: absolute;
+    height: 20px;
+    width: 70px;
+    left: 10px;
+    top: 40px;
+    background-color: green;
+    text-align: center;}
+
+  #V1 {
+    position: absolute;
+    height: 20px;
+    width: 70px;
+    left: 115px;
+    top: 20px;
+    background-color: red;
+    text-align: center;}
+
+  #V2 {
+    position: absolute;
+    height: 20px;
+    width: 70px;
+    left: 115px;
+    top: 40px;
+    background-color: red;
+    text-align: center;}
+
+
+  
+  
+  #but {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    left: 290px;
+    top:30px;
+    background-color: black;
+    text-align: center;}
+
+  #but2 {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    left: 235px;
+    top:10px;
+    background-color: black;
+    text-align: center;}
+
+
+  #sub {
+    position: absolute;
+    height: 30px;
+    width: 200px;
+    left: 370px;
+    top: 50px;
+    background-color: white;
+    text-align: center;}
+
+  #try {
+    position: absolute;
+    height: 30px;
+    width: 90px;
+    left: 370px;
+    top: 10px;
+    background-color: white;
+    text-align: center;}
+
+  #completed {
+    position: absolute;
+    left: 10px;
+    top: 570px;}
+
+  #score {
+    position: absolute;
+    left: 800px;
+    top: 20px;}
+
+
+  
+  .greytext {
+    color: grey;}
+
+  .whitetext {
+    color: white;}
+  </style>
+
+  <body>
+    <h2><center>Module 2: The Dot Product</center></h2>
+  <p>The dot product of two vectors conveys several types of information.
+  For example, two vectors are perpendicular to each other if and only if their dot product is $0$.
+  Also, the dot product of any vector with itself is the square of its length.
+  </p>
+
+  <p>In general, the dot product of two vectors $\mathbf{u}$ and $\mathbf{v}$ is given by 
+  \[\mathbf{u}\cdot \mathbf{v}=\|\mathbf{u}\|\|\mathbf{v}\|\cos\theta,\]
+  where $\|\cdot\|$ denotes the length of a vector and $\theta$ is the angle between the two vectors.
+  In the case of $\mathbf{u}$ and $\mathbf{v}$ being two-dimensional vectors, 
+  with $\textcolor{green}{\mathbf{u}=\begin{bmatrix} x_1 \\ y_1 \end{bmatrix}}$ and 
+  $\textcolor{red}{\mathbf{v}=\begin{bmatrix} x_2 \\ y_2 \end{bmatrix}}$, we have
+  \[\textcolor{green}{\mathbf{u}}\cdot \textcolor{red}{\mathbf{v}}
+  = \textcolor{green}{x_1} \textcolor{red}{x_2} + \textcolor{green}{y_1} \textcolor{red}{y_2}.\] 
+  </p>
+
+
+  <p>
+For instance, in the initial example in the diagram below 
+$\textcolor{green}{\mathbf{u}=\begin{bmatrix} 2 \\ 1 \end{bmatrix}}$ and 
+  $\textcolor{red}{\mathbf{v}=\begin{bmatrix} 0.5 \\ 1 \end{bmatrix}}$ so that 
+  $\textcolor{green}{\mathbf{u}}\cdot \textcolor{red}{\mathbf{v}}
+  = \textcolor{green}{(2)} \textcolor{red}{(1)} + \textcolor{green}{(0.5)} \textcolor{red}{(1)} =\textcolor{gold}{2}$.
+Note that this quantity is equal to the length of the green vector ($\textcolor{green}{2.24}$) times the amount that the
+red vector extends in the direction of the green vector (this is the length of the dotted red line
+running through the green vector--in this case $\textcolor{red}{0.89}$).  Since the yellow rectangle  has
+these dimensions ($\textcolor{green}{2.24} \times \textcolor{red}{0.89}$) its area gives a graphical representation of the value of the dot product.
+(When the value of the dot product becomes negative the color of rectangle turns from yellow to orange.) 
+</p>
+
+  <p>For this module, you may change the vectors $\mathbf{u}$ and $\mathbf{v}$ in either one of two ways:
+  <ul>
+    <li> You may change the component entries for $\mathbf{u}$ and $\mathbf{v}$ either by clicking the up/down arrows or by typing, or</li>
+    <li> You may drag the vectors, $\mathbf{u}$ in green and $\mathbf{v}$ in red, in the diagram below.</li>
+  </ul>
+  
+  </p>
+
+  <p>
+    <div id="question">
+
+    Click the "Start" button when you are ready to begin.
+
+    </div>
+  </p>
+  <div class="popup" onclick="pop()"><u>Question Statistics</u>
+    <div class="popuptext" id="myPopup">
+      <h3 id="selected" style="text-align:center;">No Question Selected</h3>
+      <table >
+
+        <tr>
+          <td>Users Who Have Attempted This Question</td>
+          <td id="users">0</td>
+        </tr>
+        <tr>
+          <td>Percentage of Users With a Correct Response</td>
+          <td id="eventual">0</td>
+        </tr>
+        <tr>
+          <td>Average Number of Attempts per User</td>
+          <td id="attempts">0</td>
+        </tr>
+        <tr>
+          <td>Percentage of Attempts that are Correct</td>
+          <td id="overall">0</td>
+        </tr>
+
+      </table>
+      
+
+
+    </div>
+  </div>
+  <div id="blank">
+    <div id="matrix">
+
+        <div  style="color:green; font-size:19px; position:absolute; left:40px; top:0px">
+            <span>$\mathbf{u}$ </span> 
+          </div>
+          <div  style="color:red; font-size:19px; position:absolute; left:145px; top:0px">
+            <span>$\mathbf{v}$ </span> 
+          </div>
+          <div id="u_length" style="color:green; font-size:17px; position:absolute; left:10px; top:65px">
+            <span>$||\mathbf{u}|| = $ </span> <span id="green_length">1.41</span>
+          </div>
+    
+    
+          <div id="v_length" style="color:red; font-size:17px; position:absolute; left:115px; top:65px">
+            <span>$||\mathbf{v}|| = $ </span> <span id="red_length">1</span>
+          </div>
+    
+        
+          <div id="dot_product" style="color:rgb(247, 247, 27); font-size:21px; position:absolute; left:215px; top:40px">
+            <span>$\mathbf{u}\cdot\mathbf{v}  = $ </span> <span id="dot">1</span>
+          </div>
+
+
+      <div id="U1">
+
+        <input type="number" id="u1"   style="width: 4em" value="1" step=0.01 onChange="match()">
+      </div>
+
+      <div id="U2">
+        <input type="number" id="u2"   style="width: 4em" value="1" step=0.01 onChange="match()">
+      </div>
+
+ 
+
+      <div id="V1">
+        <input type="number" id="v1"   style="width: 4em" value="0" step=0.01 onChange="match()">
+      </div>
+
+      <div id="V2">
+        <input type="number" id="v2"   style="width: 4em" value="1" step=0.01 onChange="match()">
+      </div>
+
+      
+
+     
+    </div>
+
+    <div id="sub">
+      <button  onclick="submit()">Start</button>
+      <button onclick="previousPage()">Previous</button>
+      <button onclick="nextPage()">Skip</button>
+    </div>
+
+    <div id="try">
+    </div>
+
+    <div id="outer">
+      <div id="bluetip">
+      </div>
+
+      <div id="greentip">
+      </div>
+
+      <div id="redtip">
+      </div>
+
+      <canvas id="myCanvas" width="400" height="400"
+      style="border:1px solid #c3c3c3;">
+      </canvas>
+    </div>
+
+    <div id="score">
+    </div>
+  
+    <div id="completed">
+      <h2>Completed Questions:</h2>
+    </div>
+  </div>
+
+  
+
+
+<script>
+
+Module_Number="02"
+
+ 
+function pop() {
+  sql_retrieve(Module_Number)
+      var popup = document.getElementById("myPopup");
+      popup.classList.toggle("show");
+    }
+
+
+the_time=Date.now()
+grades=[]
+for (u=0; u<14; u++){
+grades.push([0,0])
+}
+
+
+sql_record(Module_Number)
+
+
+
+  function draw(){
+    gt=document.getElementById("greentip")
+    rt=document.getElementById("redtip")
+
+    g1=gt.offsetLeft+10
+    g2=gt.offsetTop+10
+    r1=rt.offsetLeft+10
+    r2=rt.offsetTop+10
+
+    G1=g1-200
+    G2=200-g2
+    R1=r1-200
+    R2=200-r2
+
+    H1=G1*(G1*R1+G2*R2)/(G1*G1+G2*G2)
+    H2=G2*(G1*R1+G2*R2)/(G1*G1+G2*G2)
+
+    if (G1>=0){
+      S1=-H2
+      S2=H1}
+    if (G1<0){
+      S1=H2
+      S2=-H1}
+
+    C1=G1+S1
+    C2=S2+G2
+
+    h1=200+H1
+    h2=200-H2
+    s1=200+S1
+    s2=200-S2
+    c1=200+C1
+    c2=200-C2
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.beginPath();
+    ctx.strokeStyle="black"
+    ctx.lineWidth=1
+    ctx.moveTo(0, 200);
+    ctx.lineTo(400, 200);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle="black"
+    ctx.lineWidth=1
+    ctx.moveTo(200, 0);
+    ctx.lineTo(200, 400);
+    ctx.stroke();
+
+    ctx.beginPath();
+    if (G1*R1+G2*R2>=0){
+    ctx.fillStyle = "yellow"
+    ctx.strokeStyle="yellow"}
+    if (G1*R1+G2*R2<0){
+    ctx.fillStyle = "orange"
+    ctx.strokeStyle="orange"}
+    ctx.lineWidth=2
+    ctx.moveTo(200, 200);
+    ctx.lineTo(g1, g2);
+    ctx.lineTo(c1, c2);
+
+    ctx.lineTo(s1, s2);
+
+    ctx.lineTo(200, 200);
+    ctx.stroke();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.strokeStyle="green"
+    ctx.lineWidth=3
+    ctx.moveTo(200, 200);
+    ctx.lineTo(g1, g2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle="red"
+    ctx.lineWidth=3
+    ctx.moveTo(200, 200);
+    ctx.lineTo(r1, r2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="red"
+    ctx.setLineDash([2, 3])
+    ctx.lineWidth=3
+    ctx.moveTo(200, 200);
+    ctx.lineTo(h1, h2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="pink"
+    ctx.lineWidth=3
+    ctx.moveTo(200, 200);
+    ctx.lineTo(s1, s2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="black"
+    ctx.lineWidth=2
+    ctx.moveTo(h1, h2);
+    ctx.lineTo(r1, r2);
+    ctx.stroke();
+
+    ctx.setLineDash([5, 0])
+  }
+  </script>
+
+  <script>
+  function fill(){
+    gt=document.getElementById("greentip")
+    rt=document.getElementById("redtip")
+
+    g1=gt.offsetLeft+10
+    g2=gt.offsetTop+10
+    r1=rt.offsetLeft+10
+    r2=rt.offsetTop+10
+
+    G1=g1-200
+    G2=200-g2
+    R1=r1-200
+    R2=200-r2
+
+    D=(G1*R1+G2*R2)/10000
+    D=D.toFixed(2)
+    G=Math.pow(G1*G1+G2*G2,0.5)/100
+    R=Math.pow(R1*R1+R2*R2,0.5)/100
+    G=G.toFixed(2)
+    R=R.toFixed(2)
+    document.getElementById("dot").innerHTML=D
+    document.getElementById("green_length").innerHTML=G
+    document.getElementById("red_length").innerHTML=R
+    document.getElementById("u1").value=G1/100
+    document.getElementById("u2").value=G2/100
+    document.getElementById("v1").value=R1/100
+    document.getElementById("v2").value=R2/100
+  }
+  </script>
+
+  <script>
+  fill()
+  draw()
+  </script>
+
+  <script>
+  function mobilize(tip) {
+    tip.onmousedown = move;  
+
+    function move(e) {
+      x0 = e.clientX;
+      y0 = e.clientY;
+      document.onmousemove = drag;
+      document.onmouseup = close;
+    }
+
+    function drag(e) {
+      dx = e.clientX-x0;
+      dy = e.clientY-y0;
+      x0 = e.clientX;
+      y0 = e.clientY;
+      tip.style.left = (tip.offsetLeft + dx) + "px";
+      tip.style.top = (tip.offsetTop + dy) + "px";
+      draw(tip.offsetLeft + dx + 10, tip.offsetTop + dy +10);
+      fill()
+    }
+
+    function close() {
+    	document.onmouseup = null;
+    	document.onmousemove = null;
+    }
+  }
+
+  gt=document.getElementById("greentip")
+  mobilize(gt)
+  rt=document.getElementById("redtip")
+  mobilize(rt)
+  </script>
+
+  <script>
+  function match(){
+    a12=document.getElementById("u1").value
+    a22=document.getElementById("u2").value
+
+    v1=document.getElementById("v1").value
+    v2=document.getElementById("v2").value
+
+    gt=document.getElementById("greentip")
+    rt=document.getElementById("redtip")
+
+    A12=100*a12+200-10
+    A22=200-100*a22-10
+    V1=100*v1+200-10
+    V2=200-100*v2-10
+
+    gt.style.left=A12+"px"
+    gt.style.top=A22+"px"
+
+    rt.style.left=V1+"px"
+    rt.style.top=V2+"px"
+
+    G=Math.pow(a12*a12+a22*a22,0.5)
+    R=Math.pow(v1*v1+v2*v2,0.5)
+    D=(a12*v1+a22*v2)
+    D=D.toFixed(2)
+    G=G.toFixed(2)
+    R=R.toFixed(2)
+    document.getElementById("dot").innerHTML=D
+    document.getElementById("green_length").innerHTML=G
+    document.getElementById("red_length").innerHTML=R
+
+    draw()
+  }
+  </script>
+
+  <script>
+  var initialized=0
+  var page=0
+  var questions=[
+  "1. Find two vectors with length roughly  equal (within $0.1$ of) to $1$  and dot product roughly equal to $1$.",
+  "2. Good job, now find two vectors with length roughly equal to $1$ and dot product roughly equal to $0.5$.",
+  "3. Excellent,  now find two vectors with length roughly equal to $1$ and dot product roughly equal to $0$.",
+  "4. Good job,  now find two vectors with length roughly equal to $1$ and dot product roughly equal to $-0.5$.",
+  "5. Excellent, now find two vectors with length roughly equal to $1$ and dot product roughly equal to $-1$.",
+  "6. Good, find two vectors $\\mathbf{u}$ and $\\mathbf{v}$ such that lie on the same line and that have dot product roughly equal to $1.2$.",
+  "7. Great, find two vectors $\\mathbf{u}$ and $\\mathbf{v}$ such that lie on the same line and that have dot product roughly equal to $-0.3.$",
+  "8. Find a vector $\\mathbf{u}$ such that the changing the second coordinate of $\\mathbf{v}$ with the arrow keys does not change the dot product.",
+  "9. Find a vector $\\mathbf{v}$ such that the changing the first coordinate of $\\mathbf{u}$ with the arrow keys does not change the dot product.",
+  "10. Find vectors $\\mathbf{u}$ and $\\mathbf{v}$ such that the length that $\\mathbf{v}$ extends in the direction of $\\mathbf{u}$ is equal to the length of $\\mathbf{u}$ (this will make the yellow rectangle into a square).",
+  "11. Find vectors $\\mathbf{u}$ and $\\mathbf{v}$ such that the projection of  $\\mathbf{v}$ onto $\\mathbf{u }$ (the red dotted line) extends in the opposite direction as the green vector a distance roughly half the length of the green vector.",
+  "12. Great, set vector $\\mathbf{u}$ to be in the second quadrant. Find a vector $\\mathbf{v}$ such that it makes an angle of roughly $60^{\\circ}$ and that the dot product is roughly $0.8$.",
+  "13. Set vector $\\mathbf{u}$ to have length roughly equal to 1.5. Find  a unit (length of 1) vector $\\mathbf{v}$ that maximizes (largest yellow rectangle) the value of the dot product between them?",
+  "14. Set vector $\\mathbf{v}$ to have length roughly equal to 0.5. Find a unit vector $\\mathbf{u}$ minimizes (largest orange rectangle) the value of the dot product between them?",
+  "Good job!!!"]
+
+  answered = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+  function score(){
+    scoreBoard = document.getElementById("score")
+    while(scoreBoard.firstChild){
+      scoreBoard.removeChild(scoreBoard.firstChild)}
+
+    var scoreCard = document.createElement('h1')
+    scoreCard.style.fontSize="x-large"
+    scoreCard.style.textAlign="left"
+    scoreCard.innerHTML="Score Card"
+    scoreBoard.appendChild(scoreCard)
+
+    for (i=0; i<answered.length; i++){
+      question_id = 'q' + i
+      var question = document.createElement('div');
+      question.style.fontSize = "x-large"
+      question.style.textAlign = "left"
+      question.id = question_id;
+      question.innerHTML =  i + 1;
+      if (answered[i]==0){
+        question.style.color = 'red'
+        Check = question.innerHTML
+        Check += " &#x2610"
+        question.innerHTML = Check
+      }
+      if (answered[i]==1){
+        question.style.color = 'green'
+        Check = question.innerHTML
+        Check += " &#9745"
+        question.innerHTML = Check
+      }
+      scoreBoard.appendChild(question)
+    }
+  }
+  score()
+  
+  function grade(p,g1,g2,r1,r2,d,G,R){
+    correct=0
+    
+    if (p==0){ if (Math.abs(G-1)<=0.1 && Math.abs(R-1)<=0.1 && Math.abs(d-1)<=0.1){correct=1}}
+    if (p==1){ if (Math.abs(G-1)<=0.1 && Math.abs(R-1)<=0.1 && Math.abs(d-0.5)<=0.1){correct=1}}
+    if (p==2){ if (Math.abs(G-1)<=0.1 && Math.abs(R-1)<=0.1 && Math.abs(d-0)<=0.1){correct=1}}
+    if (p==3){ if (Math.abs(G-1)<=0.1 && Math.abs(R-1)<=0.1 && Math.abs(d-(-0.5))<=0.1){correct=1}}
+    if (p==4){ if (Math.abs(G-1)<=0.1 && Math.abs(R-1)<=0.1 && Math.abs(d-(-1))<=0.1){correct=1}}
+    if (p==5){ if (Math.abs(g1*r2-g2*r1)<=0.1 && Math.abs(d-1.2)<=0.1){correct=1}}
+    if (p==6){ if (Math.abs(g1*r2-g2*r1)<=0.1 && Math.abs(d-(-0.3))<=0.1){correct=1}}
+    if (p==7){ if (Math.abs(g2)<0.03){correct=1}}
+    if (p==8){ if (Math.abs(r1)<0.03){correct=1}}
+    if (p==9){ if ( (g1*g1+g2*g2)/d<1.05 && (g1*g1+g2*g2)/d>0.95   )   {correct=1}}
+    if (p==10){ if ( (g1*g1+g2*g2)/d<-1.8 && (g1*g1+g2*g2)/d>-2.2   )   {correct=1}}
+    if (p==11){ if (g1<=0 && g2>=0 && Math.abs(d-0.8)<=0.1 && Math.abs(d/(G*R)-0.5)<=0.15){correct=1}}
+    if (p==12){ if (Math.abs(d-G*R)<=0.1 && Math.abs(G-1.5)<=0.1 && Math.abs(R-1)<=0.1){correct=1}}
+    if (p==13){ if (Math.abs(d-(-G*R))<=0.1 && Math.abs(R-0.5)<=0.1 && Math.abs(G-1)<=0.1){correct=1}}
+
+
+
+if (correct==0){
+grades[p][1]+=1}
+if (correct==1){
+grades[p][0]+=1}
+sql_record(Module_Number)
+score()
+return(correct)
+
+
+  }
+  
+  function submit(){
+    if (initialized==0){
+      document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
+      displayQuestion(page)
+
+    }
+  
+    if (initialized==1){
+      gx=(document.getElementById("u1").value)
+      gy=(document.getElementById("u2").value)
+      rx=(document.getElementById("v1").value)
+      ry=(document.getElementById("v2").value)
+      dot=parseFloat(document.getElementById("dot").innerHTML)
+      gL=parseFloat(document.getElementById("green_length").innerHTML)
+      rL=parseFloat(document.getElementById("red_length").innerHTML)
+      
+      var feed=document.getElementById("try").innerText
+      if (feed==""){
+       document.getElementById("try").innerText="Try Again"}
+      if (feed=="Not Quite"){
+       document.getElementById("try").innerText="Try Again"}
+      if (feed=="Try Again"){
+       document.getElementById("try").innerText="Not Quite"}
+  
+      if (grade(page,gx,gy,rx,ry,dot,gL,rL)==1){
+        document.getElementById("try").innerText=""
+        appendCompletedQuestion(page)
+        score()
+        page+=1
+        displayQuestion(page)
+ 
+
+      }
+    }
+    initialized=1
+  }
+
+  function displayQuestion(page){
+    document.getElementById("question").innerText = questions[page]
+    MathJax.typesetPromise()
+  }
+
+  function nextPage(){
+    if (initialized && page<answered.length-1){
+      page += 1
+      displayQuestion(page)
+ 
+
+}
+  }
+
+  function previousPage(){
+    if (initialized && page>0){
+      page -= 1
+      displayQuestion(page)
+
+
+}
+  }
+
+  function appendCompletedQuestion(page){
+    if (answered[page] == 0){
+      answered[page] = 1
+      var answeredQuestion = document.createElement('div')
+      gx=(document.getElementById("u1").value)
+      gy=(document.getElementById("u2").value)
+      rx=(document.getElementById("v1").value)
+      ry=(document.getElementById("v2").value)
+      answeredQuestion.textContent = questions[page]+" Your answer: ("+gx+","+gy+"),  ("+rx+","+ry+")"
+      answeredQuestion.setAttribute('class', 'greytext')
+      document.getElementById("completed").appendChild(answeredQuestion)
+    }
+  }
+  </script>
+  </body>
+</html>

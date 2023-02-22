@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- The following adds MathJax to render LaTeX notation -->
+    <link type="text/css" rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="scripts.js"></script>
+  </head>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+</head>
+<body>
+  <div class="navbar">
+    <div>
+      <a href="index.html">Home</a>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Lab Courses 
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+          <a href="linear-lab.html"; style="color:blue">Linear Algebra</a>
+          <a style="color:grey">Calculus</a>
+          <a style="color:grey">Probability</a>
+          <a style="color:grey">Statistics</a>
+          <a style="color:grey">Discrete Math</a>
+      </div>
+    </div> 
+      <div class="dropdown">
+          <button class="dropbtn">The Team 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+              <a href="graham.html"; style="color:blue">Dr. Graham Hawkes</a>
+              <a href="wencin.html"; style="color:blue">Dr. Wencin Poh</a>
+              <a href="jeff.html"; style="color:blue">Jeff Nichols</a>
+       </div>
+  
+    </div>
+  <a href="contact.html">Contact</a>
+  
+    <a href="research.html">Research</a>
+  
+    <a href="news.html">News</a>
+  </div>
+
+<h3>We'd love your feedback.  Please send us a message.</h3>
+<div class="container">
+<form action="/contact-from-process.php">
+    <label for="name"> Name</label> <input id="name" name="name" type="text" placeholder="Your name.." /> 
+    <label for="email">Email</label> <input id="email" name="email" type="text" placeholder="Your email.." /> 
+   <label for="message">Subject</label> <textarea id="message" style="height: 200px;" name="message" placeholder="Write something.."></textarea>
+    <input type="submit" value="Submit" />
+</form>
+</div>
+<p>
+    Or email us directly:
+    <ul>
+        <li>Graham Hawkes: <u>graham.hawkes@purdueglobal.edu</u></li>
+        <li>Wencin Poh: <u>wpoh@ucdavis.edu</u></li>
+      </ul>
+</p>
+</body>
+</html>

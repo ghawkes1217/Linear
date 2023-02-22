@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- The following adds MathJax to render LaTeX notation -->
+    <link type="text/css" rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="scripts.js"></script>
+  </head>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+input[type=password], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+</head>
+<body>
+  <div class="navbar">
+    <div>
+      <a href="index.html">Home</a>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Lab Courses 
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+          <a href="linear-lab.html"; style="color:blue">Linear Algebra</a>
+          <a style="color:grey">Calculus</a>
+          <a style="color:grey">Probability</a>
+          <a style="color:grey">Statistics</a>
+          <a style="color:grey">Discrete Math</a>
+      </div>
+    </div> 
+      <div class="dropdown">
+          <button class="dropbtn">The Team 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+              <a href="graham.html"; style="color:blue">Dr. Graham Hawkes</a>
+              <a href="wencin.html"; style="color:blue">Dr. Wencin Poh</a>
+              <a href="jeff.html"; style="color:blue">Jeff Nichols</a>
+       </div>
+  
+    </div>
+  <a href="contact.html">Contact</a>
+  
+    <a href="research.html">Research</a>
+  
+    <a href="news.html">News</a>
+  </div>
+
+<h3>Fill the form below to make an account.</h3>
+<div class="container">
+
+    <label> Username</label> <input id="name" name="name" type="text" placeholder="Create username.." /> 
+    <label>Password</label> <input id="password" name="password" type="text" placeholder="Make a password.." /> 
+    <label>Re-enter password</label> <input id="repeat" name="repeat" type="text" placeholder="Confirm password.." /> 
+
+    <button onclick=sub()>Submit</button>
+
+</div>
+</body>
+<script>
+
+function sub(){
+    user_name=document.getElementById("name").value
+password=document.getElementById("password").value
+repeat=document.getElementById("repeat").value
+fetch("create-account.php?user_name="+user_name+"&password="+password+"&repeat="+repeat)
+
+
+.then(function(response){
+  return response.json()})
+  .then(function(data){
+alert(data)
+
+  })
+
+
+}
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

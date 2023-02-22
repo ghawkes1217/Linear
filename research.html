@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="site-scripts.js"></script>
+  <style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #pic{
+    position: absolute;
+    height: 230px;
+    width: 800px;
+    left: 80px;
+    top: 10px;
+    background-color: white;
+  }
+
+  #info_box{
+    position: absolute;
+    height: 230px;
+    width: 580px;
+    left: 800px;
+    top: 10px;
+    background-color: white;
+  }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div>
+      <a href="index.html">Home</a>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Lab Courses 
+          <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+          <a href="linear-lab.html"; style="color:blue">Linear Algebra</a>
+          <a style="color:grey">Calculus</a>
+          <a style="color:grey">Probability</a>
+          <a style="color:grey">Statistics</a>
+          <a style="color:grey">Discrete Math</a>
+      </div>
+    </div> 
+    <div class="dropdown">
+      <button class="dropbtn">The Team 
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a href="graham.html"; style="color:blue">Dr. Graham Hawkes</a>
+        <a href="wencin.html"; style="color:blue">Dr. Wencin Poh</a>
+        <a href="jeff.html"; style="color:blue">Jeff Nichols</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="research.html">Research</a>
+    <a href="news.html">News</a>
+  </div>
+
+  <h1 style="text-align: center;">Research</h1>
+  <p>
+    In order to improve the educational experience, we need to know what works and what doesn't. Towards this
+    end, we are engaging in two types of research around the effectiveness of our product.  The first type of 
+    research involves the careful collection, interpretation, and analysis of data combed from students' interaction
+    with our product.  Because of the interactive nature of our product we are able to collect not only data 
+    on student responses to the questions in our modules but also statistics on how students interact with 
+    the modules themselves.  
+  </p>
+   
+  <p>
+    For those curious to know how this actually works here is a short overview:  The content of Project Intuition 
+    is stored on a server.  When a user navigates to our website, files are sent to the user's browser, which then
+    compiles those files and displays the result.  At this point the user can view all of our content, interact with
+    modules and answer questions without any additional flow of data between the server and the browser. However, by 
+    keeping a connection open between the browser and the server, we are able to send data associated to student 
+    behavior back to the server.  The server then interprets this data and stores it to a database. 
+    Whenever needed (such as when a user clicks the "Question Statistics" link in each module) the browser sends 
+    a request to the server to look up the relevant information in the database.  After retrieving the data, the 
+    server sends the requested information back to the browser which can then be used to improve the user's 
+    experience.
+  </p>
+  <div style="text-align: center;"> 
+    <!--
+    <img style="width:950px; height:400px;" src="https://drive.google.com/uc?id=1TZBzemzlD9C9gOHRVoiVk1es9wVHYIOn" alt="software">
+    -->
+    <svg alt="software"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:cc="http://creativecommons.org/ns#"
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+      xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+      width="750px"
+      height="450px"
+      viewBox="0 0 340 280"
+      preserveAspectRatio="none"
+      version="1.1"
+      id="svg8"
+      inkscape:version="0.92.3 (2405546, 2018-03-11)"
+      sodipodi:docname="software_structure.svg">
+     <defs
+        id="defs2">
+       <marker
+          inkscape:stockid="Arrow1Lstart"
+          orient="auto"
+          refY="0"
+          refX="0"
+          id="Arrow1Lstart"
+          style="overflow:visible"
+          inkscape:isstock="true">
+         <path
+            id="path872"
+            d="M 0,0 5,-5 -12.5,0 5,5 Z"
+            style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+            transform="matrix(0.8,0,0,0.8,10,0)"
+            inkscape:connector-curvature="0" />
+       </marker>
+       <marker
+          inkscape:stockid="Arrow1Lstart"
+          orient="auto"
+          refY="0"
+          refX="0"
+          id="Arrow1Lstart-6"
+          style="overflow:visible"
+          inkscape:isstock="true">
+         <path
+            inkscape:connector-curvature="0"
+            id="path872-2"
+            d="M 0,0 5,-5 -12.5,0 5,5 Z"
+            style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+            transform="matrix(0.8,0,0,0.8,10,0)" />
+       </marker>
+       <marker
+          inkscape:stockid="Arrow1Lstart"
+          orient="auto"
+          refY="0"
+          refX="0"
+          id="Arrow1Lstart-6-4"
+          style="overflow:visible"
+          inkscape:isstock="true">
+         <path
+            inkscape:connector-curvature="0"
+            id="path872-2-5"
+            d="M 0,0 5,-5 -12.5,0 5,5 Z"
+            style="fill:#55ddff;fill-opacity:1;fill-rule:evenodd;stroke:#00ccff;stroke-width:1.00000003pt;stroke-opacity:1"
+            transform="matrix(0.8,0,0,0.8,10,0)" />
+       </marker>
+       <marker
+          inkscape:stockid="Arrow1Lstart"
+          orient="auto"
+          refY="0"
+          refX="0"
+          id="Arrow1Lstart-6-1"
+          style="overflow:visible"
+          inkscape:isstock="true">
+         <path
+            inkscape:connector-curvature="0"
+            id="path872-2-7"
+            d="M 0,0 5,-5 -12.5,0 5,5 Z"
+            style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+            transform="matrix(0.8,0,0,0.8,10,0)" />
+       </marker>
+       <marker
+          inkscape:stockid="Arrow1Lstart"
+          orient="auto"
+          refY="0"
+          refX="0"
+          id="Arrow1Lstart-6-4-8"
+          style="overflow:visible"
+          inkscape:isstock="true">
+         <path
+            inkscape:connector-curvature="0"
+            id="path872-2-5-5"
+            d="M 0,0 5,-5 -12.5,0 5,5 Z"
+            style="fill:#008000;fill-opacity:1;fill-rule:evenodd;stroke:#008000;stroke-width:1.00000003pt;stroke-opacity:1"
+            transform="matrix(0.8,0,0,0.8,10,0)" />
+       </marker>
+       <marker
+          inkscape:stockid="Arrow1Lstart"
+          orient="auto"
+          refY="0"
+          refX="0"
+          id="Arrow1Lstart-6-3"
+          style="overflow:visible"
+          inkscape:isstock="true">
+         <path
+            inkscape:connector-curvature="0"
+            id="path872-2-57"
+            d="M 0,0 5,-5 -12.5,0 5,5 Z"
+            style="fill:#803300;fill-opacity:1;fill-rule:evenodd;stroke:#803300;stroke-width:1.00000003pt;stroke-opacity:1"
+            transform="matrix(0.8,0,0,0.8,10,0)" />
+       </marker>
+     </defs>
+     <sodipodi:namedview
+        id="base"
+        pagecolor="#ffffff"
+        bordercolor="#666666"
+        borderopacity="1.0"
+        inkscape:pageopacity="0.0"
+        inkscape:pageshadow="2"
+        inkscape:zoom="0.43729198"
+        inkscape:cx="488.82954"
+        inkscape:cy="283.54191"
+        inkscape:document-units="mm"
+        inkscape:current-layer="layer1"
+        showgrid="false"
+        inkscape:window-width="1920"
+        inkscape:window-height="986"
+        inkscape:window-x="-11"
+        inkscape:window-y="-11"
+        inkscape:window-maximized="1"
+        showguides="false"
+        fit-margin-top="0"
+        fit-margin-left="0"
+        fit-margin-right="0"
+        fit-margin-bottom="0" />
+     <metadata
+        id="metadata5">
+       <rdf:RDF>
+         <cc:Work
+            rdf:about="">
+           <dc:format>image/svg+xml</dc:format>
+           <dc:type
+              rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+           <dc:title></dc:title>
+         </cc:Work>
+       </rdf:RDF>
+     </metadata>
+     <g
+        inkscape:label="Layer 1"
+        inkscape:groupmode="layer"
+        id="layer1"
+        transform="translate(15.927123,21.453774)">
+       <g
+          id="g10627"
+          transform="translate(19.966637,-20.571686)">
+         <rect
+            y="31.716692"
+            x="-14.156658"
+            height="123.45907"
+            width="72.46656"
+            id="rect815"
+            style="opacity:1;vector-effect:none;fill:#ffaaaa;fill-opacity:1;stroke:#ff0000;stroke-width:3.54092884;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         <text
+            id="text819"
+            y="57.349277"
+            x="22.578571"
+            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.28888893px;line-height:0.80000001;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+            xml:space="preserve"><tspan
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;stroke-width:0.26458332"
+              y="57.349277"
+              x="22.578571"
+              id="tspan817"
+              sodipodi:role="line">Client</tspan><tspan
+              id="tspan821"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;stroke-width:0.26458332"
+              y="66.380386"
+              x="22.578571"
+              sodipodi:role="line">Browser</tspan></text>
+         <g
+            transform="translate(45.322163,51.850282)"
+            id="g5346">
+           <circle
+              style="opacity:1;vector-effect:none;fill:#deaa87;fill-opacity:1;stroke:#803300;stroke-width:2.64583325;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+              id="path4884"
+              cx="205.24107"
+              cy="176.42558"
+              r="28.947443" />
+           <text
+              id="text819-5-1"
+              y="175.39064"
+              x="205.58257"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.28888893px;line-height:0.80000001;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+              xml:space="preserve"><tspan
+                id="tspan821-7-8"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#000000;stroke:none;stroke-width:0.26458332"
+                y="175.39064"
+                x="205.58257"
+                sodipodi:role="line">SQL</tspan><tspan
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#000000;stroke:none;stroke-width:0.26458332"
+                y="184.42175"
+                x="205.58257"
+                sodipodi:role="line"
+                id="tspan4910">Database</tspan></text>
+         </g>
+         <rect
+            y="31.718954"
+            x="214.44559"
+            height="123.45454"
+            width="72.654541"
+            id="rect815-1"
+            style="opacity:1;vector-effect:none;fill:#80ff80;fill-opacity:1;stroke:#008000;stroke-width:3.54545355;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         <text
+            id="text819-5"
+            y="61.599575"
+            x="249.62856"
+            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.28888893px;line-height:0.80000001;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+            xml:space="preserve"><tspan
+              id="tspan821-7"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#000000;stroke:none;stroke-width:0.26458332"
+              y="61.599575"
+              x="249.62856"
+              sodipodi:role="line">Server</tspan></text>
+         <g
+            id="g10227">
+           <path
+              sodipodi:type="star"
+              style="opacity:1;vector-effect:none;fill:#55ddff;fill-opacity:1;stroke:#006680;stroke-width:2.64583325;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+              id="path5305"
+              sodipodi:sides="5"
+              sodipodi:cx="250.9489"
+              sodipodi:cy="105.21705"
+              sodipodi:r1="30.863375"
+              sodipodi:r2="24.319525"
+              sodipodi:arg1="0.94453489"
+              sodipodi:arg2="1.5728535"
+              inkscape:flatsided="true"
+              inkscape:rounded="0"
+              inkscape:randomized="0"
+              d="m 269.03853,130.22331 -36.28199,-0.0746 -11.14077,-34.52929 29.39662,-21.265641 29.30888,21.386404 z"
+              inkscape:transform-center-x="-0.17688311"
+              inkscape:transform-center-y="-2.7017824" />
+           <text
+              xml:space="preserve"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.28888893px;line-height:0.80000001;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+              x="251.01888"
+              y="100.97044"
+              id="text5322"><tspan
+                sodipodi:role="line"
+                id="tspan5320"
+                x="251.01888"
+                y="100.97044"
+                style="stroke-width:0.26458332">Data</tspan><tspan
+                sodipodi:role="line"
+                x="251.01888"
+                y="110.00156"
+                style="stroke-width:0.26458332"
+                id="tspan5324">Analysis</tspan></text>
+         </g>
+         <path
+            sodipodi:nodetypes="caaac"
+            inkscape:connector-curvature="0"
+            id="path866-2-3-2"
+            d="m 251.15384,195.63189 c 0,0 0.34639,-6.89206 0.39098,-10.33931 0.0366,-2.83296 -0.10927,-5.66585 -0.1014,-8.49888 0.009,-3.0456 0.15541,-6.0907 0.15956,-9.13631 0.003,-2.45761 -0.1087,-7.37257 -0.1087,-7.37257"
+            style="fill:none;stroke:#008000;stroke-width:0.80406702;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart-6-4-8)" />
+         <path
+            sodipodi:nodetypes="caaac"
+            inkscape:connector-curvature="0"
+            id="path866-2-4"
+            d="m 270.36204,132.9519 c 0,0 6.55058,10.0651 8.8211,15.38348 2.85623,6.69039 5.89346,13.57316 5.96051,20.60242 0.0721,7.56547 -2.41374,15.17467 -5.99154,22.24146 -1.89268,3.73835 -8.03319,10.36158 -8.03319,10.36158"
+            style="fill:none;stroke:#803300;stroke-width:0.79374999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart-6-3)" />
+         <g
+            id="g10204">
+           <path
+              style="fill:#55ddff;fill-opacity:1;stroke:#00ccff;stroke-width:0.79374999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart-6-4)"
+              d="m 64.101634,102.6223 c 0,0 30.469141,0.18981 45.703066,0.32921 12.12935,0.11101 24.25649,0.38835 36.38674,0.40387 13.85636,0.0178 27.71043,-0.27632 41.56642,-0.35493 10.86279,-0.0617 32.58911,-0.0915 32.58911,-0.0915"
+              id="path866-2-3"
+              inkscape:connector-curvature="0"
+              sodipodi:nodetypes="caaac" />
+           <text
+              xml:space="preserve"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.28888893px;line-height:0.80000001;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#55ddff;fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none"
+              x="142.61342"
+              y="99.71048"
+              id="text7779"><tspan
+                sodipodi:role="line"
+                id="tspan7777"
+                x="142.61342"
+                y="99.71048"
+                style="fill:#55ddff;fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none">Enhanced Experience</tspan></text>
+         </g>
+         <g
+            id="g10193">
+           <path
+              style="fill:none;stroke:#ff0000;stroke-width:0.79374999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart)"
+              d="m 63.386261,40.996898 c 0,0 24.834139,-10.557728 38.012609,-14.058222 12.87734,-3.420512 26.20488,-6.563281 39.68182,-6.669663 13.29967,-0.104983 26.68589,2.320133 39.29384,5.962662 11.04082,3.189779 31.09689,13.703859 31.09689,13.703859"
+              id="path866"
+              inkscape:connector-curvature="0"
+              sodipodi:nodetypes="caaac" />
+           <g
+              id="g9362">
+             <g
+                style="fill:#ffbb3c;fill-opacity:1;stroke-width:1.43913043;stroke-miterlimit:4;stroke-dasharray:none"
+                transform="matrix(0.48999434,0,0,0.62083483,141.90978,21.645213)"
+                id="g7819">
+               <rect
+                  style="opacity:1;vector-effect:none;fill:#ffbb3c;fill-opacity:1;stroke:#806600;stroke-width:1.93730927;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                  id="rect7793-3"
+                  width="25.684311"
+                  height="14.872869"
+                  x="3.3685994"
+                  y="18.672935"
+                  transform="matrix(0.99996744,0.00806978,-0.838385,0.54507852,0,0)" />
+               <rect
+                  style="opacity:1;vector-effect:none;fill:#ffbb3c;fill-opacity:1;stroke:#806600;stroke-width:1.93730927;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                  id="rect7793-5"
+                  width="25.684311"
+                  height="14.872869"
+                  x="-1.7021248"
+                  y="12.864021"
+                  transform="matrix(0.99996744,0.00806978,-0.838385,0.54507852,0,0)" />
+               <rect
+                  style="opacity:1;vector-effect:none;fill:#ffbb3c;fill-opacity:1;stroke:#806600;stroke-width:1.93730927;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                  id="rect7793"
+                  width="25.684311"
+                  height="14.872869"
+                  x="-6.7290916"
+                  y="6.7857623"
+                  transform="matrix(0.99996744,0.00806978,-0.83838499,0.54507853,0,0)" />
+             </g>
+             <text
+                id="text7823"
+                y="44.263157"
+                x="137.85759"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.28888893px;line-height:0.80000001;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffbb3c;fill-opacity:1;stroke:none;stroke-width:0.13229167;stroke-miterlimit:4;stroke-dasharray:none"
+                xml:space="preserve"><tspan
+                  style="fill:#ffbb3c;fill-opacity:1;stroke:none;stroke-width:0.13229167;stroke-miterlimit:4;stroke-dasharray:none"
+                  y="44.263157"
+                  x="137.85759"
+                  id="tspan7821"
+                  sodipodi:role="line">Files</tspan></text>
+           </g>
+         </g>
+         <g
+            id="g10217">
+           <path
+              style="fill:none;stroke:#000000;stroke-width:0.79374999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Lstart-6)"
+              d="m 209.70758,148.66732 c 0,0 -21.77739,9.25249 -33.28452,12.45951 -14.47562,4.03433 -29.36755,8.32432 -44.57647,8.41902 -16.36906,0.10193 -32.832728,-3.40932 -48.122806,-8.46284 C 75.635287,158.40968 61.304929,149.7364 61.304929,149.7364"
+              id="path866-2"
+              inkscape:connector-curvature="0"
+              sodipodi:nodetypes="caaac" />
+           <g
+              id="g7852"
+              transform="translate(15.378737,9.050232)">
+             <path
+                sodipodi:nodetypes="ccccssscccc"
+                inkscape:connector-curvature="0"
+                d="m 121.58047,154.60753 -4.05912,2.27329 0.78697,-3.14019 -0.94205,-0.46548 c -0.79534,-0.45098 -1.43897,-0.98799 -1.88377,-1.58431 -0.44479,-0.59631 -0.69076,-1.25192 -0.69076,-1.9401 0,-2.75275 3.93542,-4.98428 8.79,-4.98428 4.85457,0 8.78999,2.23153 8.78999,4.98428 -0.11311,1.64032 -1.2414,2.75739 -2.57453,3.52441 -1.93662,1.03576 -4.16488,1.45091 -6.21546,1.45987 z"
+                style="opacity:1;vector-effect:none;fill:#e3dedb;fill-opacity:1;stroke:#000000;stroke-width:0.94706225;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                id="path7832" />
+             <text
+                id="text7841"
+                y="140.30713"
+                x="118.67502"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.28888893px;line-height:0.80000001;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+                xml:space="preserve"><tspan
+                  style="stroke-width:0.26458332"
+                  y="140.30713"
+                  x="118.67502"
+                  id="tspan7839"
+                  sodipodi:role="line">User Responses</tspan></text>
+           </g>
+         </g>
+       </g>
+     </g>
+    </svg>
+  </div>
+
+  <p>
+    In addition, we at Project Intuition have direct access to the contents of the database.  This allows us to make
+    adjustments to our modules (as a simple example, if a question is only correctly answered 5% of the time, this 
+    tells us the question is too difficult, worded poorly, or confusing for another reason and needs to be re-evaluated).
+    Since Project Intuition courses are designed to be taken corequisitely with their associated undergraduate math 
+    courses we plan to eventually link our own data to student performance metrics gathered by the instructor of the associated
+    in person math course including data such as test scores and class attendance.  In this way we can see if there
+    is a correlation between use of our product and improved performance, and, if so, exactly what aspects of our
+    product appear to be most helpful.
+  </p>
+
+  <p>
+    The second type of research that we are engaging in involves reviewing the current literature in the 
+    field of mathematics education to help inform the construction of our product.
+  </p>
+</body>
+</html>

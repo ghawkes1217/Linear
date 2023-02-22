@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+
+
+
+  <!-- The following adds MathJax to render LaTeX notation -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../site-scripts.js"></script>
+
+</head>
+<style>
+
+
+
+
+
+#intro {
+  position: relative;
+  width: 550px;
+}
+
+#blank {
+  position: relative;
+  width: 550px;
+  height: 350px;
+
+}
+#question {
+  position: relative;
+  width: 550px;
+  height: 20px;
+}
+
+ #buttons {
+  position: absolute;
+  height: 40px;
+  width: 230px;
+  left: 10px;
+  top: 145px;
+  background-color: grey;
+  text-align: center;
+  border: 9px solid #d3d3d3}
+
+
+#tet {
+  position: absolute;
+  left: 10px;
+  top: 20px;}
+#tname {
+  position: absolute;
+  height: 20px;
+  width: 80px;
+  left: 5px;
+  top: 0px;
+  background-color: grey;
+  text-align: center}
+#tnum {
+  position: absolute;
+  height: 20px;
+  width: 25px;
+  left: 34px;
+  top: 20px;
+  background-color: white;
+  text-align: center}
+  
+  #tetd {
+  position: absolute;
+  left: 60px;
+  top: 20px;}
+ 
+ #sq {
+  position: absolute;
+  left: 80px;
+  top: 20px;}
+#sname {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 80px;
+  top: 0px;
+  background-color: grey;
+  text-align: center}
+#snum {
+  position: absolute;
+  height: 20px;
+  width: 30px;
+  left: 103px;
+  top: 20px;
+  background-color: white;
+  text-align: center}
+  
+  #sqd {
+  position: absolute;
+  left: 130px;
+  top: 20px;}
+
+ #oct {
+  position: absolute;
+  left: 150px;
+  top: 20px;}
+#oname {
+  position: absolute;
+  height: 20px;
+  width: 80px;
+  left: 145px;
+  top: 0px;
+  background-color: grey;
+  text-align: center}
+#onum {
+  position: absolute;
+  height: 20px;
+  width: 30px;
+  left: 174px;
+  top: 20px;
+  background-color: white;
+  text-align: center}
+  
+   #octd {
+  position: absolute;
+  left: 200px;
+  top: 20px;}
+
+ #topmatrix {
+  position: absolute;
+  height: 110px;
+  width: 270px;
+  left: 10px;
+  top: 20px;
+  background-color: grey;
+  text-align: center;
+  border: 9px solid #d3d3d3;}
+  
+   #sub {
+  position: absolute;
+  height: 20px;
+  width: 50px;
+  left: 320px;
+  top: 30px;
+  background-color: white;
+  text-align: center;}
+
+
+  
+
+
+  #score {
+  position: absolute;
+  height: 220px;
+  width: 90px;
+  left: 930px;
+  top: 90px;
+  background-color: white;
+  text-align: center;}
+
+
+
+
+  
+     #try {
+  position: absolute;
+  height: 20px;
+  width: 50px;
+  left: 400px;
+  top: 105px;
+  background-color: white;
+  text-align: center;}
+  
+  
+  #M11 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 10px;
+  top: 20px;
+  background-color: blue;
+  text-align: center;}
+  
+  #M21 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 10px;
+  top: 50px;
+  background-color: blue;
+  text-align: center;}
+  
+  
+  #M31 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 10px;
+  top: 80px;
+  background-color: blue;
+  text-align: center;} 
+
+  
+ #M12 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 80px;
+  top: 20px;
+  background-color: yellow;
+  text-align: center;}
+  
+  #M22 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 80px;
+  top: 50px;
+  background-color: yellow;
+  text-align: center;}
+  
+  
+  #M32 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 80px;
+  top: 80px;
+  background-color: yellow;
+  text-align: center;} 
+  
+  
+  #M13 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 150px;
+  top: 20px;
+  background-color: red;
+  text-align: center;}
+  
+  #M23 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 150px;
+  top: 50px;
+  background-color: red;
+  text-align: center;}
+  
+  
+  #M33 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 150px;
+  top: 80px;
+  background-color: red;
+  text-align: center;} 
+
+
+  #M14 {
+  position: absolute;
+  height: 20px;
+  width: 40px;
+  left: 225px;
+  top: 20px;
+  background-color: grey;
+  text-align: left;} 
+  #M24 {
+  position: absolute;
+  height: 20px;
+  width: 40px;
+  left: 225px;
+  top: 50px;
+  background-color: grey;
+  text-align: left;} 
+  #M34 {
+  position: absolute;
+  height: 20px;
+  width: 40px;
+  left: 225px;
+  top: 80px;
+  background-color: grey;
+  text-align: left;} 
+
+
+
+
+
+
+
+
+#bottommatrix {
+  position: absolute;
+  height: 120px;
+  width: 230px;
+  left: 10px;
+  top: 200px;
+  background-color: grey;
+  text-align: center;
+  border: 9px solid #d3d3d3;}
+  
+  #A11 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 10px;
+  top: 20px;
+  background-color: blue;
+  text-align: center;}
+  
+  #A21 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 10px;
+  top: 50px;
+  background-color: blue;
+  text-align: center;}
+  
+  
+  #A31 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 10px;
+  top: 80px;
+  background-color: blue;
+  text-align: center;} 
+
+  
+ #A12 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 80px;
+  top: 20px;
+  background-color: yellow;
+  text-align: center;}
+  
+  #A22 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 80px;
+  top: 50px;
+  background-color: yellow;
+  text-align: center;}
+  
+  
+  #A32 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 80px;
+  top: 80px;
+  background-color: yellow;
+  text-align: center;} 
+  
+  
+  #A13 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 150px;
+  top: 20px;
+  background-color: red;
+  text-align: center;}
+  
+  #A23 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 150px;
+  top: 50px;
+  background-color: red;
+  text-align: center;}
+  
+  
+  #A33 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 150px;
+  top: 80px;
+  background-color: red;
+  text-align: center;} 
+
+
+
+
+#vector {
+  position: absolute;
+  height: 120px;
+  width: 180px;
+  left: 250px;
+  top: 200px;
+  background-color: grey;
+  text-align: center;
+  border: 9px solid #d3d3d3;}
+
+ #V1 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 10px;
+  top: 20px;
+  background-color: green;
+  text-align: center;}
+  
+  
+   #Ver {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 90px;
+  top: 20px;
+  background-color: white;
+  text-align: center;}
+  
+  
+  #V2 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 10px;
+  top: 50px;
+  background-color: green;
+  text-align: center;}
+     #Edg {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 90px;
+  top: 50px;
+  background-color: white;
+  text-align: center;}
+  
+  #V3 {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 10px;
+  top: 80px;
+  background-color: green;
+  text-align: center;} 
+     #Fac {
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  left: 90px;
+  top: 80px;
+  background-color: white;
+  text-align: center;}
+
+  
+  #MatEq {
+  position: absolute;
+  height: 100px;
+  width: 300px;
+  left: 500px;
+  top: 350px;
+  background-color: lightgrey;
+  text-align: center;}
+
+
+
+ </style>
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+<body>
+
+
+  <h2> <center>Module 1: Linear Combinations </center></h2>
+
+
+<div id="intro">
+
+
+<p>
+You are at the platonic solid market.  You are allowed to purchase any (non-negative) number of each type of solid.  You wish to create a:  
+</p>
+
+<span style='color:green'>
+Shopping basket which contains V vertices, E edges, and F faces.
+</span>
+<br>
+<span style='color:blue'>
+A tetrahedron has 4 vertices, 6 edges, and 4 faces.
+</span>
+<br>
+<span style='color:gold'>
+A cube has 8 vertices, 12 edges, and 6 faces.
+</span>
+
+<br>
+<span style='color:red'>
+An octahedron has 6 vertices, 12 edges, and 8 faces.
+</span>
+
+<p>
+Use the up and down arrows to add or subtract each type of solid from your shopping basket to 
+answer the following questions. If there is no solution click "No Solution." 
+The matrix equation representing your selection is shown to the right.
+
+
+</div>
+
+<p id="question">
+
+
+<span>Click the "Start" button when you are ready to begin.</span>
+
+
+</p>
+
+  <div class="popup" onclick="pop()"><u>Question Statistics</u>
+    <div class="popuptext" id="myPopup">
+      <h3 id="selected" style="text-align:center;">No Question Selected</h3>
+      <table >
+
+        <tr>
+          <td>Users Who Have Attempted This Question</td>
+          <td id="users">0</td>
+        </tr>
+        <tr>
+          <td>Percentage of Users With a Correct Response</td>
+          <td id="eventual">0</td>
+        </tr>
+        <tr>
+          <td>Average Number of Attempts per User</td>
+          <td id="attempts">0</td>
+        </tr>
+        <tr>
+          <td>Percentage of Attempts that are Correct</td>
+          <td id="overall">0</td>
+        </tr>
+
+      </table>
+      
+
+
+    </div>
+  </div>
+
+
+
+
+<div id="blank">
+
+
+<div id="topmatrix">
+
+<div id="M11">
+</div>
+<div id="M21">
+</div>
+<div id="M31">
+</div>
+
+<div id="M12">
+</div>
+<div id="M22">
+</div>
+<div id="M32">
+</div>
+
+
+<div id="M13">
+</div>
+<div id="M23">
+</div>
+<div id="M33">
+</div>
+
+<div id="M14">
+  <small>Vertices</small>
+</div>
+<div id="M24">
+  <small>Edges</small>
+</div>
+<div id="M34">
+  <small>Faces</small>
+</div>
+
+
+
+</div>
+
+
+
+<div id="sub">
+  <p>
+<button  onclick="submit(0)">Start</button>
+  </p>
+    <p>
+  <button  onclick="submit(1)">No Solution</button>
+    </p>
+<p>
+  <button  onclick="forward()">Skip</button>
+</p>
+<p>
+    <button  onclick="back()">Previous</button>
+</p>
+  </div>
+
+<div id="try">
+</div>
+
+
+
+
+
+
+<div id="buttons">
+<div id="tname">
+<small>Tetrahedrons</small>
+</div>
+<div id="tet">
+<button style="background-color:blue" onclick="arrow(1,1)">&#8593</button>
+</div>
+<div id="tnum">
+</div>
+<div id="tetd">
+<button style="background-color:blue" onclick="arrow(-1,1)">&#8595</button>
+</div>
+
+
+<div id="sname">
+<small>Cubes</small>
+</div>
+<div id="sq">
+
+<button style="background-color:yellow" onclick="arrow(1,2)">&#8593</button>
+</div>
+<div id="snum">
+</div>
+<div id="sqd">
+<button style="background-color:yellow" onclick="arrow(-1,2)">&#8595</button>
+</div>
+
+<div id="oname">
+<small>Octahedrons</small>
+</div>
+<div id="oct">
+<button style="background-color:red" onclick="arrow(1,3)">&#8593</button>
+</div>
+<div id="onum">
+</div>
+<div id="octd">
+<button style="background-color:red" onclick="arrow(-1,3)">&#8595</button>
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="bottommatrix">
+
+<div id="A11">
+</div>
+<div id="A21">
+</div>
+<div id="A31">
+</div>
+
+<div id="A12">
+</div>
+<div id="A22">
+</div>
+<div id="A32">
+</div>
+
+
+<div id="A13">
+</div>
+<div id="A23">
+</div>
+<div id="A33">
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div id="vector">
+  <small>TOTALS</small>
+<div id="V1">
+</div>
+<div id="Ver">
+Vertices
+</div>
+<div id="V2">
+</div>
+<div id="Edg">
+Edges
+</div>
+<div id="V3">
+</div>
+<div id="Fac">
+Faces
+</div>
+</div>
+
+
+</div>
+
+
+<div id="previous">
+
+<h2>Completed Questions:</h2>
+
+</div>
+
+
+
+<div id="score">
+
+</div>
+
+<div id="MatEq">
+
+
+</div>
+
+
+<script>
+
+
+
+
+
+
+
+
+
+var Module_Number="01"
+
+function pop() {
+  sql_retrieve(Module_Number)
+      var popup = document.getElementById("myPopup");
+      popup.classList.toggle("show");
+    }
+
+the_time=Date.now()
+grades=[]
+for (u=0; u<14; u++){
+grades.push([0,0])
+}
+
+
+sql_record(Module_Number)
+
+
+function make_mat(){
+m11=parseFloat(document.getElementById("M11").innerText)
+m21=parseFloat(document.getElementById("M21").innerText)
+m31=parseFloat(document.getElementById("M31").innerText)
+c1=parseFloat(document.getElementById("tnum").innerText)
+
+
+m12=parseFloat(document.getElementById("M12").innerText)
+m22=parseFloat(document.getElementById("M22").innerText)
+m32=parseFloat(document.getElementById("M32").innerText)
+c2=parseFloat(document.getElementById("snum").innerText)
+
+m13=parseFloat(document.getElementById("M13").innerText)
+m23=parseFloat(document.getElementById("M23").innerText)
+m33=parseFloat(document.getElementById("M33").innerText)
+c3=parseFloat(document.getElementById("onum").innerText)
+
+v1=parseFloat(document.getElementById("V1").innerText)
+v2=parseFloat(document.getElementById("V2").innerText)
+v3=parseFloat(document.getElementById("V3").innerText)
+
+Mat=document.getElementById('MatEq')
+Mat_string='\\[ \\begin{bmatrix}\\textcolor{blue}{'+m11+'}&\\textcolor{yellow}{'+m12+'}&\\textcolor{red}{'+m13+'}\\\\'
+Mat_string+='\\textcolor{blue}{'+m21+'}&\\textcolor{yellow}{'+m22+'}&\\textcolor{red}{'+m23+'}\\\\'
+Mat_string+='\\textcolor{blue}{'+m31+'}&\\textcolor{yellow}{'+m32+'}&\\textcolor{red}{'+m33+'}\\end{bmatrix}'
+Mat_string+='\\begin{bmatrix}\\textcolor{blue}{'+c1+'}\\\\ \\textcolor{yellow}{'+c2+'}\\\\ \\textcolor{red}{'+c3+'}\\end{bmatrix}'
+Mat_string+='=\\begin{bmatrix}\\textcolor{green}{'+v1+'}\\\\ \\textcolor{green}{'+v2+'}\\\\ \\textcolor{green}{'+v3+'}\\end{bmatrix}\\]'
+Mat.innerHTML=Mat_string
+MathJax.typesetPromise()
+
+}
+
+function zero(){
+
+document.getElementById("tnum").innerText="0"
+document.getElementById("snum").innerText="0"
+document.getElementById("onum").innerText="0"
+
+document.getElementById("V1").innerText="0"
+document.getElementById("V2").innerText="0"
+document.getElementById("V3").innerText="0"
+
+
+document.getElementById("M11").innerText="4"
+document.getElementById("M21").innerText="6"
+document.getElementById("M31").innerText="4"
+document.getElementById("M12").innerText="8"
+document.getElementById("M22").innerText="12"
+document.getElementById("M32").innerText="6"
+document.getElementById("M13").innerText="6"
+document.getElementById("M23").innerText="12"
+document.getElementById("M33").innerText="8"
+
+document.getElementById("A11").innerText="0"
+document.getElementById("A21").innerText="0"
+document.getElementById("A31").innerText="0"
+document.getElementById("A12").innerText="0"
+document.getElementById("A22").innerText="0"
+document.getElementById("A32").innerText="0"
+document.getElementById("A13").innerText="0"
+document.getElementById("A23").innerText="0"
+document.getElementById("A33").innerText="0"
+make_mat()
+
+}
+zero()
+</script>
+
+
+
+<script>
+function arrow(s,r){
+if (r==1){
+a=parseFloat(document.getElementById("A11").innerText)
+b=parseFloat(document.getElementById("A21").innerText)
+c=parseFloat(document.getElementById("A31").innerText)
+t=parseFloat(document.getElementById("tnum").innerText)
+x=4
+y=6
+z=4
+}
+if (r==2){
+a=parseFloat(document.getElementById("A12").innerText)
+b=parseFloat(document.getElementById("A22").innerText)
+c=parseFloat(document.getElementById("A32").innerText)
+t=parseFloat(document.getElementById("snum").innerText)
+x=8
+y=12
+z=6
+}
+if (r==3){
+a=parseFloat(document.getElementById("A13").innerText)
+b=parseFloat(document.getElementById("A23").innerText)
+c=parseFloat(document.getElementById("A33").innerText)
+t=parseFloat(document.getElementById("onum").innerText)
+x=6
+y=12
+z=8
+}
+
+
+
+
+
+
+
+v1=parseFloat(document.getElementById("V1").innerText)
+v2=parseFloat(document.getElementById("V2").innerText)
+v3=parseFloat(document.getElementById("V3").innerText)
+t+=s*1
+a+=s*x
+b+=s*y
+c+=s*z
+v1+=s*x
+v2+=s*y
+v3+=s*z
+
+document.getElementById("V1").innerText=v1
+document.getElementById("V2").innerText=v2
+document.getElementById("V3").innerText=v3
+
+if (r==1){
+document.getElementById("A11").innerText=a
+document.getElementById("A21").innerText=b
+document.getElementById("A31").innerText=c
+document.getElementById("tnum").innerText=t}
+
+if (r==2){
+document.getElementById("A12").innerText=a
+document.getElementById("A22").innerText=b
+document.getElementById("A32").innerText=c
+document.getElementById("snum").innerText=t}
+
+if (r==3){
+document.getElementById("A13").innerText=a
+document.getElementById("A23").innerText=b
+document.getElementById("A33").innerText=c
+document.getElementById("onum").innerText=t}
+
+make_mat()
+
+}
+</script>
+
+
+<script>
+
+
+
+
+
+
+
+
+var initialized=0
+var page=0
+var quests=[
+"1. Find a basket with V=12, E=18, and F=10",
+"2. Good job, now find a basket with V=10, E=18, and F=12",
+"3. Good job, now find a basket with V=14, E=24, and F=16",
+"4. Good job, now find a basket with at least 5 of each type of solid and with V=F",
+"5. Excellent, now find a basket with V=32, E=48, and F=32",
+"6. Excellent, now find a basket with V=28, E=48, and F=28",
+"7. Good job, now find a basket with V=30, E=48, and F=30",
+"8. Excellent, now find a basket with more cubes than octahedrons and with V=F",
+"9. Good job, now find a basket with at least one of each shape and V>F",
+"10. Excellent, now find a basket with at least one of each shape and V>E",
+"11. Good job, now find a basket with the same number of tetrahedron faces, cube faces, and octahedron faces",
+"12. Good job, now find a basket with the same number of tetrahedron edges, cube edges, and octahedron edges",
+"13. Good job, now find a basket with the same number of tetrahedron vertices, cube vertices, and octahedron vertices",
+"14. Good job, now find a non-empty basket with the same number of tetrahedron vertices, tetrahedron edges and tetrahedron faces",
+"Good job!!!"]
+
+Answered=[0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+function score(){
+  S=document.getElementById("score")
+  while(S.firstChild){
+  S.removeChild(S.firstChild)}
+
+
+  var q = document.createElement('h1');
+  q.style.fontSize="x-large"
+  q.style.textAlign="left"
+   q.innerHTML="Score Card"
+    S.appendChild(q);
+
+  for (i=0; i<Answered.length; i++){
+  qid='q'+i
+  var q = document.createElement('div');
+  q.style.fontSize="x-large"
+  q.style.textAlign="left"
+    q.id = qid;
+    q.innerHTML = i+1;
+    if (Answered[i]==0){
+      q.style.color='red'
+      Check=q.innerHTML
+      Check+=" &#x2610"
+      q.innerHTML=Check
+    }
+    if (Answered[i]>0){
+      q.style.color='green'
+      Check=q.innerHTML
+      Check+=" &#9745"
+      q.innerHTML=Check
+    }
+    S.appendChild(q);
+}}
+
+score()
+
+
+function grade(p,v1,v2,v3,t,c,o,x){
+correct=0
+
+if (p==0){ if (x==0 && v1==12 && v2==18 && v3==10){correct=1}}
+if (p==1){ if (x==0 && v1==10 && v2==18 && v3==12){correct=1}}
+if (p==2){ if (x==0 && v1==14 && v2==24 && v3==16){correct=1}}
+if (p==3){ if (x==0 && v1==v3 && t>=5 && c>=5 && o>=5){correct=1}}
+if (p==4){ if (x==0 && v1==32 && v2==48 && v3==32){correct=1}}
+if (p==5){ if (x==0 && v1==28 && v2==48 && v3==28){correct=1}}
+if (p==6){ if (x==0 && v1==30 && v2==48 && v3==30){correct=1}}
+if (p==7){ if (x==1){correct=1}}
+if (p==8){ if (x==0 && v1>v3 && t>=1 && c>=1 && o>=1){correct=1}}
+if (p==9){ if (x==1){correct=1}}
+if (p==10){ if (x==0 && 4*t==6*c && 6*c==8*o){correct=1}}
+if (p==11){ if (x==0 && 6*t==12*c && 12*c==12*o){correct=1}}
+if (p==12){ if (x==0 && 4*t==8*c && 8*c==6*o){correct=1}}
+if (p==13){ if (v1==0){correct=1}}
+
+Answered[p]+=correct
+if (correct==0){
+grades[p][1]+=1}
+if (correct==1){
+grades[p][0]+=1}
+sql_record(Module_Number)
+score()
+return(correct)
+}
+
+
+function forward(){
+  if (page<Answered.length){
+  page+=1
+  document.getElementById("question").innerText=quests[page]
+  document.getElementById("try").innerText=""
+}
+}
+function back(){
+  if (page>0){
+  page-=1
+  document.getElementById("question").innerText=quests[page]
+  document.getElementById("try").innerText=""
+}
+}
+
+
+
+function submit(x){
+
+ 
+if (initialized==0){
+document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
+document.getElementById("question").innerText=quests[page]
+}
+
+if (initialized==1){
+
+v1=parseFloat(document.getElementById("V1").innerText)
+v2=parseFloat(document.getElementById("V2").innerText)
+v3=parseFloat(document.getElementById("V3").innerText)
+tet=parseFloat(document.getElementById("tnum").innerText)
+cub=parseFloat(document.getElementById("snum").innerText)
+oct=parseFloat(document.getElementById("onum").innerText)
+
+var feed=document.getElementById("try").innerText
+if (feed==""){
+document.getElementById("try").innerText="Try Again"}
+if (feed=="Not Quite"){
+document.getElementById("try").innerText="Try Again"}
+if (feed=="Try Again"){
+document.getElementById("try").innerText="Not Quite"}
+
+
+
+
+if (grade(page,v1,v2,v3,tet,cub,oct,x)==1)
+{
+document.getElementById("try").innerText=""
+
+
+      // This creates a new element to display previous questions
+
+      
+      var answered_question = document.createElement('div')
+      if (x==0){
+      answered_question.innerHTML=quests[page]+': '+ tet +' tetrahedron(s), '+cub +' cube(s), '+oct +' octahedron(s).'
+}
+if (x==1){
+      answered_question.innerHTML=quests[page]+': No Solution.'}
+      var previous=document.getElementById("previous")
+      previous.appendChild(answered_question)
+      answered_question.style.color='grey'
+
+
+
+
+
+
+
+page+=1
+document.getElementById("question").innerText=quests[page]
+zero()
+make_mat()
+}
+
+
+
+
+}
+initialized=1
+}
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
