@@ -1,16 +1,51 @@
+function make_cookject(){
+  cookie=document.cookie 
+  crumbs=cookie.split('; ')
+  cookject={}
+  for (i=0; i<crumbs.length; i++){
+      tuple=crumbs[i].split('=')
+      key=tuple[0]
+      val=tuple[1]
+      cookject[key]=val}
+  return(cookject)}
+
+
+
+function make_grades(module_number){
+user=make_cookject()['user']
+if (user==undefined){
+  user=the_time
+}
+    fetch("../grades.php?module_number="+module_number+"&user="+user)
+    .then(function(response){
+      return response.json()})
+      .then(function(data){
+        alert(data)
+     grd=[]
+    for (i=0; i<14; i++){
+      grd.push([parseFloat(data[2*i+2]),parseFloat(data[2*i+3])])
+    }
+    grades=grd
+})  
+
+  }
+
+
+
 
 
 
 //Records User Responses to SQL database
 function sql_record(module_number) {
-
 gradestring=""
-user=the_time  
+user=make_cookject()['user']
+if (user==undefined){
+user=the_time  }
   for (var i=0; i<grades.length; i++){
   gradestring+=grades[i][0].toString()+", "+grades[i][1].toString()
   if (i<grades.length-1){
   gradestring+=", "}}
-
+alert(gradestring)
   fetch("../records.php?module_number="+module_number+"&user="+user+"&gradestring="+gradestring)
 
   }
@@ -20,6 +55,8 @@ user=the_time
 
 //Retrieves User Responses from SQL database
   function sql_retrieve(module_number){
+
+
     quest=''+(page+1)
     fetch("../retrieve.php?module_number="+module_number+"&quest="+quest)
 

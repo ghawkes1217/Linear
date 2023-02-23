@@ -765,13 +765,11 @@ function pop() {
     }
 
 the_time=Date.now()
-grades=[]
-for (u=0; u<14; u++){
-grades.push([0,0])
-}
 
 
-sql_record(Module_Number)
+
+make_grades(Module_Number)
+
 
 
 function make_mat(){
