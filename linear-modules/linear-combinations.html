@@ -146,8 +146,6 @@
   text-align: center;}
 
 
-  
-
 
   #score {
   position: absolute;
@@ -752,26 +750,6 @@ Faces
 
 
 
-
-
-
-
-var Module_Number="01"
-
-function pop() {
-  sql_retrieve(Module_Number)
-      var popup = document.getElementById("myPopup");
-      popup.classList.toggle("show");
-    }
-
-the_time=Date.now()
-
-
-
-make_grades(Module_Number)
-
-
-
 function make_mat(){
 m11=parseFloat(document.getElementById("M11").innerText)
 m21=parseFloat(document.getElementById("M21").innerText)
@@ -803,6 +781,7 @@ Mat.innerHTML=Mat_string
 MathJax.typesetPromise()
 
 }
+
 
 function zero(){
 
@@ -837,12 +816,8 @@ document.getElementById("A33").innerText="0"
 make_mat()
 
 }
-zero()
-</script>
 
 
-
-<script>
 function arrow(s,r){
 if (r==1){
 a=parseFloat(document.getElementById("A11").innerText)
@@ -914,73 +889,6 @@ document.getElementById("onum").innerText=t}
 make_mat()
 
 }
-</script>
-
-
-<script>
-
-
-
-
-
-
-
-
-var initialized=0
-var page=0
-var quests=[
-"1. Find a basket with V=12, E=18, and F=10",
-"2. Good job, now find a basket with V=10, E=18, and F=12",
-"3. Good job, now find a basket with V=14, E=24, and F=16",
-"4. Good job, now find a basket with at least 5 of each type of solid and with V=F",
-"5. Excellent, now find a basket with V=32, E=48, and F=32",
-"6. Excellent, now find a basket with V=28, E=48, and F=28",
-"7. Good job, now find a basket with V=30, E=48, and F=30",
-"8. Excellent, now find a basket with more cubes than octahedrons and with V=F",
-"9. Good job, now find a basket with at least one of each shape and V>F",
-"10. Excellent, now find a basket with at least one of each shape and V>E",
-"11. Good job, now find a basket with the same number of tetrahedron faces, cube faces, and octahedron faces",
-"12. Good job, now find a basket with the same number of tetrahedron edges, cube edges, and octahedron edges",
-"13. Good job, now find a basket with the same number of tetrahedron vertices, cube vertices, and octahedron vertices",
-"14. Good job, now find a non-empty basket with the same number of tetrahedron vertices, tetrahedron edges and tetrahedron faces",
-"Good job!!!"]
-
-Answered=[0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-function score(){
-  S=document.getElementById("score")
-  while(S.firstChild){
-  S.removeChild(S.firstChild)}
-
-
-  var q = document.createElement('h1');
-  q.style.fontSize="x-large"
-  q.style.textAlign="left"
-   q.innerHTML="Score Card"
-    S.appendChild(q);
-
-  for (i=0; i<Answered.length; i++){
-  qid='q'+i
-  var q = document.createElement('div');
-  q.style.fontSize="x-large"
-  q.style.textAlign="left"
-    q.id = qid;
-    q.innerHTML = i+1;
-    if (Answered[i]==0){
-      q.style.color='red'
-      Check=q.innerHTML
-      Check+=" &#x2610"
-      q.innerHTML=Check
-    }
-    if (Answered[i]>0){
-      q.style.color='green'
-      Check=q.innerHTML
-      Check+=" &#9745"
-      q.innerHTML=Check
-    }
-    S.appendChild(q);
-}}
-
-score()
 
 
 function grade(p,v1,v2,v3,t,c,o,x){
@@ -1001,7 +909,7 @@ if (p==11){ if (x==0 && 6*t==12*c && 12*c==12*o){correct=1}}
 if (p==12){ if (x==0 && 4*t==8*c && 8*c==6*o){correct=1}}
 if (p==13){ if (v1==0){correct=1}}
 
-Answered[p]+=correct
+
 if (correct==0){
 grades[p][1]+=1}
 if (correct==1){
@@ -1012,26 +920,8 @@ return(correct)
 }
 
 
-function forward(){
-  if (page<Answered.length){
-  page+=1
-  document.getElementById("question").innerText=quests[page]
-  document.getElementById("try").innerText=""
-}
-}
-function back(){
-  if (page>0){
-  page-=1
-  document.getElementById("question").innerText=quests[page]
-  document.getElementById("try").innerText=""
-}
-}
-
-
-
 function submit(x){
 
- 
 if (initialized==0){
 document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
 document.getElementById("question").innerText=quests[page]
@@ -1060,12 +950,9 @@ document.getElementById("try").innerText="Not Quite"}
 if (grade(page,v1,v2,v3,tet,cub,oct,x)==1)
 {
 document.getElementById("try").innerText=""
-
-
       // This creates a new element to display previous questions
 
-      
-      var answered_question = document.createElement('div')
+var answered_question = document.createElement('div')
       if (x==0){
       answered_question.innerHTML=quests[page]+': '+ tet +' tetrahedron(s), '+cub +' cube(s), '+oct +' octahedron(s).'
 }
@@ -1075,19 +962,11 @@ if (x==1){
       previous.appendChild(answered_question)
       answered_question.style.color='grey'
 
-
-
-
-
-
-
 page+=1
 document.getElementById("question").innerText=quests[page]
 zero()
 make_mat()
 }
-
-
 
 
 }
@@ -1101,8 +980,31 @@ initialized=1
 
 
 
+var Module_Number="01"
+var initialized=0
+var page=0
+var quests=[
+"1. Find a basket with V=12, E=18, and F=10",
+"2. Good job, now find a basket with V=10, E=18, and F=12",
+"3. Good job, now find a basket with V=14, E=24, and F=16",
+"4. Good job, now find a basket with at least 5 of each type of solid and with V=F",
+"5. Excellent, now find a basket with V=32, E=48, and F=32",
+"6. Excellent, now find a basket with V=28, E=48, and F=28",
+"7. Good job, now find a basket with V=30, E=48, and F=30",
+"8. Excellent, now find a basket with more cubes than octahedrons and with V=F",
+"9. Good job, now find a basket with at least one of each shape and V>F",
+"10. Excellent, now find a basket with at least one of each shape and V>E",
+"11. Good job, now find a basket with the same number of tetrahedron faces, cube faces, and octahedron faces",
+"12. Good job, now find a basket with the same number of tetrahedron edges, cube edges, and octahedron edges",
+"13. Good job, now find a basket with the same number of tetrahedron vertices, cube vertices, and octahedron vertices",
+"14. Good job, now find a non-empty basket with the same number of tetrahedron vertices, tetrahedron edges and tetrahedron faces",
+"Good job!!!"]
 
 
+
+zero()
+the_time=Date.now()
+make_grades(Module_Number)
 
 </script>
 

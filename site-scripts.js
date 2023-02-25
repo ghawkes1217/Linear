@@ -1,3 +1,47 @@
+
+function pop() {
+  sql_retrieve(Module_Number)
+      var popup = document.getElementById("myPopup");
+      popup.classList.toggle("show");
+    }
+
+
+function score(){
+  S=document.getElementById("score")
+  while(S.firstChild){
+  S.removeChild(S.firstChild)}
+
+
+  var q = document.createElement('h1');
+  q.style.fontSize="x-large"
+  q.style.textAlign="left"
+   q.innerHTML="Score Card"
+    S.appendChild(q);
+
+  for (i=0; i<quests.length-1; i++){
+  qid='q'+i
+  var q = document.createElement('div');
+  q.style.fontSize="x-large"
+  q.style.textAlign="left"
+    q.id = qid;
+    q.innerHTML = i+1;
+    if (grades[i][0]==0){
+      q.style.color='red'
+      Check=q.innerHTML
+      Check+=" &#x2610"
+      q.innerHTML=Check
+    }
+    if (grades[i][0]>0){
+      q.style.color='green'
+      Check=q.innerHTML
+      Check+=" &#9745"
+      q.innerHTML=Check
+    }
+    S.appendChild(q);
+}}
+
+
+
 function make_cookject(){
   cookie=document.cookie 
   crumbs=cookie.split('; ')
@@ -26,6 +70,7 @@ if (user==undefined){
       grd.push([parseFloat(data[2*i+2]),parseFloat(data[2*i+3])])
     }
     grades=grd
+    score()
 })  
 
   }
@@ -76,6 +121,23 @@ alert(gradestring)
   c.innerHTML=Math.round((100*parseFloat(data[1])+100*parseFloat(data[2]))/(parseFloat(data[0])+0.0001))/100
   o.innerHTML=Math.round(100*parseFloat(data[1])/(parseFloat(data[1])+parseFloat(data[2])+0.0001))
       })
-  
+  }
 
+
+
+  function forward(){
+    if (page<quests.length-1){
+    page+=1
+    document.getElementById("question").innerText=quests[page]
+    document.getElementById("try").innerText=""
+    MathJax.typesetPromise()
+  }
+  }
+  function back(){
+    if (page>0){
+    page-=1
+    document.getElementById("question").innerText=quests[page]
+    document.getElementById("try").innerText=""
+    MathJax.typesetPromise()
+  }
   }
