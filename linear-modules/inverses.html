@@ -437,11 +437,7 @@ style="border:1px solid #c3c3c3;">
 
 <script>
 
-function pop() {
-  sql_retrieve(Module_Number)
-      var popup = document.getElementById("myPopup");
-      popup.classList.toggle("show");
-    }
+
 
 function col_mat(a,b,c,d){
 st='\\(\\begin{bmatrix} \\textcolor{blue} {'+a+'} & \\textcolor{red}{'+b+'}\\\\ \\textcolor{blue}{'+c+'} & \\textcolor{red}{'+d+'} \\end{bmatrix} \\)'
@@ -605,11 +601,6 @@ mat.appendChild(label)
 
 
 
-
-
-
-
-
 function fill_ba(){
 n11=document.getElementById("n11").value
 n21=document.getElementById("n21").value
@@ -628,76 +619,6 @@ document.getElementById("nm12").value=nm12.toFixed(2)
 document.getElementById("nm21").value=nm21.toFixed(2)
 document.getElementById("nm22").value=nm22.toFixed(2)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function score(){
-  scoreBoard = document.getElementById("score")
-  while(scoreBoard.firstChild){
-    scoreBoard.removeChild(scoreBoard.firstChild)
-  }
-  var scoreCard = document.createElement('h1');
-  scoreCard.style.fontSize="x-large"
-  scoreCard.style.textAlign="left"
-  scoreCard.innerHTML="Score Card"
-  scoreBoard.appendChild(scoreCard);
-
-  for (i=0; i<Answered.length; i++){
-    question_id = 'q' + i
-    var question = document.createElement('div');
-    question.style.fontSize = "x-large"
-    question.style.textAlign = "left"
-    question.id = question_id;
-    question.innerHTML =  i + 1;
-    if (Answered[i]==0){
-      question.style.color = 'red'
-      Check = question.innerHTML
-      Check += " &#x2610"
-      question.innerHTML = Check
-    }
-    if (Answered[i]>=1){
-      question.style.color = 'green'
-      Check = question.innerHTML
-      Check += " &#9745"
-      question.innerHTML = Check
-    }
-    scoreBoard.appendChild(question);
-  }
-}
-
-
-
-
-function forward(){
-  if (page<Answered.length){
-    page+=1
-    document.getElementById("question").innerText=quests[page]
-    document.getElementById("try").innerText=""
-  MathJax.typesetPromise()}
-}
-
-function back(){
-  if (page>0){
-    page-=1
-    document.getElementById("question").innerText=quests[page]
-    document.getElementById("try").innerText=""
-    MathJax.typesetPromise()}
-}
-
-
-
 
 
 
@@ -905,12 +826,6 @@ document.getElementById("n12").value=Math.round(G2/10)/10
 
 
 
-</script>
-
-
-
-
-<script>
 
 
 
@@ -952,31 +867,11 @@ function close() {
 
 
 
-bt=document.getElementById("bluetip")
-mobilize(bt)
-gt=document.getElementById("greentip")
-mobilize(gt)
-
-
-
-</script>
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-<script>
 function match(){
 
 n11=document.getElementById("n11").value
@@ -1008,21 +903,6 @@ draw()
 }
 
 
-</script>
-
-
-
-
-
-
-<script>
-
-
-</script>
-
-
-
-<script>
 
 
 
@@ -1158,8 +1038,7 @@ if (page==12){
 if (correct==0){
 grades[page][1]+=1}
 if (correct==1){
-grades[page][0]+=1
-Answered[page]+=1}
+grades[page][0]+=1}
 sql_record(Module_Number)    
 
 return(correct)
@@ -1175,16 +1054,8 @@ return(correct)
 var Module_Number="08"
 
 the_time=Date.now()
-grades=[]
-for (u=0; u<14; u++){
-grades.push([0,0])
-}
-sql_record(Module_Number)
+make_grades(Module_Number)
 
-
-
-
-Answered=[0,0,0,0,0,0,0,0,0,0,0,0,0]
 var initialized=0
 var page=0
 var quests=[
@@ -1202,6 +1073,10 @@ var quests=[
 "12. Set \\(A=\\)"+col_mat(-1.2,1.6,1.6,1.2)+". Find B such that \\(BA=I\\)",
 "13. Find a matrix \\(A\\) and its inverse \\(B\\) such that the two matrices are the same but not equal to \((I\)).",
 "Good job!!!"]
+bt=document.getElementById("bluetip")
+mobilize(bt)
+gt=document.getElementById("greentip")
+mobilize(gt)
   make_mats()
   document.getElementById("m11").value=1
   document.getElementById("m12").value=0
