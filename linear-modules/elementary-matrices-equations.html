@@ -272,22 +272,7 @@ Solutions
 
 <script>
 
-var Module_Number="06"
 
-function pop() {
-      sql_retrieve(Module_Number)
-      var popup = document.getElementById("myPopup");
-      popup.classList.toggle("show");
-    }
-
-the_time=Date.now()
-grades=[]
-for (u=0; u<14; u++){
-grades.push([0,0])
-}
-
-
-sql_record(Module_Number)
 
 
 function multiply(){
@@ -332,58 +317,6 @@ write_equations()
 }
 
 
-
-
-
-
-
-
-
-Colors=["blue","green", "red", "yellow"]
-
-
-
-
-Answered=[0,0,0,0,0,0,0,0,0]
-function score(){
-  S=document.getElementById("score")
-  while(S.firstChild){
-  S.removeChild(S.firstChild)}
-
-
-  var q = document.createElement('h1');
-  q.style.fontSize="x-large"
-  q.style.textAlign="left"
-   q.innerHTML="Score Card"
-    S.appendChild(q);
-
-  for (i=0; i<Answered.length; i++){
-  qid='q'+i
-  var q = document.createElement('div');
-  q.style.fontSize="x-large"
-  q.style.textAlign="left"
-    q.id = qid;
-    q.innerHTML = i+1;
-    if (Answered[i]==0){
-      q.style.color='red'
-      Check=q.innerHTML
-      Check+=" &#x2610"
-      q.innerHTML=Check
-    }
-    if (Answered[i]>0){
-      q.style.color='green'
-      Check=q.innerHTML
-      Check+=" &#9745"
-      q.innerHTML=Check
-    }
-    S.appendChild(q);
-}}
-
-
-
-
-difficulty=1
-page=difficulty-1
 function diff(k){
   if (difficulty+k<10 && difficulty+k>0){
   difficulty+=k
@@ -395,7 +328,7 @@ function diff(k){
 
 
 
-get_entries()
+
 function get_entries(){
   Entries=[[],[],[],[]]
   for (i=0; i<4; i++){
@@ -804,7 +737,7 @@ score()
 }
 
 
-initialize()
+
 function record_state(){
     Entries=get_entries()
  
@@ -969,7 +902,6 @@ if (rank==4){
   if (correct==4){
     alert('Good Job')
 grades[difficulty-1][0]+=1
-    Answered[difficulty-1]+=1
     solved=1
  }
 
@@ -1003,7 +935,6 @@ if (same==0){
   if (correct1==4 && correct2==4){
     alert('Good Job.')
 grades[difficulty-1][0]+=1
-    Answered[difficulty-1]+=1
     solved=1
 }
 
@@ -1102,35 +1033,28 @@ function close(e) {
 }
 
 
+var Module_Number="06"
+quests=[0,0,0,0,0,0,0,0,0,0]
+the_time=Date.now()
+make_grades(Module_Number)
+
+
+Colors=["blue","green", "red", "yellow"]
+
+
+difficulty=1
+page=difficulty-1
+get_entries()
+initialize()
 
 bt=document.getElementById("bluetip")
 mobilize(bt)
-
 gt=document.getElementById("greentip")
 mobilize(gt)
 rt=document.getElementById("redtip")
 mobilize(rt)
-
 yt=document.getElementById("yellowtip")
 mobilize(yt)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

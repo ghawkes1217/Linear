@@ -19,8 +19,8 @@ $new=1;}
 
 
 
-$add= "INSERT INTO modules VALUES($module_number, $user, $gradestring)";
-$remove= "DELETE FROM modules WHERE user_time=$user";
+$add= "INSERT INTO modules VALUES($module_number, '$user', $gradestring)";
+$remove= "DELETE FROM modules WHERE user_time='$user' and module=$module_number";
 
 
 

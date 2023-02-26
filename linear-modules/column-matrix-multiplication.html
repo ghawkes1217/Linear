@@ -383,28 +383,6 @@ style="border:1px solid #c3c3c3;">
 
 
 <script>
-var Module_Number="03"
-
-function pop() {
-  sql_retrieve(Module_Number)
-      var popup = document.getElementById("myPopup");
-      popup.classList.toggle("show");
-    }
-
-the_time=Date.now()
-grades=[]
-for (u=0; u<14; u++){
-grades.push([0,0])
-}
-
-
-sql_record(Module_Number)
-
-    Answered=[0,0,0,0,0,0,0,0,0,0,0,0,0]
-
-
-
-
 
     function make_mat(){
 var a11=(document.getElementById("m11").value)
@@ -436,61 +414,9 @@ if (a22<0){a22s='- '+(-a22)}
 
 
 }
-make_mat()
-function score(){
-  scoreBoard = document.getElementById("score")
-  while(scoreBoard.firstChild){
-    scoreBoard.removeChild(scoreBoard.firstChild)
-  }
-
-  var scoreCard = document.createElement('h1');
-  scoreCard.style.fontSize="x-large"
-  scoreCard.style.textAlign="left"
-  scoreCard.innerHTML="Score Card"
-  scoreBoard.appendChild(scoreCard);
-
-  for (i=0; i<Answered.length; i++){
-    question_id = 'q' + i
-    var question = document.createElement('div');
-    question.style.fontSize = "x-large"
-    question.style.textAlign = "left"
-    question.id = question_id;
-    question.innerHTML =  i + 1;
-    if (Answered[i]==0){
-      question.style.color = 'red'
-      Check = question.innerHTML
-      Check += " &#x2610"
-      question.innerHTML = Check
-    }
-    if (Answered[i]==1){
-      question.style.color = 'green'
-      Check = question.innerHTML
-      Check += " &#9745"
-      question.innerHTML = Check
-    }
-    scoreBoard.appendChild(question);
-  }
-}
 
 
-score()
 
-
-function forward(){
-  if (page<Answered.length){
-    page+=1
-    document.getElementById("question").innerText=quests[page]
-    document.getElementById("try").innerText=""
-}
-}
-
-function back(){
-  if (page>0){
-    page-=1
-    document.getElementById("question").innerText=quests[page]
-    document.getElementById("try").innerText=""
-}
-}
 
 function draw(){
 
@@ -619,15 +545,6 @@ ctx.fill();
 
 
 
-</script>
-
-
-
-
-
-<script>
-
-
 
 
 function fill(){
@@ -658,55 +575,6 @@ make_mat()
 
 }
 
-
-
-
-</script>
-
-
-
-
-
-<script>
-draw()
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
 
 
 
@@ -747,31 +615,7 @@ function close() {
 
 
 
-bt=document.getElementById("bluetip")
-mobilize(bt)
-gt=document.getElementById("greentip")
-mobilize(gt)
 
-
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
 function match(){
 
 a11=document.getElementById("m11").value
@@ -808,14 +652,7 @@ make_mat()
 }
 
 
-</script>
 
-
-
-
-
-
-<script>
 function purp(){
 
 
@@ -845,29 +682,8 @@ document.getElementById("w2").innerHTML=Y
 }
 
 
-</script>
 
 
-
-<script>
-var initialized=0
-var page=0
-var quests=[
-"1. Make a linear combination that includes 2 copies of the first column of the matrix, and 1 copy of the second.",
-"2. Make a linear combination that adds 1 of the first column and subtracts one half of the second.",
-"3. Find a linear combination where the result does not depend at all on the second column of the matrix.  You can check your answer by changing the red vector and making sure the result does not change.",
-"4. Find a linear combination where the result does not depend at all on the second column of the matrix, and the result is the vector (-1, 0).",
-"5. Find a two vectors in the second quadrant, and a linear combination of them which lies in the first quadrant.",
-"6. Good job, now find a vector in the first quadrant and a vector in the third quadrant along with a linear combination of them in the fourth quadrant.",
-"7. Make the vector in the matrix-vector product equal to (1,1) and the first column of the matrix also equal to (1,1).  Then, find the second column so that the black dot lies on the line between the two grey squares.",
-"8. Find a vector so that for any matrix the black dot lies on one of the grey squares",
-"9. Set the top entry in the vector to 0.5. Find the bottom entry of the vector so that any matrix will result in  black dot lying on the line (not shown) between the two grey squares.",
-"10. Set the bottom entry in the vector to 0.3. Find the top entry of the vector so that any matrix will result in  black dot lying on the line (not shown) between the two grey squares.",
-"11. Set the bottom entry in the vector to -1. Find the top entry of the vector so that any matrix will result in  one of the grey squares lying on the line between the black dot and the other grey square.",
-"12. Find a vector so that the matrix-vector product is always the same, no matter what matrix you use.",
-"13. Find a matrix so that we can multiply it with any vector and get the same vector back (i.e. vectors are unchanged by multiplication with this matrix)",
-
-"Good job!!!"]
 
 
 function submit(){
@@ -898,7 +714,6 @@ document.getElementById("try").innerText="Not Quite"}
 
 if (grade(page,M11,M21,M12,M22,V1,V2,W1,W2)==1)
 {
-    Answered[page]+=1
 document.getElementById("try").innerText=""
 
 
@@ -994,6 +809,42 @@ sql_record(Module_Number)
 return(correct)
 }
 
+
+make_mat()
+score()
+
+</script>
+
+<script>
+
+
+var Module_Number="03"
+var initialized=0
+var page=0
+var quests=[
+"1. Make a linear combination that includes 2 copies of the first column of the matrix, and 1 copy of the second.",
+"2. Make a linear combination that adds 1 of the first column and subtracts one half of the second.",
+"3. Find a linear combination where the result does not depend at all on the second column of the matrix.  You can check your answer by changing the red vector and making sure the result does not change.",
+"4. Find a linear combination where the result does not depend at all on the second column of the matrix, and the result is the vector (-1, 0).",
+"5. Find a two vectors in the second quadrant, and a linear combination of them which lies in the first quadrant.",
+"6. Good job, now find a vector in the first quadrant and a vector in the third quadrant along with a linear combination of them in the fourth quadrant.",
+"7. Make the vector in the matrix-vector product equal to (1,1) and the first column of the matrix also equal to (1,1).  Then, find the second column so that the black dot lies on the line between the two grey squares.",
+"8. Find a vector so that for any matrix the black dot lies on one of the grey squares",
+"9. Set the top entry in the vector to 0.5. Find the bottom entry of the vector so that any matrix will result in  black dot lying on the line (not shown) between the two grey squares.",
+"10. Set the bottom entry in the vector to 0.3. Find the top entry of the vector so that any matrix will result in  black dot lying on the line (not shown) between the two grey squares.",
+"11. Set the bottom entry in the vector to -1. Find the top entry of the vector so that any matrix will result in  one of the grey squares lying on the line between the black dot and the other grey square.",
+"12. Find a vector so that the matrix-vector product is always the same, no matter what matrix you use.",
+"13. Find a matrix so that we can multiply it with any vector and get the same vector back (i.e. vectors are unchanged by multiplication with this matrix)",
+
+"Good job!!!"]
+the_time=Date.now()
+make_grades(Module_Number)
+draw()
+
+bt=document.getElementById("bluetip")
+mobilize(bt)
+gt=document.getElementById("greentip")
+mobilize(gt)
 match()
 </script>
 

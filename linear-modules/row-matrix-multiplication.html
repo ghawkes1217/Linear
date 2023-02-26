@@ -193,28 +193,7 @@
 <h2> <center>Module 4: Matrix Multiplication (Row Picture) </center></h2>
 
 <div id="intro">
-<!--
-<p>
-  Let us explore another perspective of matrix multiplication in the context of the rows of matrix.
-  Here, we view the matrix equation \(Ax = b\) in the following framework:
-  <ol type='a'>
-    <li>The column vector \(x\) has \(m\) unknowns \(x_1, x_2, \ldots, x_m\);</li>
-    <li>Each of the \(n\) rows of the matrix \(A\) provide coefficients of the respective unknowns.
-    They represent an expression in terms of these unknowns;</li>
-    <li>Each entry of the column vector \(b\) provides a value for the respective expressions mentioned in part (b).</li>
-  </ol>
-  In other words, we can see the equation \(Ax = b\) as a system of linear equations that an unknown vector \(x\) is supposed to satisfy.
-  We shall explore this using a system of two linear equations in two unknowns, which are straight lines on a plane, in general.
-</p>
 
-<p>
-  In the following questions, only the entries of matrix \(A\) and vector \(b\) can be changed.
-  The entries in vector \(x\) changes in response to these entries. 
-  In the case where no such \(x\) exists, there are no values displayed in \(x\).
-
-  As you change the values in \(A\) and \(b\), ponder what these changes mean geometrically for the respective straight lines.
-</p>
--->
 
 
 
@@ -379,45 +358,7 @@ specified in the question.
 
 
 <script>
-var Module_Number="04"
 
-function pop() {
-  sql_retrieve(Module_Number)
-      var popup = document.getElementById("myPopup");
-      popup.classList.toggle("show");
-    }
-
-the_time=Date.now()
-grades=[]
-for (u=0; u<14; u++){
-grades.push([0,0])
-}
-
-
-sql_record(Module_Number)
-
-
-
-
-    usejax=0
-var initialized=0
-Answered = [0,0,0,0,0,0,0,0,0,0,0,0,0]
-var page=0
-var quests=[
-"1. Set up a matrix equation that corresponds to two lines, one with zero slope and the other with positive slope, on the diagram below.",
-"2. Set up a matrix equation that corresponds to two lines, both with negative slopes, on the diagram below.",
-"3. Set up a matrix equation that corresponds to two lines, one with slope 1 and the other with slope -1, such that both have positive y-intercepts.",
-"4. Set up a matrix equation that corresponds to two lines, one with slope 1 and the other with slope -1, such that both have negative x-intercepts.",
-"5. Find two lines, one with positive slope and the other with negative slope, that intersect somewhere strictly in the first quadrant.",
-"6. Superb!! Determine two lines, with slopes -0.5 and -1 respectively that intersect somewhere within the fourth quadrant.",
-"7. Wonderful! Next, find two lines, both with negative slope, that intersect somewhere on the x-axis.",
-"8. Excellent! Now find two lines, both with positive slope, that intersect somewhere on the y-axis.",
-"9. Terrific! Find two lines, one with positive slope and the other with negative slope, that intersect somewhere near (-1, 1).",
-"10. Great!! Let's now find two lines, with slopes 1 and 2 respectively that intersect somewhere near the point (-2, -1).",
-"11. Awesome, let's try a different type of question. Set the first row of the matrix A to have only entries with negative signs, and the second row to have only entries with positive signs. Find a value of vector b so that the two lines intersect at exactly one point.",
-"12. Nice! Set the first row of the matrix A to have only entries with negative signs, and the second row to have only entries with positive signs. Find a value of vector b so that the two lines intersect at more than one point.",
-"13. Way to go! Set the first row of the matrix A to have only entries with negative signs, and the second row to have only entries with positive signs. Find value of vector b so that the two lines never intersect.",
-"Good job!!!"]
 function make_mat(){
 var a11=(document.getElementById("m11").value)
 var a21=(document.getElementById("m21").value)
@@ -465,8 +406,7 @@ if (a22<0){a22s='- '+(-a22)}
 
 }
 
-score()
-draw()
+
 function draw(){
 
   a11=document.getElementById("m11").value
@@ -535,60 +475,6 @@ function draw(){
     make_mat()
 }
 
-
-
-
-
-function score(){
-  scoreBoard = document.getElementById("score")
-  while(scoreBoard.firstChild){
-    scoreBoard.removeChild(scoreBoard.firstChild)
-  }
-
-  var scoreCard = document.createElement('h1');
-  scoreCard.style.fontSize="x-large"
-  scoreCard.style.textAlign="left"
-  scoreCard.innerHTML="Score Card"
-  scoreBoard.appendChild(scoreCard);
-
-  for (i=0; i<Answered.length; i++){
-    question_id = 'q' + i
-    var question = document.createElement('div');
-    question.style.fontSize = "x-large"
-    question.style.textAlign = "left"
-    question.id = question_id;
-    question.innerHTML =  i + 1;
-    if (Answered[i]==0){
-      question.style.color = 'red'
-      Check = question.innerHTML
-      Check += " &#x2610"
-      question.innerHTML = Check
-    }
-    if (Answered[i]==1){
-      question.style.color = 'green'
-      Check = question.innerHTML
-      Check += " &#9745"
-      question.innerHTML = Check
-    }
-    scoreBoard.appendChild(question);
-  }
-}
-
-function forward(){
-  if (page<Answered.length){
-    page+=1
-    document.getElementById("question").innerText=quests[page]
-    document.getElementById("try").innerText=""
-}
-}
-
-function back(){
-  if (page>0){
-    page-=1
-    document.getElementById("question").innerText=quests[page]
-    document.getElementById("try").innerText=""
- }
-}
 
 
 function submit(){
@@ -744,9 +630,7 @@ function grade(page,m11,m21,m12,m22,w1,w2){
       }
       break
   }
-  if (correct == "true"){
-    Answered[page] = 1
-  }
+
 
 if (correct=="false"){
 grades[page][1]+=1}
@@ -760,6 +644,30 @@ sql_record(Module_Number)
   return(correct)
 }
 
+
+
+var Module_Number="04"
+usejax=0
+var initialized=0
+var page=0
+var quests=[
+"1. Set up a matrix equation that corresponds to two lines, one with zero slope and the other with positive slope, on the diagram below.",
+"2. Set up a matrix equation that corresponds to two lines, both with negative slopes, on the diagram below.",
+"3. Set up a matrix equation that corresponds to two lines, one with slope 1 and the other with slope -1, such that both have positive y-intercepts.",
+"4. Set up a matrix equation that corresponds to two lines, one with slope 1 and the other with slope -1, such that both have negative x-intercepts.",
+"5. Find two lines, one with positive slope and the other with negative slope, that intersect somewhere strictly in the first quadrant.",
+"6. Superb!! Determine two lines, with slopes -0.5 and -1 respectively that intersect somewhere within the fourth quadrant.",
+"7. Wonderful! Next, find two lines, both with negative slope, that intersect somewhere on the x-axis.",
+"8. Excellent! Now find two lines, both with positive slope, that intersect somewhere on the y-axis.",
+"9. Terrific! Find two lines, one with positive slope and the other with negative slope, that intersect somewhere near (-1, 1).",
+"10. Great!! Let's now find two lines, with slopes 1 and 2 respectively that intersect somewhere near the point (-2, -1).",
+"11. Awesome, let's try a different type of question. Set the first row of the matrix A to have only entries with negative signs, and the second row to have only entries with positive signs. Find a value of vector b so that the two lines intersect at exactly one point.",
+"12. Nice! Set the first row of the matrix A to have only entries with negative signs, and the second row to have only entries with positive signs. Find a value of vector b so that the two lines intersect at more than one point.",
+"13. Way to go! Set the first row of the matrix A to have only entries with negative signs, and the second row to have only entries with positive signs. Find value of vector b so that the two lines never intersect.",
+"Good job!!!"]
+draw()
+the_time=Date.now()
+make_grades(Module_Number)
 </script>
 </body>
 </html>

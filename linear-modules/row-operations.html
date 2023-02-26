@@ -613,64 +613,12 @@ Solutions
 </script>
 
 <script>
-var Module_Number="05"
-
-function pop() {
-  sql_retrieve(Module_Number)
-      var popup = document.getElementById("myPopup");
-      popup.classList.toggle("show");
-    }
-
-the_time=Date.now()
-grades=[]
-for (u=0; u<14; u++){
-grades.push([0,0])
-}
-
-
-sql_record(Module_Number)
-
-
-Answered=[0,0,0,0,0,0,0,0,0]
-function score(){
-  S=document.getElementById("score")
-  while(S.firstChild){
-  S.removeChild(S.firstChild)}
-
-
-  var q = document.createElement('h1');
-  q.style.fontSize="x-large"
-  q.style.textAlign="left"
-   q.innerHTML="Score Card"
-    S.appendChild(q);
-
-  for (i=0; i<Answered.length; i++){
-  qid='q'+i
-  var q = document.createElement('div');
-  q.style.fontSize="x-large"
-  q.style.textAlign="left"
-    q.id = qid;
-    q.innerHTML = i+1;
-    if (Answered[i]==0){
-      q.style.color='red'
-      Check=q.innerHTML
-      Check+=" &#x2610"
-      q.innerHTML=Check
-    }
-    if (Answered[i]>0){
-      q.style.color='green'
-      Check=q.innerHTML
-      Check+=" &#9745"
-      q.innerHTML=Check
-    }
-    S.appendChild(q);
-}}
 
 
 
 
-difficulty=1
-page=difficulty-1
+
+
 function diff(k){
   if (difficulty+k<10 && difficulty+k>0){
   difficulty+=k
@@ -800,15 +748,6 @@ for (i=0; i<4; i++){
 
 
 
-BLUE=document.getElementById("bluetip")
-  GREEN=document.getElementById("greentip")
-  RED=document.getElementById("redtip")
-  YELLOW=document.getElementById("yellowtip")
-
-  BLUE.style.backgroundColor="blue"
-  GREEN.style.backgroundColor="green"
-  RED.style.backgroundColor="red"
-  YELLOW.style.backgroundColor="yellow"
 
 
 
@@ -975,7 +914,6 @@ score()
 }
 
 
-initialize()
 function record_state(){
     Entries=get_entries()
     var B=document.getElementById("bluetip").style.backgroundColor
@@ -1050,34 +988,6 @@ function swi(i){
     }
 
 
-ins=["in1","in2","in3","in4"]
-
-    
-
-var in1 = document.getElementById("in1");
-in1.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") { 
-        mult(1);
-    }
-})
-var in2 = document.getElementById("in2");
-in2.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") {  
-        mult(2);
-    }
-})
-var in3 = document.getElementById("in3");
-in3.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") { 
-        mult(3);
-    }
-})
-var in4 = document.getElementById("in4");
-in4.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") {
-        mult(4);
-    }
-})
 
 
 
@@ -1291,7 +1201,6 @@ if (rank==4){
   if (correct==4){
 grades[difficulty-1][0]+=1
     alert('Good Job')
-    Answered[difficulty-1]+=1
     solved=1
  }
 
@@ -1325,7 +1234,6 @@ if (same==0){
   if (correct1==4 && correct2==4){
     alert('Good Job.')
 grades[difficulty-1][0]+=1
-    Answered[difficulty-1]+=1
     solved=1
 }
 
@@ -1422,6 +1330,59 @@ function close(e) {
   
   
 }
+
+
+
+var Module_Number="05"
+quests=[0,0,0,0,0,0,0,0,0,0]
+the_time=Date.now()
+make_grades(Module_Number)
+
+
+
+difficulty=1
+page=difficulty-1
+BLUE=document.getElementById("bluetip")
+  GREEN=document.getElementById("greentip")
+  RED=document.getElementById("redtip")
+  YELLOW=document.getElementById("yellowtip")
+
+  BLUE.style.backgroundColor="blue"
+  GREEN.style.backgroundColor="green"
+  RED.style.backgroundColor="red"
+  YELLOW.style.backgroundColor="yellow"
+
+
+initialize()
+
+ins=["in1","in2","in3","in4"]
+
+    
+
+var in1 = document.getElementById("in1");
+in1.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") { 
+        mult(1);
+    }
+})
+var in2 = document.getElementById("in2");
+in2.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") {  
+        mult(2);
+    }
+})
+var in3 = document.getElementById("in3");
+in3.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") { 
+        mult(3);
+    }
+})
+var in4 = document.getElementById("in4");
+in4.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") {
+        mult(4);
+    }
+})
 
 
 
