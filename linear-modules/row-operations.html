@@ -431,16 +431,21 @@
   top: 0px;
   background-color: white;
   text-align: center;}
+
+  
  </style>
  
  
- 
+ .
  
 
  
  
  
 <body>
+  <div style="position: absolute;">
+    <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
+  </div>
 
   <h2> <center>Module 5: Row Operations </center></h2>
 
@@ -987,13 +992,6 @@ function swi(i){
     write_equations()
     }
 
-
-
-
-
-    
-
-
     function mult(i){
       record_state()
 
@@ -1061,9 +1059,6 @@ if (Constant[0]==0){
     write_equations()
     }
 
-
-
-  
 function add(Z0,Z1){
 
 start=99
@@ -1112,7 +1107,6 @@ newVals.push([C[0]*S[0]*E[1]+E[0]*C[1]*S[1],C[1]*S[1]*E[1]])}
     }
   
 
-
     function reduce(){
     
 
@@ -1144,7 +1138,6 @@ if (n1==1){
   }
 }
     
-
 
 function check_one(e){
  
@@ -1189,8 +1182,6 @@ for (i=0; i<4; i++){
   return([correct_eqs,[x,y,z,w]])
 
 }
-
-
 
 
 function check_both(){
@@ -1277,11 +1268,6 @@ sql_record(Module_Number)
 }
 
 
-
-
-
-
-
 function clear()
 {
  if (window.getSelection) {window.getSelection().removeAllRanges();}
@@ -1357,7 +1343,6 @@ initialize()
 
 ins=["in1","in2","in3","in4"]
 
-    
 
 var in1 = document.getElementById("in1");
 in1.addEventListener("keydown", function (e) {

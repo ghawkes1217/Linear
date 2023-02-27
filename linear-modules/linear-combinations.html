@@ -2,17 +2,11 @@
 <html>
 
 <head>
-
-
-
-
-
   <!-- The following adds MathJax to render LaTeX notation -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="../styles.css">
   <script src="../site-scripts.js"></script>
-
 </head>
 <style>
 
@@ -462,7 +456,15 @@
   background-color: lightgrey;
   text-align: center;}
 
-
+  .backto {
+    border: solid red 1px;
+    background-color:yellow;
+    padding: 3px;
+    font-weight:bold;
+    font-size: 16px;
+    color:black;
+    text-decoration: none;
+}
 
  </style>
  
@@ -474,7 +476,10 @@
  
  
 <body>
-
+  <div style="position: absolute;">
+    <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
+  </div>
+<div>
 
   <h2> <center>Module 1: Linear Combinations </center></h2>
 
@@ -979,7 +984,6 @@ initialized=1
 
 
 
-
 var Module_Number="01"
 var initialized=0
 var page=0
@@ -1002,10 +1006,11 @@ var quests=[
 
 
 
-zero()
-the_time=Date.now()
-make_grades(Module_Number)
 
+the_time=Date.now()
+
+make_grades(Module_Number)
+zero()
 </script>
 
 
