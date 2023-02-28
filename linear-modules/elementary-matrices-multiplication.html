@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Linear Algebra: Elementary Matrices</title>
+  <title>Linear Algebra: Elementary Matrices (Multiplication)</title>
 
   <script>
     MathJax = {
@@ -15,10 +15,7 @@
 
   <!-- The following adds MathJax to render LaTeX notation -->
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
-  <!-- This adds some Google Font(s) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Source+Serif+Pro">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+  
   <link rel="stylesheet" href="../styles.css">
   <script src="../site-scripts.js"></script>
   <style>
@@ -27,85 +24,81 @@
       justify-content: space-around;
       align-items: center;}
 
-    .expand {
+    /* This wraps questionHeader, matrixOptions and matrixHeader elements within a single container*/
+    .elementWrapper{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;}
+
+    /* This defines the styles for the question header */
+    .questionHeader {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;}
 
-    #matrixPrompt {
-      width: 300px;
-      height: 200px;}
-
-    #questionArea {
-      width: 740px;
-      height: 60px;}
-
-    #questionBox {
-      width: 750px;
+    .questionBox {
+      width: 720px;
       height: 170px;}
 
-    #displayArea {
-      width: 750px;
-      height: 150px;}
-    
-    .box { 
-      width: 200px;
-      height: 100px;}
+    .questionArea {
+      width: 710px;
+      height: 60px;}
 
-    .smallbox { 
-      width: 150px;
-      height: 100px;}
+    #response {
+      height: 20px;}
 
-    .largebox { 
-      width: 500px;
-      height: 100px;}
+    #matrixPrompt {
+      width: 225px;
+      height: 200px;}
+
+    /* This defines the styles for setting elementary matrix options
+       and for the display of matrix multiplication */
+    .operations-dropdown {
+      height: 20px;
+      border-radius: 5px;}
+
+    .displayArea {
+      width: 700px;
+      height: 175px;}
+
+    /* This defines the styles for the matrix header */
+    .matrixHeader {
+      width: 650px;
+      height: 200px}
 
     .entry { 
       width: 40px;
       height: 15px;
       border-radius: 5px;}
 
-    .output { 
-      width: 40px;
-      height: 15px;
-      border-radius: 5px;
-      background-color: ghostwhite;}
-
-    .dropdown {
-      height: 20px;
-      border-radius: 5px;}
-
-    .multiplication {
-      width: 70px; 
-      position: relative; 
-      top: 25px;
-    }
-
-    .Button {
-      height: 20px;
-      border-radius: 5px;
-      background: radial-gradient(#FFFFFF, #DDDDDD);
-      cursor: pointer;}
-
-    .Button:hover {
-      background: radial-gradient(#FFFFFF, #FFB000);}
-
-    .Button:active {
-      background: #FFB000;}
-
     .column {
       position: relative;
       left: 10px;}
 
+    .multiplication {
+      width: 65px; 
+      position: relative; 
+      top: 25px;}
+
+    /* This styles the text for completed questions */
     .greytext {
       color: grey;}
 
+    /* These are additional boxes for scaffolding */
+    .box { 
+      width: 200px;
+      /*border: black 2px dotted;*/
+      height: 100px;}
 
+    .smallbox { 
+      width: 50px;
+      /*border: black 2px dotted;*/
+      height: 100px;}
 
-    #score {
-      position: absolute;
-      left: 1100px;
-      top: 1250px;}
+    .largebox { 
+      width: 500px;
+      /*border: black 2px dotted;*/
+      height: 100px;}
   </style>
 </head>
 
@@ -113,7 +106,7 @@
   <div style="position: absolute;">
     <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
   </div>
-    <h2><center>Module 7: Row Operations and Elementary Matrices</center></h2>
+    <h2><center>Module 7: Elementary Matrices (Multiplication)</center></h2>
     <div id="intro">
       <p>We will explore the following idea in this module: for every elementary row operation applied onto a matrix, we could achieve the same effect by multiplying that matrix with a suitable elementary matrix.</p>
       <p>Each elementary matrix looks almost like an identity matrix, but the difference in entries depends on their type. 
@@ -183,164 +176,149 @@
       </p>
     </div>
 
-    <div id="question" class="expand">
-      <div id="questionBox">
-        <h3>Current question:</h3>
-        <div id="questionArea">
-          <p id="questionToDisplay">Click 'Start' whenever you are ready. Good luck!</p>
-          
-        </div>
-        
-        <button onclick ="updateQuestions()" id="submitButton">Start</button>
-        <button onclick="previousPage()">Previous</button>
-        <button onclick="nextPage()">Next</button>
-        <!--<button onclick="automaticSucceed()">Succeed Automatically</button>-->
-        <div id="response">
-        </div>
-      </div>
-      
-
-      <div id="matrixPrompt">
-      </div>
-
-      <div class="box">
-      </div>
-    </div>
-
-    <div id="matrixOptions" class="float">
+    <div class="elementWrapper">
       <div>
-        <h3>Elementary row operation</h3>
-        Operation type:
-        <select onchange="disableParameters()" id="operationType" name="operationType" class="dropdown">
-          <option value="null"> </option>
-            <option value="swap">Swap Rows</option>
-            <option value="scale">Scale Row</option>
-            <option value="add">Add Row</option>
-          </select><br>
-        Row \(i=\)
-        <select id="row_i" name="row_i" class="dropdown">
-          <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select><br>
-          Row \(j=\)
-        <select id="row_j" name="row_j" class="dropdown">
-          <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select><br>
-        Scalar \(c=\)
-        <input type="text" class="entry" id="scalar" name="scalar" value=1><br><br>
+        <div class="questionHeader">
+          <div class="questionBox">
+            <h3>Current question:</h3>
+            <div class="questionArea">
+              <p id="questionToDisplay">Click 'Start' whenever you are ready. Good luck!</p>
+            </div>
+            <button onclick ="updateQuestions()" id="submitButton">Start</button>
+            <button onclick="previousPage()">Previous</button>
+            <button onclick="nextPage()">Next</button>
+            <!--<button onclick="automaticSucceed()">Succeed Automatically</button>-->
+            <div id="response">
+            </div>
 
-        <button onclick="createMatrix()" id="createMatrix"> Create Matrix </button>
-        <button onclick="resetSettings()" id="reset"> Reset </button>
-      </div>
+            <div class="popup" onclick="pop()"><u>Question Statistics</u>
+              <div class="popuptext" id="myPopup">
+                <h3 id="selected" style="text-align:center;">No Question Selected</h3>
+                <table>
+                  <tr>
+                    <td>Users Who Have Attempted This Question</td>
+                    <td id="users">0</td>
+                  </tr>
+                  <tr>
+                    <td>Percentage of Users With a Correct Response</td>
+                    <td id="eventual">0</td>
+                  </tr>
+                  <tr>
+                    <td>Average Number of Attempts per User</td>
+                    <td id="attempts">0</td>
+                  </tr>
+                  <tr>
+                    <td>Percentage of Attempts that are Correct</td>
+                    <td id="overall">0</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
 
-      <div id="displayArea">
-        <div id="matrixEquation">
+          <div id="matrixPrompt">
+          </div>
+        </div>
+
+        <div class="matrixOptions float">
+          <div>
+            <h3>Elementary row operation</h3>
+            Operation type:
+            <select onchange="disableParameters()" id="operationType" name="operationType" class="operations-dropdown">
+              <option value="null"> </option>
+              <option value="swap">Swap Rows</option>
+              <option value="scale">Scale Row</option>
+              <option value="add">Add Row</option>
+            </select><br>
+            Row \(i=\)
+            <select id="row_i" name="row_i" class="operations-dropdown">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select><br>
+              Row \(j=\)
+            <select id="row_j" name="row_j" class="operations-dropdown">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select><br>
+            Scalar \(c=\)
+            <input type="text" id="scalar" name="scalar" class="entry" value=1><br><br>
+
+            <button onclick="createMatrix()" id="createMatrix"> Create Matrix </button>
+            <button onclick="resetSettings()" id="reset"> Reset </button>
+          </div>
+
+          <div class="displayArea">
+            <div id="matrixEquation">
+            </div>
+          </div>
+        </div>
+
+        <div class="matrixHeader float">
+          <div id="elementaryMatrix">
+            <h3>Matrix $E$</h3>
+            <!--Row 1-->
+            <input type="text" id="e11" class="entry" value=1>
+            <input type="text" id="e12" class="entry" value=0>
+            <input type="text" id="e13" class="entry" value=0>
+            <input type="text" id="e14" class="entry" value=0><br><br>
+            <!--Row 2-->
+            <input type="text" id="e21" class="entry" value=0>
+            <input type="text" id="e22" class="entry" value=1>
+            <input type="text" id="e23" class="entry" value=0>
+            <input type="text" id="e24" class="entry" value=0><br><br>
+            <!--Row 3-->
+            <input type="text" id="e31" class="entry" value=0>
+            <input type="text" id="e32" class="entry" value=0>
+            <input type="text" id="e33" class="entry" value=1>
+            <input type="text" id="e34" class="entry" value=0><br><br>
+            <!--Row 4-->
+            <input type="text" id="e41" class="entry" value=0>
+            <input type="text" id="e42" class="entry" value=0>
+            <input type="text" id="e43" class="entry" value=0>
+            <input type="text" id="e44" class="entry" value=1><br><br>
+          </div>
+
+          <button class="multiplication" onclick="showMatrixMultiplication()" id="multiplyMatrices"> Multiply Matrices </button>
+          
+          <div id="augmentedMatrix">
+            <h3>Matrix $A$</h3>
+            <!--Row 1-->
+            <input type="text" id="a11" class="entry" value=1>
+            <input type="text" id="a12" class="entry" value=0>
+            <input type="text" id="a13" class="entry" value=0>
+            <input type="text" id="a14" class="entry" value=0>
+            <input type="text" id="a15" class="entry column" value=1><br><br>
+            <!--Row 2-->
+            <input type="text" id="a21" class="entry" value=0>
+            <input type="text" id="a22" class="entry" value=1>
+            <input type="text" id="a23" class="entry" value=0>
+            <input type="text" id="a24" class="entry" value=0>
+            <input type="text" id="a25" class="entry column" value=2><br><br>
+            <!--Row 3-->
+            <input type="text" id="a31" class="entry" value=0>
+            <input type="text" id="a32" class="entry" value=0>
+            <input type="text" id="a33" class="entry" value=1>
+            <input type="text" id="a34" class="entry" value=0>
+            <input type="text" id="a35" class="entry column" value=3><br><br>
+            <!--Row 4-->
+            <input type="text" id="a41" class="entry" value=0>
+            <input type="text" id="a42" class="entry" value=0>
+            <input type="text" id="a43" class="entry" value=0>
+            <input type="text" id="a44" class="entry" value=1>
+            <input type="text" id="a45" class="entry column" value=4><br><br>
+          </div>
         </div>
       </div>
 
-      <div class="smallbox">
-      </div> 
+      <div id="score"></div>
     </div>
-
-    <div id="matrices" class="float">
-      <div id="elementaryMatrix">
-        <h3>Matrix $E$</h3>
-        <!--Row 1-->
-        <input type="text" id="e11" class="entry" value=1>
-        <input type="text" id="e12" class="entry" value=0>
-        <input type="text" id="e13" class="entry" value=0>
-        <input type="text" id="e14" class="entry" value=0><br><br>
-        <!--Row 2-->
-        <input type="text" id="e21" class="entry" value=0>
-        <input type="text" id="e22" class="entry" value=1>
-        <input type="text" id="e23" class="entry" value=0>
-        <input type="text" id="e24" class="entry" value=0><br><br>
-        <!--Row 3-->
-        <input type="text" id="e31" class="entry" value=0>
-        <input type="text" id="e32" class="entry" value=0>
-        <input type="text" id="e33" class="entry" value=1>
-        <input type="text" id="e34" class="entry" value=0><br><br>
-        <!--Row 4-->
-        <input type="text" id="e41" class="entry" value=0>
-        <input type="text" id="e42" class="entry" value=0>
-        <input type="text" id="e43" class="entry" value=0>
-        <input type="text" id="e44" class="entry" value=1>
-      </div>
-
-      <button class="multiplication" onclick="showMatrixMultiplication()" id="multiplyMatrices"> Multiply Matrices </button>
-      
-      <div id="augmentedMatrixOne">
-        <h3>Matrix $A$</h3>
-        <!--Row 1-->
-        <input type="text" id="a11" class="entry" value=1>
-        <input type="text" id="a12" class="entry" value=0>
-        <input type="text" id="a13" class="entry" value=0>
-        <input type="text" id="a14" class="entry" value=0>
-        <input type="text" id="a15" class="entry column" value=1><br><br>
-        <!--Row 2-->
-        <input type="text" id="a21" class="entry" value=0>
-        <input type="text" id="a22" class="entry" value=1>
-        <input type="text" id="a23" class="entry" value=0>
-        <input type="text" id="a24" class="entry" value=0>
-        <input type="text" id="a25" class="entry column" value=2><br><br>
-        <!--Row 3-->
-        <input type="text" id="a31" class="entry" value=0>
-        <input type="text" id="a32" class="entry" value=0>
-        <input type="text" id="a33" class="entry" value=1>
-        <input type="text" id="a34" class="entry" value=0>
-        <input type="text" id="a35" class="entry column" value=3><br><br>
-        <!--Row 4-->
-        <input type="text" id="a41" class="entry" value=0>
-        <input type="text" id="a42" class="entry" value=0>
-        <input type="text" id="a43" class="entry" value=0>
-        <input type="text" id="a44" class="entry" value=1>
-        <input type="text" id="a45" class="entry column" value=4><br><br>
-      </div>
-
-      <!--
-      <div id="augmentedMatrixTwo" class="matrixOperation">
-        <h3>Matrix \(B\)</h3>
-        <!--Row 1--\>
-        <input type="text" id="b11" name="b11" class="output" disabled>
-        <input type="text" id="b12" name="b12" class="output" disabled>
-        <input type="text" id="b13" name="b13" class="output" disabled>
-        <input type="text" id="b14" name="b14" class="output" disabled>
-        <input type="text" id="b16" name="b15" class="output column" disabled><br><br>
-        <!--Row 2--\>
-        <input type="text" id="b21" name="b21" class="output" disabled>
-        <input type="text" id="b22" name="b22" class="output" disabled>
-        <input type="text" id="b23" name="b23" class="output" disabled>
-        <input type="text" id="b24" name="b24" class="output" disabled>
-        <input type="text" id="b26" name="b25" class="output column" disabled><br><br>
-        <!--Row 3--\>
-        <input type="text" id="b31" name="b31" class="output" disabled>
-        <input type="text" id="b32" name="b32" class="output" disabled>
-        <input type="text" id="b33" name="b33" class="output" disabled>
-        <input type="text" id="b34" name="b34" class="output" disabled>
-        <input type="text" id="b36" name="b35" class="output column" disabled><br><br>
-        <!--Row 4--\>
-        <input type="text" id="b41" name="b41" class="output" disabled>
-        <input type="text" id="b42" name="b42" class="output" disabled>
-        <input type="text" id="b43" name="b43" class="output" disabled>
-        <input type="text" id="b44" name="b44" class="output" disabled>
-        <input type="text" id="b46" name="b45" class="output column" disabled><br><br>
-      </div>
-      -->
-
-      <div class="largebox">
-      </div>
-    </div>
-
     <div id="completed">
       <h2>Completed questions:</h2>
     </div>
-
-    <div id="score"></div>
 
     <script>
       /* This script handles rational numbers - both input and output. */
@@ -724,6 +702,7 @@
       /* This script handles questions display and scoring. 
          It also contains navigational features.
       */
+      var Module_Number = '07'
       page = 0
       beginQuestions = "false"
       questions = [
@@ -732,7 +711,7 @@
         "3. Create an elementary matrix that scales entries in Row $3$ by $2$.",
         "4. What about an elementary matrix that multiplies the entire Row $4$ by $-1$?",
         "5. Determine an elementary matrix that adds Row $3$ to Row $4$.",
-        "6. Can you find an elementary matrix that adds $-3$ times of Row 3 to Row 1?",
+        "6. Can you find an elementary matrix that adds $-3$ times of Row $3$ to Row $1$?",
         "7. Look at the two displayed matrices $A$ and $B$. $B$ is obtained from $A$ from a certain elementary row operation. Name an elementary matrix that performs this operation.",
         "8. Great, now specify an elementary matrix that transforms $B$ back into $A$.",
         "9. Next, $B$ is obtained from $A$ from another elementary row operation. Specify an elementary matrix that is responsible for this operation.",
@@ -844,8 +823,8 @@
       MatricesB = [B0, B0, B1, B1, B2, B2]
 
       function displayQuestion(page){
-        displayArea = document.getElementById("questionToDisplay") 
-        displayArea.innerHTML = questions[page]
+        landingArea = document.getElementById("questionToDisplay") 
+        landingArea.innerHTML = questions[page]
 
         if (6<=page && page<12){
           promptMatrices(A0, MatricesB[page-6])
@@ -877,6 +856,12 @@
           writeRationalMatrix(MatrixA, "a")}
       }
 
+      // Records User Responses to SQL database
+      the_time = Date.now()
+      grades = []
+      for (u=0; u<14; u++){
+        grades.push([0,0])}
+      sql_record(Module_Number)
       function updateQuestions(){
         if (beginQuestions == "false"){
           button = document.getElementById("submitButton")
@@ -889,11 +874,16 @@
           if (page >= answered.length){
             return }
           if (gradeElementaryMatrices(page, E)=="true"){
+            grades[page][0] += 1
             document.getElementById("response").textContent = ""
             appendCompletedQuestion(page)
-            nextPage()} 
+            nextPage()
+          } 
           else {
-            pointOut()} }
+            grades[page][1] += 1
+            pointOut()} 
+          }
+          sql_record(Module_Number)
       }
 
       function automaticSucceed(){
@@ -904,13 +894,6 @@
           page += 1}
         displayQuestion(page)
       }
-
-
-
-
-
-
-
     </script>
 </body>
 </html>
