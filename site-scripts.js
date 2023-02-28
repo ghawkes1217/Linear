@@ -141,3 +141,15 @@ alert(gradestring)
     MathJax.typesetPromise()
   }
   }
+
+
+  function inout(){
+    user=make_cookject()['user']
+if (user!=undefined){
+  document.getElementById("in-out").innerHTML="Log Out"
+}
+if (user==undefined){
+  document.getElementById("in-out").innerHTML="Log In"
+}
+
+  }
