@@ -3,7 +3,7 @@
   <head>
     <!-- The following adds MathJax to render LaTeX notation -->
     <link type="text/css" rel="stylesheet" href="styles.css">
-    <script type="text/javascript" src="scripts.js"></script>
+    <script type="text/javascript" src="site-scripts.js"></script>
   </head>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,22 +86,41 @@ input[type=submit]:hover {
     <a href="research.html">Research</a>
   
     <a href="news.html">News</a>
+    <a href="new-account.html">Sign Up</a>
+    <a id="in-out" href="log-in.html">Log In</a>
   </div>
 
-<h3>Please fill in your account information to sign in.</h3>
-<div class="container">
+<h3 id="greeting">Please fill in your account information to sign in.</h3>
+<div id="login" class="container">
 
     <label> Username</label> <input id="name" name="name" type="text"  /> 
     <label>Password</label> <input id="password" name="password" type="text"  /> 
     
 
-    <button onclick=sub()>Submit</button>
-
 </div>
+<button onclick=sub()>Submit</button>
 </body>
 <script>
 
+function loggedin(){
+  user=make_cookject()['user']
+if (user!=undefined){
+  document.getElementById("greeting").innerHTML="Are you sure you want to log out? Progress will not be recorded until you log back in."
+  document.getElementById("login").innerHTML="Click Submit below to log out."
+}
+}
+
+
 function sub(){
+  user=make_cookject()['user']
+
+  if (user!=undefined){
+    document.cookie="user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;"
+    window.location.href="index.html"
+}
+
+
+if (user==undefined){
     user_name=document.getElementById("name").value
 password=document.getElementById("password").value
 fetch("sign-in.php?user_name="+user_name+"&password="+password)
@@ -111,13 +130,21 @@ fetch("sign-in.php?user_name="+user_name+"&password="+password)
   return response.json()})
   .then(function(data){
 alert(data)
-if (data=="Welcome"){
-    document.cookie="user="+user_name
+if (data=="Welcome back " + user_name +"!"){
+    document.cookie="user="+user_name + ';expires=Thu, 01 Jan 2070 00:00:01 GMT;'
+    window.location.href="index.html"
 }
   })
+}
+
+
+ 
 
 
 }
+
+inout()
+loggedin()
 </script>
 </html>
 

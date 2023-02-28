@@ -24,7 +24,7 @@ $exists=0;
 
     
 if ($exists==1){
-$result="Welcome";
+$result="Welcome back ".$user_name."!";
 };
 
 if ($exists==0){
