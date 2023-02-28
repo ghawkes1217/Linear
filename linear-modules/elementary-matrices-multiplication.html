@@ -721,12 +721,7 @@
 
     // Records User Responses to SQL database
     the_time = Date.now()
-    grades = []
-    for (u=0; u<14; u++){
-      grades.push([0,0])}
-    sql_record(Module_Number)
-
-    score()
+    make_grades(Module_Number)
 
     function nextPage(){
       if (page<quests.length && initialized==1){
