@@ -902,9 +902,12 @@ if (p==7){ if (x==1){correct=1}}
 if (p==8){ if (x==0 && v1>v3 && t>=1 && c>=1 && o>=1){correct=1}}
 if (p==9){ if (x==1){correct=1}}
 if (p==10){ if (x==0 && 4*t==6*c && 6*c==8*o){correct=1}}
+if (p==10){ if (t==0 && c==0 && o==0){correct=0}}
 if (p==11){ if (x==0 && 6*t==12*c && 12*c==12*o){correct=1}}
+if (p==11){ if (t==0 && c==0 && o==0){correct=0}}
 if (p==12){ if (x==0 && 4*t==8*c && 8*c==6*o){correct=1}}
-if (p==13){ if (v1==0){correct=1}}
+if (p==12){ if (t==0 && c==0 && o==0){correct=0}}
+if (p==13){ if (x==1){correct=1}}
 
 
 if (correct==0){
@@ -990,9 +993,9 @@ var quests=[
 "8. Excellent, now find a basket with more cubes than octahedrons and with V=F",
 "9. Good job, now find a basket with at least one of each shape and V>F",
 "10. Excellent, now find a basket with at least one of each shape and V>E",
-"11. Good job, now find a basket with the same number of tetrahedron faces, cube faces, and octahedron faces",
-"12. Good job, now find a basket with the same number of tetrahedron edges, cube edges, and octahedron edges",
-"13. Good job, now find a basket with the same number of tetrahedron vertices, cube vertices, and octahedron vertices",
+"11. Good job, now find a non-empty basket with the same number of tetrahedron faces, cube faces, and octahedron faces",
+"12. Good job, now find a non-empty basket with the same number of tetrahedron edges, cube edges, and octahedron edges",
+"13. Good job, now find a non-empty basket with the same number of tetrahedron vertices, cube vertices, and octahedron vertices",
 "14. Good job, now find a non-empty basket with the same number of tetrahedron vertices, tetrahedron edges and tetrahedron faces",
 "Good job!!!"]
 

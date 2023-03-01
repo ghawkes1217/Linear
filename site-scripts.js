@@ -143,13 +143,69 @@ alert(gradestring)
   }
 
 
-  function inout(){
-    user=make_cookject()['user']
-if (user!=undefined){
-  document.getElementById("in-out").innerHTML="Log Out"
-}
-if (user==undefined){
-  document.getElementById("in-out").innerHTML="Log In"
-}
 
-  }
+
+
+
+
+  function inout(){
+
+    user=make_cookject()['user']
+    if (user==undefined){
+    logged="Log In"}
+    if (user!=undefined){
+    var logged="Log Out"}
+    
+      var icons=[]
+      icons.push(["Home","index.html"])
+      icons.push(["Lab Courses", "Linear Algebra", "linear-lab.html", "Calculus", "", "Probability", "", "Statistics", "", "Discrete Math", ""])
+      icons.push(["The Team", "Dr. Graham Hawkes", "graham.html", "Dr. Wencin Poh", "wencin.html", "Jeff NIchols", "jeff.html"])
+      icons.push(["Contact","contact.html"])
+      icons.push(["Research","research.html"])
+      icons.push(["News","news.html"])
+      icons.push(["Sign Up","new-account.html"])
+      icons.push([logged,"log-in.html"])
+      icons.push(["Your Progress","student-progress.html"])
+    
+    var bar=document.createElement("div")
+    bar.className="navbar"
+    document.body.prepend(bar)
+    for (i=0;i<icons.length;i++){
+    
+    if (icons[i].length==2){
+    var Icon = document.createElement("div")
+    bar.appendChild(Icon)
+    var icon = document.createElement("a")
+    icon.innerHTML=icons[i][0]
+    icon.href=icons[i][1]
+    Icon.appendChild(icon)}
+    
+    if (icons[i].length>2){
+    var Icon = document.createElement("div")
+    Icon.className="dropdown"
+    bar.append(Icon)
+    var dropbut = document.createElement("button")
+    dropbut.className="dropbtn"
+    dropbut.innerHTML=icons[i][0]
+    Icon.appendChild(dropbut)
+    var caret = document.createElement("i")
+    caret.className="fa fa-caret-down"
+    dropbut.appendChild(caret)
+    var content = document.createElement("div")
+    content.className="dropdown-content"
+    Icon.appendChild(content)
+    for (j=1; j<icons[i].length; j+=2){
+      var line = document.createElement("a")
+      line.innerHTML=icons[i][j]
+      if (icons[i][j+1]==""){
+        line.style="color:grey"
+      }
+      if (icons[i][j+1]!=""){
+        line.style="color:blue"
+        line.href=icons[i][j+1]
+      }
+      content.appendChild(line)
+    }
+    }
+    }
+    }
