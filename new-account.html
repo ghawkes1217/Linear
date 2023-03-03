@@ -73,14 +73,16 @@ function sub(){
     user_name=document.getElementById("name").value
 password=document.getElementById("password").value
 repeat=document.getElementById("repeat").value
-fetch("create-account.php?user_name="+user_name+"&password="+password+"&repeat="+repeat)
+
+fetch("create-account.php?user_name="+encodeURIComponent(user_name)+"&password="+encodeURIComponent(password)+"&repeat="+encodeURIComponent(repeat))
 
 
 .then(function(response){
   return response.json()})
   .then(function(data){
 alert(data)
-
+if (data=="New account creation successful"){
+window.location.href="index.html"}
   })
 
 

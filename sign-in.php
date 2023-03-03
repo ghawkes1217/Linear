@@ -1,7 +1,7 @@
 <?php // Get data from form 
 
-$user_name = $_GET['user_name'];
-$password= $_GET['password'];
+$user_name = rawurldecode($_GET['user_name']);
+$password= rawurldecode($_GET['password']);
 
  
 

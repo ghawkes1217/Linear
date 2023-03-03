@@ -89,7 +89,7 @@ function sub(){
 if (user==undefined){
     user_name=document.getElementById("name").value
 password=document.getElementById("password").value
-fetch("sign-in.php?user_name="+user_name+"&password="+password)
+fetch("sign-in.php?user_name="+encodeURIComponent(user_name)+"&password="+encodeURIComponent(password))
 
 
 .then(function(response){

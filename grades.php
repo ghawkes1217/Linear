@@ -6,7 +6,7 @@ $mod=$_GET['module_number'];
 
 
 $get= "SELECT * FROM `modules` WHERE module=$mod AND user_time='$user'";
-$put= "INSERT INTO `modules` VALUES('$user',$mod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+$put= "INSERT INTO `modules` VALUES($mod,'$user',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
 
 $graderow='new';
 
@@ -21,8 +21,7 @@ $resp=mysqli_query($link, $get);
 
 
   if ($graderow=='new'){
-    mysqli_query($link, $put);
-    $graderow=array($user,$mod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+    $graderow=array($mod,$user,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
     }
 
 
