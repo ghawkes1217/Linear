@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="site-scripts.js"></script>
+  <script type="text/javascript" src="update-progress.js"></script>
+
+  <style>
+    /* 
+    These define the enumeration of modules 
+    */
+    ul {
+      padding-top: -2em;
+      list-style-type: none;
+      text-indent: -2em;
+    }
+
+    .custom-ol {
+      text-indent: -3.5em;
+      counter-reset: x;
+      font-size: 1.25em;
+    }
+    .custom-ol li::before {
+        counter-increment: x;
+        content: "Module " counter(x)": ";
+    }
+
+    ol {
+      padding-bottom: 1em;
+      list-style-type: none;
+    }
+
+    .toggleProgress{
+      text-indent: -1.5em;
+      font-size: 1.25em;
+    }
+
+    /* 
+    These indicate the state of completion of modules 
+    */
+    .notStartedModule {
+      color: blue;
+    }
+
+    .inProgressModule {
+      color: #CC0E05;
+    }
+
+    .completedModule {
+      color: #138F2C;
+    }
+
+    /*
+    Hides irrelevant elements
+    */
+    .hidden {
+      display: none;
+    }
+
+    .flexWrapper {
+      width: 650px;
+      display: flex;
+      justify-content: space-between;}
+
+    .statsButton {
+      width: 95px;
+      cursor: pointer;
+      font-size: 1em;
+      background-color: #C2FFCC;
+    }
+
+    .statsButton:hover {
+      color: white;
+      background-color: #1090DF;
+    }
+
+    h1 {
+      color: #1184F0;
+      font-weight: 600;
+      margin: 0.5em 0em 0em;
+    }
+
+    h2 {
+      color: #07871A;
+      text-indent: -1.5em;
+      font-weight: 600;
+      margin: 0.2em 0em 0.1em;
+    }
+
+  </style>
+</head>
+<body>
+  <h1 id="greeting">Welcome, {userGivenName}</h1>
+  <div id="login" style="padding: 0px 0px 10px 0px;"></div>
+
+  <div>
+    <input type="checkbox" id="showProgress" checked> Show completion progress<br>
+    <input type="checkbox" id="hideStats"> Hide question statistics
+  </div>
+
+  <h1> Course List </h1>
+  <ul>
+    <li class="LinAlg hidden"> 
+      <h2> Linear Algebra </h2>
+      <div class="toggleProgress"> Completion Progress: {x} % </div>
+      <div class="flexWrapper">
+        <ol class="LinAlg custom-ol">
+        </ol>
+        <ol class="LinAlg">
+        </ol>
+      </div>
+    </li>
+    <li class="Calc hidden"> 
+      <h2> Calculus </h2>
+      <div class="toggleProgress"> Completion Progress: {x} % </div>
+      <div class="flexWrapper">
+        <ol class="Calc custom-ol">
+        </ol>
+        <ol class="Calc">
+        </ol>
+      </div>
+    </li>
+    <li class="Prob hidden"> 
+      <h2> Probability </h2>
+      <div class="toggleProgress"> Completion Progress: {x} % </div>
+      <div class="flexWrapper">
+        <ol class="Prob custom-ol">
+        </ol>
+        <ol class="Prob">
+        </ol>
+      </div>
+    </li>
+    <li class="Stat hidden"> 
+      <h2> Statistics </h2>
+      <div class="toggleProgress"> Completion Progress: {x} % </div>
+      <div class="flexWrapper">
+        <ol class="Stat custom-ol">
+        </ol>
+        <ol class="Stat">
+        </ol>
+      </div>
+    </li>
+    <li class="DiscMat hidden"> 
+      <h2> Discrete Math </h2>
+      <div class="toggleProgress"> Completion Progress: {x} % </div>
+      <div class="flexWrapper">
+        <ol class="DiscMat custom-ol">
+        </ol>
+        <ol class="DiscMat">
+        </ol>
+      </div>
+    </li>
+  </ul>
+  
+  <script>
+    inout()
+
+    userfirstName = "Graham"
+    loginName = "ghawkes"
+    greetUser()
+
+    enrolledLabCourses = [0, 1, 2]
+    showEnrolledCourses()
+
+    for (let k=0; k<enrolledLabCourses.length; k++){
+      courseName = labCourses[enrolledLabCourses[k]]
+      moduleData = aggregateModuleData[courseName]
+      updateCourseProgress(moduleData, courseName)
+    }
+
+    showProgresscheckbox = document.getElementById("showProgress")
+    statsList = document.getElementsByClassName("toggleProgress")
+    showProgresscheckbox.addEventListener('change', (event) => {
+      if (!event.target.checked) {
+        for (let i=0; i<statsList.length; i++){
+          x = statsList[i]
+          x.classList.add("hidden")
+        }
+
+        for (let k=0; k<enrolledLabCourses.length; k++){
+          courseName = labCourses[enrolledLabCourses[k]]
+          courseCode = associations[courseName][0]
+          moduleList = associations[courseName][1]
+          for (let i=0; i<moduleList.length; i++){
+            listArea = document.getElementsByClassName(courseCode)[1]
+            listElement = listArea.children[i]
+            anchorElement = listElement.children[0]
+            anchorElement.textContent = moduleList[i]
+          }
+        }
+      }
+      else {
+        for (let i=0; i<statsList.length; i++){
+          x = statsList[i]
+          x.classList.remove("hidden")
+        }
+
+        for (let k=0; k<enrolledLabCourses.length; k++){
+          courseName = labCourses[enrolledLabCourses[k]]
+          courseCode = associations[courseName][0]
+          moduleList = associations[courseName][1]
+          for (let i=0; i<moduleList.length; i++){
+            listArea = document.getElementsByClassName(courseCode)[1]
+            listElement = listArea.children[i]
+            anchorElement = listElement.children[0]
+
+            s = String(i+1)
+            moduleData = aggregateModuleData[courseName]
+            userData = moduleData[s][0]
+            questionWeights = moduleData[s][1]
+            score = computeModuleCompletionProgress(userData, questionWeights)
+            if (score == 100){
+              anchorElement.textContent = moduleList[i] + " [Completed]"
+            }
+            else if (score > 0){
+              anchorElement.textContent = moduleList[i] + " [" + score.toFixed() + "%]"
+            }
+          }
+        }
+      }
+    })
+
+    hideStatscheckbox = document.getElementById("hideStats")
+    buttonList = document.getElementsByClassName("statsButton")
+    hideStatscheckbox.addEventListener('change', (event) =>{
+      if (event.target.checked){
+        for (let i=0; i<buttonList.length; i++){
+          x = buttonList[i]
+          x.classList.add("hidden")
+        }
+      }
+      else {
+        for (let i=0; i<buttonList.length; i++){
+          x = buttonList[i]
+          x.classList.remove("hidden")
+        }
+      }
+    })
+  </script>
+</body>
+</html>
