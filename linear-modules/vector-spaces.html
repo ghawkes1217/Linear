@@ -1,0 +1,542 @@
+<!--Credit: Graham Hawkes-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- The following adds MathJax to render LaTeX notation -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="../styles.css">
+        <script src="../site-scripts.js"></script>
+      </head>
+<style>
+#blank {
+  position: relative;
+}
+#score {
+  position: absolute;
+  height: 220px;
+  width: 90px;
+  left: 990px;
+  top: 10px;
+  background-color: white;
+  text-align: center;}
+
+ 
+
+ </style>
+
+ 
+<body>
+  <div style="position: absolute;">
+    <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
+  </div>
+<div>
+    <h2><center>Module 10: Vector Spaces</center></h2>
+<p>
+This module explores matrix inverses for \(2 \times 2\) matrices.  
+
+    
+</div>
+
+<div id="question">
+    Ready to begin?  Click "Start" to view your first question.
+    </div>
+    </p>
+    
+    <div class="popup" onclick="pop()"><u>Question Statistics</u>
+      <div class="popuptext" id="myPopup">
+        <h3 id="selected" style="text-align:center;">No Question Selected</h3>
+        <table >
+    
+          <tr>
+            <td>Users Who Have Attempted This Question</td>
+            <td id="users">0</td>
+          </tr>
+          <tr>
+            <td>Percentage of Users With a Correct Response</td>
+            <td id="eventual">0</td>
+          </tr>
+          <tr>
+            <td>Average Number of Attempts per User</td>
+            <td id="attempts">0</td>
+          </tr>
+          <tr>
+            <td>Percentage of Attempts that are Correct</td>
+            <td id="overall">0</td>
+          </tr>
+    
+        </table>
+        
+    
+    
+      </div>
+    </div>
+    
+    </div>
+    <div id="blank">
+
+    
+
+    
+    <div id="sub">
+        <span>
+          <button  onclick="submit()">Start</button>
+        </span>
+        <span>
+          <button  onclick="forward()">Skip</button>
+        </span>
+        <span>
+          <button  onclick="back()">Previous</button>
+        </span>
+      </div>
+    <div id="try">
+    
+    </div>
+    
+    
+    
+    
+    <div id="outer" style="position:relative;  top:60px; height:500px">
+        <div id="leftInner" style="position:absolute;  top:-10px">
+            <p style="position:absolute; text-align: center; left:185px; top:-45px"> \(f(x)\)</p>
+
+    <canvas  id="leftCanvas"   width="400px" height="200px">
+    </canvas>
+    </div>
+    <div id="rightInner" style="position:absolute;  top:-10px; left:500px">
+        <p style="position:absolute; text-align: center; left:185px; top:-45px"> \(g(x)\)</p>
+        
+        <canvas  id="rightCanvas"   width="400px" height="200px">
+        </canvas>
+        </div>
+
+        <div id="bottomInner" style="position:absolute;  top:220px; left:245px">
+<p style="text-align: center;">\(h(x)=\) <input id="a" type="number" step="0.1" style="width:40px" value="1" onchange="draw()"> \(\cdot f(x) +\) <input id="b" type="number" step="0.1"  style="width:40px" value="1" onchange="draw()">\(\cdot g(x)\)</p>
+<p id="scale" style="position:absolute; text-align: center; left:415px; top:130px"> SCALE=1</p>
+
+<canvas  id="bottomCanvas"   width="400px" height="200px">
+            </canvas>
+
+       
+
+            </div>
+
+</div>
+
+
+    
+    <div id="score">
+    </div>
+    <div id="completed">
+        <h2>Completed Questions:</h2>
+      </div>
+    </div>
+    
+    
+
+
+<script>
+MathJax.typesetPromise()
+
+
+function col_mat(a,b,c,d){
+st='\\(\\begin{bmatrix} \\textcolor{blue} {'+a+'} & \\textcolor{red}{'+b+'}\\\\ \\textcolor{blue}{'+c+'} & \\textcolor{red}{'+d+'} \\end{bmatrix} \\)'
+return(st)
+}
+
+function row_mat(a,b,c,d){
+st='\\(\\begin{bmatrix} \\textcolor{red} {'+a+'} & \\textcolor{red}{'+b+'}\\\\ \\textcolor{blue}{'+c+'} & \\textcolor{blue}{'+d+'} \\end{bmatrix} \\)'
+return(st)
+}
+
+
+
+
+function make_dots(){
+    for (var side=0; side<=1; side++){
+    for (var i=0; i<=400; i+=40){
+var dot=document.createElement('div')
+        if (side==0){
+        dot.id="ldot"+i
+        inner=document.getElementById('leftInner')}
+        if (side==1){
+        inner=document.getElementById('rightInner')
+        dot.id="rdot"+i}
+        dot.style.position="absolute"
+        dot.style.width="10px"
+        dot.style.height="10px"
+        dot.style.backgroundColor="grey"
+        dot.style.top="95px"
+        dot.style.left=i-5+"px"
+        inner.appendChild(dot)
+        mobilize(dot)}}
+}
+
+
+function draw(){
+for (var side=0; side<=1; side++){
+if (side==0){
+var canvas = document.getElementById("leftCanvas");}
+if (side==1){
+var canvas = document.getElementById("rightCanvas");}
+var ctx = canvas.getContext("2d");
+ctx.clearRect(0, 0, canvas.width, canvas.height)
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(0, 100);
+ctx.lineTo(400, 100);
+ctx.stroke();
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(200, 0);
+ctx.lineTo(200, 200);
+ctx.stroke();
+
+for (var j=-5; j<=5; j++){
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=0.5
+ctx.moveTo(0, 100+20*j);
+ctx.lineTo(400, 100+20*j);
+ctx.stroke();}
+
+
+for (var i=0; i<400; i+=40){
+if (side==0){
+var dot=document.getElementById("ldot"+i)
+var next=document.getElementById("ldot"+(i+40))}
+if (side==1){
+var dot=document.getElementById("rdot"+i)
+var next=document.getElementById("rdot"+(i+40))}
+x1=dot.offsetLeft  
+y1=dot.offsetTop      
+x2=next.offsetLeft      
+y2=next.offsetTop      
+ctx.beginPath();
+if (side==0){
+ctx.strokeStyle="blue"}
+if (side==1){
+ctx.strokeStyle="red"}
+ctx.lineWidth=1
+ctx.moveTo(x1+5, y1+5);
+ctx.lineTo(x2+5, y2+5);
+ctx.stroke();}
+
+
+}
+draw_sum()
+}
+
+
+
+
+
+function draw_sum(){
+var canvas = document.getElementById("bottomCanvas");
+var ctx = canvas.getContext("2d");
+ctx.clearRect(0, 0, canvas.width, canvas.height)
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(0, 100);
+ctx.lineTo(400, 100);
+ctx.stroke();
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(200, 0);
+ctx.lineTo(200, 200);
+ctx.stroke();
+
+for (var j=-5; j<=5; j++){
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=0.5
+ctx.moveTo(0, 100+20*j);
+ctx.lineTo(400, 100+20*j);
+ctx.stroke();}
+a=document.getElementById("a").value
+b=document.getElementById("b").value
+DOTS=[]
+for (var i=0; i<=400; i+=40){
+var ldot=document.getElementById("ldot"+i)
+var rdot=document.getElementById("rdot"+i)
+DOTS.push([ldot.offsetLeft+5, -a*(95-ldot.offsetTop)-b*(95-rdot.offsetTop)+100])
+}
+
+var ymax=0
+for (var t=0; t<=10; t++){
+    if (Math.abs(100-DOTS[t][1])>ymax){
+        ymax=Math.abs(100-DOTS[t][1])
+    }
+}
+var scale=1
+if (ymax>100){scale=ymax/100}
+document.getElementById("scale").innerHTML="SCALE="+scale
+for (var k=0; k<10; k++){
+ctx.beginPath();
+ctx.strokeStyle="purple"
+ctx.lineWidth=1
+ctx.moveTo(DOTS[k][0],100-(100-DOTS[k][1])/scale);
+ctx.lineTo(DOTS[k+1][0],100-(100-DOTS[k+1][1])/scale);
+ctx.stroke();}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function mobilize(tip) {
+    tip.onmousedown = move;  
+
+  function move(e) {
+    x0 = e.clientX;
+    y0 = e.clientY;
+    document.onmousemove = drag;
+    document.onmouseup = close;
+  }
+
+function drag(e) {
+    dx = e.clientX-x0;
+    dy = e.clientY-y0;
+    x0 = e.clientX;
+    y0 = e.clientY;
+    tip.style.top = (tip.offsetTop + dy) + "px";
+    draw();
+
+  }
+
+function close() {
+  document.onmouseup = null;
+  document.onmousemove = null;
+    tip.style.top = 5+10*Math.round(tip.offsetTop/10-0.5) + "px";
+    draw();
+
+ }
+  
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function submit(){
+if (initialized==0){
+document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
+document.getElementById("question").innerText=quests[page]
+MathJax.typesetPromise()
+}
+
+if (initialized==1){
+
+
+var feed=document.getElementById("try").innerText
+if (feed==""){
+document.getElementById("try").innerText="Try Again"}
+if (feed=="Not Quite"){
+document.getElementById("try").innerText="Try Again"}
+if (feed=="Try Again"){
+document.getElementById("try").innerText="Not Quite"}
+
+
+
+if (grade()==1)
+{n11=document.getElementById("n11").value
+n12=document.getElementById("n12").value
+n21=document.getElementById("n21").value
+n22=document.getElementById("n22").value
+m11=document.getElementById("m11").value
+m12=document.getElementById("m12").value
+m21=document.getElementById("m21").value
+m22=document.getElementById("m22").value
+
+
+
+
+
+
+document.getElementById("try").innerText=""
+
+
+var answeredQuestion = document.createElement('div')
+      answeredQuestion.innerHTML = quests[page]
+      answeredQuestion.innerHTML += ' Your answer: \\(B= \\)'+row_mat(n11,n12,n21,n22)
+      answeredQuestion.innerHTML += ', \\(A= \\)'+col_mat(m11,m12,m21,m22)
+     answeredQuestion.style.color="grey"
+      var completedQuestions = document.getElementById("completed")
+      completedQuestions.appendChild(answeredQuestion)
+
+
+
+page+=1
+document.getElementById("question").innerText=quests[page]
+MathJax.typesetPromise()
+score()
+}
+
+
+
+
+}
+initialized=1
+}
+
+
+
+
+
+function grade(){
+n11=document.getElementById("n11").value
+n12=document.getElementById("n12").value
+n21=document.getElementById("n21").value
+n22=document.getElementById("n22").value
+m11=document.getElementById("m11").value
+m12=document.getElementById("m12").value
+m21=document.getElementById("m21").value
+m22=document.getElementById("m22").value
+row1=[n11,n12]
+row2=[n21,n22]
+col1=[m11,m21]
+col2=[m12,m22]
+
+
+if (page==0){
+  if (m11==1 && m21==-1 && m12==0 && m22==0.5){
+    correct = 1}}
+if (page==1){
+  if (dot(row1,col2)==0){
+    correct = 1}}
+if (page==2){
+  if (dot(row1,col2)==0 && dot(row2,col1)==0){
+    correct = 1}}
+if (page==3){
+  if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1){
+    correct = 1}}
+if (page==4){
+  if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
+    correct = 1}}
+if (page==5){
+  if (m11==-1 && m21==0 && m12==-0.5 && m22==1){
+    correct = 1}}
+if (page==6){
+  if (dot(row1,col2)==0 && dot(row2,col1)==0){
+    correct = 1}}  
+if (page==7){
+  if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
+    correct = 1}}
+if (page==8){
+  if (m11==1 && m21==-1 && m12==0 && m22==1  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
+    correct = 1}}
+if (page==9){
+  if (m11==0.5 && m21==0 && m12==-0.5 && m22==0.5  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
+    correct = 1}}
+if (page==10){
+  if (m11==2 && m21==0 && m12==2 && m22==2  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
+    correct = 1}}
+
+if (page==11){
+  if (m11==-1.2 && m21==1.6 && m12==1.6 && m22==1.2  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
+    correct = 1}}
+if (page==12){
+  if (m11==n11 && m21==n21 && m12==n12 && m22==n22  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
+    correct = 1}
+  if (m11==1 && m21==0 && m12==0 && m22==1 ){
+    correct = 0}}
+
+
+
+
+if (correct==0){
+grades[page][1]+=1}
+if (correct==1){
+grades[page][0]+=1}
+sql_record(Module_Number)    
+
+return(correct)
+}
+
+
+
+
+</script>
+
+<script>
+    make_dots()
+draw()
+var Module_Number="08"
+
+the_time=Date.now()
+make_grades(Module_Number)
+
+var initialized=0
+var page=0
+var quests=[
+"1. Set \\(A=\\)"+col_mat(1,0,-1,0.5)+".",
+"2. Keeping \\(A\\) the same, drag the dotted  red vector until it is perpendicular to the solid red vector (this ensures the top right entry of the matrix product \\(BA\\) is 0).",
+"3. Keeping the red vectors perpendicular, drag the dotted blue vector until it is perpendicular to the solid blue vector (this ensures the bottom left entry of the matrix product \\(BA\\) is 0).",
+"4. Keeping the red vectors perpendicular and the blue vectors perpendicular scale the dotted red vector until the red dot lies where the blue vector intersects the black circle (this ensures that the top left entry of \\(BA\\) is 1).",
+"5. Keeping all of the properties of questions 1-4, scale the dotted blue vector until the blue dot lies where the red vector would intersect the black circle (this ensures that the bottom right entry of \\(BA\\) is 1). All together, this means \\(B\\) is the inverse of \\(A\\).",
+"6. Set \\(A=\\)"+col_mat(-1,-0.5,0,1)+".",
+"7. Keeping \\(A\\) the same, make the red vectors perpendicular and the blue vectors perpendicular",
+"8. Keeping solid and dotted vectors of both colors perpendicular scale the dotted vectors until the red and blue dots lie on the black circle. Note that to ensure that \\(BA=I\\) the dots must be on the proper side of the black circle.",
+"9. Set \\(A=\\)"+col_mat(1,-1,0,1)+". Find B such that \\(BA=I\\)",
+"10. Set \\(A=\\)"+col_mat(0.5,-0.5,0,0.5)+". Find B such that \\(BA=I\\)",
+"11. Set \\(A=\\)"+col_mat(2,2,0,2)+". Find B such that \\(BA=I\\)",
+"12. Set \\(A=\\)"+col_mat(-1.2,1.6,1.6,1.2)+". Find B such that \\(BA=I\\)",
+"13. Find a matrix \\(A\\) and its inverse \\(B\\) such that the two matrices are the same but not equal to \((I\)).",
+"Good job!!!"]
+bt=document.getElementById("bluetip")
+mobilize(bt)
+gt=document.getElementById("greentip")
+mobilize(gt)
+  make_mats()
+  document.getElementById("m11").value=1
+  document.getElementById("m12").value=0
+  document.getElementById("m21").value=0
+  document.getElementById("m22").value=1
+  make_inv()
+  document.getElementById("n11").value=-0.5
+  document.getElementById("n12").value=-1
+  document.getElementById("n21").value=1
+  document.getElementById("n22").value=0.5
+  make_prod()
+  fill_ba()
+  make_deg()
+  draw()
+  score()
+  match()
+  </script>
+
+
+</body>
+</html>
