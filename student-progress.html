@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- The following adds MathJax to render LaTeX notation -->
+        <link type="text/css" rel="stylesheet" href="styles.css">
+        <script type="text/javascript" src="site-scripts.js"></script>
+      </head>
+<style>
+    body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+    #info_box{
+
+position: absolute;
+height: 200px;
+width: 380px;
+left: 950px;
+top: 30px;
+background-color: white;
+
+border: 9px solid #d3d3d3;}
+</style>
+
+
+<body>
+    
+      
+
+<h2>Your Progress</h2>
+<div id="prog">
+    
+</div>
+</body>
+<script>
+    function progress(){
+    user=make_cookject()['user']
+if (user==undefined){
+  alert("You are not logged in!")
+}
+    if (user!=undefined){
+        fetch("get-progress.php?user="+user)
+.then(function(response){
+  return response.json()})
+  .then(function(data){
+
+    data.sort(function(a, b){return a[0]-b[0]})
+for (i=0; i<data.length;i++){
+  var d=data[i]
+
+  para=document.getElementById("prog")
+  var newline=document.createElement("p")
+p="In Module "+d[0]+" you have correctly answered questions"
+for (j=2; j<d.length; j+=2){
+  if (d[j]>0){
+    p+=", "+(j/2)
+  }}
+  newline.innerHTML=p
+  para.appendChild(newline)
+}
+  })
+}}
+
+inout()
+  progress()
+
+
+
+
+
+</script>
+</html>
