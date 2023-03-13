@@ -9,9 +9,7 @@
         <script src="../site-scripts.js"></script>
       </head>
 <style>
-#blank {
-  position: relative;
-}
+
 #score {
   position: absolute;
   height: 220px;
@@ -21,7 +19,10 @@
   background-color: white;
   text-align: center;}
 
- 
+  #question {
+  position: relative;
+  height: 25px;
+}
 
  </style>
 
@@ -33,7 +34,7 @@
 <div>
     <h2><center>Module 10: Vector Spaces</center></h2>
 <p>
-This module explores matrix inverses for \(2 \times 2\) matrices.  
+This module explores the vector space of functions from \(\mathbb{R} \rightarrow \mathbb{R}\). 
 
     
 </div>
@@ -73,7 +74,7 @@ This module explores matrix inverses for \(2 \times 2\) matrices.
     </div>
     
     </div>
-    <div id="blank">
+    <div id="blank" style="position:relative">
 
     
 
@@ -96,7 +97,7 @@ This module explores matrix inverses for \(2 \times 2\) matrices.
     
     
     
-    <div id="outer" style="position:relative;  top:60px; height:500px">
+    <div id="outer" style="position:relative;  top:60px; height:550px">
         <div id="leftInner" style="position:absolute;  top:-10px">
             <p style="position:absolute; text-align: center; left:185px; top:-45px"> \(f(x)\)</p>
 
@@ -139,15 +140,6 @@ This module explores matrix inverses for \(2 \times 2\) matrices.
 MathJax.typesetPromise()
 
 
-function col_mat(a,b,c,d){
-st='\\(\\begin{bmatrix} \\textcolor{blue} {'+a+'} & \\textcolor{red}{'+b+'}\\\\ \\textcolor{blue}{'+c+'} & \\textcolor{red}{'+d+'} \\end{bmatrix} \\)'
-return(st)
-}
-
-function row_mat(a,b,c,d){
-st='\\(\\begin{bmatrix} \\textcolor{red} {'+a+'} & \\textcolor{red}{'+b+'}\\\\ \\textcolor{blue}{'+c+'} & \\textcolor{blue}{'+d+'} \\end{bmatrix} \\)'
-return(st)
-}
 
 
 
@@ -219,7 +211,7 @@ if (side==0){
 ctx.strokeStyle="blue"}
 if (side==1){
 ctx.strokeStyle="red"}
-ctx.lineWidth=1
+ctx.lineWidth=1.5
 ctx.moveTo(x1+5, y1+5);
 ctx.lineTo(x2+5, y2+5);
 ctx.stroke();}
@@ -278,7 +270,7 @@ document.getElementById("scale").innerHTML="SCALE="+scale
 for (var k=0; k<10; k++){
 ctx.beginPath();
 ctx.strokeStyle="purple"
-ctx.lineWidth=1
+ctx.lineWidth=1.5
 ctx.moveTo(DOTS[k][0],100-(100-DOTS[k][1])/scale);
 ctx.lineTo(DOTS[k+1][0],100-(100-DOTS[k+1][1])/scale);
 ctx.stroke();}
@@ -371,18 +363,7 @@ document.getElementById("try").innerText="Not Quite"}
 
 
 if (grade()==1)
-{n11=document.getElementById("n11").value
-n12=document.getElementById("n12").value
-n21=document.getElementById("n21").value
-n22=document.getElementById("n22").value
-m11=document.getElementById("m11").value
-m12=document.getElementById("m12").value
-m21=document.getElementById("m21").value
-m22=document.getElementById("m22").value
-
-
-
-
+{
 
 
 document.getElementById("try").innerText=""
@@ -390,8 +371,6 @@ document.getElementById("try").innerText=""
 
 var answeredQuestion = document.createElement('div')
       answeredQuestion.innerHTML = quests[page]
-      answeredQuestion.innerHTML += ' Your answer: \\(B= \\)'+row_mat(n11,n12,n21,n22)
-      answeredQuestion.innerHTML += ', \\(A= \\)'+col_mat(m11,m12,m21,m22)
      answeredQuestion.style.color="grey"
       var completedQuestions = document.getElementById("completed")
       completedQuestions.appendChild(answeredQuestion)
@@ -416,63 +395,43 @@ initialized=1
 
 
 function grade(){
-n11=document.getElementById("n11").value
-n12=document.getElementById("n12").value
-n21=document.getElementById("n21").value
-n22=document.getElementById("n22").value
-m11=document.getElementById("m11").value
-m12=document.getElementById("m12").value
-m21=document.getElementById("m21").value
-m22=document.getElementById("m22").value
-row1=[n11,n12]
-row2=[n21,n22]
-col1=[m11,m21]
-col2=[m12,m22]
-
+correct=1
+fDOTS=[]
+gDOTS=[]
+for (var i=0; i<=400; i+=40){
+var ldot=document.getElementById("ldot"+i)
+var rdot=document.getElementById("rdot"+i)
+fDOTS.push(95-ldot.offsetTop)
+gDOTS.push(95-rdot.offsetTop)
+}
+a=document.getElementById("a").value
+b=document.getElementById("b").value
 
 if (page==0){
-  if (m11==1 && m21==-1 && m12==0 && m22==0.5){
-    correct = 1}}
+correct=1
+  for (var i=0; i<=10; i++){
+    if (gDOTS[i]!=0){
+      correct=0}}}
+
 if (page==1){
-  if (dot(row1,col2)==0){
-    correct = 1}}
+  correct=1
+  for (var i=0; i<=10; i++){
+    if (gDOTS[i]+fDOTS[i]!=0){
+      correct=0}}
+    if (fDOTS[5]<=0){
+      correct=0}}
+
 if (page==2){
-  if (dot(row1,col2)==0 && dot(row2,col1)==0){
-    correct = 1}}
-if (page==3){
-  if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1){
-    correct = 1}}
-if (page==4){
-  if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
-    correct = 1}}
-if (page==5){
-  if (m11==-1 && m21==0 && m12==-0.5 && m22==1){
-    correct = 1}}
-if (page==6){
-  if (dot(row1,col2)==0 && dot(row2,col1)==0){
-    correct = 1}}  
-if (page==7){
-  if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
-    correct = 1}}
-if (page==8){
-  if (m11==1 && m21==-1 && m12==0 && m22==1  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
-    correct = 1}}
-if (page==9){
-  if (m11==0.5 && m21==0 && m12==-0.5 && m22==0.5  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
-    correct = 1}}
-if (page==10){
-  if (m11==2 && m21==0 && m12==2 && m22==2  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
-    correct = 1}}
+  correct=1
+  for (var i=0; i<=10; i++){
+    if (gDOTS[i]+fDOTS[i]!=0 || fDOTS[i]<=0){
+      correct=0}}}
 
-if (page==11){
-  if (m11==-1.2 && m21==1.6 && m12==1.6 && m22==1.2  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
-    correct = 1}}
-if (page==12){
-  if (m11==n11 && m21==n21 && m12==n12 && m22==n22  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
-    correct = 1}
-  if (m11==1 && m21==0 && m12==0 && m22==1 ){
-    correct = 0}}
-
+  if (page==3){
+  correct=1
+  for (var i=0; i<=10; i++){
+    if (gDOTS[i]<0 || fDOTS[i]<0 || a*gDOTS[i]+b*fDOTS[i]>=0 ){
+      correct=0}}}
 
 
 
@@ -493,7 +452,7 @@ return(correct)
 <script>
     make_dots()
 draw()
-var Module_Number="08"
+var Module_Number="10"
 
 the_time=Date.now()
 make_grades(Module_Number)
@@ -501,40 +460,21 @@ make_grades(Module_Number)
 var initialized=0
 var page=0
 var quests=[
-"1. Set \\(A=\\)"+col_mat(1,0,-1,0.5)+".",
-"2. Keeping \\(A\\) the same, drag the dotted  red vector until it is perpendicular to the solid red vector (this ensures the top right entry of the matrix product \\(BA\\) is 0).",
-"3. Keeping the red vectors perpendicular, drag the dotted blue vector until it is perpendicular to the solid blue vector (this ensures the bottom left entry of the matrix product \\(BA\\) is 0).",
-"4. Keeping the red vectors perpendicular and the blue vectors perpendicular scale the dotted red vector until the red dot lies where the blue vector intersects the black circle (this ensures that the top left entry of \\(BA\\) is 1).",
-"5. Keeping all of the properties of questions 1-4, scale the dotted blue vector until the blue dot lies where the red vector would intersect the black circle (this ensures that the bottom right entry of \\(BA\\) is 1). All together, this means \\(B\\) is the inverse of \\(A\\).",
-"6. Set \\(A=\\)"+col_mat(-1,-0.5,0,1)+".",
-"7. Keeping \\(A\\) the same, make the red vectors perpendicular and the blue vectors perpendicular",
-"8. Keeping solid and dotted vectors of both colors perpendicular scale the dotted vectors until the red and blue dots lie on the black circle. Note that to ensure that \\(BA=I\\) the dots must be on the proper side of the black circle.",
-"9. Set \\(A=\\)"+col_mat(1,-1,0,1)+". Find B such that \\(BA=I\\)",
-"10. Set \\(A=\\)"+col_mat(0.5,-0.5,0,0.5)+". Find B such that \\(BA=I\\)",
-"11. Set \\(A=\\)"+col_mat(2,2,0,2)+". Find B such that \\(BA=I\\)",
-"12. Set \\(A=\\)"+col_mat(-1.2,1.6,1.6,1.2)+". Find B such that \\(BA=I\\)",
-"13. Find a matrix \\(A\\) and its inverse \\(B\\) such that the two matrices are the same but not equal to \((I\)).",
+"1. If \\(a=1=b\\), find a function  \\(g(x)\\) such that for any function \\(f(x)\\) we have \\(h(x)=f(x)\\) ",
+"2. Set \\(a=1=b\\). Find a function \\(f(x)\\) with \\(f(0)>0\\) along with a function \\(g(x)\\) such that \\(f(x)+g(x)=0\\).", 
+"3. Set \\(a=1=b\\). Find a function \\(f(x)\\) with \\(f(x)> 0\\) for all \\(x\\) along with a function \\(g(x)\\) such that \\(f(x)+g(x)=0\\).", 
+"4. Find a function \\(f(x)\\) with \\(f(x)\\geq 0\\) for all \\(x\\) along with a function \\(g(x)\\)  with \\(g(x)\\geq0\\) for all \\(x\\) and a linear combination of them \\(h(x)\\) with \\(h(x)<0\\) for all \\(x\\).", 
+"5. Set",
+"6. Set",
+"7. Set",
+"8. Set",
+"9. Set",
+"10. Set",
+"11. Set",
+"12. Set",
+"13. Set",
 "Good job!!!"]
-bt=document.getElementById("bluetip")
-mobilize(bt)
-gt=document.getElementById("greentip")
-mobilize(gt)
-  make_mats()
-  document.getElementById("m11").value=1
-  document.getElementById("m12").value=0
-  document.getElementById("m21").value=0
-  document.getElementById("m22").value=1
-  make_inv()
-  document.getElementById("n11").value=-0.5
-  document.getElementById("n12").value=-1
-  document.getElementById("n21").value=1
-  document.getElementById("n22").value=0.5
-  make_prod()
-  fill_ba()
-  make_deg()
-  draw()
-  score()
-  match()
+
   </script>
 
 
