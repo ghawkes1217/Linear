@@ -165,7 +165,7 @@ alert(gradestring)
       icons.push(["News","news.html"])
       icons.push(["Sign Up","new-account.html"])
       icons.push([logged,"log-in.html"])
-      icons.push(["Your Progress","student-progress.html"])
+      icons.push(["Your Progress","student-prog.html"])
     
     var bar=document.createElement("div")
     bar.className="navbar"

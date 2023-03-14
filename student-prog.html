@@ -156,184 +156,7 @@
   </ul>
 
   <script>
-    linearAlgebraModules = [
-      "Linear Combinations", 
-      "Dot Product", 
-      "Matrix Multiplication (Column Picture)", 
-      "Matrix Multiplication (Row Picture)", 
-      "Row Operations", 
-      "Elementary Matrices (Linear Equations)", 
-      "Elementary Matrices (Multiplication)", 
-      "Inverse Matrices", 
-      "Reduced Row Echelon Form"]
-    linearAlgebraModuleAddresses = {
-      "Linear Combinations": "linear-combinations.html", 
-      "Dot Product": "dot-product.html", 
-      "Matrix Multiplication (Column Picture)": "column-matrix-multiplication.html", 
-      "Matrix Multiplication (Row Picture)": "row-matrix-multiplication.html", 
-      "Row Operations": "row-operations.html", 
-      "Elementary Matrices (Linear Equations)": "elementary-matrices-equations.html", 
-      "Elementary Matrices (Multiplication)": "elementary-matrices-multiplication.html", 
-      "Inverse Matrices": "inverses.html", 
-      "Reduced Row Echelon Form": ""}
-    linearAlgebraWeights = {
-      "Linear Combinations": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1,1], 1], 
-      "Dot Product": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1,1], 1], 
-      "Matrix Multiplication (Column Picture)": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1], 1], 
-      "Matrix Multiplication (Row Picture)": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1], 1], 
-      "Row Operations": [[1,1,1,1,1, 1,1,1,1], 1], 
-      "Elementary Matrices (Linear Equations)": [[1,1,1,1,1, 1,1,1,1], 1], 
-      "Elementary Matrices (Multiplication)": [[1,1,1,1,1, 1,1,1,1,1, 1,1], 1], 
-      "Inverse Matrices": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1], 1], 
-      "Reduced Row Echelon Form": [[1,1,1,1,1, 1,1,1,1,1, 1,1], 1],
-    }
-
-    calculusModules = [
-      "Functions (Domain and Range)", 
-      "Functions (Composition)", 
-      "Limit of Functions", 
-      "Evaluating Limits", 
-      "Limit Laws", 
-      "Limit of Functions (Precise Definition)", 
-      "Continuity of Functions", 
-      "Intermediate Value Theorem"]
-    calculusModuleAddresses = {
-      "Functions (Domain and Range)": "", 
-      "Functions (Composition)": "", 
-      "Limit of Functions": "", 
-      "Evaluating Limits": "", 
-      "Limit Laws": "", 
-      "Limit of Functions (Precise Definition)": "", 
-      "Continuity of Functions": "", 
-      "Intermediate Value Theorem": ""}
-    calculusWeights = {
-      "Functions (Domain and Range)": [[1,1,1,1,1], 1], 
-      "Functions (Composition)": [[1,1,1,1,1], 1], 
-      "Limit of Functions": [[1,1,1,1,1], 1], 
-      "Evaluating Limits": [[1,1,1,1,1], 1], 
-      "Limit Laws": [[1,1,1,1,1], 1], 
-      "Limit of Functions (Precise Definition)": [[1,1,1,1,1], 1], 
-      "Continuity of Functions": [[1,1,1,1,1], 1], 
-      "Intermediate Value Theorem": [[1,1,1,1,1], 1]}
-
-    probabilityModules = [
-      "Outcomes and Sample Space", 
-      "Events and Probability", 
-      "Probability of Mutually Exclusive Events", 
-      "Probability of Independent Events", 
-      "Probability of Complementary Events", 
-      "Conditional Probability", 
-      "Bayes' Theorem", 
-      "Discrete Random Variables", 
-      "Expected Value and Variance (Discrete)", 
-      "Binomial Distribution", 
-      "Poisson Distribution", 
-      "Continuous Random Variables", 
-      "Normal Distribution"]
-    probabilityModuleAddresses = {
-      "Outcomes and Sample Space": "", 
-      "Events and Probability": "", 
-      "Probability of Mutually Exclusive Events": "", 
-      "Probability of Independent Events": "", 
-      "Probability of Complementary Events": "", 
-      "Conditional Probability": "", 
-      "Bayes' Theorem": "", 
-      "Discrete Random Variables": "", 
-      "Expected Value and Variance (Discrete)": "", 
-      "Binomial Distribution": "", 
-      "Poisson Distribution": "", 
-      "Continuous Random Variables": "", 
-      "Normal Distribution": ""}
-    probabilityWeights = {
-      "Outcomes and Sample Space": [[1,1,1,1,1], 1], 
-      "Events and Probability": [[1,1,1,1,1], 1], 
-      "Probability of Mutually Exclusive Events": [[1,1,1,1,1], 1], 
-      "Probability of Independent Events": [[1,1,1,1,1], 1], 
-      "Probability of Complementary Events": [[1,1,1,1,1], 1], 
-      "Conditional Probability": [[1,1,1,1,1], 1], 
-      "Bayes' Theorem": [[1,1,1,1,1], 1], 
-      "Discrete Random Variables": [[1,1,1,1,1], 1], 
-      "Expected Value and Variance (Discrete)": [[1,1,1,1,1], 1], 
-      "Binomial Distribution": [[1,1,1,1,1], 1], 
-      "Poisson Distribution": [[1,1,1,1,1], 1], 
-      "Continuous Random Variables": [[1,1,1,1,1], 1], 
-      "Normal Distribution": [[1,1,1,1,1], 1]}
-
-    // This lists all the courses so far
-    labCourses = [
-      "Linear Algebra", 
-      "Calculus", 
-      "Probability", 
-      "Statistics", 
-      "Discrete Math"]
-
-    // This associates the course to modules and addresses
-    associations = {
-      "Linear Algebra": ["LinAlg", linearAlgebraModules, "linear-modules", 
-                         linearAlgebraModuleAddresses, linearAlgebraWeights],
-      "Calculus": ["Calc", calculusModules, "calculus-modules", 
-                   calculusModuleAddresses, calculusWeights],
-      "Probability": ["Prob", probabilityModules, "probability-modules",  
-                      probabilityModuleAddresses, probabilityWeights]}
-
-    function greetUser(){
-      document.getElementById("greeting").textContent = "Welcome, " + userName
-      //document.getElementById("login").textContent = "logged in as " + loginName
-    }
-
-    linearAlgebraModuleData = {
-      "1": [2,1, 3,0, 0,4, 0,0, 1,3, 
-            0,0, 1,0, 0,2, 1,0, 0,0,
-            1,2, 2,0, 0,5, 0,6], 
-      "2": [1,0, 3,0, 1,2, 1,0, 5,0,
-            1,1, 2,0, 1,4, 2,0, 4,3, 
-            2,2, 3,0, 1,5, 1,6],
-      "3": [0,2, 1,0, 0,0, 0,1, 0,0,
-            0,0, 2,0, 0,4, 1,1, 0,3, 
-            2,1, 0,3, 0,5],
-      "4": [0,1, 0,3, 0,0, 0,0, 0,0,
-            0,0, 0,4, 1,0, 0,0, 0,0, 
-            0,1, 0,0, 0,5],
-      "5": [0,0, 0,0, 0,0, 0,0, 0,0,
-            0,0, 0,0, 0,0, 0,0],
-      "6": [1,0, 0,3, 0,1, 0,3, 0,0,
-            0,0, 2,0, 0,1, 0,0], 
-      "7": [1,0, 0,3, 0,4, 0,0, 0,0,
-            0,0, 0,0, 4,2, 0,0, 0,0,
-            0,0, 1,5], 
-      "8": [1,0, 2,3, 4,4, 1,0, 3,0,
-            1,0, 3,0, 4,2, 2,1, 1,5,
-            1,0, 1,5, 1,1], 
-      "9": [0,0, 0,0, 0,0, 0,0, 0,0,
-            0,0, 0,0, 0,0, 0,0, 0,0,
-            0,0, 0,0]}
-    calculusModuleData = {
-      "1": [1,0, 1,0, 1,0, 1,0, 1,0], 
-      "2": [1,0, 3,1, 1,0, 2,1, 1,1], 
-      "3": [0,0, 0,0, 0,0, 0,0, 0,0], 
-      "4": [2,1, 0,3, 0,4, 0,0, 0,1], 
-      "5": [0,1, 0,0, 4,0, 0,0, 0,3], 
-      "6": [0,0, 0,0, 0,0, 0,0, 0,0], 
-      "7": [0,0, 0,0, 0,0, 0,0, 0,0], 
-      "8": [0,0, 0,0, 0,0, 0,0, 0,0]}
-    probabilityModuleData = {
-      "1": [2,1, 3,0, 1,4, 2,0, 1,3], 
-      "2": [2,1, 3,0, 0,4, 0,0, 1,3], 
-      "3": [2,1, 3,0, 0,4, 0,0, 1,3], 
-      "4": [1,4, 3,3, 2,0, 1,0, 1,0], 
-      "5": [0,0, 0,0, 0,0, 0,0, 0,0], 
-      "6": [0,0, 0,0, 0,0, 0,0, 0,0], 
-      "7": [2,1, 0,3, 0,4, 0,0, 0,1], 
-      "8": [5,1, 1,0, 4,0, 2,0, 2,3], 
-      "9": [0,0, 0,0, 0,0, 0,0, 0,0], 
-      "10": [0,0, 0,0, 0,0, 0,0, 0,0], 
-      "11": [0,0, 0,0, 0,0, 0,0, 0,0], 
-      "12": [2,1, 0,3, 0,4, 0,0, 0,1], 
-      "13": [0,1, 0,0, 4,0, 0,0, 0,3]}
-    aggregateModuleData = {
-      "Linear Algebra": linearAlgebraModuleData,
-      "Calculus": calculusModuleData,
-      "Probability": probabilityModuleData}
+    
 
     function showEnrolledCourses(){
       for (let m=0; m<enrolledLabCourses.length; m++)
@@ -493,16 +316,22 @@
       parent = document.getElementsByClassName(courseCode)[0]
       progressArea = parent.children[1]
       progressArea.textContent = "Completion Progress: " + courseProgress.toFixed(2) + "%"}
+      function greetUser(){
+      document.getElementById("greeting").textContent = "Welcome, " + user
+      //document.getElementById("login").textContent = "logged in as " + loginName
+    }
+  
   </script>
   
   <script>
-    inout()
+ 
 
+ function wencinLoad(){
     userName = "ghawkes"
     /*loginName = "ghawkes"*/
     greetUser()
 
-    enrolledLabCourses = [0, 1, 2]
+    enrolledLabCourses = [0]
     showEnrolledCourses()
 
     for (let k=0; k<enrolledLabCourses.length; k++){
@@ -572,6 +401,236 @@
           content.style.display = "block"}
       })
     }
+  }
+
+
+function wencinData(){
+
+    linearAlgebraModules = [
+      "Linear Combinations", 
+      "Dot Product", 
+      "Matrix Multiplication (Column Picture)", 
+      "Matrix Multiplication (Row Picture)", 
+      "Row Operations", 
+      "Elementary Matrices (Linear Equations)", 
+      "Elementary Matrices (Multiplication)", 
+      "Inverse Matrices", 
+      "Reduced Row Echelon Form",
+      "Vector Spaces"]
+    linearAlgebraModuleAddresses = {
+      "Linear Combinations": "linear-combinations.html", 
+      "Dot Product": "dot-product.html", 
+      "Matrix Multiplication (Column Picture)": "column-matrix-multiplication.html", 
+      "Matrix Multiplication (Row Picture)": "row-matrix-multiplication.html", 
+      "Row Operations": "row-operations.html", 
+      "Elementary Matrices (Linear Equations)": "elementary-matrices-equations.html", 
+      "Elementary Matrices (Multiplication)": "elementary-matrices-multiplication.html", 
+      "Inverse Matrices": "inverses.html", 
+      "Reduced Row Echelon Form": "rref.html",
+      "Vector Spaces": "vector-spaces.html"}
+    linearAlgebraWeights = {
+      "Linear Combinations": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1,1], 1], 
+      "Dot Product": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1,1], 1], 
+      "Matrix Multiplication (Column Picture)": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1], 1], 
+      "Matrix Multiplication (Row Picture)": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1], 1], 
+      "Row Operations": [[1,1,1,1,1, 1,1,1,1], 1], 
+      "Elementary Matrices (Linear Equations)": [[1,1,1,1,1, 1,1,1,1], 1], 
+      "Elementary Matrices (Multiplication)": [[1,1,1,1,1, 1,1,1,1,1, 1,1], 1], 
+      "Inverse Matrices": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1], 1], 
+      "Reduced Row Echelon Form": [[1,1,1,1,1, 1,1,1,1,1, 1,1], 1],
+      "Vector Spaces": [[1,1,1,1,1, 1,1,1,1,1, 1,1], 1],
+    }
+
+    calculusModules = [
+      "Functions (Domain and Range)", 
+      "Functions (Composition)", 
+      "Limit of Functions", 
+      "Evaluating Limits", 
+      "Limit Laws", 
+      "Limit of Functions (Precise Definition)", 
+      "Continuity of Functions", 
+      "Intermediate Value Theorem"]
+    calculusModuleAddresses = {
+      "Functions (Domain and Range)": "", 
+      "Functions (Composition)": "", 
+      "Limit of Functions": "", 
+      "Evaluating Limits": "", 
+      "Limit Laws": "", 
+      "Limit of Functions (Precise Definition)": "", 
+      "Continuity of Functions": "", 
+      "Intermediate Value Theorem": ""}
+    calculusWeights = {
+      "Functions (Domain and Range)": [[1,1,1,1,1], 1], 
+      "Functions (Composition)": [[1,1,1,1,1], 1], 
+      "Limit of Functions": [[1,1,1,1,1], 1], 
+      "Evaluating Limits": [[1,1,1,1,1], 1], 
+      "Limit Laws": [[1,1,1,1,1], 1], 
+      "Limit of Functions (Precise Definition)": [[1,1,1,1,1], 1], 
+      "Continuity of Functions": [[1,1,1,1,1], 1], 
+      "Intermediate Value Theorem": [[1,1,1,1,1], 1]}
+
+    probabilityModules = [
+      "Outcomes and Sample Space", 
+      "Events and Probability", 
+      "Probability of Mutually Exclusive Events", 
+      "Probability of Independent Events", 
+      "Probability of Complementary Events", 
+      "Conditional Probability", 
+      "Bayes' Theorem", 
+      "Discrete Random Variables", 
+      "Expected Value and Variance (Discrete)", 
+      "Binomial Distribution", 
+      "Poisson Distribution", 
+      "Continuous Random Variables", 
+      "Normal Distribution"]
+    probabilityModuleAddresses = {
+      "Outcomes and Sample Space": "", 
+      "Events and Probability": "", 
+      "Probability of Mutually Exclusive Events": "", 
+      "Probability of Independent Events": "", 
+      "Probability of Complementary Events": "", 
+      "Conditional Probability": "", 
+      "Bayes' Theorem": "", 
+      "Discrete Random Variables": "", 
+      "Expected Value and Variance (Discrete)": "", 
+      "Binomial Distribution": "", 
+      "Poisson Distribution": "", 
+      "Continuous Random Variables": "", 
+      "Normal Distribution": ""}
+    probabilityWeights = {
+      "Outcomes and Sample Space": [[1,1,1,1,1], 1], 
+      "Events and Probability": [[1,1,1,1,1], 1], 
+      "Probability of Mutually Exclusive Events": [[1,1,1,1,1], 1], 
+      "Probability of Independent Events": [[1,1,1,1,1], 1], 
+      "Probability of Complementary Events": [[1,1,1,1,1], 1], 
+      "Conditional Probability": [[1,1,1,1,1], 1], 
+      "Bayes' Theorem": [[1,1,1,1,1], 1], 
+      "Discrete Random Variables": [[1,1,1,1,1], 1], 
+      "Expected Value and Variance (Discrete)": [[1,1,1,1,1], 1], 
+      "Binomial Distribution": [[1,1,1,1,1], 1], 
+      "Poisson Distribution": [[1,1,1,1,1], 1], 
+      "Continuous Random Variables": [[1,1,1,1,1], 1], 
+      "Normal Distribution": [[1,1,1,1,1], 1]}
+
+    // This lists all the courses so far
+    labCourses = [
+      "Linear Algebra", 
+      "Calculus", 
+      "Probability", 
+      "Statistics", 
+      "Discrete Math"]
+
+    // This associates the course to modules and addresses
+    associations = {
+      "Linear Algebra": ["LinAlg", linearAlgebraModules, "linear-modules", 
+                         linearAlgebraModuleAddresses, linearAlgebraWeights],
+      "Calculus": ["Calc", calculusModules, "calculus-modules", 
+                   calculusModuleAddresses, calculusWeights],
+      "Probability": ["Prob", probabilityModules, "probability-modules",  
+                      probabilityModuleAddresses, probabilityWeights]}
+
+ 
+
+    linearAlgebraModuleData = {
+      "1": [2,1, 3,0, 0,4, 0,0, 1,3, 
+            0,0, 1,0, 0,2, 1,0, 0,0,
+            1,2, 2,0, 0,5, 0,6], 
+      "2": [1,0, 3,0, 1,2, 1,0, 5,0,
+            1,1, 2,0, 1,4, 2,0, 4,3, 
+            2,2, 3,0, 1,5, 1,6],
+      "3": [0,2, 1,0, 0,0, 0,1, 0,0,
+            0,0, 2,0, 0,4, 1,1, 0,3, 
+            2,1, 0,3, 0,5],
+      "4": [0,1, 0,3, 0,0, 0,0, 0,0,
+            0,0, 0,4, 1,0, 0,0, 0,0, 
+            0,1, 0,0, 0,5],
+      "5": [0,0, 0,0, 0,0, 0,0, 0,0,
+            0,0, 0,0, 0,0, 0,0],
+      "6": [1,0, 0,3, 0,1, 0,3, 0,0,
+            0,0, 2,0, 0,1, 0,0], 
+      "7": [1,0, 0,3, 0,4, 0,0, 0,0,
+            0,0, 0,0, 4,2, 0,0, 0,0,
+            0,0, 1,5], 
+      "8": [1,0, 2,3, 4,4, 1,0, 3,0,
+            1,0, 3,0, 4,2, 2,1, 1,5,
+            1,0, 1,5, 1,1], 
+      "9": [0,0, 0,0, 0,0, 0,0, 0,0,
+            0,0, 0,0, 0,0, 0,0, 0,0,
+            0,0, 0,0],
+            "10": [0,0, 0,0, 0,0, 0,0, 0,0,
+            0,0, 0,0, 0,0, 0,0, 0,0,
+            0,0, 0,0]}
+
+
+  for (let key in linearAlgebraModuleData) {
+  for (var i=0; i<linearAlgebraModuleData[key].length; i++){
+    linearAlgebraModuleData[key][i]=0
+  }
+}
+
+
+    calculusModuleData = {
+      "1": [1,0, 1,0, 1,0, 1,0, 1,0], 
+      "2": [1,0, 3,1, 1,0, 2,1, 1,1], 
+      "3": [0,0, 0,0, 0,0, 0,0, 0,0], 
+      "4": [2,1, 0,3, 0,4, 0,0, 0,1], 
+      "5": [0,1, 0,0, 4,0, 0,0, 0,3], 
+      "6": [0,0, 0,0, 0,0, 0,0, 0,0], 
+      "7": [0,0, 0,0, 0,0, 0,0, 0,0], 
+      "8": [0,0, 0,0, 0,0, 0,0, 0,0]}
+    probabilityModuleData = {
+      "1": [2,1, 3,0, 1,4, 2,0, 1,3], 
+      "2": [2,1, 3,0, 0,4, 0,0, 1,3], 
+      "3": [2,1, 3,0, 0,4, 0,0, 1,3], 
+      "4": [1,4, 3,3, 2,0, 1,0, 1,0], 
+      "5": [0,0, 0,0, 0,0, 0,0, 0,0], 
+      "6": [0,0, 0,0, 0,0, 0,0, 0,0], 
+      "7": [2,1, 0,3, 0,4, 0,0, 0,1], 
+      "8": [5,1, 1,0, 4,0, 2,0, 2,3], 
+      "9": [0,0, 0,0, 0,0, 0,0, 0,0], 
+      "10": [0,0, 0,0, 0,0, 0,0, 0,0], 
+      "11": [0,0, 0,0, 0,0, 0,0, 0,0], 
+      "12": [2,1, 0,3, 0,4, 0,0, 0,1], 
+      "13": [0,1, 0,0, 4,0, 0,0, 0,3]}
+    aggregateModuleData = {
+      "Linear Algebra": linearAlgebraModuleData,
+      "Calculus": calculusModuleData,
+      "Probability": probabilityModuleData}
+
+    }
+   
+    function progress(){
+    user=make_cookject()['user']
+if (user==undefined){
+  alert("You are not logged in!")
+}
+    if (user!=undefined){
+
+      greetUser()
+        fetch("get-progress.php?user="+user)
+.then(function(response){
+  return response.json()})
+  .then(function(data){
+wencinData()
+for (var i=0; i<data.length; i++){
+  mod_num=data[i][0].toString()
+  mod=linearAlgebraModuleData[mod_num]
+  for (var j=0; j<mod.length; j++){
+    mod[j]=data[i][j+2]
+  }
+}
+
+wencinLoad()
+
+
+  })
+}}
+
+inout()
+  progress()
+
+
+
   </script>
 </body>
 </html>

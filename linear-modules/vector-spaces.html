@@ -9,6 +9,14 @@
         <script src="../site-scripts.js"></script>
       </head>
 <style>
+  #try {
+  position: absolute;
+  height: 30px;
+  width: 80px;
+  left: 260px;
+  top: 35px;
+  background-color: white;
+  text-align: center;}
 
 #score {
   position: absolute;
@@ -23,6 +31,10 @@
   position: relative;
   height: 25px;
 }
+
+
+
+
 
  </style>
 
@@ -79,9 +91,9 @@ This module explores the vector space of functions from \(\mathbb{R} \rightarrow
     
 
     
-    <div id="sub">
-        <span>
-          <button  onclick="submit()">Start</button>
+    <div id="sub" style="position:absolute; top:20px">
+        <span >
+          <button  style="width:60px" onclick="submit()">Start</button>
         </span>
         <span>
           <button  onclick="forward()">Skip</button>
@@ -97,7 +109,7 @@ This module explores the vector space of functions from \(\mathbb{R} \rightarrow
     
     
     
-    <div id="outer" style="position:relative;  top:60px; height:550px">
+    <div id="outer" style="position:relative;  top:80px; height:550px">
         <div id="leftInner" style="position:absolute;  top:-10px">
             <p style="position:absolute; text-align: center; left:185px; top:-45px"> \(f(x)\)</p>
 
@@ -408,30 +420,60 @@ a=document.getElementById("a").value
 b=document.getElementById("b").value
 
 if (page==0){
-correct=1
   for (var i=0; i<=10; i++){
     if (gDOTS[i]!=0){
       correct=0}}}
 
 if (page==1){
-  correct=1
   for (var i=0; i<=10; i++){
-    if (gDOTS[i]+fDOTS[i]!=0){
+    if (fDOTS[i]+gDOTS[i]!=0){
       correct=0}}
     if (fDOTS[5]<=0){
       correct=0}}
 
 if (page==2){
-  correct=1
   for (var i=0; i<=10; i++){
-    if (gDOTS[i]+fDOTS[i]!=0 || fDOTS[i]<=0){
+    if (fDOTS[i]+gDOTS[i]!=0 || fDOTS[i]<=0){
       correct=0}}}
 
   if (page==3){
-  correct=1
   for (var i=0; i<=10; i++){
-    if (gDOTS[i]<0 || fDOTS[i]<0 || a*gDOTS[i]+b*fDOTS[i]>=0 ){
+    if (fDOTS[i]<0 || gDOTS[i]<0 || a*fDOTS[i]+b*gDOTS[i]>=0 ){
       correct=0}}}
+
+
+  if (page==4){
+  for (var i=0; i<=10; i++){
+    if (fDOTS[i]<0 || gDOTS[i]<0){
+      correct=0}}
+    positive=0
+    negative=0
+    for (var i=0; i<=10; i++){
+    if (a*fDOTS[i]+b*gDOTS[i]>0 ){
+      positive=1}
+      if (a*fDOTS[i]+b*gDOTS[i]<0 ){
+      negative=1}}
+if (positive==0 || negative==0){
+  correct=0}
+}
+    
+
+if (page==5){
+  for (var i=1; i<=10; i++){
+    if (fDOTS[i]-fDOTS[i-1]<0 || gDOTS[i]-gDOTS[i-1]>0){
+      correct=0}}
+    positive=0
+    negative=0
+    for (var i=1; i<=10; i++){
+    if (a*fDOTS[i]+b*gDOTS[i]-a*fDOTS[i-1]+b*gDOTS[i-1]>0 ){
+      positive=1}
+      if (a*fDOTS[i]+b*gDOTS[i]-a*fDOTS[i-1]-b*gDOTS[i-1]<0 ){
+      negative=1}}
+if (positive==0 || negative==0){
+  correct=0}
+}
+
+  
 
 
 
@@ -464,8 +506,8 @@ var quests=[
 "2. Set \\(a=1=b\\). Find a function \\(f(x)\\) with \\(f(0)>0\\) along with a function \\(g(x)\\) such that \\(f(x)+g(x)=0\\).", 
 "3. Set \\(a=1=b\\). Find a function \\(f(x)\\) with \\(f(x)> 0\\) for all \\(x\\) along with a function \\(g(x)\\) such that \\(f(x)+g(x)=0\\).", 
 "4. Find a function \\(f(x)\\) with \\(f(x)\\geq 0\\) for all \\(x\\) along with a function \\(g(x)\\)  with \\(g(x)\\geq0\\) for all \\(x\\) and a linear combination of them \\(h(x)\\) with \\(h(x)<0\\) for all \\(x\\).", 
-"5. Set",
-"6. Set",
+"5. Find a function \\(f(x)\\) with \\(f(x)\\geq 0\\) for all \\(x\\)  and a function \\(g(x)\\) with \\(g(x)\\geq 0\\) for all \\(x\\)  and a linear combination of them that has points both above and below the \\(x\\) axis.",
+"6. Find a function \\(f(x)\\) that is weakly increasing and a function  \\(g(x)\\) that is weakly decreasing and a linear combination of them which is neither weakly increasing nor weakly decreasing.",
 "7. Set",
 "8. Set",
 "9. Set",
