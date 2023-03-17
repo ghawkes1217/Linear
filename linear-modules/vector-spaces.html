@@ -46,11 +46,44 @@
 <div>
     <h2><center>Module 10: Vector Spaces</center></h2>
 <p>
-This module explores the vector space of functions from \(\mathbb{R} \rightarrow \mathbb{R}\). 
+Abstractly, a vector space is just a set of objects (vectors) which we can add together and multiply by real 
+numbers (scalars) such that the result is still an object in our set.  More precisely, we also need these operations 
+of addition and scalar multiplication to sastisfy the commutatuve, associative and distributive rules and we need a couple 
+facts about what vectors are inside our set.
 
-    
-</div>
+<ul>
+  A1: The set must contain a special vector \(\mathbf{0}\) such that for any other vector \(v\) we have \(v+ \mathbf{0}=v\). 
+  For instance, in \(\mathbb{R}^3\) this special vector is just \([0,0,0]\).
+</ul>
+<ul>
+  A2: For any vector vector \(v\) there is an "opposite" vector \(u\) such that \(v+u=\mathbf{0}\).  For instance,
+  in \(\mathbb{R}^3\) the opposite of \(v=[1,-2,3]\) is \(u=[-1,2,-3]\).
+</ul>
 
+Through most of the course we will be concerned with the vector space \(\mathbb{R}^n\).  In fact, this is the only finite
+dimensional vector space (using real numbers) that exists.  However, there are a few interesting cases of vector spaces 
+that are not finite dimensional.  
+
+We'll look at one such vector space in this module.  Namely, the set of functions with domain \([-5,5]\) and 
+range \(\mathbb{R}\).  Within this vector space we'll explore the ideas of the \(\mathbf{0}\) vector and opposite vectors
+from properties A1 and A2 and also see how we can think of linear combinations of functions just like we think of linear
+combinations of vectors in \(\mathbb{R}^n\). 
+
+Here's some questions to think about while completing the module:
+<ul>
+  <li>Is the set of all constant functions a vector space?</li>
+  <li>Is the set of all increasing functions a vector space?</li>
+  <li> Is the set of all functions that are either increasing functions or decreasing functions a vector space?</li>
+  <li>Is the set of functions that pass through the origin a vector space?</li>
+  <li>Is the set of functions with y-intercept of 1 a vector space?</li>
+</ul>
+
+(What you should be asking yourself in each of these cases is whether or not a linear combination of elements from
+the set will still be an element in that set.)
+
+
+</p>
+<p>
 <div id="question">
     Ready to begin?  Click "Start" to view your first question.
     </div>
@@ -96,10 +129,10 @@ This module explores the vector space of functions from \(\mathbb{R} \rightarrow
           <button  style="width:60px" onclick="submit()">Start</button>
         </span>
         <span>
-          <button  onclick="forward()">Skip</button>
+          <button  onclick="FORWARD();">Skip</button>
         </span>
         <span>
-          <button  onclick="back()">Previous</button>
+          <button  onclick="BACK()">Previous</button>
         </span>
       </div>
     <div id="try">
@@ -153,10 +186,23 @@ MathJax.typesetPromise()
 
 
 
-
+function FORWARD(){
+  forward()
+  make_func()
+  move_dots()
+  draw()
+}
+function BACK(){
+  back()
+  make_func()
+  move_dots()
+  draw()
+}
 
 
 function make_dots(){
+  document.getElementById("a").value=1
+  document.getElementById("b").value=1
     for (var side=0; side<=1; side++){
     for (var i=0; i<=400; i+=40){
 var dot=document.createElement('div')
@@ -170,11 +216,44 @@ var dot=document.createElement('div')
         dot.style.width="10px"
         dot.style.height="10px"
         dot.style.backgroundColor="grey"
-        dot.style.top="95px"
+        if (side==0){  
+        dot.style.top=(95)+"px"}
+        if (side==1){  
+        dot.style.top=(95)+"px"}
         dot.style.left=i-5+"px"
         inner.appendChild(dot)
-        mobilize(dot)}}
+        mobilize(dot)}
+      
+      }
 }
+
+
+
+
+
+function move_dots(){
+  document.getElementById("a").value=1
+  document.getElementById("b").value=1
+for (var side=0; side<=1; side++){
+for (var i=0; i<=400; i+=40){
+    if (side==0){
+    dot=document.getElementById("ldot"+i)}
+    if (side==1){
+      dot=document.getElementById("rdot"+i)}
+    if (side==0){  
+    dot.style.top=(95-funcF[i/40]*20)+"px"}
+    if (side==1){  
+    dot.style.top=(95-funcG[i/40]*20)+"px"}
+    if ((side==0 && funcF[11]==1) || (side==1 &&funcG[11]==1)){
+    mobilize(dot)}
+    if ((side==0 && funcF[11]==0) || (side==1 &&funcG[11]==0)){
+    immobilize(dot)}
+  
+  }}
+}
+
+
+
 
 
 function draw(){
@@ -305,7 +384,8 @@ ctx.stroke();}
 
 
 
-
+function immobilize(tip) {
+    tip.onmousedown = null;  }
 
 
 
@@ -356,6 +436,9 @@ function close() {
 
 function submit(){
 if (initialized==0){
+  make_func()
+  move_dots()
+  draw()
 document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
 document.getElementById("question").innerText=quests[page]
 MathJax.typesetPromise()
@@ -390,6 +473,9 @@ var answeredQuestion = document.createElement('div')
 
 
 page+=1
+make_func()
+move_dots()
+draw()
 document.getElementById("question").innerText=quests[page]
 MathJax.typesetPromise()
 score()
@@ -427,51 +513,126 @@ if (page==0){
 if (page==1){
   for (var i=0; i<=10; i++){
     if (fDOTS[i]+gDOTS[i]!=0){
-      correct=0}}
-    if (fDOTS[5]<=0){
-      correct=0}}
+      correct=0}}}
 
 if (page==2){
   for (var i=0; i<=10; i++){
-    if (fDOTS[i]+gDOTS[i]!=0 || fDOTS[i]<=0){
-      correct=0}}}
-
-  if (page==3){
+    if (fDOTS[i]+gDOTS[i]!=0){
+      correct=0}}}      
+if (page==3){
   for (var i=0; i<=10; i++){
-    if (fDOTS[i]<0 || gDOTS[i]<0 || a*fDOTS[i]+b*gDOTS[i]>=0 ){
-      correct=0}}}
+    if (fDOTS[i]+gDOTS[i]!=0){
+      correct=0}}}  
 
-
-  if (page==4){
+if (page==4){
   for (var i=0; i<=10; i++){
-    if (fDOTS[i]<0 || gDOTS[i]<0){
-      correct=0}}
-    positive=0
-    negative=0
-    for (var i=0; i<=10; i++){
-    if (a*fDOTS[i]+b*gDOTS[i]>0 ){
-      positive=1}
-      if (a*fDOTS[i]+b*gDOTS[i]<0 ){
-      negative=1}}
-if (positive==0 || negative==0){
-  correct=0}
-}
-    
+    if (a*fDOTS[i]+b*gDOTS[i]<=0){
+      correct=0}}}
 
 if (page==5){
+  for (var i=0; i<=10; i++){
+    if (a*fDOTS[i]+b*gDOTS[i]>=0){
+      correct=0}}}
+
+  if (page==6){
+    up=0
+    down=0
+    g_up=0
   for (var i=1; i<=10; i++){
-    if (fDOTS[i]-fDOTS[i-1]<0 || gDOTS[i]-gDOTS[i-1]>0){
+    if (fDOTS[i]+gDOTS[i]>fDOTS[i-1]+gDOTS[i-1] ){
+      up=1}
+      if (fDOTS[i]+gDOTS[i]<fDOTS[i-1]+gDOTS[i-1]){
+      down=1}
+      if (gDOTS[i]>gDOTS[i-1] ){
+      g_up=1}
+  }
+      if (up==0 || down==0 || g_up==1){
+        correct=0}
+      }
+
+
+if (page==7){
+    up=0
+    down=0
+    g_up=0
+  for (var i=0; i<=10; i++){
+    if (fDOTS[i]+gDOTS[i]>0 ){
+      up=1}
+      if (fDOTS[i]+gDOTS[i]<0 ){
+      down=1}
+      if (gDOTS[i]>0 ){
+      g_up=1}
+  }
+      if (up==0 || down==0 || g_up==1){
+        correct=0}
+      }
+
+
+
+      if (page==8){
+    nonzero=0
+    same=1
+  for (var i=0; i<=10; i++){
+    if (gDOTS[i]!=0 ){
+      nonzero=1}
+      if (a*fDOTS[i]+b*gDOTS[i]!=fDOTS[i] ){
       correct=0}}
-    positive=0
-    negative=0
-    for (var i=1; i<=10; i++){
-    if (a*fDOTS[i]+b*gDOTS[i]-a*fDOTS[i-1]+b*gDOTS[i-1]>0 ){
-      positive=1}
-      if (a*fDOTS[i]+b*gDOTS[i]-a*fDOTS[i-1]-b*gDOTS[i-1]<0 ){
-      negative=1}}
-if (positive==0 || negative==0){
-  correct=0}
-}
+      if (a==0 || b==0 || nonzero==0){
+        correct=0}
+      }
+
+      if (page==9){
+    nonzero=0
+    same=1
+  for (var i=0; i<=10; i++){
+    if (gDOTS[i]!=0 ){
+      nonzero=1}
+      if (a*fDOTS[i]+b*gDOTS[i]!=fDOTS[i] ){
+      correct=0}}
+      if (a==0 || b==0 || nonzero==0){
+        correct=0}
+      }
+
+
+      if (page==10){
+    f_zeros=0
+    g_zeros=0
+    fg_zeros=0
+  for (var i=0; i<=10; i++){
+    if (fDOTS[i]==0 ){
+      f_zeros+=1}
+    if (gDOTS[i]==0 ){
+      g_zeros+=1}
+      if (a*fDOTS[i]+b*gDOTS[i]==0 ){
+      fg_zeros+=1}}
+      if (f_zeros!=1 || g_zeros!=1 || fg_zeros!=0){
+        correct=0}
+      }
+
+      if (page==11){
+    f_zeros=0
+    g_zeros=0
+    fg_zeros=0
+  for (var i=0; i<=10; i++){
+    if (fDOTS[i]==0 ){
+      f_zeros+=1}
+    if (gDOTS[i]==0 ){
+      g_zeros+=1}
+      if (a*fDOTS[i]+b*gDOTS[i]==0 ){
+      fg_zeros+=1}}
+      if (f_zeros!=0 || g_zeros!=0 || fg_zeros!=1){
+        correct=0}
+      }
+
+
+      if (page==12){
+        if (a==0 && b==0){
+          correct=0}
+  for (var i=0; i<=4; i++){
+      if (a*fDOTS[i]+b*gDOTS[i]!=a*fDOTS[10-i]+b*gDOTS[10-i]){
+        correct=0}
+      }}
+
 
   
 
@@ -481,40 +642,95 @@ if (correct==0){
 grades[page][1]+=1}
 if (correct==1){
 grades[page][0]+=1}
+your_ans='f='+fDOTS+' g='+ gDOTS+' a='+a+' b='+b
 sql_record(Module_Number)    
-
 return(correct)
 }
 
 
+function make_func(){
+if (page==0){
+  funcF=[-5,-4,-3,-2,-1,0,1,2,3,4,5,1]
+  funcG=[2,2,1,1,0,0,0,1,1,2,2,1]
+}
+if (page==1){
+  funcF=[5,4,3,2,1,0,1,2,3,4,5,0]
+  funcG=[2,2,1,1,0,0,0,1,1,2,2,1]
+}
+if (page==2){
+  funcF=[1,0,1,0,1,0,1,0,1,0,1,0]
+  funcG=[2,2,1,1,0,0,0,1,1,2,2,1]
+}
+if (page==3){
+  funcF=[0,0,0,0,0,-1,-2,-3,-1,1,1,0]
+  funcG=[2,2,1,1,0,0,0,1,1,2,2,1]
+}
+if (page==4){
+  funcF=[3,4,3,2,1,0,0,0,-1,-2,-3,0]
+  funcG=[3,3,1,-1,-1,-1,-1,-1,-2,-3,-4,0]
+}
+if (page==5){
+  funcF=[3,2,1,-2,-1,0,2,3,-1,0]
+  funcG=[1,0,0,-1.5,-2,-1,0,1,-2,-1,-2,0]
+}
+if (page==6){
+  funcF=[-5,-4,-3,-2,-1,0,1,2,3,4,5]
+  funcG=[1,0,0,-1.5,-2,-1,0,1,-2,-1,-2,1]
+}
+if (page==7){
+  funcF=[2,2,3,4,5,5,5,4,3,2,2,0]
+  funcG=[-2,-2,-3,-4,-5,-5,-5,-4,-3,-2,-2,1]
+}
+if (page==8){
+  funcF=[2,2,2,2,2,2,2,2,2,2,2,0]
+  funcG=[2,1,2,1,2,1,2,1,2,1,2,1]
+}
+if (page==9){
+  funcF=[0,1,2,2,3,2,1,0,-1,-2,-2,0]
+  funcG=[2,2,2,2,2,2,2,2,2,2,2,1]
+}
+if (page==10){
+  funcF=[1,1,1,1,1,1,1,1,1,1,1,1]
+  funcG=[2,2,2,2,2,2,2,2,2,2,2,1]
+}
+if (page==11){
+  funcF=[1,1,1,1,1,1,1,1,1,1,1,1]
+  funcG=[2,2,2,2,2,2,2,2,2,2,2,1]
+}
+if (page==12){
+  funcF=[4,2,4,4,2,0,0,0,0,0,0,0]
+  funcG=[0,0,0,0,0,0,-1,-2,-2,-1,-2,0]
+}
 
-
+}
 </script>
 
 <script>
-    make_dots()
-draw()
+
 var Module_Number="10"
 
 the_time=Date.now()
 make_grades(Module_Number)
 
 var initialized=0
-var page=0
+page=0
+make_dots()
+draw()
 var quests=[
-"1. If \\(a=1=b\\), find a function  \\(g(x)\\) such that for any function \\(f(x)\\) we have \\(h(x)=f(x)\\) ",
-"2. Set \\(a=1=b\\). Find a function \\(f(x)\\) with \\(f(0)>0\\) along with a function \\(g(x)\\) such that \\(f(x)+g(x)=0\\).", 
-"3. Set \\(a=1=b\\). Find a function \\(f(x)\\) with \\(f(x)> 0\\) for all \\(x\\) along with a function \\(g(x)\\) such that \\(f(x)+g(x)=0\\).", 
-"4. Find a function \\(f(x)\\) with \\(f(x)\\geq 0\\) for all \\(x\\) along with a function \\(g(x)\\)  with \\(g(x)\\geq0\\) for all \\(x\\) and a linear combination of them \\(h(x)\\) with \\(h(x)<0\\) for all \\(x\\).", 
-"5. Find a function \\(f(x)\\) with \\(f(x)\\geq 0\\) for all \\(x\\)  and a function \\(g(x)\\) with \\(g(x)\\geq 0\\) for all \\(x\\)  and a linear combination of them that has points both above and below the \\(x\\) axis.",
-"6. Find a function \\(f(x)\\) that is weakly increasing and a function  \\(g(x)\\) that is weakly decreasing and a linear combination of them which is neither weakly increasing nor weakly decreasing.",
-"7. Set",
-"8. Set",
-"9. Set",
-"10. Set",
-"11. Set",
-"12. Set",
-"13. Set",
+"1. Find the \\(\\mathbf{0}\\) vector and set \\(g(x)\\) equal to it.  That is, find the function  \\(g(x)\\) such that for any function \\(f(x)\\) we have \\(f(x)+g(x)=f(x)\\).",
+"2. Given the fixed function \\(f(x)\\) on the left find the opposite function.  That is, find \\(g(x)\\) such that \\(f(x)+g(x)=\\mathbf{0}\\).", 
+"3. Given the fixed function \\(f(x)\\) on the left find the opposite function.  That is, find \\(g(x)\\) such that \\(f(x)+g(x)=\\mathbf{0}\\).", 
+"4. Given the fixed function \\(f(x)\\) on the left find the opposite function.  That is, find \\(g(x)\\) such that \\(f(x)+g(x)=\\mathbf{0}\\).", 
+"5. Using the input boxes, find a linear combination \\(h(x)\\) of the given functions \\(f(x)\\) and \\(g(x)\\) such that \\(h(x)>0\\) for all \\(x\\).",
+"6. Using the input boxes, find a linear combination \\(h(x)\\) of the given functions \\(f(x)\\) and \\(g(x)\\) such that \\(h(x)<0\\) for all \\(x\\).",
+"7. Given the function \\(f(x)\\) find a function \\(g(x)\\) that never increases such that \\(h(x)=f(x)+g(x)\\) increases at at least one point and decreases at at least one point.", 
+"8. Given the function \\(f(x)\\) find a function \\(g(x)\\) with \\(g(x) \\leq 0 \\) for all \\(x\\) such that \\(h(x)=f(x)+g(x)\\) has at least one point above the x-axis and at least one point below the x-axis.", 
+"9. Given the fixed function \\(f(x)\\) find a function \\(g(x) \\neq \\mathbf{0} \\) and a linear combination \\(h(x)=af(x)+bg(x)\\) such that \\(a \\neq 0\\neq b\\) and \\(h(x)=f(x)\\).",
+"10. Given the fixed function \\(f(x)\\) find a function \\(g(x) \\neq \\mathbf{0} \\) and a linear combination \\(h(x)=af(x)+bg(x)\\) such that \\(a \\neq 0\\neq b\\) and \\(h(x)=f(x)\\).",
+"11. Find a function \\(f(x)\\) that touches the x-axis in exactly one spot and a function \\(g(x)\\) that touches the x-axis in exactly one spot and a linear combination of them that never touches the \\(x\\)-axis.",
+"12. Find functions \\(f(x)\\) and \\(g(x)\\) that never touch the x-axis and a linear combination of them that touches the \\(x\\)-axis in one point.",
+"13. Given the fixed functions \\(f(x)\\) and \\(g(x)\\) find a non-zero linear combination of them that is symmetric over the y-axis.",
+
 "Good job!!!"]
 
   </script>
