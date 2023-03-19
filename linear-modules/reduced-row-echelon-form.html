@@ -109,6 +109,15 @@
     /* This hides irrelevant elements */
     .hidden {
       display: none;}
+
+    ol {
+      counter-reset: x;
+      list-style-type: none;
+    }
+    ol li::before {
+      counter-increment: x;
+      content: "(" counter(x) ")";
+    }
   </style>
 </head>
 
@@ -116,12 +125,253 @@
   <h2><center>Module 9: Reduced Row Echelon Form</center></h2>
   <div id="introduction">
     <p>
-      Ever wondered if you could determine whether or not the inverse of a large square matrix, say $100\times 100$, exist? It turns out that you can do this in general, using the reduced row echelon form for matrices. 
+      Ever wondered if you could determine whether or not the inverse of a large square matrix, say $100\times 100$, exists? You can actually do this in general, using a reduced row echelon form for matrices. 
     </p>
 
     <p>
-      What exactly is the reduced row echelon form for a matrix? 
+      What exactly is a reduced row echelon form for a matrix? A matrix is said to be in a reduced row echelon form if it 
+      meets all of the following conditions:
+      <ol>
+        <li> Every nonzero row is lead by a 1 (there may be extra zeros before); this entry is also known as a pivot.</li>
+        <li> All entries above and below a pivot must equal 0.</li>
+        <li> For every nonzero row, each row below this row is either a row of zeros or that the pivot of the row below is to the right of the pivot of this row.</li>
+      </ol>
+    </p>
 
+    <p>
+      These conditions would force a reduced row echelon matrix to take a particular shape. Here is a generic example with several pivots, each shown in bolded red:
+      $$\begin{bmatrix}
+        0 & \ldots & 0 & \mathbf{\color{red}{1}} & * & \ldots & * & 0 & * & \ldots & * & 0 & * & \ldots & *\\
+        0 & \ldots & 0 & 0 & 0 & \ldots & 0 & \mathbf{\color{red}{1}} & * & \ldots & * & 0 & * & \ldots & *\\
+        0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 & \mathbf{\color{red}{1}} & * & \ldots & *\\
+        0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 \\
+        0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0
+      \end{bmatrix}.$$
+      Here, each entry with the symbol * denotes that any real number could be in that entry. Moreover, it is entirely possible for some matrices in this form that the pivot on the first row is not lead by zeros, or that there are no columns in between two pivots in consecutive rows, or that the rows of zeros at the bottom do not appear.
+    </p>
+
+    <p>
+      How could we obtain a reduced row echelon form (abbreviated as r.r.e.f) for a matrix? Simply put, we would need to perform 
+      row operations on the matrix until we reach a form as defined above. In order to achieve this systematically, we may perform 
+      the following procedure for every row $R$ in the matrix, beginning from the top and ending at the bottom.
+      <ol>
+        <li> Skip to step (2) if $R$ is a nonzero row. If $R$ is indeed a row of zeros, and that all rows below it consists of zeros, return the current matrix as being in a r.r.e.f. If instead we can find a nonzero row below $R$, we swap $R$ with that nonzero row.</li>
+        <li> Identify the locations of the leading nonzero entry for row $R$ and those of all the rows below it. If the leading nonzero entry of $R$ is not the leftmost one, swap it with another row whose leading nonzero entry is the leftmost. </li>
+        <li> Suppose $a$ is the value of this leading entry. Scale row $R$ by $1/a$ to make it a pivot. </li>
+        <li> Eliminate all other entries in the same column as the pivot for row $R$. Specifically, if another row $R'$ has a nonzero entry $b$ in the same column as the pivot, add $-b$ times row $R$ to row $R'$.</li>
+        <li> Repeat steps (1) through (4) with the row directly below $R$ until we reach the bottommost row.</li>
+      </ol>
+
+      It can be shown more rigorously that a r.r.e.f. for a matrix is unique and does not depend on the row operations involved to 
+      attain it, so we may actually speak of the r.r.e.f. for a matrix. 
+    </p>
+
+    <p>
+      To illustrate the above procedure with an example, let us begin with the matrix 
+      $$A = \begin{bmatrix} 
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      2 & 2 & 0 & -2 & 0 & 2\\
+      3 & -3 & 3 & 0 & -3 & 0
+      \end{bmatrix}$$
+
+      The steps taken according to the procedure outlined above are shown below:
+      $$\begin{aligned}
+      \begin{bmatrix} 
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      2 & 2 & 0 & -2 & 0 & 2\\
+      3 & -3 & 3 & 0 & -3 & 0
+      \end{bmatrix} && \xrightarrow{R_1 \leftrightarrow R_2} &&
+      \begin{bmatrix} 
+      2 & 2 & 0 & -2 & 0 & 2\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      3 & -3 & 3 & 0 & -3 & 0
+      \end{bmatrix} && \xrightarrow{1/2\; R_2} &&
+      \begin{bmatrix} 
+      1 & 1 & 0 & -1 & 0 & 1\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      3 & -3 & 3 & 0 & -3 & 0
+      \end{bmatrix}\\
+      \begin{bmatrix} 
+      1 & 1 & 0 & -1 & 0 & 1\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      3 & -3 & 3 & 0 & -3 & 0
+      \end{bmatrix} && \xrightarrow{-3 R_1 + R_2} && 
+      \begin{bmatrix} 
+      1 & 1 & 0 & -1 & 0 & 1\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      0 & -6 & 3 & 3 & -3 & -3
+      \end{bmatrix} && \xrightarrow{- R_2 + R_1} && 
+      \begin{bmatrix} 
+      1 & 0 & 1 & -2 & -1 & 1\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      0 & -6 & 3 & 3 & -3 & -3
+      \end{bmatrix}\\
+      \begin{bmatrix} 
+      1 & 0 & 1 & -2 & -1 & 1\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      0 & -6 & 3 & 3 & -3 & -3
+      \end{bmatrix} && \xrightarrow{6 R_2 + R_3} && 
+      \begin{bmatrix} 
+      1 & 0 & 1 & -2 & -1 & 1\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      0 & 0 & -3 & 9 & 3 & -3
+      \end{bmatrix} && \xrightarrow{-1/3\; R_3} && 
+      \begin{bmatrix} 
+      1 & 0 & 1 & -2 & -1 & 1\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      0 & 0 & 1 & -3 & -1 & 1
+      \end{bmatrix}\\
+      \begin{bmatrix} 
+      1 & 0 & 1 & -2 & -1 & 1\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      0 & 0 & 1 & -3 & -1 & 1
+      \end{bmatrix} && \xrightarrow{-R_3 + R_1} && 
+      \begin{bmatrix} 
+      1 & 0 & 0 & 1 & 0 & 0\\
+      0 & 1 & -1 & 1 & 1 & 0\\ 
+      0 & 0 & 1 & -3 & -1 & 1
+      \end{bmatrix} && \xrightarrow{R_3 + R_2} && 
+      \begin{bmatrix} 
+      1 & 0 & 0 & 1 & 0 & 0\\
+      0 & 1 & 0 & -2 & 0 & 1\\ 
+      0 & 0 & 1 & -3 & -1 & 1
+      \end{bmatrix}.
+      \end{aligned}$$
+
+      Thus, the r.r.e.f. for $A$ is the matrix $$B = \begin{bmatrix} 1 & 0 & 0 & 1 & 0 & 0\\ 0 & 1 & 0 & -2 & 0 & 1\\ 0 & 0 & 1 & -3 & -1 & 1 \end{bmatrix}.$$
+    </p>
+
+    <p>
+      Now, we could use the r.r.e.f. to determine whether or not a square matrix has an inverse.
+      Consider the matrix $A = \begin{bmatrix} 1 & 1 & 0 \\ 0 & -2 & 0 \\ 0 & 3 & -3 \end{bmatrix}$. 
+      Firstly, we produce a block matrix of the form $M = [A|I]$, where $I$ is the identity matrix with the same dimensions as $A$.
+      In our example, $M$ would look like
+      
+      $$M= \left[\begin{array}{ccc|ccc}
+      1 & 1 & 0 & 1 & 0 & 0 \\
+      0 & -2 & 0 & 0 & 1 & 0 \\
+      0 & 3 & -3 & 0 & 0 & 1 \\
+      \end{array}\right].$$
+    </p>
+
+    <p>
+      Next, we apply row operations until we obtain the r.r.e.f. for $M$. In our example, we have
+      
+      $$\begin{aligned}
+      \left[\begin{array}{ccc|ccc}
+      1 & 1 & 0 & 1 & 0 & 0 \\
+      0 & -2 & 0 & 0 & 1 & 0 \\
+      0 & 3 & -3 & 0 & 0 & 1 \\
+      \end{array}\right] && \xrightarrow{-1/2\; R_2} && 
+      \left[\begin{array}{ccc|ccc}
+      1 & 1 & 0 & 1 & 0 & 0 \\
+      0 & 1 & 0 & 0 & -1/2 & 0 \\
+      0 & 3 & -3 & 0 & 0 & 1 \\
+      \end{array}\right]  && \xrightarrow{-R_2+R_1} && 
+      \left[\begin{array}{ccc|ccc}
+      1 & 0 & 0 & 1 & 1/2 & 0 \\
+      0 & 1 & 0 & 0 & -1/2 & 0 \\
+      0 & 3 & -3 & 0 & 0 & 1 \\
+      \end{array}\right]\\
+      \left[\begin{array}{ccc|ccc}
+      1 & 0 & 0 & 1 & 1/2 & 0 \\
+      0 & 1 & 0 & 0 & -1/2 & 0 \\
+      0 & 3 & -3 & 0 & 0 & 1 \\
+      \end{array}\right] && \xrightarrow{-3R_2+R_3} && 
+      \left[\begin{array}{ccc|ccc}
+      1 & 0 & 0 & 1 & 1/2 & 0 \\
+      0 & 1 & 0 & 0 & -1/2 & 0 \\
+      0 & 0 & -3 & 0 & 3/2 & 1 \\
+      \end{array}\right]  && \xrightarrow{-1/3\; R_3} && 
+      \left[\begin{array}{ccc|ccc}
+      1 & 0 & 0 & 1 & 1/2 & 0 \\
+      0 & 1 & 0 & 0 & -1/2 & 0 \\
+      0 & 0 & 1 & 0 & -1/2 & -1/3 \\
+      \end{array}\right]
+      \end{aligned}$$
+
+      We see that the $3\times 3$ matrix on the left is the identity matrix $I$, so we may read off the inverse of $A$ as 
+      the $3\times 3$ matrix on the right, that is, 
+      $$A^{-1} = \begin{bmatrix} 1 & 1/2 & 0 \\ 0 & -1/2 & 0 \\ 0 & -1/2 & -1/3 \end{bmatrix}.$$
+    </p>
+
+    <p>
+      The procedure above fails if the matrix that we started with has no inverse. Take for instance the matrix 
+      $$B = \begin{bmatrix} 1 & 0 & 1 \\ 2 & 1 & 0 \\ 0 & 1 & -2 \end{bmatrix}.$$
+      Performing row operations on the block matrix $M'=[B|I]$, we obtain the following:
+      
+      $$\begin{aligned}
+      \left[\begin{array}{ccc|ccc}
+      1 & 0 & 1 & 1 & 0 & 0 \\
+      2 & 1 & 0 & 0 & 1 & 0 \\
+      0 & 1 & -2 & 0 & 0 & 1 \\
+      \end{array}\right] && \xrightarrow{-2R_1+R_2} && 
+      \left[\begin{array}{ccc|ccc}
+      1 & 0 & 1 & 1 & 0 & 0 \\
+      0 & 1 & -2 & -2 & 1 & 0 \\
+      0 & 1 & -2 & 0 & 0 & 1 \\
+      \end{array}\right] && \xrightarrow{-R_2+R_3} && 
+      \left[\begin{array}{ccc|ccc}
+      1 & 0 & 1 & 1 & 0 & 0 \\
+      0 & 2 & -2 & -2 & 1 & 0 \\
+      0 & 0 & 0 & 2 & -1 & 1 \\
+      \end{array}\right].
+      \end{aligned}$$
+
+      Looking at the last matrix of the row, since the left part has a row of zeros as we find the r.r.e.f. for $M'$,
+      we end the procedure and conclude that $B$ has no inverse.
+    </p>
+
+    <p>
+      We may also use the r.r.e.f. to determine whether or not a variable in a system of linear equations takes on a specific value. For example, consider the following system of linear equations in variables $v,w,x,y,z$:
+      $$\begin{aligned}
+       2v   -6x-4y &= 14,\\
+      -3v-2w+9x+6y &= -33,\\
+                 y &= -1.
+      \end{aligned}$$
+      Using variables $v,w,x,y,z$ in that order, we represent this system as an augmented matrix 
+      $A=\left[\begin{array}{ccccc|c}
+      2 & 0 & -6 & -4 & 0 & 14\\
+      -3 & -2 & 9 & 6 & 0 & -33\\
+      0 & 0 & 0 & 1 & 0 & -1
+      \end{array}\right]$.
+
+      $$\begin{aligned}
+      \left[\begin{array}{ccccc|c}
+      2 & 0 & -6 & -4 & 0 & 14\\
+      -3 & -2 & 9 & 6 & 0 & -33\\
+      0 & 0 & 0 & 1 & 0 & -1
+      \end{array}\right] && \xrightarrow{1/2\; R_1} && 
+      \left[\begin{array}{ccccc|c}
+      1 & 0 & -3 & -2 & 0 & 7\\
+      -3 & -2 & 9 & 6 & 0 & -33\\
+      0 & 0 & 0 & 1 & 0 & -1
+      \end{array}\right] && \xrightarrow{3\; R_1 + R_2} && 
+      \left[\begin{array}{ccccc|c}
+      1 & 0 & -3 & -2 & 0 & 7\\
+      0 & -2 & 0 & 0 & 0 & -12\\
+      0 & 0 & 0 & 1 & 0 & -1
+      \end{array}\right]\\
+      \left[\begin{array}{ccccc|c}
+      1 & 0 & -3 & -2 & 0 & 7\\
+      0 & -2 & 0 & 0 & 0 & -12\\
+      0 & 0 & 0 & 1 & 0 & -1
+      \end{array}\right] && \xrightarrow{-1/2\; R_2} && 
+      \left[\begin{array}{ccccc|c}
+      1 & 0 & -3 & -2 & 0 & 7\\
+      0 & 1 & 0 & 0 & 0 & 6\\
+      0 & 0 & 0 & 1 & 0 & -1
+      \end{array}\right] && \xrightarrow{2R_3+R_1} && 
+      \left[\begin{array}{ccccc|c}
+      1 & 0 & -3 & 0 & 0 & 5\\
+      0 & 1 & 0 & 0 & 0 & 6\\
+      0 & 0 & 0 & 1 & 0 & -1
+      \end{array}\right]\\
+      \end{aligned}$$
+
+      Now that we have the reduced row echelon form for $A$, we conclude that the value of $w$ is fixed (in fact, $w=6$). 
+      On the other hand, from the same system of equations, as we may see that $v=3x+5$ and that $x$ can take on any real value, thus, $v$ can take on any real value. 
+      Furthermore, there are no restrictions on the value of $z$, so that $z$ can take on any real value too. 
     </p>
   </div>
 
@@ -131,12 +381,23 @@
       Next we use the r.r.e.f. to perform the following tasks:
       <ul>
         <li> Determine whether or not a $3\times 3$ matrix has an inverse, and if so, find its inverse.</li>
-        <li> Discover whether or not a variable in a system of equations can take any real value.</li>
+        <li> Determine whether or not a variable in a system of equations can take on any real value.</li>
       </ul>
 
-      You may specify the row operation type in 
+      For Questions 4 to 8, you may click on 'No Inverse' if there is no inverse matrix as an answer. For Questions 9 to 12, you may click on 'Any Real Value' if instead the variable in question takes on any real value.      
+    </p>
+
+    <p>
+      You may specify the row operation type under the subsection 'Elementary Row Operation'. Clicking on 'Reset' will reset matrix 
+      $A$ to the page default for each question. After performing a row operation on matrix $A$, clicking 'Preview' would show the 
+      result as matrix $B$, also summarized in display within 'Row Operation'. On the other hand, clicking 'Commit' would copy entries 
+      of $B$ into $A$ and stores the row operation into memory. Should you decide to rollback the most recent committed row operation, click on 'Undo'
+      to do that.
     </p>
     
+    <p>
+      You may freely edit the entries of matrix $A$ and use the 'Elementary Row Operation' section as a computational sandbox. Bear in mind that once you decide to alter the entries of $A$ to be different from the previewed matrix $B$, all previous row operations will be forgotten. Entries for all text input are allowed to be rational numbers of the form $a/b$, where $a$ is an integer and $b$ is a nonzero integer.
+    </p>
   </div>
 
   <div class="elementWrapper">
@@ -214,7 +475,8 @@
         </div>
 
         <div class="displayArea">
-          <div id="rowOperation">
+          <h3 class="hidden"><center>Row Operation</center></h3>
+          <div class="hidden" id="rowOperation">
           </div>
         </div>
       </div>
@@ -281,9 +543,9 @@
         </div>
 
         <div class="buttonAreaTwo">
-          <button id="alternateAnswer" class="buttons" onclick="gradeSubmission('alternate')">No Inverse</button>
-          <p id="variable" class=""> Value of $x$: <p>
-          <input type="text" id="value" class="entry">
+          <button id="alternateAnswer" class="buttons hidden" onclick="gradeSubmission('alternate')">No Inverse</button>
+          <p id="variable" class="hidden"> Value of $x$: <p>
+          <input type="text" id="value" class="entry hidden">
         </div>
       </div>
     </div>
@@ -764,13 +1026,9 @@
       address = document.getElementById("itemPrompt")
       address.textContent = s
     }
-  </script>
 
-  <script>
-    /* This script handles row operations settings */
-
-    // This function disables unnecessary parameters to prevent users from changing 
-    // their values
+    /* This function disables unnecessary parameters to prevent users from changing 
+       their values */
     function disableParameters(){
       type = document.getElementById("operationType").value
       jthRow = document.getElementById("row_j")
@@ -797,9 +1055,11 @@
   <script>
     /* This script handles questions display and scoring. 
        It also contains navigational features. */
+
+    var Module_Number = '09'
     page = 0
-    beginQuestions = "false"
-    questions = [
+    initialized = 0
+    quests = [
       "1. Apply row operations to find the r.r.e.f. for the matrix $A$ displayed on the right.",
       "2. Good, now find the r.r.e.f. for this matrix $A$.",
       "3. Nicely done! Next, what is the r.r.e.f of this matrix $A$?",
@@ -814,9 +1074,14 @@
       "12. Nice, what values can $y$ assume in the given system of linear equations?",
       "Terrific!"
     ]
+
+    // Records User Responses to SQL database
+    //the_time = Date.now()
+    //make_grades(Module_Number)
+    
     answered = []
-    for (let i = 0; i < 12; i++)
-      answered.push(0)
+    for (let i = 0; i < 12; i++){
+      answered.push(0)}
 
     function score(){
       scoreBoard = document.getElementById("score")
@@ -847,21 +1112,25 @@
         if (answered[i]==1 && question.style.color=='red'){
           question.style.color = 'green'
           question.innerHTML =  (i+1) + " &#9745"
-          break}
+          break
+        }
       }
     }
     score()
+    
 
     function nextPage(){
-      if (page<answered.length && beginQuestions=="true"){
+      if (page<answered.length && initialized==1){
         document.getElementById("response").textContent = ""
+        clearRowOperation()
         page += 1
         displayQuestion(page)}
     }
 
     function previousPage(){
-      if (page>0 && beginQuestions=="true"){
+      if (page>0 && initialized==1){
         document.getElementById("response").textContent = ""
+        clearRowOperation()
         page -= 1
         displayQuestion(page)}
     }
@@ -874,7 +1143,8 @@
       for (let i=0; i<texts.length; i++){
         if (reply.textContent == texts[i]){
           reply.textContent = texts[(i+1)%3]
-          return }
+          return 
+        }
       }
       reply.textContent = texts[0]
     }
@@ -930,15 +1200,20 @@
       if (!selected){
         return }
       writeRationalMatrix(newMatrix, "b")
-      showRowOperation(A, newOperation, newMatrix)
+      displayRowOperation(A, newOperation, newMatrix)
     }
 
+    // This function commits performed row operation and adds it to memory
     function commitRowOperation(){
       if (newMatrix === null || newOperation === null){
-        return } 
-      //console.log("Before: ", matrixList, operationList)
+        return }
+      A = readRationalMatrix('a')
       if (matrixList.length == 0){
-        A = readRationalMatrix('a')
+        matrixList.push(A)
+      }
+      else if (matrixList[matrixList.length-1].doesNotEqual(A)) {
+        matrixList = []
+        operationList = []
         matrixList.push(A)
       }
       matrixList.push(newMatrix)
@@ -947,10 +1222,9 @@
       
       newMatrix = null
       newOperation = null
-      console.log("Commit: ", matrixList, operationList)
     }
 
-    displayMatrix = false
+    // This function rolls back committed row operation and removes it from memory
     function undoRowOperation(){
       if (operationList.length == 0){
         return }
@@ -960,7 +1234,7 @@
         operation = operationList[operationList.length-2]
         matrixList.pop()
         operationList.pop()
-        showRowOperation(A, operation, B)
+        displayRowOperation(A, operation, B)
         writeRationalMatrix(A, 'a')
         writeRationalMatrix(B, 'b')
       }
@@ -968,26 +1242,36 @@
         matrixList.pop()
         matrixList.pop()
         operationList.pop()
-        displayMatrix = false
-        child = document.getElementById("rowOperation")
-        parent = child.parentNode
-        child.textContent = ""
-        parent.removeChild(parent.firstElementChild)
+        showRow("false")
       }
-      console.log("Undo: ", matrixList, operationList)
     }
 
-    function showRowOperation(matrixA, operation, matrixB){
-      if (!displayMatrix){
-        heading = document.createElement('h3')
-        heading.innerHTML = "<center>Row Operation</center>"
-        child = document.getElementById("rowOperation")
-        parent = child.parentNode
-        parent.insertBefore(heading, child)
-        displayMatrix = true
-      } 
+    function showRow(option){
+      parent = document.getElementsByClassName("displayArea")[0]
+      children = parent.children
+      for (let i=0; i<children.length; i++){
+        child = children[i]
+        if (option == "true"){
+          child.classList.remove("hidden")
+        }
+        else if (option == "false"){
+          child.classList.add("hidden")
+        }
+      }
+    }
+
+    function displayRowOperation(matrixA, operation, matrixB){
+      showRow("true")
       LaTeXifyRowOperation(matrixA, operation, matrixB)
       MathJax.typesetPromise()
+    }
+
+    function clearRowOperation(){
+      showRow("false")
+      matrixList = []
+      operationList = []
+      newMatrix = null
+      newOperation = null
     }
 
     answers = [
@@ -995,15 +1279,13 @@
       new RationalMatrix([[1,"1/2",0,0,"-1/2","3/2"],[0,0,1,0,0,2],[0,0,0,1,"1/3","-2/3"]]),
       new RationalMatrix([[1,0,0,0,"-2/5","3/5"],[0,1,"2/5",0,"1/5","-1/5"],[0,0,0,0,0,0]]),
       new RationalMatrix([[1,0,0,6,-12,54],[0,1,0,5,-4,33],[0,0,1,-2,9,-22]]),
-      
       new RationalMatrix([[1,0,0,"1/2","-1/4","1/6"],[0,1,0,"-1/2","-1/4","1/6"],[0,0,1,"-1/2","-1/4","-1/6"]]),
-      new ResponseString("No inverse"),
-      new ResponseString("No inverse"),
+      new ResponseString("No Inverse"),
+      new ResponseString("No Inverse"),
       new RationalMatrix([[1,0,0,"1/9","-1/2","5/27"],[0,1,0,"1/9",0,"-4/27"],[0,0,1,"-1/9",0,"-5/27"]]),
-      
-      new ResponseString("Any real value"), 
+      new ResponseString("Any Real Value"), 
       parseRational("-4"), 
-      new ResponseString("Any real value"), 
+      new ResponseString("Any Real Value"), 
       parseRational("1/3")]
     function gradeAnswer(page, response){
       correct = "false"
@@ -1020,7 +1302,7 @@
         score()
 
         var answeredQuestion = document.createElement('div')
-        answeredQuestion.textContent = questions[page]
+        answeredQuestion.textContent = quests[page]
         answeredQuestion.setAttribute('class', 'greytext')
         document.getElementById("completed").appendChild(answeredQuestion)}
     }
@@ -1031,12 +1313,10 @@
       new RationalMatrix([[4,2,0,12,2,-2],[-2,-1,1,-3,0,1],[2,1,3,18,5,-3]]),
       new RationalMatrix([[1,4,"8/5",0,"2/5","-1/5"],[2,5,2,0,"1/5","1/5"],[3,10,4,0,"4/5","-1/5"]]),
       new RationalMatrix([[1,-1,1,-1,1,-1],[1,2,4,8,16,32],[1,-3,9,-27,81,-243]]),
-
       new RationalMatrix([[1,-1,0,1,0,0],[-2,0,-2,0,1,0],[0,3,-3,0,0,1]]),
       new RationalMatrix([[1,-1,2,1,0,0],[2,3,0,0,1,0],[0,5,-4,0,0,1]]),
       new RationalMatrix([[0,"3/4","1/3",0,1,0],["2/5","-1/4",0,1,0,0],["-6/5",0,"-1/3",0,0,1]]),
       new RationalMatrix([[0,5,-4,1,0,0],[-2,0,-2,0,1,0],[0,-3,-3,0,0,1]]),
-      
       new RationalMatrix([[1,1,2,-1,2,-1],[0,0,1,1,-2,2],[1,0,0,-3,6,-9]]),
       new RationalMatrix([[-4,6,2,8,10,-19],[-8,8,4,4,17,-24],[2,-2,-1,0,-4,"11/2"]]),
       new RationalMatrix([[1,1,2,-5,8,4],[2,1,4,-3,6,9],[3,0,6,3,-3,15]]),
@@ -1044,7 +1324,7 @@
 
     function displayQuestion(page){
       landingArea = document.getElementById("questionToDisplay") 
-      landingArea.innerHTML = questions[page]
+      landingArea.innerHTML = quests[page]
 
       A = questionPrompts[page]
       buttonAddress = document.getElementById("alternateAnswer")
@@ -1061,7 +1341,7 @@
           B = A.limitColumns(1, 3)
           promptMatrix(B, 'B')
           buttonAddress.classList.remove("hidden")
-          buttonAddress.textContent = "No inverse"
+          buttonAddress.textContent = "No Inverse"
           variableAddress.classList.add("hidden")
           textAddress.classList.add("hidden")
         }
@@ -1071,7 +1351,7 @@
       else if (8<=page && page<12){
         promptEquation(A)
         buttonAddress.classList.remove("hidden")
-        buttonAddress.textContent = "Any real value"
+        buttonAddress.textContent = "Any Real Value"
         variableAddress.classList.remove("hidden")
         variableString = 'xwzy'
         variableAddress.textContent = "Value of $" + variableString[page-8] + "$:"
@@ -1100,7 +1380,7 @@
       disableParameters()
       
       // This resets the matrices' entries
-      if (beginQuestions=="true" && page<12){
+      if (initialized==1 && page<12){
         writeRationalMatrix(questionPrompts[page], "a")
         writeRationalMatrix(questionPrompts[page], "b")
       }
@@ -1109,14 +1389,6 @@
         writeRationalMatrix(Default, "b")
       }
     }
-
-    // Records User Responses to SQL database
-    var Module_Number = '09'
-    the_time = Date.now()
-    grades = []
-    for (u=0; u<14; u++){
-      grades.push([0,0])}
-    sql_record(Module_Number)
 
     function updateCorrect(pageNum){
       grades[page][0]+=1
@@ -1131,65 +1403,62 @@
     }
 
     function gradeSubmission(mode){        
-      if (beginQuestions == "false"){
+      if (initialized == 0){
         button = document.getElementById("submitButton")
         button.textContent = "Submit"
-        beginQuestions = "true"
-
+        initialized = 1
+        clearRowOperation()
         displayQuestion(0)
-        return } 
-      else if (beginQuestions == "true"){
+        return }
+      else if (initialized == 1){
         if (page >= answered.length){
           return }
 
         A = readRationalMatrix("a")
+        correctAnswer = false
         if (page<4){
           if (mode === 'matrix' && gradeAnswer(page, A) == "true"){
-            updateCorrect(page)}
-          else {
-            updateIncorrect(page)}
+            correctAnswer = true}
         }
         else if (4<=page && page<8){
           if (mode === 'matrix'){
             if (gradeAnswer(page, A) == "true"){
-              updateCorrect(page)}
-            else {
-              updateIncorrect(page)}
+              correctAnswer = true}
           }
           else if (mode === 'alternate'){
-            let response = new ResponseString("No inverse")
+            let response = new ResponseString("No Inverse")
             if (gradeAnswer(page, response) == "true"){
-              updateCorrect(page)}
-            else {
-              updateIncorrect(page)}
+              correctAnswer = true}
           }
         }
         else if (8<=page && page<12){
           if (mode === 'matrix'){
             let number = parseRational(document.getElementById("text").value)
             if (gradeAnswer(page, number) == "true"){
-              updateCorrect(page)}
-            else {
-              updateIncorrect(page)}
+              correctAnswer = true}
           }
           else if (mode === 'alternate'){
-            let response = new ResponseString("Any real value")
+            let response = new ResponseString("Any Real Value")
             if (gradeAnswer(page, response) == "true"){
-              updateCorrect(page)}
-            else {
-              updateIncorrect(page)}
+              correctAnswer = true}
           }
-        } 
+        }
+
+        if (correctAnswer){
+          updateCorrect(page)}
+        else {
+          updateIncorrect(page)}
       }
       sql_record(Module_Number)
     }
 
     function automaticSucceed(){
-      if (beginQuestions != "true"){
+      if (initialized != 1){
         return }
       appendCompletedQuestion(page)
       if (page < answered.length){
         page += 1}
+      clearRowOperation()
       displayQuestion(page)
     }
   </script>
