@@ -134,7 +134,8 @@
       <ol>
         <li> Every nonzero row is lead by a 1 (there may be extra zeros before); this entry is also known as a pivot.</li>
         <li> All entries above and below a pivot must equal 0.</li>
-        <li> For every nonzero row, each row below this row is either a row of zeros or that the pivot of the row below is to the right of the pivot of this row.</li>
+        <li> For every nonzero row, either the row below this row is a row of zeros or that the pivot of the row below is 
+        to the right of the pivot of this row.</li>
       </ol>
     </p>
 
@@ -147,7 +148,7 @@
         0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 \\
         0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0
       \end{bmatrix}.$$
-      Here, each entry with the symbol * denotes that any real number could be in that entry. Moreover, it is entirely possible for some matrices in this form that the pivot on the first row is not lead by zeros, or that there are no columns in between two pivots in consecutive rows, or that the rows of zeros at the bottom do not appear.
+      Here, each entry with the symbol * denotes that any real number is possible in that entry. Moreover, it is entirely possible for some matrices in this form where the pivot on the first row is not lead by zeros, or that no columns exists in between two pivots at consecutive rows, or that the rows of zeros at the bottom do not appear.
     </p>
 
     <p>
@@ -157,7 +158,7 @@
       <ol>
         <li> Skip to step (2) if $R$ is a nonzero row. If $R$ is indeed a row of zeros, and that all rows below it consists of zeros, return the current matrix as being in a r.r.e.f. If instead we can find a nonzero row below $R$, we swap $R$ with that nonzero row.</li>
         <li> Identify the locations of the leading nonzero entry for row $R$ and those of all the rows below it. If the leading nonzero entry of $R$ is not the leftmost one, swap it with another row whose leading nonzero entry is the leftmost. </li>
-        <li> Suppose $a$ is the value of this leading entry. Scale row $R$ by $1/a$ to make it a pivot. </li>
+        <li> Suppose $a$ is the value of this leading entry for row $R$. Scale row $R$ by $1/a$ to make it a pivot. </li>
         <li> Eliminate all other entries in the same column as the pivot for row $R$. Specifically, if another row $R'$ has a nonzero entry $b$ in the same column as the pivot, add $-b$ times row $R$ to row $R'$.</li>
         <li> Repeat steps (1) through (4) with the row directly below $R$ until we reach the bottommost row.</li>
       </ol>
@@ -388,11 +389,12 @@
     </p>
 
     <p>
-      You may specify the row operation type under the subsection 'Elementary Row Operation'. Clicking on 'Reset' will reset matrix 
+      You may specify the row operation type under the 'Elementary Row Operation' area. Clicking on 'Reset' will reset matrix 
       $A$ to the page default for each question. After performing a row operation on matrix $A$, clicking 'Preview' would show the 
-      result as matrix $B$, also summarized in display within 'Row Operation'. On the other hand, clicking 'Commit' would copy entries 
-      of $B$ into $A$ and stores the row operation into memory. Should you decide to rollback the most recent committed row operation, click on 'Undo'
-      to do that.
+      result as matrix $B$, also summarized in display within 'Performed Row Operation' area. On the other hand, clicking 'Commit' 
+      would copy entries of $B$ into $A$ and stores the row operation into memory. You may preview another row operation without 
+      committing if you change your mind and decide to explore other possibilities. Should you decide to rollback the most recent 
+      committed row operation, click on 'Undo' to do that.
     </p>
     
     <p>
@@ -475,7 +477,7 @@
         </div>
 
         <div class="displayArea">
-          <h3 class="hidden"><center>Row Operation</center></h3>
+          <h3 class="hidden"><center>Performed Row Operation</center></h3>
           <div class="hidden" id="rowOperation">
           </div>
         </div>
@@ -558,9 +560,15 @@
   </div>
 
   <script>
-    /* This script handles rational numbers - both input and output. 
-       Also, it defines methods for rational-valued matrices. */
+    /////////////////////////////////
+    // Classes of Response Objects //
+    /////////////////////////////////
 
+    /* This script handles rational numbers - both input and output. 
+       Also, it defines methods for rational-valued matrices. 
+    */
+
+    // Returns the gcd of two integers
     function gcd(a, b){
       if (a==0 && b==0){
         alert("Both integers cannot be both zero.")
@@ -887,6 +895,7 @@
       }
     }
 
+    // This class structures a string as a response string that can be compared with other objects 
     class ResponseString{
       constructor(string){
         this.response = string}
@@ -903,8 +912,13 @@
   </script>
 
   <script>
+    ////////////////////////////
+    // Matrix-Related Methods //
+    ////////////////////////////
+
     /* This script handles matrix input and output.
-       It also checks for matrix equality. */
+       It also checks for matrix equality. 
+    */
 
     function readRationalMatrix(string){
       M = []
@@ -1053,8 +1067,11 @@
   </script>
 
   <script>
-    /* This script handles questions display and scoring. 
-       It also contains navigational features. */
+    /* 
+      This script handles question display, grading and scoring.
+      Furthermore, it tracks performed row operations. 
+      It also contains page navigational features. 
+    */
 
     var Module_Number = '09'
     page = 0
@@ -1076,7 +1093,7 @@
     ]
 
     // Records User Responses to SQL database
-    //the_time = Date.now()
+    the_time = Date.now()
     //make_grades(Module_Number)
     
     answered = []
@@ -1117,7 +1134,10 @@
       }
     }
     score()
-    
+
+    /////////////////////////////
+    // Page navigation buttons //
+    /////////////////////////////
 
     function nextPage(){
       if (page<answered.length && initialized==1){
@@ -1135,26 +1155,31 @@
         displayQuestion(page)}
     }
 
-    function pointOut(){
-      reply = document.getElementById("response")
-      texts = ["Not quite, please try again.", 
-               "This is slightly incorrect, please check once more.",
-               "You're almost there, don't give up!"]
-      for (let i=0; i<texts.length; i++){
-        if (reply.textContent == texts[i]){
-          reply.textContent = texts[(i+1)%3]
-          return 
-        }
-      }
-      reply.textContent = texts[0]
+    function automaticSucceed(){
+      if (initialized != 1){
+        return }
+      appendCompletedQuestion(page)
+      if (page < answered.length){
+        page += 1}
+      clearRowOperation()
+      displayQuestion(page)
     }
 
-    // This function applies an elementary row operation
+    ////////////////////////////
+    // Row operation tracking //
+    ////////////////////////////
+
+    // These form the internal memory for stored row operations and matrices
     let matrixList = []
     let operationList = []
     let newMatrix = null
     let newOperation = null
+    
     function previewRowOperation(){
+      /* 
+        Applies and previews an elementary row operation
+        Temporarily stores the new matrix and row operation
+      */
       let selected = true
 
       type = document.getElementById("operationType").value
@@ -1203,8 +1228,15 @@
       displayRowOperation(A, newOperation, newMatrix)
     }
 
-    // This function commits performed row operation and adds it to memory
     function commitRowOperation(){
+      /* 
+        Commits the performed row operation and adds the new matrix and row operation 
+        into memory
+        
+        Should the user decides to commit a (matrix, row operation) pair that 
+        is not possible from the most recent ones, all previous matrices and 
+        row operations are removed from memory and the new pair is committed instead
+      */
       if (newMatrix === null || newOperation === null){
         return }
       A = readRationalMatrix('a')
@@ -1224,8 +1256,11 @@
       newOperation = null
     }
 
-    // This function rolls back committed row operation and removes it from memory
     function undoRowOperation(){
+      /* 
+       Rolls back the most recently committed row operation and removes 
+       the corresponding a (matrix, row operation) pair from memory
+      */
       if (operationList.length == 0){
         return }
       if (operationList.length > 1){
@@ -1247,6 +1282,7 @@
     }
 
     function showRow(option){
+      // Shows or hides all elements in the Performed Row Operation area
       parent = document.getElementsByClassName("displayArea")[0]
       children = parent.children
       for (let i=0; i<children.length; i++){
@@ -1261,18 +1297,24 @@
     }
 
     function displayRowOperation(matrixA, operation, matrixB){
+      // Adds row operation preview
       showRow("true")
       LaTeXifyRowOperation(matrixA, operation, matrixB)
       MathJax.typesetPromise()
     }
 
     function clearRowOperation(){
+      // Removes row operation preview and resets internal memory
       showRow("false")
       matrixList = []
       operationList = []
       newMatrix = null
       newOperation = null
     }
+
+    ///////////////////////////////
+    // Grading related functions //
+    ///////////////////////////////
 
     answers = [
       new RationalMatrix([[1,0,0,-1,1,-1],[0,1,0,0,-2,2],[0,0,1,0,0,-3]]),
@@ -1284,10 +1326,11 @@
       new ResponseString("No Inverse"),
       new RationalMatrix([[1,0,0,"1/9","-1/2","5/27"],[0,1,0,"1/9",0,"-4/27"],[0,0,1,"-1/9",0,"-5/27"]]),
       new ResponseString("Any Real Value"), 
-      parseRational("-4"), 
+      parseRational("-2"), 
       new ResponseString("Any Real Value"), 
       parseRational("1/3")]
     function gradeAnswer(page, response){
+      // Defines the grading of a submitted answer
       correct = "false"
       reference = answers[page]
       if (response.equals(reference)){
@@ -1297,6 +1340,10 @@
     }
 
     function appendCompletedQuestion(page){
+      /* 
+        Adds a recently completed question if no correct attempt was 
+        submitted before
+      */
       if (answered[page] == 0){
         answered[page] = 1
         score()
@@ -1323,6 +1370,7 @@
       new RationalMatrix([[6,-2,12,9,-4,-3],[-3,1,-6,-3,2,2],[-3,1,6,-6,-2,-5]])]
 
     function displayQuestion(page){
+      // Handles the display of questions and question prompts
       landingArea = document.getElementById("questionToDisplay") 
       landingArea.innerHTML = quests[page]
 
@@ -1366,8 +1414,11 @@
       MathJax.typesetPromise()
     }
 
-    // This functions resets the entire progress of row operations
     function resetSettings(){
+      /* 
+        This functions resets the row operations settings and rewrites the matrix 
+        for the page
+      */
       let i = 1
       let j = 1
       let c = 1
@@ -1391,18 +1442,36 @@
     }
 
     function updateCorrect(pageNum){
-      grades[page][0]+=1
+      //grades[page][0]+=1
       document.getElementById("response").textContent = ""
       appendCompletedQuestion(page)
       nextPage()
     }
 
+    function pointOut(){
+      reply = document.getElementById("response")
+      texts = ["Not quite, please try again.", 
+               "This is slightly incorrect, please check once more.",
+               "You're almost there, don't give up!"]
+      for (let i=0; i<texts.length; i++){
+        if (reply.textContent == texts[i]){
+          reply.textContent = texts[(i+1)%3]
+          return 
+        }
+      }
+      reply.textContent = texts[0]
+    }
+
     function updateIncorrect(pageNum){
-      grades[page][1]+=1
+      //grades[page][1]+=1
       pointOut()
     }
 
-    function gradeSubmission(mode){        
+    function gradeSubmission(mode){
+      /* 
+        This function defines the behavior after the submission of an incorrect 
+        or a correct attempt 
+      */       
       if (initialized == 0){
         button = document.getElementById("submitButton")
         button.textContent = "Submit"
@@ -1420,6 +1489,12 @@
           if (mode === 'matrix' && gradeAnswer(page, A) == "true"){
             correctAnswer = true}
         }
+        /* 
+        For questions 4 through 12
+        If user enters a matrix or a number, then the function compares its value against the answer
+        Otherwise, the user enters an alternate answer and the function compares the response against 
+        the answer
+        */
         else if (4<=page && page<8){
           if (mode === 'matrix'){
             if (gradeAnswer(page, A) == "true"){
@@ -1433,7 +1508,7 @@
         }
         else if (8<=page && page<12){
           if (mode === 'matrix'){
-            let number = parseRational(document.getElementById("text").value)
+            let number = parseRational(document.getElementById("value").value)
             if (gradeAnswer(page, number) == "true"){
               correctAnswer = true}
           }
@@ -1450,16 +1525,6 @@
           updateIncorrect(page)}
       }
       sql_record(Module_Number)
-    }
-
-    function automaticSucceed(){
-      if (initialized != 1){
-        return }
-      appendCompletedQuestion(page)
-      if (page < answered.length){
-        page += 1}
-      clearRowOperation()
-      displayQuestion(page)
     }
   </script>
 </body>
