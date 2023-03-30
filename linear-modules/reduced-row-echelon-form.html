@@ -1094,53 +1094,14 @@
 
     // Records User Responses to SQL database
     the_time = Date.now()
-    //make_grades(Module_Number)
-    
-    answered = []
-    for (let i = 0; i < 12; i++){
-      answered.push(0)}
-
-    function score(){
-      scoreBoard = document.getElementById("score")
-
-      // This creates the score board initially
-      if (scoreBoard.firstChild == null){
-        var scoreCard = document.createElement('h1')
-        scoreCard.style.fontSize="x-large"
-        scoreCard.style.textAlign="left"
-        scoreCard.innerHTML="Score Card"
-        scoreBoard.appendChild(scoreCard)
-
-        for(let i=0; i<answered.length; i++){
-          var question = document.createElement('div')
-          question.style.fontSize = "x-large"
-          question.style.textAlign = "left"
-          question.id = 'q' + i
-          question.innerHTML =  (i+1) + " &#x2610" 
-          question.style.color = 'red'
-          scoreBoard.appendChild(question)
-        } 
-        return }
-
-      // This looks for the question that was most recently answered correctly
-      // and modifies its HTML and CSS properties
-      for (let i=0; i<answered.length; i++){
-        question = document.getElementById('q'+i)
-        if (answered[i]==1 && question.style.color=='red'){
-          question.style.color = 'green'
-          question.innerHTML =  (i+1) + " &#9745"
-          break
-        }
-      }
-    }
-    score()
+    make_grades(Module_Number)
 
     /////////////////////////////
     // Page navigation buttons //
     /////////////////////////////
 
     function nextPage(){
-      if (page<answered.length && initialized==1){
+      if (page<quests.length && initialized==1){
         document.getElementById("response").textContent = ""
         clearRowOperation()
         page += 1
@@ -1159,7 +1120,7 @@
       if (initialized != 1){
         return }
       appendCompletedQuestion(page)
-      if (page < answered.length){
+      if (page < quests.length){
         page += 1}
       clearRowOperation()
       displayQuestion(page)
@@ -1344,8 +1305,7 @@
         Adds a recently completed question if no correct attempt was 
         submitted before
       */
-      if (answered[page] == 0){
-        answered[page] = 1
+      if (grades[page][0] == 1){
         score()
 
         var answeredQuestion = document.createElement('div')
@@ -1442,7 +1402,7 @@
     }
 
     function updateCorrect(pageNum){
-      //grades[page][0]+=1
+      grades[page][0]+=1
       document.getElementById("response").textContent = ""
       appendCompletedQuestion(page)
       nextPage()
@@ -1463,7 +1423,7 @@
     }
 
     function updateIncorrect(pageNum){
-      //grades[page][1]+=1
+      grades[page][1]+=1
       pointOut()
     }
 
@@ -1480,7 +1440,7 @@
         displayQuestion(0)
         return }
       else if (initialized == 1){
-        if (page >= answered.length){
+        if (page >= quests.length){
           return }
 
         A = readRationalMatrix("a")
