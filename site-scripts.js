@@ -70,7 +70,9 @@ if (user==undefined){
       grd.push([parseFloat(data[2*i+2]),parseFloat(data[2*i+3])])
     }
     grades=grd
+
     score()
+  
 })  
 
   }

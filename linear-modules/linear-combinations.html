@@ -164,92 +164,6 @@
   text-align: center;}
   
   
-  #M11 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 10px;
-  top: 20px;
-  background-color: blue;
-  text-align: center;}
-  
-  #M21 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 10px;
-  top: 50px;
-  background-color: blue;
-  text-align: center;}
-  
-  
-  #M31 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 10px;
-  top: 80px;
-  background-color: blue;
-  text-align: center;} 
-
-  
- #M12 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 80px;
-  top: 20px;
-  background-color: yellow;
-  text-align: center;}
-  
-  #M22 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 80px;
-  top: 50px;
-  background-color: yellow;
-  text-align: center;}
-  
-  
-  #M32 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 80px;
-  top: 80px;
-  background-color: yellow;
-  text-align: center;} 
-  
-  
-  #M13 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 150px;
-  top: 20px;
-  background-color: red;
-  text-align: center;}
-  
-  #M23 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 150px;
-  top: 50px;
-  background-color: red;
-  text-align: center;}
-  
-  
-  #M33 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 150px;
-  top: 80px;
-  background-color: red;
-  text-align: center;} 
-
 
   #M14 {
   position: absolute;
@@ -278,11 +192,6 @@
 
 
 
-
-
-
-
-
 #bottommatrix {
   position: absolute;
   height: 120px;
@@ -293,94 +202,7 @@
   text-align: center;
   border: 9px solid #d3d3d3;}
   
-  #A11 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 10px;
-  top: 20px;
-  background-color: blue;
-  text-align: center;}
-  
-  #A21 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 10px;
-  top: 50px;
-  background-color: blue;
-  text-align: center;}
-  
-  
-  #A31 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 10px;
-  top: 80px;
-  background-color: blue;
-  text-align: center;} 
-
-  
- #A12 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 80px;
-  top: 20px;
-  background-color: yellow;
-  text-align: center;}
-  
-  #A22 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 80px;
-  top: 50px;
-  background-color: yellow;
-  text-align: center;}
-  
-  
-  #A32 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 80px;
-  top: 80px;
-  background-color: yellow;
-  text-align: center;} 
-  
-  
-  #A13 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 150px;
-  top: 20px;
-  background-color: red;
-  text-align: center;}
-  
-  #A23 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 150px;
-  top: 50px;
-  background-color: red;
-  text-align: center;}
-  
-  
-  #A33 {
-  position: absolute;
-  height: 20px;
-  width: 70px;
-  left: 150px;
-  top: 80px;
-  background-color: red;
-  text-align: center;} 
-
-
-
+ 
 
 #vector {
   position: absolute;
@@ -456,6 +278,11 @@
   background-color: lightgrey;
   text-align: center;}
 
+.matrixBox{
+  position: absolute;
+  height: 20px;
+  width: 70px;
+  text-align: center;}
 
 
  </style>
@@ -553,27 +380,6 @@ The matrix equation representing your selection is shown to the right.
 
 <div id="topmatrix">
 
-<div id="M11">
-</div>
-<div id="M21">
-</div>
-<div id="M31">
-</div>
-
-<div id="M12">
-</div>
-<div id="M22">
-</div>
-<div id="M32">
-</div>
-
-
-<div id="M13">
-</div>
-<div id="M23">
-</div>
-<div id="M33">
-</div>
 
 <div id="M14">
   <small>Vertices</small>
@@ -670,28 +476,6 @@ The matrix equation representing your selection is shown to the right.
 
 <div id="bottommatrix">
 
-<div id="A11">
-</div>
-<div id="A21">
-</div>
-<div id="A31">
-</div>
-
-<div id="A12">
-</div>
-<div id="A22">
-</div>
-<div id="A32">
-</div>
-
-
-<div id="A13">
-</div>
-<div id="A23">
-</div>
-<div id="A33">
-</div>
-
 
 
 </div>
@@ -747,31 +531,29 @@ Faces
 
 
 
+
 function make_mat(){
-m11=parseFloat(document.getElementById("M11").innerText)
-m21=parseFloat(document.getElementById("M21").innerText)
-m31=parseFloat(document.getElementById("M31").innerText)
-c1=parseFloat(document.getElementById("tnum").innerText)
 
 
-m12=parseFloat(document.getElementById("M12").innerText)
-m22=parseFloat(document.getElementById("M22").innerText)
-m32=parseFloat(document.getElementById("M32").innerText)
-c2=parseFloat(document.getElementById("snum").innerText)
+var M=[]
+for (let i=1; i<4; i++){
+  M.push([])
+  for (let j=1; j<4; j++){
+    M[i-1].push(document.getElementById(("M"+i)+j).innerText)
+  }
+}
+let c1=parseFloat(document.getElementById("tnum").innerText)
+let c2=parseFloat(document.getElementById("snum").innerText)
+let c3=parseFloat(document.getElementById("onum").innerText)
 
-m13=parseFloat(document.getElementById("M13").innerText)
-m23=parseFloat(document.getElementById("M23").innerText)
-m33=parseFloat(document.getElementById("M33").innerText)
-c3=parseFloat(document.getElementById("onum").innerText)
-
-v1=parseFloat(document.getElementById("V1").innerText)
-v2=parseFloat(document.getElementById("V2").innerText)
-v3=parseFloat(document.getElementById("V3").innerText)
+let v1=parseFloat(document.getElementById("V1").innerText)
+let v2=parseFloat(document.getElementById("V2").innerText)
+let v3=parseFloat(document.getElementById("V3").innerText)
 
 Mat=document.getElementById('MatEq')
-Mat_string='\\[ \\begin{bmatrix}\\textcolor{blue}{'+m11+'}&\\textcolor{yellow}{'+m12+'}&\\textcolor{red}{'+m13+'}\\\\'
-Mat_string+='\\textcolor{blue}{'+m21+'}&\\textcolor{yellow}{'+m22+'}&\\textcolor{red}{'+m23+'}\\\\'
-Mat_string+='\\textcolor{blue}{'+m31+'}&\\textcolor{yellow}{'+m32+'}&\\textcolor{red}{'+m33+'}\\end{bmatrix}'
+Mat_string='\\[ \\begin{bmatrix}\\textcolor{blue}{'+M[0][0]+'}&\\textcolor{yellow}{'+M[0][1]+'}&\\textcolor{red}{'+M[0][2]+'}\\\\'
+Mat_string+='\\textcolor{blue}{'+M[1][0]+'}&\\textcolor{yellow}{'+M[1][1]+'}&\\textcolor{red}{'+M[1][2]+'}\\\\'
+Mat_string+='\\textcolor{blue}{'+M[2][0]+'}&\\textcolor{yellow}{'+M[2][1]+'}&\\textcolor{red}{'+M[2][2]+'}\\end{bmatrix}'
 Mat_string+='\\begin{bmatrix}\\textcolor{blue}{'+c1+'}\\\\ \\textcolor{yellow}{'+c2+'}\\\\ \\textcolor{red}{'+c3+'}\\end{bmatrix}'
 Mat_string+='=\\begin{bmatrix}\\textcolor{green}{'+v1+'}\\\\ \\textcolor{green}{'+v2+'}\\\\ \\textcolor{green}{'+v3+'}\\end{bmatrix}\\]'
 Mat.innerHTML=Mat_string
@@ -976,7 +758,38 @@ initialized=1
 
 
 
+function make_divs(){
+var plato=[[4,8,6],[6,12,12],[4,6,8]]
+var jColor=["blue","yellow","red"]
+var top=document.getElementById("topmatrix")
+for (let i=0; i<3; i++){
+  for (let j=0; j<3; j++){
+    let box=document.createElement('div')
+    box.className="matrixBox"
+    box.style.top=20+(i*30)+"px"
+    box.style.left=10+(j*70)+"px"
+    box.style.backgroundColor=jColor[j]
+    box.id="M"+(i+1)+(j+1)
+    box.innerText=plato[i][j]
+  top.appendChild(box)
+}}
 
+
+var bottom=document.getElementById("bottommatrix")
+for (let i=0; i<3; i++){
+  for (let j=0; j<3; j++){
+    let box=document.createElement('div')
+    box.className="matrixBox"
+    box.style.top=20+(i*30)+"px"
+    box.style.left=10+(j*70)+"px"
+    box.style.backgroundColor=jColor[j]
+    box.id="A"+(i+1)+(j+1)
+    box.innerText="0"
+  bottom.appendChild(box)
+}}
+
+
+}
 
 
 var Module_Number="01"
@@ -1005,7 +818,10 @@ var quests=[
 the_time=Date.now()
 
 make_grades(Module_Number)
+
+make_divs()
 zero()
+
 </script>
 
 

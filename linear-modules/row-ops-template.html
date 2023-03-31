@@ -19,8 +19,6 @@
 
 #outer {
   position: absolute;
-  height: 300px;
-  width: 475px;
   left: 0px;
   top: 90px;
   background-color: white;
@@ -275,97 +273,17 @@
 
 
 
-#switch12 {
-  position: absolute;
-  height: 20px;
-  width: 375px;
-  left: 100px;
-  top: 55px;
-  background-color: white;}
 
-  #switch23 {
-  position: absolute;
-  height: 20px;
-  width: 375px;
-  left: 100px;
-  top: 130px;
-  background-color: white;}
+ 
 
-  #switch34 {
+  .inp {
   position: absolute;
-  height: 20px;
-  width: 375px;
-  left: 100px;
-  top: 205px;
-  background-color: white;}
-
-  #in1 {
-  position: absolute;
+  left: 5px;
   height: 40px;
   width: 55px;
-  left: 5px;
-  top: 5px;
-  background-color: white;}
-
-  #in2 {
-  position: absolute;
-  height: 40px;
-  width: 55px;
-  left: 5px;
-  top: 80px;
-  background-color: white;}
-
-  #in3 {
-  position: absolute;
-  height: 40px;
-  width: 55px;
-  left: 5px;
-  top: 155px;
-  background-color: white;}
-
-  #in4 {
-  position: absolute;
-  height: 40px;
-  width: 55px;
-  left: 5px;
-  top: 230px;
   background-color: white;}
 
 
-
-  #mult1 {
-  position: absolute;
-  height: 46px;
-  width: 28px;
-  left: 70px;
-  top: 5px;
-  background-color: rgb(179, 172, 172);}
-
-  #mult2 {
-  position: absolute;
-  height: 46px;
-  width: 28px;
-  left: 70px;
-  top: 80px;
-  background-color: rgb(179, 172, 172);}
-
-
-  #mult3 {
-  position: absolute;
-  height: 46px;
-  width: 28px;
-  left: 70px;
-  top: 155px;
-  background-color: rgb(179, 172, 172);}
-
-
-  #mult4 {
-  position: absolute;
-  height: 46px;
-  width: 28px;
-  left: 70px;
-  top: 230px;
-  background-color: rgb(179, 172, 172);}
 
 
 
@@ -436,7 +354,7 @@
  </style>
  
  
- .
+ 
  
 
  
@@ -534,53 +452,13 @@ h
 
 
 <div id="outer">
-    <input id = "in1"  type='text' style='font-size: 22px'></input>
-    <input id = "in2"  type='text' style='font-size: 22px'></input>
-
-    <input id = "in3"  type='text' style='font-size: 22px'></input>
-    <input id = "in4"  type='text' style='font-size: 22px'></input>
-
-    <button id="switch12" onclick="swi(1)"></button>
-    <button id="switch23" onclick="swi(2)"></button>
-    <button id="switch34" onclick="swi(3)"></button>
 
 
-    <button id="mult1" style='font-size: 22px' onclick="mult(1)">&times</button>
-    <button id="mult2" style='font-size: 22px' onclick="mult(2)">&times</button>
-    <button id="mult3" style='font-size: 22px' onclick="mult(3)">&times</button>
-    <button id="mult4" style='font-size: 22px' onclick="mult(4)">&times</button>
+  
 
-<div id="bluetip">
-    <div id="blue1" class="center"></div>
-    <div id="blue2" class="center"></div>
-    <div id="blue3" class="center"></div>
-    <div id="blue4" class="center"></div>
-    <div id="blue5" class="center"></div>
-</div>
 
-<div id="greentip">
-    <div id="green1" class="center"></div>
-    <div id="green2" class="center"></div>
-    <div id="green3" class="center"></div>
-    <div id="green4" class="center"></div>
-    <div id="green5" class="center"></div>
-</div>
 
-<div id="redtip">
-    <div id="red1" class="center"></div>
-    <div id="red2" class="center"></div>
-    <div id="red3" class="center"></div>
-    <div id="red4" class="center"></div>
-    <div id="red5" class="center"></div>
-</div>
 
-<div id="yellowtip">
-    <div id="yellow1" class="center"></div>
-    <div id="yellow2" class="center"></div>
-    <div id="yellow3" class="center"></div>
-    <div id="yellow4" class="center"></div>
-    <div id="yellow5" class="center"></div>
-</div>
 
 <div id="line">
 
@@ -609,15 +487,103 @@ Solutions
 
 
 <script>
+const colorList=["blue","green","red","yellow","orange","brown"]
+numRows=5
+numCols=6
+
+function create_matrix(){
+
+var outer=document.getElementById('outer')
+outer.value=[numRows,numCols]
+outer.style.height=75*numRows+50+"px"
+outer.style.width=75*numCols+90+"px"
+//inputs
+for (var i=0; i<numRows; i++){
+    var inp=document.createElement('input')
+    inp.style.top=(75*i+5)+"px"
+    inp.style.position="absolute"
+    inp.style.backgroundColor="white"
+    inp.style.left="5px"
+    inp.id="in"+(i+1)
+    inp.type="text" 
+    inp.style.fontSize="22px"
+    inp.style.width="55px"
+    inp.style.height="40px"
+    inp.name=i
+    outer.appendChild(inp)
+}
+
+
+//switches
+
+for (var i=0; i<numRows-1; i++){
+  var swit=document.createElement('button')
+  swit.id="switch"+(i+1)+(i+2)
+  swit.addEventListener("click",function() {swi()},false)
+  swit.style.position="absolute"
+  swit.style.backgroundColor="white"
+  swit.style.height="20px"
+  swit.style.width=numCols*75+"px"
+  swit.style.left="100px"
+  swit.style.top=(75*i+55)+"px"
+  swit.name=i
+  outer.appendChild(swit)}
 
 
 
 
+//multipliers
+for (var i=0; i<numRows; i++){
+  var multi=document.createElement('button')
+  multi.style.fontSize="22px"
+  multi.id="mult"+(i+1)
+  multi.innerHTML="&times"
+  multi.addEventListener("click",function() {mult()},false)
+  multi.style.position="absolute"
+  multi.style.height="46px"
+  multi.style.width="28px"
+  multi.style.left="70px"
+  multi.style.top=(75*i+5)+"px"
+  multi.style.backgroundColor="rgb(179, 172, 172)"
+  multi.name=i
+  outer.appendChild(multi)}
 
 
-</script>
+//rows
+var Colors=colorList
+var outer=document.getElementById("outer")
+for (var i=0; i<numRows; i++){
+var row=document.createElement('div')
+row.style.position="absolute";
+row.style.height="55px";
+row.style.width=(numCols*75)+"px";
+row.style.left="100px";
+row.style.top=(75*i)+"px";
+row.style.opacity=0.8;
+row.style.backgroundColor=Colors[i];
+row.id=Colors[i]+"tip"
+outer.appendChild(row)
+for (var j=0; j<numCols; j++){
+    var col=document.createElement('div')
+col.style.position="absolute";
+col.style.height="45px";
+col.style.width="75px";
+col.style.left=(75*j)+"px";
+col.style.top="10px";
+col.style.opacity=0.8;
+col.style.backgroundColor=Colors[i];
+col.id=Colors[i]+(j+1)
+col.className="center"
+row.appendChild(col)
+}}
 
-<script>
+}
+
+create_matrix()
+
+
+
+
 
 
 
@@ -631,40 +597,21 @@ function diff(k){
   initialize()}
   if (difficulty==9){
   score()}
-
   document.getElementById("difficulty").innerText='Difficulty Level: ' + difficulty}
 
 
 function get_entries(){
-    var b1=document.getElementById("blue1")
-    var b2=document.getElementById("blue2")
-    var b3=document.getElementById("blue3")
-    var b4=document.getElementById("blue4")
-    var b5=document.getElementById("blue5")
-    var g1=document.getElementById("green1")
-    var g2=document.getElementById("green2")
-    var g3=document.getElementById("green3")
-    var g4=document.getElementById("green4")
-    var g5=document.getElementById("green5")
-    var r1=document.getElementById("red1")
-    var r2=document.getElementById("red2")
-    var r3=document.getElementById("red3")
-    var r4=document.getElementById("red4")
-    var r5=document.getElementById("red5")
-    var y1=document.getElementById("yellow1")
-    var y2=document.getElementById("yellow2")
-    var y3=document.getElementById("yellow3")
-    var y4=document.getElementById("yellow4")
-    var y5=document.getElementById("yellow5")  
+numRows=Number(document.getElementById("outer").value[0])
+numCols=Number(document.getElementById("outer").value[1])
+var Colors=[]
+for (var i=0; i<numRows; i++){
+    Colors.push([])
+    for (var j=0; j<numCols; j++){
+Colors[i].push(document.getElementById(colorList[i]+(j+1)))
+    }
+}
+return(Colors)}
 
-  
-    
-    var B=[b1,b2,b3,b4,b5]
-    var G=[g1,g2,g3,g4,g5]
-    var R=[r1,r2,r3,r4,r5]
-    var Y=[y1,y2,y3,y4,y5]
-    var Colors=[B,G,R,Y]
-    return(Colors)}
 
 
 function rationalize(fraction){
@@ -754,32 +701,79 @@ for (i=0; i<4; i++){
 
 
 
+function sum(X,i,j){
+  var s=0
+  for (var k=i; k<j; k++){
+    s+=X[k]
+  }
+  return(s)
+}
 
 
-
+function randrat(){
+  var num=Math.round(10*(Math.random()*Math.random()-0.2))
+      var den=Math.ceil(5*(Math.random()*Math.random()))
+return([num,den])
+}
 
 
 function set(complexity){
+var Pivots=[]
 
-B0=Math.round(10*(Math.random()+Math.random()))-10
-B1=Math.round(10*(Math.random()+Math.random()))-10
-B2=Math.round(10*(Math.random()+Math.random()))-10
-B3=Math.round(10*(Math.random()+Math.random()))-10
-b=[[1,1],[0,1],[0,1],[0,1],[B0,1]]
-g=[[0,1],[1,1],[0,1],[0,1],[B1,1]]
-r=[[0,1],[0,1],[1,1],[0,1],[B2,1]]
-y=[[0,1],[0,1],[0,1],[1,1],[B3,1]]
-var Mat_Vals=[b,g,r,y]
+if (Math.random()>0.1){
+    Pivots.push(1)}
+    else{
+Pivots.push(0)}
+
+
+for (var j=1; j<numCols-1; j++){
+
+if (Math.random()>0.2){
+    Pivots.push(1)}
+    else{
+Pivots.push(0)}
+    }
+    if (Math.random()>0.9){
+    Pivots.push(1)}
+    else{
+Pivots.push(0)}
+
+
+
+var Matrix=[]
+for (var i=0; i<numRows; i++){
+    Matrix.push([])
+    for (var j=0; j<numCols; j++){
+        if (sum(Pivots,0,j+1)<i+1){
+          Matrix[i].push([0,1])
+        }
+        if (sum(Pivots,0,j+1)==i+1 && Pivots[j]==1){
+          Matrix[i].push([1,1])
+        }
+
+        if (sum(Pivots,0,j)>=i+1){
+          if (Pivots[j]==1){
+            Matrix[i].push([0,1])
+          }
+          if (Pivots[j]==0){
+            let r=randrat()
+            Matrix[i].push(randrat())
+          }
+
+
+        }
+    
+
+    }
+
+}
+
+alert(Matrix)
+var Mat_Vals=Matrix
 
 //set rank
-r=Math.random()
-rank=4
-if (r<0.3){
-  rank-=1
-  Mat_Vals[1]=[[0,1],[0,1],[0,1],[0,1],[0,1]]}
-if (r<0.1){
-  rank-=1
-  Mat_Vals[2]=[[0,1],[0,1],[0,1],[0,1],[0,1]]  }        
+
+ 
 
 
 
@@ -825,8 +819,8 @@ for (j=0; j<complexity; j++){
 
 
     var Entries=get_entries()
-    for (p=0; p<4; p++){
-      for (q=0; q<5; q++){
+    for (p=0; p<numRows; p++){
+      for (q=0; q<numCols; q++){
 
         if (Mat_Vals[p][q][1]==1 || Mat_Vals[p][q][0]==0){
           Entries[p][q].innerHTML=Mat_Vals[p][q][0]
@@ -836,9 +830,9 @@ for (j=0; j<complexity; j++){
         }
     }
   }
+
+
 }
-
-
 
 
 
@@ -961,7 +955,9 @@ Entries[i][j].style.backgroundColor=S[4][i]}}
 
 
 
-function swi(i){
+function swi(){
+    (document.activeElement)
+var i =1+parseFloat(document.activeElement.name)
   record_state()
   BLUE=document.getElementById("bluetip")
   GREEN=document.getElementById("greentip")
@@ -992,7 +988,9 @@ function swi(i){
     write_equations()
     }
 
-    function mult(i){
+    function mult(){
+    var i =1+parseFloat(document.activeElement.name)
+
       record_state()
 
     b=document.getElementById("in1")
@@ -1001,6 +999,8 @@ function swi(i){
     y=document.getElementById("in4")
 
     constants=[b,g,r,y]
+   
+
 
     
     Entries=get_entries()
@@ -1277,7 +1277,6 @@ function clear()
 
 
 function mobilize(tip) {
-
     tip.onmousedown = move;  
 
   function move(e) {
@@ -1342,6 +1341,36 @@ BLUE=document.getElementById("bluetip")
 
 
 
+ins=["in1","in2","in3","in4"]
+
+
+var in1 = document.getElementById("in1");
+in1.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") { 
+        mult();
+    }
+})
+var in2 = document.getElementById("in2");
+in2.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") {  
+        mult();
+    }
+})
+var in3 = document.getElementById("in3");
+in3.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") { 
+        mult();
+    }
+})
+var in4 = document.getElementById("in4");
+in4.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") {
+        mult();
+    }
+})
+
+
+
 bt=document.getElementById("bluetip")
 mobilize(bt)
 
@@ -1353,41 +1382,8 @@ mobilize(rt)
 yt=document.getElementById("yellowtip")
 mobilize(yt)
 
+
 initialize()
-ins=["in1","in2","in3","in4"]
-
-
-var in1 = document.getElementById("in1");
-in1.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") { 
-        mult(1);
-    }
-})
-var in2 = document.getElementById("in2");
-in2.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") {  
-        mult(2);
-    }
-})
-var in3 = document.getElementById("in3");
-in3.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") { 
-        mult(3);
-    }
-})
-var in4 = document.getElementById("in4");
-in4.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") {
-        mult(4);
-    }
-})
-
-
-
-
-
-
-
 
 
 
