@@ -48,7 +48,7 @@
 <p>
 Abstractly, a vector space is just a set of objects (vectors) which we can add together and multiply by real 
 numbers (scalars) such that the result is still an object in our set.  More precisely, we also need these operations 
-of addition and scalar multiplication to sastisfy the commutative, associative and distributive rules and we need a couple 
+of addition and scalar multiplication to satisfy the commutative, associative and distributive rules and we need a couple 
 facts about what vectors are inside our set.
 
 <ul>
@@ -56,12 +56,12 @@ facts about what vectors are inside our set.
   For instance, in \(\mathbb{R}^3\) this special vector is just \([0,0,0]\).
 </ul>
 <ul>
-  A2: For any vector vector \(v\) there is an "opposite" vector \(u\) such that \(v+u=\mathbf{0}\).  For instance,
+  A2: For any vector \(v\) there is an "opposite" vector \(u\) such that \(v+u=\mathbf{0}\).  For instance,
   in \(\mathbb{R}^3\) the opposite of \(v=[1,-2,3]\) is \(u=[-1,2,-3]\).
 </ul>
 
-Through most of the course we will be concerned with the vector space \(\mathbb{R}^n\).  In fact, this is the only finite
-dimensional vector space (using real numbers) that exists.  However, there are a few interesting cases of vector spaces 
+Through most of the course we will be concerned with the finite dimensional vector spaces like \(\mathbb{R}^n\).  
+ However, there are a few interesting cases of vector spaces 
 that are not finite dimensional.  
 
 We'll look at one such vector space in this module.  Namely, the set of functions with domain \([-5,5]\) and 
@@ -248,8 +248,12 @@ for (var i=0; i<=400; i+=40){
     mobilize(dot)}
     if ((side==0 && funcF[11]==0) || (side==1 &&funcG[11]==0)){
     immobilize(dot)}
+
+    }
   
-  }}
+  }
+  
+      disableCo(funcF[12])
 }
 
 
@@ -422,7 +426,12 @@ function close() {
 
 
 
-
+function disableCo(param){
+  aInput=document.getElementById("a")
+  bInput=document.getElementById("b")
+  aInput.disabled=param
+  bInput.disabled=param
+}
 
 
 
@@ -463,12 +472,12 @@ if (grade()==1)
 
 document.getElementById("try").innerText=""
 
-
+if (grades[page][0]==1){
 var answeredQuestion = document.createElement('div')
       answeredQuestion.innerHTML = quests[page]
      answeredQuestion.style.color="grey"
       var completedQuestions = document.getElementById("completed")
-      completedQuestions.appendChild(answeredQuestion)
+      completedQuestions.appendChild(answeredQuestion)}
 
 
 
@@ -595,31 +604,34 @@ if (page==7){
 
 
       if (page==10){
+   
     f_zeros=0
     g_zeros=0
     fg_zeros=0
   for (var i=0; i<=10; i++){
-    if (fDOTS[i]==0 ){
+    if (fDOTS[i]==0 || (i<10 && fDOTS[i]*fDOTS[i+1]<0)){
       f_zeros+=1}
-    if (gDOTS[i]==0 ){
+    if (gDOTS[i]==0 ||  (i<10 && gDOTS[i]*gDOTS[i+1]<0)   ){
       g_zeros+=1}
-      if (a*fDOTS[i]+b*gDOTS[i]==0 ){
+      if (a*fDOTS[i]+b*gDOTS[i]==0 || (i<10 && a*fDOTS[i]+b*gDOTS[i+1]*(a*fDOTS[i]+b*gDOTS[i+1])<0) ){
       fg_zeros+=1}}
+
       if (f_zeros!=1 || g_zeros!=1 || fg_zeros!=0){
         correct=0}
       }
 
       if (page==11){
-    f_zeros=0
+        f_zeros=0
     g_zeros=0
     fg_zeros=0
   for (var i=0; i<=10; i++){
-    if (fDOTS[i]==0 ){
+    if (fDOTS[i]==0 || (i<10 && fDOTS[i]*fDOTS[i+1]<0)){
       f_zeros+=1}
-    if (gDOTS[i]==0 ){
+    if (gDOTS[i]==0 ||  (i<10 && gDOTS[i]*gDOTS[i+1]<0)   ){
       g_zeros+=1}
-      if (a*fDOTS[i]+b*gDOTS[i]==0 ){
+      if (a*fDOTS[i]+b*gDOTS[i]==0 || (i<10 && a*fDOTS[i]+b*gDOTS[i+1]*(a*fDOTS[i]+b*gDOTS[i+1])<0) ){
       fg_zeros+=1}}
+      alert([f_zeros,g_zeros,fg_zeros])
       if (f_zeros!=0 || g_zeros!=0 || fg_zeros!=1){
         correct=0}
       }
@@ -650,55 +662,55 @@ return(correct)
 
 function make_func(){
 if (page==0){
-  funcF=[-5,-4,-3,-2,-1,0,1,2,3,4,5,1]
-  funcG=[2,2,1,1,0,0,0,1,1,2,2,1]
+  funcF=[-5,-4,-3,-2,-1,0,1,2,3,4,5,1,true]
+  funcG=[2,2,1,1,0,0,0,1,1,2,2,1,]
 }
 if (page==1){
-  funcF=[5,4,3,2,1,0,1,2,3,4,5,0]
+  funcF=[5,4,3,2,1,0,1,2,3,4,5,0,true]
   funcG=[2,2,1,1,0,0,0,1,1,2,2,1]
 }
 if (page==2){
-  funcF=[1,0,1,0,1,0,1,0,1,0,1,0]
-  funcG=[2,2,1,1,0,0,0,1,1,2,2,1]
+  funcF=[1,0,1,0,1,0,1,0,1,0,1,0,true]
+  funcG=[2,2,1,1,0,0,0,1,1,2,2,1,]
 }
 if (page==3){
-  funcF=[0,0,0,0,0,-1,-2,-3,-1,1,1,0]
+  funcF=[0,0,0,0,0,-1,-2,-3,-1,1,1,0,true]
   funcG=[2,2,1,1,0,0,0,1,1,2,2,1]
 }
 if (page==4){
-  funcF=[3,4,3,2,1,0,0,0,-1,-2,-3,0]
+  funcF=[3,4,3,2,1,0,0,0,-1,-2,-3,0,false]
   funcG=[3,3,1,-1,-1,-1,-1,-1,-2,-3,-4,0]
 }
 if (page==5){
-  funcF=[3,2,1,-2,-1,0,2,3,-1,0]
+  funcF=[3,2,1,-2,-1,0,2,3,-1,0,false]
   funcG=[1,0,0,-1.5,-2,-1,0,1,-2,-1,-2,0]
 }
 if (page==6){
-  funcF=[-5,-4,-3,-2,-1,0,1,2,3,4,5]
+  funcF=[-5,-4,-3,-2,-1,0,1,2,3,4,5,0,true]
   funcG=[1,0,0,-1.5,-2,-1,0,1,-2,-1,-2,1]
 }
 if (page==7){
-  funcF=[2,2,3,4,5,5,5,4,3,2,2,0]
+  funcF=[2,2,3,4,5,5,5,4,3,2,2,0,true]
   funcG=[-2,-2,-3,-4,-5,-5,-5,-4,-3,-2,-2,1]
 }
 if (page==8){
-  funcF=[2,2,2,2,2,2,2,2,2,2,2,0]
+  funcF=[2,2,2,2,2,2,2,2,2,2,2,0,false]
   funcG=[2,1,2,1,2,1,2,1,2,1,2,1]
 }
 if (page==9){
-  funcF=[0,1,2,2,3,2,1,0,-1,-2,-2,0]
+  funcF=[0,1,2,2,3,2,1,0,-1,-2,-2,0,false]
   funcG=[2,2,2,2,2,2,2,2,2,2,2,1]
 }
 if (page==10){
-  funcF=[1,1,1,1,1,1,1,1,1,1,1,1]
+  funcF=[1,1,1,1,1,1,1,1,1,1,1,1,false]
   funcG=[2,2,2,2,2,2,2,2,2,2,2,1]
 }
 if (page==11){
-  funcF=[1,1,1,1,1,1,1,1,1,1,1,1]
+  funcF=[1,1,1,1,1,1,1,1,1,1,1,1,false]
   funcG=[2,2,2,2,2,2,2,2,2,2,2,1]
 }
 if (page==12){
-  funcF=[4,2,4,4,2,0,0,0,0,0,0,0]
+  funcF=[4,2,4,4,2,0,0,0,0,0,0,0,false]
   funcG=[0,0,0,0,0,0,-1,-2,-2,-1,-2,0]
 }
 
