@@ -990,43 +990,56 @@ col2=[m12,m22]
 
 
 if (page==0){
+  correct=0
   if (m11==1 && m21==-1 && m12==0 && m22==0.5){
     correct = 1}}
 if (page==1){
+   correct=0
   if (dot(row1,col2)==0){
     correct = 1}}
 if (page==2){
+  correct=0
   if (dot(row1,col2)==0 && dot(row2,col1)==0){
     correct = 1}}
 if (page==3){
+  correct=0
   if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1){
     correct = 1}}
 if (page==4){
+  correct=0
   if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
     correct = 1}}
 if (page==5){
+  correct=0
   if (m11==-1 && m21==0 && m12==-0.5 && m22==1){
     correct = 1}}
 if (page==6){
+  correct=0
   if (dot(row1,col2)==0 && dot(row2,col1)==0){
     correct = 1}}  
 if (page==7){
+  correct=0
   if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
     correct = 1}}
 if (page==8){
+  correct=0
   if (m11==1 && m21==-1 && m12==0 && m22==1  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
     correct = 1}}
 if (page==9){
+  correct=0
   if (m11==0.5 && m21==0 && m12==-0.5 && m22==0.5  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
     correct = 1}}
 if (page==10){
+  correct=0
   if (m11==2 && m21==0 && m12==2 && m22==2  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
     correct = 1}}
 
 if (page==11){
+  correct=0
   if (m11==-1.2 && m21==1.6 && m12==1.6 && m22==1.2  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
     correct = 1}}
 if (page==12){
+  correct=0
   if (m11==n11 && m21==n21 && m12==n12 && m22==n22  &&    dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
     correct = 1}
   if (m11==1 && m21==0 && m12==0 && m22==1 ){
