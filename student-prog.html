@@ -416,7 +416,8 @@ function wencinData(){
       "Elementary Matrices (Multiplication)", 
       "Inverse Matrices", 
       "Reduced Row Echelon Form",
-      "Vector Spaces"]
+      "Vector Spaces",
+      "RREF (Free Variables)",]
     linearAlgebraModuleAddresses = {
       "Linear Combinations": "linear-combinations.html", 
       "Dot Product": "dot-product.html", 
@@ -427,7 +428,8 @@ function wencinData(){
       "Elementary Matrices (Multiplication)": "elementary-matrices-multiplication.html", 
       "Inverse Matrices": "inverses.html", 
       "Reduced Row Echelon Form": "rref.html",
-      "Vector Spaces": "vector-spaces.html"}
+      "Vector Spaces": "vector-spaces.html",
+      "RREF (Free Variables)": "rref-free-variables.html"}
     linearAlgebraWeights = {
       "Linear Combinations": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1,1], 1], 
       "Dot Product": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1,1], 1], 
@@ -439,6 +441,7 @@ function wencinData(){
       "Inverse Matrices": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1], 1], 
       "Reduced Row Echelon Form": [[1,1,1,1,1, 1,1,1,1,1, 1,1], 1],
       "Vector Spaces": [[1,1,1,1,1, 1,1,1,1,1, 1,1], 1],
+      "RREF (Free Variables)": [[1,1,1,1,1, 1,1,1,1,1], 1],
     }
 
     calculusModules = [
@@ -559,7 +562,9 @@ function wencinData(){
             0,0, 0,0],
             "10": [0,0, 0,0, 0,0, 0,0, 0,0,
             0,0, 0,0, 0,0, 0,0, 0,0,
-            0,0, 0,0]}
+            0,0, 0,0],
+            "11": [0,0, 0,0, 0,0, 0,0, 0,0,
+            0,0, 0,0, 0,0, 0,0, 0,0]}
 
 
   for (let key in linearAlgebraModuleData) {
