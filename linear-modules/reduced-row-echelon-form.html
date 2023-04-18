@@ -135,10 +135,10 @@
       What exactly is a reduced row echelon form for a matrix? A matrix is said to be in a reduced row echelon form if it 
       meets all of the following conditions:
       <ol>
-        <li> Every nonzero row is lead by a 1 (there may be extra zeros before); this entry is also known as a pivot.</li>
+        <li> Every nonzero row is lead by a 1 (there may be extra zeros before); this entry is also known as a <b><em>pivot</em></b>.</li>
         <li> All entries above and below a pivot must equal 0.</li>
-        <li> For every nonzero row, either the row below this row is a row of zeros or that the pivot of the row below is 
-        to the right of the pivot of this row.</li>
+        <li> Pivots would progress from left to right as one goes down the rows.</li> 
+        <li> All rows of zeros (if any) appear at the bottom of the matrix.</li>
       </ol>
     </p>
 
@@ -151,7 +151,13 @@
         0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 \\
         0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0 & 0 & 0 & \ldots & 0
       \end{bmatrix}.$$
-      Here, each entry with the symbol * denotes that any real number is possible in that entry. Moreover, it is entirely possible for some matrices in this form where the pivot on the first row is not lead by zeros, or that no columns exists in between two pivots at consecutive rows, or that the rows of zeros at the bottom do not appear.
+      Here, each entry with the symbol * denotes that any real number is possible in that entry. Moreover, it is entirely possible for some matrices in this form that any combination of the following can occur:
+      <ul>
+        <li> that there are no columns before the first pivot, </li> 
+        <li> that there are no columns separating two pivots at consecutive rows, </li>
+        <li> that there are no columns after the last pivot, </li>
+        <li> that there are no rows of zeros at the bottom. </li>
+      </ul>
     </p>
 
     <p>
@@ -159,15 +165,15 @@
       row operations on the matrix until we reach a form as defined above. In order to achieve this systematically, we may perform 
       the following procedure for every row $R$ in the matrix, beginning from the top and ending at the bottom.
       <ol>
-        <li> Skip to step (2) if $R$ is a nonzero row. If $R$ is indeed a row of zeros, and that all rows below it consists of zeros, return the current matrix as being in a r.r.e.f. If instead we can find a nonzero row below $R$, we swap $R$ with that nonzero row.</li>
+        <li> Whenever necessary, swap zero rows with some other rows so that these zero rows appear at the very bottom of the matrix.</li>
         <li> Identify the locations of the leading nonzero entry for row $R$ and those of all the rows below it. If the leading nonzero entry of $R$ is not the leftmost one, swap it with another row whose leading nonzero entry is the leftmost. </li>
         <li> Suppose $a$ is the value of this leading entry for row $R$. Scale row $R$ by $1/a$ to make it a pivot. </li>
         <li> Eliminate all other entries in the same column as the pivot for row $R$. Specifically, if another row $R'$ has a nonzero entry $b$ in the same column as the pivot, add $-b$ times row $R$ to row $R'$.</li>
-        <li> Repeat steps (1) through (4) with the row directly below $R$ until we reach the bottommost row.</li>
+        <li> Repeat steps (1) through (4) with the row directly below $R$ until we reach the bottommost row. Should all rows below $R$ happen to be zero rows, stop immediately and return the matrix as being in a r.r.e.f.</li>
       </ol>
 
       It can be shown more rigorously that a r.r.e.f. for a matrix is unique and does not depend on the row operations involved to 
-      attain it, so we may actually speak of the r.r.e.f. for a matrix. 
+      attain it, so we may actually speak of <em>the</em> r.r.e.f. for a matrix. 
     </p>
 
     <p>
@@ -1085,8 +1091,8 @@
       "3. Nicely done! Next, what is the r.r.e.f of this matrix $A$?",
       "4. Could you determine the r.r.e.f of this matrix $A$?",
       "5. Good job! Now, determine if the given matrix $B$ has an inverse. If so, return the r.r.e.f. with this inverse matrix.",
-      "6. Alright, what about this matrix $B$ over here?",
-      "7. Great, can you find the inverse for this matrix $B$?",
+      "6. Alright, does this matrix $B$ over here have an inverse?",
+      "7. Great, can you find the inverse, if any, for this matrix $B$?",
       "8. Does matrix $B$ over here have an inverse?",
       "9. Consider the following system of linear equations. What values can $x$ take?",
       "10. What values can $w$ take in this system of linear equations?",
