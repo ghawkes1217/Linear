@@ -779,12 +779,15 @@ document.getElementById("w2").innerHTML=Y
 
 
 function submit(){
+
+
+
+
 if (initialized==0){
 document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
 navigate(1)
 navigate(-1)
 }
-
 if (initialized==1){
 M11=document.getElementById("m11").value
 M21=document.getElementById("m21").value
@@ -823,9 +826,13 @@ var answeredQuestion = document.createElement('div')
 
 
 
+
 page+=1
 document.getElementById("question").innerText=quests[page]
 score()
+navigate(0)
+
+
 }
 
 
@@ -838,6 +845,7 @@ initialized=1
 
 
 function navigate(i){
+
 
   if (i==1){forward()}
   if (i==-1){back()}
@@ -961,6 +969,15 @@ if (p==5){
     correct = 1}}
 
 
+    if (p==6){
+  if(v1==0 && v2==0 && v3==0){
+    correct = 1}}
+
+    if (p==7){
+  if(w1==0 && w2==0){
+    correct = 1}}
+
+
 if (p==8){
 
   if(m13==0){
@@ -1010,7 +1027,8 @@ if (parseFloat(v1)==1 && parseFloat(v2)==2 && parseFloat(v3)==1){
 if (correct==0){
 grades[p][1]+=1}
 if (correct==1){
-grades[p][0]+=1}
+grades[p][0]+=1
+}
 sql_record(Module_Number)
 return(correct)
 }
