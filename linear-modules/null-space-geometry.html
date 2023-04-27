@@ -820,6 +820,7 @@ var answeredQuestion = document.createElement('div')
       answeredQuestion.innerHTML = quests[page]
       answeredQuestion.innerHTML += ' Your answer: '+V1+'&times('+M11+','+M21+')'
       answeredQuestion.innerHTML += ' + '+V2+'&times('+M12+','+M22+')'
+      answeredQuestion.innerHTML += ' + '+V3+'&times('+M13+','+M23+')'
      answeredQuestion.style.color="grey"
       var completedQuestions = document.getElementById("completed")
       completedQuestions.appendChild(answeredQuestion)
@@ -1048,14 +1049,14 @@ var quests=[
 "1. Find a (non-zero) vector in the null space of the given matrix (this means the black dot will need to lie at the origin).",
 "2. Find a (non-zero) vector in the null space of the given matrix (this means the black dot will need to lie at the origin).",
 "3. Find a (non-zero) vector in the null space of the given matrix (this means the black dot will need to lie at the origin).",
-"4. Manipulate the last column of the matrix (or drag the red vector) until the given 3-entry vector lies in the null space",
-"5. Manipulate the middle column of the matrix (or drag the red vector) until the given 3-entry vector lies in the null space",
-"6. Manipulate the first column of the matrix (or drag the red vector) until the given 3-entry vector lies in the null space",
+"4. Manipulate the last column of the matrix (or drag the red vector) until the given 3-entry vector lies in the null space.",
+"5. Manipulate the middle column of the matrix (or drag the green vector) until the given 3-entry vector lies in the null space.",
+"6. Manipulate the first column of the matrix (or drag the blue vector) until the given 3-entry vector lies in the null space.",
 "7. Find a vector that is in the null space of all matrices.",
 "8. Find a matrix for which every vector is in its null space.",
 "9. Find values for the entries in the rightmost column of the matrix such that NO vector whose first entry is 2 lies in the null space.",
 "10. Find values for the entries in the middle column of the matrix such that NO vector whose last entry is 1 lies in the null space.",
-"11. A 0-1 vector is a vector that includes only entries of 0s and/or 1s.  Find a matrix that has at least one nonzero entry in each column, such that there precisely 3 (icluding the 0 vector itself) 0-1 vectors in the null space.",
+"11. A 0-1 vector is a vector that includes only entries of 0s and/or 1s.  Find a matrix that has at least one nonzero entry in each column, such that there are precisely 3 (including the 0 vector itself) 0-1 vectors in the null space.",
 "12. Find a vector in the null space of the given matrix such that the three coordinates of that vector add up to 1.",
 "13. There are two (not including the 0 vector)  0-1 vectors in the null space of the given matrix. Enter as your solution the sum of these two vectors.",
 
