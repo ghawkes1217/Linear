@@ -333,7 +333,11 @@ The two blue vectors make an angle of 90 degrees.</li>
 (The conditions in parentheses are needed to make sure that the dot products are \(1\) and not \(-1\).)
 
 </p>
-
+<p>
+<b>
+  In this module problems 1-5 must be done in order.  The same is true for problems 6-8.
+</b>
+</p>
 <div id="question">
 Ready to begin?  Click "Start" to view your first question.
 </div>
@@ -911,6 +915,8 @@ if (initialized==0){
 document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
 document.getElementById("question").innerText=quests[page]
 MathJax.typesetPromise()
+draw()
+match()
 }
 
 if (initialized==1){
@@ -955,6 +961,7 @@ var answeredQuestion = document.createElement('div')
 
 
 page+=1
+disable()
 document.getElementById("question").innerText=quests[page]
 MathJax.typesetPromise()
 score()
@@ -995,19 +1002,19 @@ if (page==0){
     correct = 1}}
 if (page==1){
    correct=0
-  if (dot(row1,col2)==0){
+  if (m11==1 && m21==-1 && m12==0 && m22==0.5 && dot(row1,col2)==0){
     correct = 1}}
 if (page==2){
   correct=0
-  if (dot(row1,col2)==0 && dot(row2,col1)==0){
+  if (m11==1 && m21==-1 && m12==0 && m22==0.5 && dot(row1,col2)==0 && dot(row2,col1)==0){
     correct = 1}}
 if (page==3){
   correct=0
-  if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1){
+  if (m11==1 && m21==-1 && m12==0 && m22==0.5 && dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1){
     correct = 1}}
 if (page==4){
   correct=0
-  if (dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
+  if (m11==1 && m21==-1 && m12==0 && m22==0.5 && dot(row1,col2)==0 && dot(row2,col1)==0 && dot(row1,col1)==1 && dot(row2,col2)==1){
     correct = 1}}
 if (page==5){
   correct=0
@@ -1047,7 +1054,9 @@ if (page==12){
 
 
 
-
+if ((page==4 || page==7) && correct==1){
+  alert("Congratulations! You have found the inverse of A")
+}
 if (correct==0){
 grades[page][1]+=1}
 if (correct==1){
@@ -1057,7 +1066,17 @@ sql_record(Module_Number)
 return(correct)
 }
 
+function disable(val){
+val=true
+if (page==0 || page==5 || page>=8){
+  val=false
+}
 
+m11=document.getElementById("m11").disabled=val
+m12=document.getElementById("m12").disabled=val
+m21=document.getElementById("m21").disabled=val
+m22=document.getElementById("m22").disabled=val
+}
 
 
 </script>
@@ -1072,19 +1091,19 @@ make_grades(Module_Number)
 var initialized=0
 var page=0
 var quests=[
-"1. Set \\(A=\\)"+col_mat(1,0,-1,0.5)+".",
-"2. Keeping \\(A\\) the same, drag the dotted  red vector until it is perpendicular to the solid red vector (this ensures the top right entry of the matrix product \\(BA\\) is 0).",
-"3. Keeping the red vectors perpendicular, drag the dotted blue vector until it is perpendicular to the solid blue vector (this ensures the bottom left entry of the matrix product \\(BA\\) is 0).",
-"4. Keeping the red vectors perpendicular and the blue vectors perpendicular scale the dotted red vector until the red dot lies where the blue vector intersects the black circle (this ensures that the top left entry of \\(BA\\) is 1).",
-"5. Keeping all of the properties of questions 1-4, scale the dotted blue vector until the blue dot lies where the red vector would intersect the black circle (this ensures that the bottom right entry of \\(BA\\) is 1). All together, this means \\(B\\) is the inverse of \\(A\\).",
-"6. Set \\(A=\\)"+col_mat(-1,-0.5,0,1)+".",
-"7. Keeping \\(A\\) the same, make the red vectors perpendicular and the blue vectors perpendicular",
-"8. Keeping solid and dotted vectors of both colors perpendicular scale the dotted vectors until the red and blue dots lie on the black circle. Note that to ensure that \\(BA=I\\) the dots must be on the proper side of the black circle.",
-"9. Set \\(A=\\)"+col_mat(1,-1,0,1)+". Find B such that \\(BA=I\\)",
-"10. Set \\(A=\\)"+col_mat(0.5,-0.5,0,0.5)+". Find B such that \\(BA=I\\)",
-"11. Set \\(A=\\)"+col_mat(2,2,0,2)+". Find B such that \\(BA=I\\)",
-"12. Set \\(A=\\)"+col_mat(-1.2,1.6,1.6,1.2)+". Find B such that \\(BA=I\\)",
-"13. Find a matrix \\(A\\) and its inverse \\(B\\) such that the two matrices are the same but not equal to \((I\)).",
+"1. Set \\(A=\\)"+col_mat(1,0,-1,0.5)+". As you adjust the entries in matrix \\(A\\) note how this alters the diagram.",
+"2. Keeping \\(A\\) the same, drag the dotted  red vector until it is perpendicular to the solid red vector.  This will change the values in the top of row of matrix \\(B\\) and ensure the top right entry of \\(BA\\) is 0.",
+"3. Keeping the red vectors perpendicular, drag the dotted blue vector until it is perpendicular to the solid blue vector. This will change the values in the top of row of matrix \\(B\\) and ensure the bottom left entry of \\(BA\\) is 0.",
+"4. Keeping the red vectors perpendicular (and the blue vectors perpendicular) adjust the dotted red vector until the red dot lies where the solid blue vector intersects the black circle. This will scale the top row of \\(A\\) by a constant and ensure the top left entry of \\(BA\\) is 1.",
+"5. Keeping all of the properties of questions 1-4, adjust the dotted blue vector until the blue dot lies where the solid red vector would intersect the black circle. This will scale the bottom row of \\(A\\) by a constant and ensure the bottom right entry of \\(BA\\) is 1.",
+"6. Set \\(A=\\)"+col_mat(-1,-0.5,0,1)+". As you adjust the entries in matrix \\(A\\) note how this alters the diagram.",
+"7. Keeping \\(A\\) the same, make the dotted and solid red vectors perpendicular to each other  and the dotted and solid  blue vectors perpendicular to eAch other.",
+"8. Keeping solid and dotted vectors of both colors perpendicular adjust the dotted vectors until the red and blue dots lie on the black circle. Note that to ensure that \\(BA=I\\) the dots must be on the proper side of the black circle.",
+"9. Set \\(A=\\)"+col_mat(1,-1,0,1)+". Find B such that \\(BA=I\\).",
+"10. Set \\(A=\\)"+col_mat(0.5,-0.5,0,0.5)+". Find B such that \\(BA=I\\).",
+"11. Set \\(A=\\)"+col_mat(2,2,0,2)+". Find B such that \\(BA=I\\).",
+"12. Set \\(A=\\)"+col_mat(-1.2,1.6,1.6,1.2)+". Find B such that \\(BA=I\\).",
+"13. Find a matrix \\(A\\) and its inverse \\(B\\) such that the two matrices are the same but not equal to the identity matrix \\(I\\).",
 "Good job!!!"]
 bt=document.getElementById("bluetip")
 mobilize(bt)

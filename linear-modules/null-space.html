@@ -124,6 +124,10 @@
  coefficients (in other words the coefficients for the pivot columns) need to be in order for the resulting linear combination 
  to be \(\mathbf{0}\).  
 </p>
+
+
+
+
 <p>
 
   The vectors attained in this way we will call special vectors and they generate the null space in the sense that 
@@ -132,6 +136,22 @@
   is equal to the number of free variables (this number is known as the dimension of the null space).
 
 </p>
+
+<p>
+  Consider the following example.  Suppose that we have computed the reduced row echelon form of a 
+  matrix and it is equal to \(\begin{bmatrix} 1 & 0 & 2 & 0 & -4\\ 0 & 1 & 3 & 0 & -5 \\ 0 & 0 & 0 & 1& 6 \end{bmatrix}  \).
+  There are two free columns in this case: the third and the fifth.  Let's start by taking 1 copy of the third column and 
+  0 of the fifth.  In other words, so far we just have the vector \(\begin{bmatrix} 2\\3\\0 \end{bmatrix}  \).  In order to get to the 
+  vector \(\begin{bmatrix} 0\\0\\0 \end{bmatrix}\) we'll need to add \(-2\) times the first column and \(-3\) 
+  times the second column (and \(0\) times the fourth column).  This means that our first special vector 
+  would be \(\begin{bmatrix} -2\\-3\\1\\0\\0 \end{bmatrix}\).  On the other hand if we had chosen 
+  0 times the third column and 1 times the fifth column we would have needed to add 4 times the first 
+  column, 5 times the second column and \(-6\) times the fourth column.  This means our second special vector would be 
+  \(\begin{bmatrix} 4\\5\\0\\-6\\1 \end{bmatrix}\).
+
+  </p>
+
+
 <p>
 In this module, you are required to apply row operations to get the shown augmented matrix into reduced 
 row echelon form.  Once this is done, you will need create the special vectors.  In the lower levels you 
