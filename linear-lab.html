@@ -25,8 +25,8 @@ border: 9px solid #d3d3d3;}
 <body>
 
       
-<h1>Welcome to the Project Intuition Linear Algebra Lab Course</h1>
-<h2>Modules</h2>
+<h1 id ="head">Welcome to the Project Intuition Linear Algebra Lab Course</h1>
+<h2 >Modules</h2>
 <p style="font-size: 20px; color: #1f9afe;"><a href="linear-modules/linear-combinations.html">Module 1: Linear Combinations</a></p>
 <p style="font-size: 20px; color: #1f9afe;"><a href="linear-modules/dot-product.html">Module 2: Dot Product</a></p>
 <p style="font-size: 20px; color: #1f9afe;"><a href="linear-modules/column-matrix-multiplication.html">Module 3: Matrix Multiplication (Column Picture)</a></p>
@@ -44,5 +44,13 @@ border: 9px solid #d3d3d3;}
 </body>
 <script>
   inout()
+  user=make_cookject()['user']
+    if (user==undefined){
+var head = document.getElementById("head")
+var warning=document.createElement("div")
+warning.innerHTML="Warning! You are not logged in! Your progress will not be saved. Please sign in or create your free account."
+warning.style.color="red"
+warning.style.fontSize="17px"
+head.appendChild(warning)    }
 </script>
 </html>

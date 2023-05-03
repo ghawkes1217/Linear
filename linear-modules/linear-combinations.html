@@ -16,7 +16,7 @@
 
 #intro {
   position: relative;
-  width: 550px;
+  width: 950px;
 }
 
 #blank {
@@ -146,7 +146,7 @@
   height: 220px;
   width: 90px;
   left: 930px;
-  top: 90px;
+  top: 440px;
   background-color: white;
   text-align: center;}
 
@@ -274,7 +274,7 @@
   height: 100px;
   width: 300px;
   left: 500px;
-  top: 350px;
+  top: 550px;
   background-color: lightgrey;
   text-align: center;}
 
@@ -305,27 +305,33 @@
 
 <div id="intro">
 
-
+  <p>
+    One of the most essential ideas in linear algebra is the idea of a linear combination of vectors. 
+    But what is a vector?  Mathematically it is just a list of numbers, but in most practical applications these numbers 
+    represent things. For instance, we might represent certain properties of a solid using a vector with 3 entries. The 
+    first entry could represent the number of vertices, the second the number of edges, and the third the 
+    number of faces.  Did you get a box from Amazon or Ebay today?  How many vertices does it have? How many edges? How many faces?
+    If you counted right you should get the vector \(\textcolor{gold}{\begin{bmatrix} 8 \\12\\6\end{bmatrix}}\).  But different 
+    shapes will give different vectors: a tetrahedron results in the vector \(\textcolor{blue}{\begin{bmatrix} 4 \\12\\4\end{bmatrix}}\)
+    and an octahedron gives \(\textcolor{red}{\begin{bmatrix} 6 \\12\\8\end{bmatrix}}\).  If we had a certain number of each one 
+    of these objects then the task of figuring out how many vertices, edges, and faces we have in all is just a matter of taking 
+    a linear combination of vectors. For example, if we have 5 tetrahedrons,  7 cubes, and 3 octahedrons we would just compute
+    \(5 \textcolor{blue}{\begin{bmatrix} 4 \\12\\4\end{bmatrix}}+7 \textcolor{gold}{\begin{bmatrix} 8 \\12\\6\end{bmatrix}}+3 \textcolor{red}{\begin{bmatrix} 6 \\12\\8\end{bmatrix}}\)
+which can be written in matrix form as
+    \( \begin{bmatrix}\textcolor{blue}{4}&\textcolor{yellow}{8}&\textcolor{red}{6}\\
+\textcolor{blue}{6}&\textcolor{yellow}{12}&\textcolor{red}{12}\\
+\textcolor{blue}{4}&\textcolor{yellow}{6}&\textcolor{red}{8}\end{bmatrix}\ \begin{bmatrix}\textcolor{blue}{5}\\\textcolor{yellow}{7}\\\textcolor{red}{3}\end{bmatrix}\).
+This product equals  \( \textcolor{green }{\begin{bmatrix} 94 \\150\\86\end{bmatrix}}\) meaning  you end up with 94 vertices, 150 edges, and 86 faces.
+    </p>
 <p>
-You are at the platonic solid market.  You are allowed to purchase any (non-negative) number of each type of solid.  You wish to create a:  
+Suppose you are at the platonic solid market.  You are allowed to purchase any (non-negative) number of each type of solid.  You wish to create a:  
 </p>
 
 <span style='color:green'>
-Shopping basket which contains V vertices, E edges, and F faces.
-</span>
-<br>
-<span style='color:blue'>
-A tetrahedron has 4 vertices, 6 edges, and 4 faces.
-</span>
-<br>
-<span style='color:gold'>
-A cube has 8 vertices, 12 edges, and 6 faces.
+Shopping basket that contains V vertices, E edges, and F faces.
 </span>
 
-<br>
-<span style='color:red'>
-An octahedron has 6 vertices, 12 edges, and 8 faces.
-</span>
+
 
 <p>
 Use the up and down arrows to add or subtract each type of solid from your shopping basket to 
