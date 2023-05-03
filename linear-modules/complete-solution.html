@@ -24,10 +24,18 @@
   #blank {
     position: relative;}
 
+  .variables {
+    position: absolute;
+    background-color: white;
+    font-size: 22px;
+    top: 50px;
+    width: 55px;
+    height: 40px;}
+
   #outer {
     position: absolute;
     left: 0px;
-    top: 90px;
+    top: 200px;
     background-color: white;
     text-align: center;}
 
@@ -36,9 +44,8 @@
     height: 300px;
     width: 350px;
     left: 800px;
-    top: 90px;
+    top: 200px;
     background-color: black;
-    /*-webkit-text-stroke: 0.2px silver;*/
     text-align: center;}
   
   #line {
@@ -49,27 +56,17 @@
     top: 0px;
     background-color: black;}
 
-  #try {
-    position: absolute;
-    height: 30px;
-    width: 90px;
-    left: 290px;
-    top: 10px;
-    background-color: white;
-    text-align: center;}
-
   .center {
     text-align: center;
     font-size: 30px;}
 
-  .inp {
+  .separators {
+    top: 0px;
     position: absolute;
-    left: 5px;
-    height: 40px;
-    width: 55px;
-    background-color: white;}
+    background-color: black;
+    width: 10px;}
 
-  .scalarInput {
+  .scalarInputs {
     position: absolute;
     background-color: lightyellow;
     left: 5px;
@@ -77,13 +74,14 @@
     width: 55px;
     height: 40px;}
 
-  .separator {
-    top: 0px;
+  .switches {
     position: absolute;
-    background-color: black;
-    width: 10px;}
+    background-color: white;
+    height: 20px;
+    left: 100px;
+  }
 
-  .multiplyButton {
+  .multiplyButtons {
     font-size: 22px;
     position: absolute;
     height: 46px;
@@ -91,65 +89,19 @@
     left: 70px;
     background-color: silver}
 
-  .matrixRow {
+  .matrixRows {
     position: absolute;
     height: 55px;
     left: 100px;
     opacity: 0.8;}
 
-  .matrixColumn {
+  .matrixColumns {
     position: absolute;
     height: 45px;
     width: 75px;
     top: 10px;
     opacity: 0.8;
     background-color: #FFFFFF10;}
-
-  #solution_box {
-    position: absolute;
-    height: 225px;
-    width: 195px;
-    left: 900px;
-    top: 900px;
-    background-color: white;
-    border: 9px solid black;
-    text-align: center}
-
-  #solutions1 {
-    position: absolute;
-    height: 80px;
-    width: 95px;
-    left: 0px;
-    top: 30px;
-    background-color: white;
-    text-align: center}
-
-  #solutions2 {
-    position: absolute;
-    height: 80px;
-    width: 95px;
-    left: 95px;
-    top: 30px;
-    background-color: white;
-    text-align: center}
-
-  #difficulty {
-    position: absolute;
-    height: 30px;
-    width: 390px;
-    left: 490px;
-    top: 0px;
-    background-color: white;
-    text-align: center;}
-
-  #diff_buttons {
-    position: absolute;
-    height: 30px;
-    width: 390px;
-    left: 490px;
-    top: 30px;
-    background-color: white;
-    text-align: center;}
 
   #score {
     position: absolute;
@@ -162,14 +114,20 @@
 
   .systems {
     display: flex;
-    justify-content: space-around;
-  }
+    justify-content: space-around;}
+
+  .equationElement {
+    position: absolute;
+    width: 260px;
+    height: 30px;
+    font-size: 20px;
+    left: 50px;}
 </style>
 </head>
 
 <body>
 
-<h2><center>Module: Complete Solution to the System $Ax=b$</center></h2>
+<h2><center>Module 14: Complete Solution to the System $Ax=b$</center></h2>
 
 <div class="introduction">
   <p>
@@ -219,11 +177,11 @@
   </p>
   
   <p>
-    Although these three systems are systems of 3 linear equations in 3 variables, their behavior all differ:
+    Although these three systems are systems of 3 linear equations in 3 variables, their behaviors all differ:
     <ul>
       <li> One system yields a unique set of solutions,</li>
-      <li> Another system yields more than one consistent set of solutions,</li>
-      <li> Yet another system has no consistent set of solutions due to an inherent contradiction.</li>
+      <li> Another system yields more than one set of solutions,</li>
+      <li> Yet another system cannot have a consistent set of solutions due to an inherent contradiction.</li>
     </ul>
   </p>
   
@@ -353,52 +311,31 @@
   <div id="score">
   </div>
 
-  <div id="submit" style="left: 10px; top:20px; position:absolute">
-    <button onclick="compare()"> Submit </button>
+  <div>
+    <h3>Current Question:</h3>
+
+    <div id="questionToDisplay" style="height: 50px"></div>
+    
+    <button id="submitButton" onclick="submitResponse()"> Start </button>
+    <button onclick="previousPage()"> Previous </button>
+    <button onclick="nextPage()"> Next </button>
   </div>
 
-  <div id="undo" style="left:10px; top:50px; position:absolute">
-    <button  onclick="revert()">Undo</button>
+  <div>
+    <button onclick="revertState()"> Undo </button>
+    <button onclick="succeedAutomatically()"> Succeed Automatically </button>
   </div>
   
-  <!--<div id="diff_buttons">
-    <button style="background-color:white" onclick="diff(1)">&#8593</button>
-    <button style="background-color:white" onclick="diff(-1)">&#8595</button>
-  </div>
-  
-  <div id="difficulty">
-    Difficulty Level: 1
-  </div>-->
-  
-  <div id="selection" style="position:absolute; top:30px">
+  <div id="variables" style="position: absolute; top: 100px">
   </div>
 
   <div id="equations">
   </div>
 
+  <!-- Displays augmented matrix gadget -->
   <div id="outer">
   </div>
 </div>
-  
-
-<script type="text/javascript">
-  quests = 
-  [
-    "Is this a consistent or an inconsistent system of linear equations?", // Can be consistent or incosistent
-    "Which of these two types does this system of linear equations belong to?", // Can be consistent or inconsistent
-    "Great, now, find a set of values for each variable that satisfies the following system of linear equation. If there is none, click on 'No Solution' instead.", // Solution set need to exist
-    "As a follow up, is there another set of solutions to the same system? If so, click on 'Multiple Solutions', otherwise, click on 'Unique Solution'.", // Can have unique or multiple solutions
-    "Nice, can you find a set of values satisfying this system of linear equation?", // Solution set need to exist
-    "Can there be another set of solutions to the same system?", // Can have unique or multiple solutions
-    "Is there a nonzero vector that lies in the associated nullspace of this system? Click on 'None' if there is none.",
-    "Does there exist one or many sets of solution to this system?",
-    "Alright, is there a nonzero vector that lies in the associated nullspace of this system?",
-    "Does there exist one or many sets of solution to this system?",
-    "Let's switch gears. You are given a set of solutions to the following system. Can you use it to find another set of solutions?",
-    "Good, given this set of solution, can you use it to find another set of solutions?",
-    "Awesome!"
-  ]
-</script>
 
 <script type="text/javascript">
   // Returns the gcd of two integers
@@ -493,32 +430,38 @@
     for (let i=0; i<n; i++){
       if (input[i] == '-'){
         if (i!=index+1 || i==n-1){
-          alert("This is not a rational number.")
-          return } } 
+          throw new Error("This is not a rational number.")
+          return 
+        } 
+      } 
       else if (input[i] == '/'){
         if (i==0 || i==n-1 || index>0){
-          alert("This is not a rational number.")
-          return }
-        index = i}
+          throw new Error("This is not a rational number.")
+          return 
+        }
+        index = i
+      }
       else if (isNaN(input[i])){
-        alert("This is not a rational number.")
-        return } 
+        throw new Error("This is not a rational number.")
+        return 
+      } 
       else {
         if (!numberExist[0] && index==-1){
           numberExist[0] = true} 
         else if (!numberExist[1] && index > 0){
-            numberExist[1] = true} }
+            numberExist[1] = true} 
+      }
     }
 
     if(index==-1){
       if (!numberExist[0]){
-        alert("This is not a rational number.")
+        throw new Error("This is not a rational number.")
         return }
       let a = parseInt(input)
       return new RationalNumber(a, 1)}
 
     if (!numberExist[0] || !numberExist[1]){
-      alert("This is not a rational number.")
+      throw new Error("This is not a rational number.")
       return }
     let a = parseInt(input.slice(0, index))
     let b = parseInt(input.slice(index+1, n))
@@ -541,8 +484,8 @@
         for (let j=0; j<M[0].length; j++){
           let entry = parseRational(M[i][j])
           if (entry == undefined){
-            alert("Entry is not a rational number.")
             throw new Error("Entry is not a rational number.")
+            return 
           }
           row.push(entry)
         }
@@ -644,8 +587,8 @@
 
     multiply(that){
       if (this.colDim != that.rowDim){
-        alert("Dimensions of matrices must agree.")
         throw new Error("Dimensions of matrices must agree.")
+        return 
       }
 
       let matrixM = []
@@ -664,7 +607,9 @@
 
     swapRows(ithRow, jthRow){
       if (ithRow>=this.rowDim || jthRow>=this.rowDim){
-        throw new Error("Row index out of reach.")}
+        throw new Error("Row index out of reach.")
+        return 
+      }
       let matrixM = []
       for (let k=0; k<this.rowDim; k++){
         if (k!=ithRow && k!=jthRow){
@@ -677,7 +622,9 @@
 
     scaleRows(ithRow, cScalar){
       if (ithRow >= this.rowDim){
-        throw new Error("Row index out of reach.")}
+        throw new Error("Row index out of reach.")
+        return
+      }
       let matrixM = []
       for (let k=0; k<this.rowDim; k++){
         if (k != ithRow){
@@ -695,7 +642,9 @@
 
     addRows(ithRow, jthRow, cScalar){
       if (ithRow>=this.rowDim || jthRow>=this.rowDim){
-        throw new Error("Row index out of reach.")}
+        throw new Error("Row index out of reach.")
+        return
+      }
       let matrixM = []
       for (let k=0; k<this.rowDim; k++){
         if (k != jthRow){
@@ -715,9 +664,13 @@
     limitColumns(start, end){
       n = this.colDim
       if (start >= end){
-        throw new Error("Starting index must be smaller than ending index.")}
+        throw new Error("Starting index must be smaller than ending index.")
+        return
+      }
       if (start > n || end <= 1){
-        throw new Error("Column indices should range between 1 and " + n + ".")}
+        throw new Error("Column indices should range between 1 and " + n + ".")
+        return
+      }
       if (end > n){
         return this.limitColumns(start-1, n)}
       if (start < 1){
@@ -746,12 +699,15 @@
 </script>
 
 <script type="text/javascript">
+  // Random generation of mathematical objects
+
   // Returns an integer in the interval [low, high]
   function generateInteger(low, high){
     difference = high - low + 1
     return low + Math.floor(difference * Math.random())
   }
 
+  // Time complexity: O(n), where n is the number of elements
   function generatePermutation(n){
     array = []
     for (let i=0; i<n; i++){
@@ -767,574 +723,517 @@
     return array
   }
 
-  function generateRationalNumber(den, maxRange){
+  // Time complexity: O(k log k), where n is the number of elements
+  function generateSubset(k, n){
+    array = []
+    for (let i=0; i<n; i++){
+      array.push(i)
+    }
+
+    for (let i=0; i<k-1; i++){
+      j = i + generateInteger(0, n-1-i)
+      temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    S = array.splice(0, k)
+    return S.sort()
+  }
+
+  function generateRationalNumber(den, maxRange, allowZero=true){
     maxNum = maxRange * den
-    num = generateInteger(-maxNum, maxNum)
-    return new RationalNumber(num, den)
+
+    if (allowZero){
+      num = generateInteger(-maxNum, maxNum)
+      return new RationalNumber(num, den)
+    }
+
+    sign = (-1)**generateInteger(0, 1)
+    unsignedNum = generateInteger(1, maxNum)
+    return new RationalNumber(sign*unsignedNum, den)
   }
 
   function generateRationalTuple(rank){
     scalars = []
     den = generateInteger(1, 10)
     for (let i=0; i<rank; i++){
-      scalars.push(generateRationalNumber(den, 5))
+      scalars.push(generateRationalNumber(den, 3))
     }
     return scalars
   }
 
-  function linearCombination(rows, scalars){
-    n = rows[0].length
-    vector = []
-    for (let j=0; j<n; j++){
-      entry = new RationalNumber(0, 1)
-      for (let i=0; i<rows.length; i++){
-        entry = entry.add(scalars[i].multiply(rows[i][j]))
+  /// Generates a rational (rxr)-upper/lower triangular matrix
+  function generateRationalTriangularMatrix(rank, upper=true){
+    M = []
+    for (let i=0; i<rank; i++){
+      row = []
+      den = generateInteger(1, 10)
+      for (let j=0; j<rank; j++){
+        if ((i>j && upper) || (i<j && !upper)){
+          row.push(new RationalNumber(0,1))}
+        else if (i==j){
+          row.push(generateRationalNumber(den, 5, allowZero=false))}
+        else {
+          row.push(generateRationalNumber(den, 5))
+        }
       }
-      vector.push(entry)
+      M.push(row)
     }
-    return vector
+    return new RationalMatrix(M)
   }
 
-  function generateRationalMatrixPair(rowNum, colNum, rank){
-    generatingRows = []
-    var limit = rank<rowNum ? rank : rowNum
+  // Generates a rational (mxr)-matrix with rank r
+  // Time complexity for fixed rank r: O(m), where m is the number of rows
+  function generateRationalFixedRankMatrix(rowNum, rank){
+    if (rank > rowNum){
+      throw "Rank needs to be at most the number of rows."}
 
-    for (let i=0; i<limit; i++){
+    L = generateRationalTriangularMatrix(rank, upper=false)
+    U = generateRationalTriangularMatrix(rank, upper=true)
+    A = L.multiply(U)
+
+    G = []
+    for (let i=0; i<rowNum; i++){
+      if (i<rank){
+        G.push(A[i])}
+      else {
+        G.push(generateRationalTuple(rank))}
+      }
+    return new RationalMatrix(G) 
+  }
+
+  // Generates a rational (rxn)-matrix in RREF with rank r
+  // Time complexity for fixed rank r: O(n), where n is the number of columns
+  function generateRationalRREF(colNum, rank){
+    S = generateSubset(rank, colNum)
+    R = []
+
+    for (let i=0; i<rank; i++){
       row = []
       den = generateInteger(1, 10)
       for (let j=0; j<colNum; j++){
-        row.push(generateRationalNumber(den, 5))
+        if (j < S[i]){
+          row.push(new RationalNumber(0, 1))}
+        else if (j == S[i]){
+          row.push(new RationalNumber(1, 1))}
+        else if (j>S[i] && S.includes(j)){
+          row.push(new RationalNumber(0, 1))}
+        else {
+          row.push(generateRationalNumber(den, 3))}
       }
-      generatingRows.push(row)
+      R.push(row)
     }
+    return new RationalMatrix(R)
+  }
 
-    coordinateVectors = []
-    for (let i=0; i<limit; i++){
-      vector = []
-      for (let j=0; j<limit; j++){
-        q = j==i ? new RationalNumber(1, 1) : new RationalNumber(0, 1)
-        vector.push(q)
-      }
-      coordinateVectors.push(vector)
-    }
+  function generateAugmentedMatrix(rowNum, colNum, rank, isConsistent=true){
 
-    for (let i=limit; i<rowNum; i++){
-      coordinateVectors.push(generateRationalTuple(limit)) 
-    }
-    permutation = generatePermutation(rowNum) 
+  }
 
+  function generateRationalMatrix(rowNum, colNum){
     A = []
-    B = []
     for (let i=0; i<rowNum; i++){
-      m = permutation[i]
-      if (m < limit){
-        A.push(generatingRows[m])}
-      else {
-        A.push(linearCombination(generatingRows, coordinateVectors[m]))}
-      B.push(coordinateVectors[m])
+      row = []
+      den = generateInteger(1, 5)
+      for (let j=0; j<colNum; j++){
+        q = generateRationalNumber(den, 4)
+        row.push(q)
+      }
+      A.push(row)
     }
-    return [A, B]
+    return new RationalMatrix(A)
   }
 </script>
 
 <script type="text/javascript">
-  function compare(){
-    var correct=1
-    for (var i=0; i<numCols-1; i++){
-      var free=1
-      if (Pivots[i]==1 && sum(Pivots,0,i+1)<=numRows){
-        free=0}
-      var color=document.getElementById(variables[i]).style.backgroundColor
-      if (color=="white" && free==1){
-        correct=0}
-      if (color=="grey" && free==0){
-        correct=0}
-    }
+  quests = [
+    "1. Is this a consistent or an inconsistent system of linear equations?", // Can be consistent or incosistent
+    "2. Which of these two types does this system of linear equations belong to?", // Can be consistent or inconsistent
+    "3. Great, now, find a set of values for each variable that satisfies the following system of linear equation. If there is none, click on 'No Solution' instead.", // Solution set need to exist
+    "4. As a follow up, is there another set of solutions to the same system? If so, click on 'Multiple Solutions', otherwise, click on 'Unique Solution'.", // Can have unique or multiple solutions
+    "5. Nice, can you find a set of values satisfying this system of linear equation?", // Solution set need to exist
+    "6. Can there be another set of solutions to the same system?", // Can have unique or multiple solutions
+    "7. Is there a nonzero vector that lies in the associated nullspace of this system? Click on 'None' if there is none.",
+    "8. Does there exist one or many sets of solution to this system?",
+    "9. Alright, is there a nonzero vector that lies in the associated nullspace of this system?",
+    "10. Does there exist one or many sets of solution to this system?",
+    "11. Let's switch gears. You are given a set of solutions to the following system. Can you use it to find another set of solutions?",
+    "12. Good, given this set of solution, can you use it to find another set of solutions?",
+    "Awesome!"
+  ]
+  initialized = 0
+  page = 0
 
-    Current=get_entries()
-    same=1
+  function displayQuestion(page){
+    // Handles the display of questions and question prompts
+    landingArea = document.getElementById("questionToDisplay") 
+    landingArea.innerHTML = quests[page]
 
-    for (var i=0; i<numRows; i++){
-      for (var j=0; j<numCols; j++){
-      if (Initial[i][j][0]!=rationalize(Current[i][j].innerHTML)[0] || Initial[i][j][1]!=rationalize(Current[i][j].innerHTML)[1]){
-        same=0 }
-      }
-    }
-    if (same==1 && correct==1){
-      alert("Good Job!")
-      grades[difficulty-1][0]+=1
-      diff(1)
-      initialize()
-      sql_record(Module_Number)
-    }
+    States = []
+    if (page < 12){
+      if (page < 3){
+        [numRows, numCols] = [3, 4]}
+      else if (page < 6){
+        [numRows, numCols] = [4, 5]}
+      else if (page < 9){
+        [numRows, numCols] = [5, 6]}
+      else if (page < 12){
+        [numRows, numCols] = [6, 7]}
 
-    if (same==0 || correct==0){
-      if (same==0 && correct==1){
-        alert("You're not quite to RREF yet!")}
-      if (same==1 && correct==0){
-        alert("That's the correct RREF but you haven't chosen the correct free variables.")}
-      if (same==0 && correct==0){
-        alert("Oops-that's not the RREF and those aren't the free variables.")}
-      grades[difficulty-1][1]+=1
-      sql_record(Module_Number)
+      displayVariables()
+      createAugmentedMatrix()
+      A = generateRationalMatrix(numRows, numCols)
+      writeAugmentedMatrix(A)
+    }
+    else {
+      writeAugmentedMatrix(initialMatrix)}
+    activateRows()
+    equations()
+    writeEquations()
+  }
+  
+  function submitResponse(){
+    if (initialized == 0){
+      button = document.getElementById("submitButton")
+      button.innerHTML = "Submit"
+      initialized = 1
+      displayQuestion(0)
+    }
+    else if (initialized == 1){
+      page += 1
+      displayQuestion(page)
     }
   }
 
-  function selection(){
-    var selection=document.getElementById("selection")
-    while (selection.firstChild){
-      selection.removeChild(selection.lastChild)}
-    for (var i=0; i<numCols-1; i++){
-        var variable=document.createElement('button')
-        variable.style.left=(75*i+110)+"px"
-        variable.style.position="absolute"
-        variable.style.backgroundColor="white"
-        variable.id=variables[i]
-        variable.name=variables[i]
-        variable.innerHTML=variables[i]
-        variable.style.fontSize="22px"
-        variable.style.width="55px"
-        variable.style.height="40px"
-        //variable.addEventListener("click", function (){selectBox()}, false)
-        selection.appendChild(variable)
-    }
-  }
-
-  // This function toggles selected variables
-  function selectBox(){
-    var variable=document.activeElement
-    var newcolor=''
-    if (variable.style.backgroundColor=="silver"){
-      newcolor="white"}
-    if (variable.style.backgroundColor=="white"){
-      newcolor="silver"}
-    variable.style.backgroundColor=newcolor
-  }
-
-  function equations(){
-    var eBox=document.getElementById("equations")
-    eBox.style.left=75*numCols+150+"px"
-    eBox.style.height=75*numRows-10+"px"
-  }
-
-  function create_matrix(){
-    var outer=document.getElementById('outer')
-    outer.value=[numRows,numCols]
-    outer.style.height=75*6+50+"px"
-    outer.style.width=75*numCols+90+"px"
-    while (outer.firstChild) {
+  function createAugmentedMatrix(){    
+    outer.value = [numRows, numCols]
+    outer.style.height = 75*6+50+"px"
+    outer.style.width = 75*numCols+90+"px"
+    while (outer.firstChild){
       outer.removeChild(outer.lastChild)}
 
-    //separator for augmented matrix
-    var augmented=document.createElement('div')
-    augmented.className = 'separator'
-    augmented.style.left=75*numCols+15+"px"
-    augmented.style.height=75*numRows-20+"px"
-    outer.appendChild(augmented)
+    // separator for augmented matrix
+    separator = document.createElement('div')
+    separator.className = 'separators'
+    separator.style.left = 75*numCols+15+"px"
+    separator.style.height = 75*numRows-20+"px"
+    outer.appendChild(separator)
 
-    //inputs
-    for (var i=0; i<numRows; i++){
-      var inp = document.createElement('input')
-      inp.type = "text"
-      inp.name = i
-      inp.id = "in"+(i+1)
-
-      inp.className = 'scalarInput'
-      inp.style.top = (75*i+5)+"px"
-
-      outer.appendChild(inp)
+    // inputs
+    for (let i=0; i<numRows; i++){
+      input = document.createElement('input')
+      input.className = 'scalarInputs'
+      input.type = "text"
+      input.name = i+1
+      input.id = "in"+(i+1)      
+      input.style.top = (75*i+5)+"px"
+      outer.appendChild(input)
     }
 
-    //switches
-    for (var i=0; i<numRows-1; i++){
-      var swit=document.createElement('button')
-      swit.id="switch"+(i+1)+(i+2)
-      swit.addEventListener("click", function (){switchAdjacentRows()},false)
-      swit.style.position="absolute"
-      swit.style.backgroundColor="white"
-      swit.style.height="20px"
-      swit.style.width=numCols*75+"px"
-      swit.style.left="100px"
-      swit.style.top=(75*i+55)+"px"
-      swit.name=i
-      outer.appendChild(swit)
+    // switchbars
+    for (let i=0; i<numRows-1; i++){
+      switchbar = document.createElement('button')
+      switchbar.className = 'switches'
+      switchbar.style.width = numCols*75+"px"
+      switchbar.style.top = (75*i+55)+"px"
+      switchbar.id = "switch"+(i+1)+(i+2)
+      switchbar.name = i
+      switchbar.addEventListener("click", function() {switchAdjacentRows()}, false)
+      outer.appendChild(switchbar)
     }
 
-    //multipliers
-    for (var i=0; i<numRows; i++){
-      var multi = document.createElement('button')
-      multi.id = "mult"+(i+1)
-      multi.name = i
-      multi.innerHTML = "&times"
-      multi.addEventListener("click",function() {mult()},false)
-      multi.style.top = (75*i+5)+"px"
-      multi.className = 'multiplyButton'
-      outer.appendChild(multi)
+    // multipliers
+    for (let i=0; i<numRows; i++){
+      multiplier = document.createElement('button')
+      multiplier.className = 'multiplyButtons'
+      multiplier.style.top = (75*i+5)+"px"
+      multiplier.id = "mult"+(i+1)
+      multiplier.name = i+1
+      multiplier.innerHTML = "&times"
+      multiplier.addEventListener("click", function() {multiplyByScalar()}, false)
+      outer.appendChild(multiplier)
     }
 
-    //rows
+    // rows
     var Colors = colorList
-    //var outer = document.getElementById("outer")
-    for (var i=0; i<numRows; i++){
-      var row=document.createElement('div')
-      row.className = 'matrixRow'
-      row.style.width=(numCols*75)+"px"
-      row.style.top=(75*i)+"px"
-      row.style.backgroundColor=Colors[i]
-      row.id=Colors[i]+"tip"
-
+    for (let i=0; i<numRows; i++){
+      row = document.createElement('div')
+      row.className = 'matrixRows'
+      row.style.width = (numCols*75)+"px"
+      row.style.top = (75*i)+"px"
+      row.style.backgroundColor = Colors[i]
+      row.id = Colors[i]+"tip"
       outer.appendChild(row)
 
-      
-      for (var j=0; j<numCols; j++){
-        var col=document.createElement('div')
-        col.className = 'matrixColumn center'
+      for (let j=0; j<numCols; j++){
+        col = document.createElement('div')
+        col.className = 'matrixColumns center'
         col.style.left=(75*j)+"px"
-        col.style.opacity=0.8
-        col.id=colorList[i]+(j+1)
-
+        col.id = colorList[i]+(j+1)
         row.appendChild(col)
       }
     }
   }
 
-  // This function displays the matrix according to the difficulty level
-  function diff(k){
-    if (0<difficulty+k && difficulty+k<11){
-      difficulty += k
-      numRows = Math.round(2.5+difficulty/5+Math.random()*difficulty/5)
-      numCols = Math.round(3.7+difficulty/4+Math.random()*difficulty/4)
-      page += k
-      initialize()
-    }
+  function displayVariables(){
+    boxes = document.getElementById("variables")
+    while (boxes.firstChild){
+      boxes.removeChild(boxes.lastChild)}
 
-    if (difficulty==10){
-      //score()
+    for (let i=0; i<numCols-1; i++){
+      variable = document.createElement('button')
+      variable.className = 'variables'
+
+      variable.style.left = (75*i+110)+"px"
+      variable.id = variables[i]
+      variable.name = variables[i]
+      variable.innerHTML = variables[i]
+
+      boxes.appendChild(variable)
     }
-    document.getElementById("difficulty").innerText='Difficulty Level: ' + difficulty
+  }
+
+  function writeAugmentedMatrix(matrixA){
+    if (numRows!=matrixA.length || numCols!=matrixA[0].length){
+      throw "Matrix should have the correct dimensions"}
+
+    for (let i=0; i<numRows; i++){
+      for (let j=0; j<numCols; j++){
+        address = document.getElementById(colorList[i]+(j+1))
+        address.textContent = matrixA[i][j].toString()
+      }
+    }
   }
 
   // This function retrieves entries of the augmented matrix
-  function get_entries(){
-    var Col=[]
-    for (var i=0; i<numRows; i++){
-      Col.push([])
+  function readAugmentedMatrix(){
+    A = []
+    for (let i=0; i<numRows; i++){
+      row = []
       for (var j=0; j<numCols; j++){
-        Col[i].push(document.getElementById(colorList[i]+(j+1)))
+        address = document.getElementById(colorList[i]+(j+1)) 
+        row.push(parseRational(address.textContent))
       }
+      A.push(row)
     }
-    return(Col)
+    return new RationalMatrix(A)
   }
 
-  function rationalize(fraction){
-    if (fraction.includes('.')){
-      numerator=parseFloat(fraction)
-      denominator=1
+  function writeEquations(){
+    Entries = readAugmentedMatrix()
 
-      while (Number.isInteger(numerator)==false & denominator<1000){
-        numerator*=10
-        denominator*=10
-      }
+    Colors = []
+    for (let i=0; i<numRows; i++){
+      colortip = document.getElementById(colorList[i]+"tip")
+      Colors.push(colortip.style.backgroundColor)
     }
 
-    else {
-      numerator=fraction
-      denominator=1
-      var slash_index=0
-      for (var k=0; k<fraction.length; k++){
-        if ('-0123456789'.includes(fraction[k])==false){
-          slash_index=k}
-      }
+    equationElement = document.getElementById("equations")
+    equationList = []
 
-      if (slash_index>0){
-        numerator=fraction.substring(0,slash_index)
-        denominator=fraction.substring(slash_index+1,fraction.length)
-      }
-
-      numerator=parseFloat(numerator)
-      denominator=parseFloat(denominator)
-      if (isNaN(numerator) || isNaN(denominator)){
-        denominator=0}
-
-      if (denominator<0){
-        denominator*=-1
-        numerator*=-1
-      }
-    }
-    return([numerator, denominator])
-  }
-
-  function sum(X,i,j){
-    var s=0
-    for (var k=i; k<j; k++){
-      s+=X[k]
-    }
-    return(s)
-  }
-
-  // This function returns a randomly generated rational number within a fixed range
-  function randrat(){
-    var num=Math.round(10*(Math.random()*Math.random()-0.2))
-    var den=Math.ceil(5*(Math.random()*Math.random()))
-    return([num,den])
-  }
-
-  function set(complexity){
-    Pivots=[]
-
-    if (Math.random()>0.1){
-      Pivots.push(1)}
-    else{
-      Pivots.push(0)}
-
-    for (var j=1; j<numCols-1; j++){
-      if (Math.random()>0.3){
-        Pivots.push(1)}
-      else{
-        Pivots.push(0)}
-    }
-    if (Math.random()>1){
-      Pivots.push(1)}
-    else{
-      Pivots.push(0)}
-
-    var Matrix=[]
-    for (var i=0; i<numRows; i++){
-      Matrix.push([])
-      for (var j=0; j<numCols; j++){
-        if (sum(Pivots,0,j+1)<i+1){
-          Matrix[i].push([0,1])}
-        if (sum(Pivots,0,j+1)==i+1 && Pivots[j]==1){
-          Matrix[i].push([1,1])}
-        if (sum(Pivots,0,j)>=i+1){
-          if (Pivots[j]==1){
-            Matrix[i].push([0,1])}
-          if (Pivots[j]==0){
-            let r=randrat()
-            Matrix[i].push(randrat())
-          }
+    for (let i=0; i<numRows; i++){
+      eq = ''
+      for (let j=0; j<numCols-1; j++){
+        q = Entries[i][j].toString()
+        if (q == '1'){
+          eq += '+'+variables[j]}
+        else if (q == '-1'){
+          eq += '-'+variables[j]}
+        else if (q != '0'){
+          if (q[0]=='-'){
+            eq += q+variables[j]}
+          else {
+            eq += '+'+q+variables[j]}
         }
       }
-    }
-
-    Initial=[]
-    for (var m=0; m<Matrix.length; m++){
-      Initial.push([])
-      for (var n=0; n<Matrix[m].length; n++){
-        Initial[m].push(simplify(Matrix[m][n]))
-      }
-    }
-
-    //set rank
-    for (j=0; j<complexity; j++){
-      //Switch 2 rows
-      if (Math.random()<0.5){
-          m=Math.floor(numRows*Math.random())
-          n=Math.floor(numRows*Math.random())
-          var Row1=Matrix[m]
-          var Row2=Matrix[n]
-          Matrix[m]=Row2
-          Matrix[n]=Row1
-      }
-
-      //Multiply row by integer
-      if (Math.random()<0.5){
-        m=Math.floor(numRows*Math.random())
-        c=Math.round(10*Math.random())-5
-        if (c!=0){
-          for (k=0; k<numCols; k++){
-            Matrix[m][k]=simplify([c*Matrix[m][k][0],Matrix[m][k][1]])
-          }
-        }
-      }
-
-      //Divide row by positive integer
-      if (Math.random()<0.3){
-        m=Math.floor(numRows*Math.random())
-        c=Math.ceil(numRows*Math.random())
-        for (k=0; k<numCols; k++){
-          Matrix[m][k]=simplify([Matrix[m][k][0],c*Matrix[m][k][1]])
-        }
-      }
-
-      //Add one row to another
-      if (Math.random()<0.9){
-        m=Math.floor(numRows*Math.random())
-        n=Math.floor(numRows*Math.random())
-        for (k=0; k<numCols; k++){
-          var t0=Matrix[m][k][0]*Matrix[n][k][1]+Matrix[m][k][1]*Matrix[n][k][0]
-          var t1=Matrix[m][k][1]*Matrix[n][k][1]
-          Matrix[n][k]=simplify([t0,t1])
-        }
-      }
-    }
-
-    var Entries=get_entries()
-
-    for (p=0; p<numRows; p++){
-      for (q=0; q<numCols; q++){
-        if (Matrix[p][q][1]==1 || Matrix[p][q][0]==0){
-          Entries[p][q].innerHTML=Matrix[p][q][0]}    
-        if (Matrix[p][q][1]!=1 && Matrix[p][q][0]!=0){
-          Entries[p][q].innerHTML=Matrix[p][q][0]+'&frasl;'+Matrix[p][q][1]}
-    }
-    }
-
-    pivDex=[]
-
-    for (var j=0; j<Pivots.length;j++){
-      if (Pivots[j]==1){
-        pivDex.push(j)}
-    }
-
-    let r=Math.random()
-    for (var k=0; k<pivDex.length; k++){
-      if (r>k/pivDex.length && r<(k+1)/pivDex.length){
-        PIV= pivDex[k]}
-    }
-
-    if (1==2){
-      q=document.getElementById("question")
-      q.innerHTML='If we know that '
-      for (var u=PIV+1; u<Pivots.length; u++){
-        Ran=randrat()
-
-        var n0=Ran[0]
-        var n1=Ran[1]
-        lcm=1
-        for (m=0; m<n1+1; m++){
-          if (Number.isInteger(n1/m)==true && Number.isInteger(n0/m)==true){
-            lcm=m}
-        }
-        n0/=lcm
-        n1/=lcm   
-
-        Ran=[n0,n1]
-
-        if (Ran[1]==1 || Ran[0]==0){
-          q.innerHTML+=variables[u]+"="+Ran[0]+", "}
-        if (Ran[1] !=1 && Ran[0]!=0){
-          q.innerHTML+=variables[u]+"="+Ran[0]+"&frasl;"+ Ran[1]+', '}
-      }
-
-      q.innerHTML+=" then find the value of  "+variables[PIV]+'.'
-    }
-  }
-
-  function write_equations(){
-    Entries=get_entries()
-
-    Colors=[]
-    for (var i=0; i<numRows; i++){
-      Colors.push(document.getElementById(colorList[i]+"tip").style.backgroundColor)
-    }
-
-    Eq_el=document.getElementById("equations")
-    Eq_list=[]
-
-    for (i=0; i<numRows; i++){
-      eq=''
-      for (j=0; j<numCols-1; j++){
-        if (Entries[i][j].innerHTML=='1'){
-          eq+='+'+variables[j]}
-        if (Entries[i][j].innerHTML=='-1'){
-        eq+='-'+variables[j]}
-        if (Entries[i][j].innerHTML!='-1' && Entries[i][j].innerHTML!='0' && Entries[i][j].innerHTML!='1'){
-          if (Entries[i][j].innerHTML[0]=='-'){
-            eq+=Entries[i][j].innerHTML+variables[j]}
-          if (Entries[i][j].innerHTML[0]!='-'){
-            eq+='+'+Entries[i][j].innerHTML+variables[j]}
-        }
-      }
-      eq+='='+Entries[i][numCols-1].innerHTML
+      eq += '='+Entries[i][numCols-1].toString()
       if (eq[0]=='+'){
-        eq=' '+eq.substring(1,eq.length)}
+        eq = ' '+eq.substring(1,eq.length)}
       if (eq[0]=='='){
-        eq=''}
+        eq = '0'+eq}
 
-      Eq_list.push(eq)
+      equationList.push(eq)
     }
+
+    while(equationElement.firstChild){
+      equationElement.removeChild(equationElement.firstChild)
+    }
+    for (let i=0; i<numRows; i++){
+      newEquation = document.createElement('div')
+      newEquation.className = 'equationElement'
+      newEquation.innerHTML = equationList[i]
+      newEquation.style.top = 15+75*i+"px"
+      newEquation.style.color = Colors[i]
+      equationElement.appendChild(newEquation)
+    }
+  }
+
+  function nextPage(){
+    if (page<quests.length-1 && initialized==1){
+      page += 1
+      displayQuestion(page)
+    }
+  }
+
+  function previousPage(){
+    if (page>0 && initialized==1){
+      page -= 1
+      displayQuestion(page)
+    }
+  }
+
+  function succeedAutomatically(){
+    if (initialized != 1){
+      return }
+    if (page < quests.length){
+      page += 1}
+    displayQuestion(page)
+  }
+
+  function equations(){
+    equationBox = document.getElementById("equations")
+    equationBox.style.left = 75*numCols+150+"px"
+    equationBox.style.height = 75*numRows-10+"px"
+  }
+
+  function multiplyByScalar(){
+    let i = parseInt(document.activeElement.name)-1
+    recordState()
+
+    constant = document.getElementById("in"+(i+1))
+    Row = readAugmentedMatrix()[i]
+    scalar = parseRational(constant.value)
+
+    zero = new RationalNumber(0,1)
+    if (scalar.equals(zero)){
+      alert("Given scalar cannot be zero.")
+      return 
+    }
+    else {
+      for (let j=0; j<numCols; j++){
+        address = document.getElementById(colorList[i]+(j+1))
+        q = scalar.multiply(Row[j])
+        address.textContent = q.toString()
+      }
+    }
+
+    constant.value = ''
+    writeEquations()
+  }
+
+  function addOrSwap(first, second){
+    start = -1
+    end = -1
+
+    for (let i=0; i<numRows; i++){
+      if (75*i<first && first<75*i+50){
+        start=i}
+      if (75*i<second && second<75*i+50){
+        end=i}
+    }
+
+    if (start != end){
+      recordState()
+      Entries = readAugmentedMatrix()
+
+      constant = document.getElementById("in"+(start+1))
+      if (constant.value == ''){
+        for (let j=0; j<numCols; j++){
+          FirstAddress = document.getElementById(colorList[start]+(j+1))
+          SecondAddress = document.getElementById(colorList[end]+(j+1))
+          tempValue = FirstAddress.textContent
+          FirstAddress.textContent = SecondAddress.textContent
+          SecondAddress.textContent = tempValue
+        }
+        FirstTip = document.getElementById(colorList[start]+"tip")
+        SecondTip = document.getElementById(colorList[end]+"tip")
+        tempColor = FirstTip.style.backgroundColor
+        FirstTip.style.backgroundColor = SecondTip.style.backgroundColor
+        SecondTip.style.backgroundColor = tempColor
+      }
+      else if (constant.value != ''){
+        C = parseRational(constant.value)
+
+        startRow = Entries[start]
+        endRow = Entries[end]
+
+        for (let j=0; j<numCols; j++){
+          FirstAddress = document.getElementById(colorList[start]+(j+1))
+          SecondAddress = document.getElementById(colorList[end]+(j+1))
+          x1 = parseRational(FirstAddress.textContent)
+          x2 = parseRational(SecondAddress.textContent)
+          SecondAddress.textContent = ((C.multiply(x1)).add(x2)).toString()
+        }
+        constant.value = ''
+      }
       
-    while(Eq_el.firstChild){
-      Eq_el.removeChild(Eq_el.firstChild)
-    }
-    for (i=0; i<numRows; i++){
-      var new_eq = document.createElement('div');
-      new_eq.style.position='absolute'
-      new_eq.style.width='260px'
-      new_eq.style.height='30px'
-      new_eq.style.fontSize='20px'
-      new_eq.innerHTML=Eq_list[i]
-      new_eq.style.top=15+75*i+"px"
-      new_eq.style.left="50px"
-      new_eq.style.color=Colors[i]
-      //new_eq.style.textShadow='white 0.1em 0.1em 0.2em'
-      Eq_el.appendChild(new_eq)
+      writeEquations()
     }
   }
 
-  function initialize(){
+  function initializePage(){
+    displayVariables()
+    createAugmentedMatrix()
+    writeAugmentedMatrix(initialMatrix)
+    activateRows()
     equations()
-    create_matrix()
-    selection()
-    set(difficulty)
-    reduce()
-    write_equations()
+    writeEquations()
 
-    States=[]
-    for (var p=0; p<numRows; p++){
-    var inp = document.getElementById("in"+(p+1))
-    inp.addEventListener("keydown", function (e){
-      if (e.code === "Enter"){ 
-        mult()}
-    })
-  }
-    for (var ind=0; ind<numRows; ind++){
-      mobilize(document.getElementById(colorList[ind]+"tip"))
-    }
+    States = []
+    
     //score()
   }
 
-  function record_state(){
-    Entries=get_entries()
-
-    COLORS=[]
-    for (var j=0; j<numRows; j++){
-     COLORS.push(document.getElementById(colorList[j]+"tip").style.backgroundColor)
-    }   
-    var state=[]
-    for (var i=0; i<Entries.length; i++){
-      var rowstate=[]
-      for (var j=0; j<Entries[i].length; j++){
-        rowstate.push(Entries[i][j].innerHTML)
-      }
-      state.push(rowstate)
+  function activateRows(){
+    for (let i=0; i<numRows; i++){
+      input = document.getElementById("in"+(i+1))
+      input.addEventListener("keydown", function (e){
+        if (e.code === "Enter"){ 
+          multiplyByScalar()}
+      })
+    }
+    for (let i=0; i<numRows; i++){
+      colortip = document.getElementById(colorList[i]+"tip")
+      mobilize(colortip)
+    }
   }
+
+  // adds a performed operation into memory
+  function recordState(){
+    state = [readAugmentedMatrix()]
+
+    COLORS = []
+    for (let j=0; j<numRows; j++){
+      colortip = document.getElementById(colorList[j]+"tip")
+      COLORS.push(colortip.style.backgroundColor)
+    }
 
     state.push(COLORS)
     States.push(state)
   }
 
-  function revert(){
-    S = States[States.length-1]
+  // removes the most recently performed operation from memory
+  function revertState(){
+    lastState = States[States.length-1]
 
-    var Entries = get_entries()
-    for (i=0; i<Entries.length; i++){
-      for (j=0; j<Entries[i].length; j++){
-        Entries[i][j].innerHTML=S[i][j]
+    Entries = readAugmentedMatrix()
+    for (let i=0; i<Entries.length; i++){
+      for (let j=0; j<Entries[i].length; j++){
+        Entries[i][j].textContent = lastState[0][i][j].toString()
       }
     }
     
-    COL=[]
-    for (var j=0; j<numRows; j++){
-      document.getElementById(colorList[j]+"tip").style.backgroundColor=S[S.length-1][j]
+    COL = []
+    for (let j=0; j<numRows; j++){
+      colortip = document.getElementById(colorList[j]+"tip")
+      colortip.style.backgroundColor = lastState[1][j]
     } 
-    States.splice(States.length-1,1)
+    States.splice(States.length-1, 1)
   }
 
   function switchAdjacentRows(){
     var i = 1 + parseFloat(document.activeElement.name)
-    record_state()
+    recordState()
     COL = []
     for (var j=0; j<numRows; j++){
       COL.push(document.getElementById(colorList[j]+"tip"))
@@ -1342,184 +1241,31 @@
     FirstColor = COL[i-1].style.backgroundColor
     SecondColor = COL[i].style.backgroundColor
     
-    var Entries = get_entries()
+    var Entries = readAugmentedMatrix()
     First = Entries[i-1]
     Second = Entries[i]
     
     var FirstHTML = []
     var SecondHTML = []
-    for (var j=0; j<numCols; j++){
+    for (let j=0; j<numCols; j++){
       FirstHTML.push(First[j].innerHTML)
       SecondHTML.push(Second[j].innerHTML)
     }
-    for (var j=0; j<numCols; j++){
+    for (let j=0; j<numCols; j++){
       First[j].innerHTML = SecondHTML[j]
       Second[j].innerHTML = FirstHTML[j]
     }
     
     COL[i-1].style.backgroundColor = SecondColor
     COL[i].style.backgroundColor = FirstColor
-    write_equations()
-  }
-
-  function mult(){
-    var i=1+parseFloat(document.activeElement.name)
-    
-    record_state()
-
-    constants=[]
-    for (var j=0; j<numRows; j++){
-      constants.push(document.getElementById("in"+(j+1)))
-    }
-
-    var Entries = get_entries()
-    Row = Entries[i-1]
-    Constant = rationalize(constants[i-1].value)
-
-    if (Constant[1] == 0){
-      alert("Please enter a number or fraction, or exact decimal")}
-    if (Constant[0] == 0){
-      alert("If you multiply an equation by 0 you will lose all the information \
-      contained in that equation!")
-    }
-    if (Constant[0]!=0  && Constant[1]!=0){
-      var rowVals = []
-      for (var j=0; j<numCols; j++){
-        rowVals.push(rationalize(Row[j].innerHTML))
-      }
-
-      for (var j=0; j<numCols; j++){
-      rowVals[j][0] *= Constant[0]
-      rowVals[j][1] *= Constant[1]
-      }
-    }
-
-    for (var j=0; j<numCols; j++){
-      if (rowVals[j][1] == 1){
-        Row[j].innerHTML = rowVals[j][0]
-      }
-      if (rowVals[j][1] != 1){
-        Row[j].innerHTML = rowVals[j][0]+"&frasl;"+rowVals[j][1]
-      }
-    }
-
-    constants[i-1].value = ''
-    reduce()
-    write_equations()
-  }
-
-  function add(Z0,Z1){
-    start=99
-    end=99
-
-    for (var i=0; i<numRows; i++){
-      if (75*i<Z0 && Z0<75*i+50){
-        start=i}
-      if (75*i<Z1 && Z1<75*i+50){
-        end=i}
-    }
-
-    if (start!=end){
-      record_state()
-      var Entries=get_entries()
-
-      constants=[]
-      for (var j=0; j<numRows; j++){
-        constants.push(document.getElementById("in"+(j+1)))
-      }
-
-      if (constants[start].value==''){
-        COL=[]
-        for (var j=0; j<numRows; j++){
-          COL.push( document.getElementById(colorList[j]+"tip"))
-        }
-        First=Entries[start]
-        Second=Entries[end]
-        FirstColor=COL[start].style.backgroundColor
-        SecondColor=COL[end].style.backgroundColor
-        var FirstHTML=[]
-        var SecondHTML=[]
-        for (var j=0; j<numCols; j++){
-          FirstHTML.push(First[j].innerHTML)
-          SecondHTML.push(Second[j].innerHTML)
-        }
-        for (var j=0; j<numCols; j++){
-          First[j].innerHTML=SecondHTML[j]
-          Second[j].innerHTML=FirstHTML[j]
-        }
-
-        COL[start].style.backgroundColor=SecondColor
-        COL[end].style.backgroundColor=FirstColor
-      }
-      if (constants[start].value!=''){
-        var C=rationalize(constants[start].value.toString())
-
-        startRow=Entries[start]
-        endRow=Entries[end]
-        newVals=[]
-        for (i=0; i<startRow.length; i++){
-          var S=rationalize(startRow[i].innerHTML)
-          var E=rationalize(endRow[i].innerHTML)
-          newVals.push([C[0]*S[0]*E[1]+E[0]*C[1]*S[1],C[1]*S[1]*E[1]])}
-
-        for (var j=0; j<numCols; j++){
-          numer=newVals[j][0]
-          denom=newVals[j][1]
-          if (denom==1){
-            Entries[end][j].innerHTML=numer}
-          if (denom!=1){
-            Entries[end][j].innerHTML=numer+"&frasl;"+denom}
-        }
-
-        constants[start].value=''
-        reduce()
-      }
-      write_equations()
-    }
-  }
-  
-  function simplify(n){
-    var n0=n[0]
-    var n1=n[1]
-    var greatestCommonDivisor=1
-    for (var m=1; m<n1+1; m++){
-      if (Number.isInteger(n1/m)==true && Number.isInteger(n0/m)==true){
-        greatestCommonDivisor=m}
-    }
-
-    n0/=greatestCommonDivisor
-    n1/=greatestCommonDivisor
-    return([n0,n1])
-  }
-
-  function reduce(){
-    var Entries=get_entries()
-    for (var i=0; i<Entries.length; i++){
-      for (var j=0; j<Entries[i].length; j++){
-        var n=rationalize(Entries[i][j].innerHTML)
-        var n0=n[0]
-        var n1=n[1]
-        var lcm=1
-        for (var m=1; m<n1+1; m++){
-          if (Number.isInteger(n1/m)==true && Number.isInteger(n0/m)==true){
-            greatestCommonDivisor=m}
-        }
-
-        n0/=greatestCommonDivisor
-        n1/=greatestCommonDivisor
-        if (n1==1){
-          Entries[i][j].innerHTML=n0}
-        if (n1!=1){
-          Entries[i][j].innerHTML=n0+"&frasl;"+n1}
-      }
-    }
+    writeEquations()
   }
 
   function clear(){
     if (window.getSelection){
-      window.getSelection().removeAllRanges();}
+      window.getSelection().removeAllRanges()}
     else if (document.selection){
-      document.selection.empty();}
+      document.selection.empty()}
   }
 
   function mobilize(tip){
@@ -1547,29 +1293,37 @@
       document.onmouseup = null;
       document.onmousemove = null;
       for (var v=0; v<numRows; v++){
-        document.getElementById(colorList[v]+"tip").style.left="100px";
-        document.getElementById(colorList[v]+"tip").style.top=75*v+"px";
+        document.getElementById(colorList[v]+"tip").style.left = "100px";
+        document.getElementById(colorList[v]+"tip").style.top = 75*v+"px";
       }
-      Y1=e.clientY
-      ABS=document.getElementById('outer').getBoundingClientRect()
-      off=(ABS.top)
-      add(Y0-off,Y1-off)
+      Y1 = e.clientY
+      ABS = document.getElementById('outer').getBoundingClientRect()
+      off = (ABS.top)
+      addOrSwap(Y0-off,Y1-off)
      }  
   }
 
-  const colorList=["royalblue","green","tomato","yellow","orange","sienna"]
-  const variables=['a','b','c','d','e','f','g','h']
-  numRows=3
-  numCols=5
-  var Module_Number="11"
-  quests=[0,0,0,0,0,0,0,0,0,0,0]
-  the_time=Date.now()
+  const colorList = ["dodgerblue", "green", "tomato", "yellow", "orange", "sienna"]
+  const variables = ['u', 'v', 'w', 'x', 'y', 'z']
+  numRows = 6
+  numCols = 7
+  var Module_Number="14"
+  questions = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  the_time = Date.now()
   //make_grades(Module_Number)
 
-  difficulty=1
-  page=difficulty-1
+  //page = 0
 
-  initialize()
+  initialMatrix = new RationalMatrix([
+    [1, "1/5", "-2/5", 0, 0, 0, "3/5"], 
+    [1, "1/3", "-2/3", 0, 0, 0, "-4/3"], 
+    [0, 0, 0, 1, 0, 0, "1/4"], 
+    [0, 0, 0, 0, 1, 0, "-1/2"], 
+    [0, 0, 0, 0, 0, 1, 0], 
+    [0, 0, 0, 0, 0, 0, "5/4"]
+    ])
+  initializePage()
+
 </script>
 </body>
 </html>
