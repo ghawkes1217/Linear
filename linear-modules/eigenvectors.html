@@ -257,20 +257,30 @@
   </div>
     <h2><center>Eigenvectors</center></h2>
 <p>
-This module explores the idea of eigenvectors and their associated eigenvalues for \(2 \times 2 \) matrices.  
+This module explores the idea of eigenvectors and their associated eigenvalues for \(2 \times 2 \) matrices.
+For a given matrix \(A\) we call a vector \(v\) an eigenvector if there is some constant \(\lambda\) (called the eigenvalue) 
+such that \(Av=\lambda v \).  Another way to think of eigenvectors is as follows. Recall that \(Av\) is a linear combination
+ of the columns of \(A\) as specified by the coordinates of \(v\).  If this linear combination turns to out to 
+ be a scalar multiple of \(v\) then \(v\) is an eigenvector.  
 </p>
+In the module, the solid blue vector represents the first column of the matrix and the solid green vector 
+represents the second column of the matrix.  \(v\) tells us what multiple of the blue vector to take, and 
+what multiple of the green vector to take (these multiples are represented by the dotted blue and green lines).  When we 
+add these two scaled vectors together, we get the black dot.  Therefore, the black dot represents the value of \(Av\) so  we 
+can say that whenever the black dot lies on the red vector (which represents \(v\)) or on the line that 
+the red vector determines (i.e., the dotted red line) that \(Av\) is a multiple of \(v\). In other words 
+\(v\) is an eigenvector.
 
 
 
-
-</p>
+</p>  
+Below the matrix equation the factor by which the matrix scales the first and second coordinate of \(v\) are shown.
+If \(v\) is an eigenvector then \(A\) scales all of \(v\) by the same factor, so these values must be the same.   
 
 <p>
-  For instance, in the initialized example...
-</p>  
 
 
-
+</p>
 <div id="question">
 Ready to begin?  Click "Start" to view your first question.
 </div>
@@ -572,8 +582,8 @@ ctx.stroke();
 
 ctx.beginPath();
 ctx.strokeStyle="red"
-ctx.lineWidth=2
-ctx.setLineDash([2, 3])
+ctx.lineWidth=1
+ctx.setLineDash([3, 4])
 ctx.moveTo(pr1, pr2);
 ctx.lineTo(nr1, nr2 );
 ctx.stroke();
@@ -774,8 +784,8 @@ x=document.getElementById("m13").value
 y=document.getElementById("m23").value
 
 
-r1=Math.round(100*x/(a11*x+a12*y))/100
-r2=Math.round(100*y/(a21*x+a22*y))/100
+r1=Math.round(100*(a11*x+a12*y)/x)/100
+r2=Math.round(100*(a21*x+a22*y)/y)/100
 
 X=Math.round(100*(a11*x+a12*y))/100
 Y=Math.round(100*(a21*x+a22*y))/100
@@ -872,27 +882,27 @@ var red=["redtip","m13","m23"]
 if (page==0){
 fix(blue,[0],[1.2,0.6])
 fix(green,[0],[1.2,1.2])
-fix(red,[1],[1,0])
+fix(red,[1],[0.5,-1])
 }
 
 if (page==1){
-fix(blue,[0,1],[1,1,0.5])
-fix(green,[0,1],[0,1,0.7])
-fix(red,[0,0],[0.3,-1,1,1])
+fix(blue,[0],[0,1])
+fix(green,[0],[1,0])
+fix(red,[1],[1.5,1])
 }
 
 
 if (page==2){
-fix(blue,[0,1],[0.8,0.4,0.5])
-fix(green,[0,1],[-0.3,1,0.7])
-fix(red,[0,1],[-0.8,-0.4,1,0.5])
+fix(blue,[0],[-1,1])
+fix(green,[0],[1,1])
+fix(red,[1],[0.5,1])
 }
 
 
 if (page==3){
-fix(blue,[0,0],[0.8,0.8,0.5])
-fix(green,[0,0],[-0.8,0.8,0.7])
-fix(red,[1,0],[1,0,0.8])
+fix(blue,[0],[1,1])
+fix(green,[0],[1,1])
+fix(red,[1],[0.5,-1])
 }
 
 if (page==4){
@@ -961,16 +971,22 @@ function grade(p,m11,m21,m12,m22,m13,m23,w1,w2,r1,r2){
 correct=0
 
 if (p==0){
-  if(r1==r2){
+  if(r1==r2 && m13<=0 && m23<=0){
     correct = 1}}
 
 if (p==1){
-  if(w1==0 && w2==0  && (v1!=0 || v2!=0 || v3!=0)){
+  if(r1==r2 && m13<=0 && m23>=0){
     correct = 1}}
 
-if (p==2){
-  if(w1==0 && w2==0  && (v1!=0 || v2!=0 || v3!=0)){
+    if (p==1){
+  if(r1==r2 && m13>=0 && m23<=0){
     correct = 1}}
+
+
+    if (p==1){
+  if(r1==r2 && m13>=0 && m23>=0){
+    correct = 1}}
+
 
 if (p==3){
   if(w1==0 && w2==0){
@@ -1062,9 +1078,9 @@ var initialized=0
 var page=0
 var quests=[
 "1. Find a (non-zero) eigenvector for the given matrix that lies in the third quadrant.",
-"2. Find a (non-zero) vector in the null space of the given matrix (this means the black dot will need to lie at the origin).",
-"3. Find a (non-zero) vector in the null space of the given matrix (this means the black dot will need to lie at the origin).",
-"4. Manipulate the last column of the matrix (or drag the red vector) until the given 3-entry vector lies in the null space.",
+"2. Find a (non-zero) eigenvector for the given matrix that lies in the second quadrant.",
+"3. Find a (non-zero) eigenvector for the given matrix that lies in the fourth quadrant.",
+"4. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
 "5. Manipulate the middle column of the matrix (or drag the green vector) until the given 3-entry vector lies in the null space.",
 "6. Manipulate the first column of the matrix (or drag the blue vector) until the given 3-entry vector lies in the null space.",
 "7. Find a vector that is in the null space of all matrices.",
