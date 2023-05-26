@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!-- The following adds MathJax to render LaTeX notation -->
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
-        <link rel="stylesheet" href="../styles.css">
-        <script src="../site-scripts.js"></script>
-      </head>
-<style>
+<head>
+  <!-- The following adds MathJax to render LaTeX notation -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../site-scripts.js"></script>
+  <style>
 #blank {
   position: relative;
 }
@@ -247,134 +245,120 @@
   height: 35px;
 }
   
- </style>
-
+  </style>
+</head>
  
 <body>
 <div>
   <div style="position: absolute;">
     <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
   </div>
-    <h2><center>Eigenvectors</center></h2>
-<p>
-This module explores the idea of eigenvectors and their associated eigenvalues for \(2 \times 2 \) matrices.
-For a given matrix \(A\) we call a vector \(v\) an eigenvector if there is some constant \(\lambda\) (called the eigenvalue) 
-such that \(Av=\lambda v \).  Another way to think of eigenvectors is as follows. Recall that \(Av\) is a linear combination
- of the columns of \(A\) as specified by the coordinates of \(v\).  If this linear combination turns to out to 
- be a scalar multiple of \(v\) then \(v\) is an eigenvector.  
-</p>
-In the module, the solid blue vector represents the first column of the matrix and the solid green vector 
-represents the second column of the matrix.  \(v\) tells us what multiple of the blue vector to take, and 
-what multiple of the green vector to take (these multiples are represented by the dotted blue and green lines).  When we 
-add these two scaled vectors together, we get the black dot.  Therefore, the black dot represents the value of \(Av\) so  we 
-can say that whenever the black dot lies on the red vector (which represents \(v\)) or on the line that 
-the red vector determines (i.e., the dotted red line) that \(Av\) is a multiple of \(v\). In other words 
-\(v\) is an eigenvector.
 
+  <h2><center>Eigenvectors</center></h2>
+  
+  <p>
+    This module explores the idea of eigenvectors and their associated eigenvalues for \(2 \times 2 \) matrices.
+    For a given matrix \(A\) we call a vector \(v\) an eigenvector if there is some constant \(\lambda\) (called the eigenvalue) 
+    such that \(Av=\lambda v \).  Another way to think of eigenvectors is as follows. Recall that \(Av\) is a linear combination
+     of the columns of \(A\) as specified by the coordinates of \(v\).  If this linear combination turns to out to 
+     be a scalar multiple of \(v\) then \(v\) is an eigenvector.  
+  </p>
 
+  <p>
+    In the module, the solid blue vector represents the first column of the matrix and the solid green vector 
+    represents the second column of the matrix.  \(v\) tells us what multiple of the blue vector to take, and 
+    what multiple of the green vector to take (these multiples are represented by the dotted blue and green lines).  When we 
+    add these two scaled vectors together, we get the black dot.  Therefore, the black dot represents the value of \(Av\) so  we 
+    can say that whenever the black dot lies on the red vector (which represents \(v\)) or on the line that 
+    the red vector determines (i.e., the dotted red line) that \(Av\) is a multiple of \(v\). In other words 
+    \(v\) is an eigenvector.
+  </p>  
 
-</p>  
-Below the matrix equation the factor by which the matrix scales the first and second coordinate of \(v\) are shown.
-If \(v\) is an eigenvector then \(A\) scales all of \(v\) by the same factor, so these values must be the same.   
+  <p>
+    Below the matrix equation the factor by which the matrix scales the first and second coordinate of \(v\) are shown.
+    If \(v\) is an eigenvector then \(A\) scales all of \(v\) by the same factor, so these values must be the same.
+  </p>
 
-<p>
+  <div id="question">
+    Ready to begin?  Click "Start" to view your first question.
+  </div>
 
-
-</p>
-<div id="question">
-Ready to begin?  Click "Start" to view your first question.
-</div>
-<div class="popup" onclick="pop()"><u>Question Statistics</u>
-  <div class="popuptext" id="myPopup">
-    <h3 id="selected" style="text-align:center;">No Question Selected</h3>
-    <table >
-
-      <tr>
-        <td>Users Who Have Attempted This Question</td>
-        <td id="users">0</td>
-      </tr>
-      <tr>
-        <td>Percentage of Users With a Correct Response</td>
-        <td id="eventual">0</td>
-      </tr>
-      <tr>
-        <td>Average Number of Attempts per User</td>
-        <td id="attempts">0</td>
-      </tr>
-      <tr>
-        <td>Percentage of Attempts that are Correct</td>
-        <td id="overall">0</td>
-      </tr>
-
-    </table>
-    
-
-
+  <div class="popup" onclick="pop()"><u>Question Statistics</u>
+    <div class="popuptext" id="myPopup">
+      <h3 id="selected" style="text-align:center;">No Question Selected</h3>
+      <table>
+        <tr>
+          <td>Users Who Have Attempted This Question</td>
+          <td id="users">0</td>
+        </tr>
+        <tr>
+          <td>Percentage of Users With a Correct Response</td>
+          <td id="eventual">0</td>
+        </tr>
+        <tr>
+          <td>Average Number of Attempts per User</td>
+          <td id="attempts">0</td>
+        </tr>
+        <tr>
+          <td>Percentage of Attempts that are Correct</td>
+          <td id="overall">0</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
-</div>
+
 <div id="blank">
-<div id="matrix">
-<h3>Matrix Equation:</h3>
-<div id="M11">
-<input type="number" id="m11"   style="width: 4em" value="-1" step=0.01 onChange="match()">
-</div>
-<div id="M12">
-<input type="number" id="m12"   style="width: 4em" value="1" step=0.01 onChange="match()">
-</div>
-<div id="M21">
-<input type="number" id="m21"   style="width: 4em" value="0" step=0.01 onChange="match()">
-</div>
-<div id="M22">
-<input type="number" id="m22"   style="width: 4em" value="1" step=0.01 onChange="match()">
-</div>
-
-
-<div id="times">
-<b>
-&times
-</b>
-</div>
-
-<div id="V1">
-<input type="number" id="m13"   style="width: 4em" value="0.5" step=0.01 onChange="match()">
-</div>
-<div id="V2">
-<input type="number" id="m23"   style="width: 4em" value="1.1" step=0.01 onChange="match()">
-</div>
-
-
-
-
-<div id="equals">
-<b>
-=
-</b>
-</div>
-
-<div id="w1">
-0
-</div>
-
-<div id="w2">
-1
-</div>
-<div id="r1">
-    0
+  <div id="matrix">
+    <h3>Matrix Equation:</h3>
+    <div id="M11">
+      <input type="number" id="m11"   style="width: 4em" value="-1" step=0.01 onChange="match()">
     </div>
-    
+    <div id="M12">
+      <input type="number" id="m12"   style="width: 4em" value="1" step=0.01 onChange="match()">
+    </div>
+    <div id="M21">
+      <input type="number" id="m21"   style="width: 4em" value="0" step=0.01 onChange="match()">
+    </div>
+    <div id="M22">
+      <input type="number" id="m22"   style="width: 4em" value="1" step=0.01 onChange="match()">
+    </div>
+
+    <div id="times">
+      <b>&times</b>
+    </div>
+
+    <div id="V1">
+      <input type="number" id="m13"   style="width: 4em" value="0.5" step=0.01 onChange="match()">
+    </div>
+    <div id="V2">
+      <input type="number" id="m23"   style="width: 4em" value="1.1" step=0.01 onChange="match()">
+    </div>
+
+    <div id="equals">
+      <b>=</b>
+    </div>
+
+    <div id="w1">
+      0
+    </div>
+    <div id="w2">
+      1
+    </div>
+
+    <div id="r1">
+      0
+    </div>
     <div id="r2">
-    1
+      1
     </div>
-<div id="MatEq">
-<h2>Scaling Factors:</h2>
-</div>
-</div>
 
+    <div id="MatEq">
+      <h2>Scaling Factors:</h2>
+    </div>
+  </div>
 
-
-
-<div id="sub">
+  <div id="sub">
     <span>
       <button  onclick="submit()">Start</button>
     </span>
@@ -385,730 +369,569 @@ Ready to begin?  Click "Start" to view your first question.
       <button  onclick="navigate(-1)">Previous</button>
     </span>
   </div>
-<div id="try">
 
-</div>
+  <div id="try">
+  </div>
 
+  <div id="outer">
+    <div id="bluetip">
+    </div>
 
+    <div id="greentip">
+    </div>
 
+    <div id="redtip">
+    </div>
 
-<div id="outer">
+    <canvas id="myCanvas" width="400" height="400"
+    style="border:1px solid #c3c3c3;">
+    </canvas>
+  </div>
 
-<div id="bluetip">
-</div>
+  <div id="score">
+  </div>
 
-<div id="greentip">
-</div>
-
-<div id="redtip">
-</div>
-
-
-<canvas id="myCanvas" width="400" height="400"
-style="border:1px solid #c3c3c3;">
-</canvas>
-</div>
-
-
-
-<div id="score">
-</div>
-<div id="completed">
+  <div id="completed">
     <h2>Completed Questions:</h2>
   </div>
 </div>
 
-
-
-</div>
-
-
 <script>
-
-
-
-function fix(color,params,vals){
-  document.getElementById(color[1]).value=vals[0]
-  document.getElementById(color[2]).value=vals[1]
-
-
-
-if (params[0]==0){
-  document.getElementById(color[0]).onmousedown=null
-  document.getElementById(color[1]).disabled=true
-  document.getElementById(color[2]).disabled=true
-}
-if (params[0]==1){
-  document.getElementById(color[1]).disabled=false
-  document.getElementById(color[2]).disabled=false
-  mobilize(document.getElementById(color[0]))
-
-}
-
-
-match()
-}
-
-
-
-    function make_mat(){
-var a11=(document.getElementById("m11").value)
-var a21=(document.getElementById("m21").value)
-
-var a12=(document.getElementById("m12").value)
-var a22=(document.getElementById("m22").value)
-
-var a13=(document.getElementById("m13").value)
-var a23=(document.getElementById("m23").value)
-
-
-var i1=(document.getElementById("m13").value)
-var i2=(document.getElementById("m23").value)
-var c1=Math.round(10*(i1*a11+i2*a12))/10
-var c2=Math.round(10*(i1*a21+i2*a22))/10
-
-
-
-var Mat=document.getElementById('MatEq')
-
-
-
- 
-
-
-}
-
-
-
-
-function draw(){
-
-
-
- gt=document.getElementById("greentip")
- bt=document.getElementById("bluetip")
- rt=document.getElementById("redtip")
- 
-
-
-g1=gt.offsetLeft+10
-g2=gt.offsetTop+10
-
-b1=bt.offsetLeft+10
-b2=bt.offsetTop+10
-
-r1=rt.offsetLeft+10
-r2=rt.offsetTop+10
-
-
-
-G1=(g1-200)/100
-G2=(200-g2)/100
-B1=(b1-200)/100
-B2=(200-b2)/100
-R1=(r1-200)/100
-R2=(200-r2)/100
-NR1=-10*R1
-NR2=-10*R2
-PR1=10*R1
-PR2=10*R2
-
-
-
-BR1=R1*B1
-BR2=R1*B2
-GR1=R2*G1 
-GR2=R2*G2
-BG1=BR1+GR1 
-BG2=BR2+GR2
-
-
-
-br1=100*(BR1+2)
-br2=100*(2-BR2)
-gr1=100*(GR1+2)
-gr2=100*(2-GR2)
-bg1=100*(BG1+2)
-bg2=100*(2-BG2)
-nr1=100*(NR1+2)
-nr2=100*(2-NR2)
-pr1=100*(PR1+2)
-pr2=100*(2-PR2)
-
-
-
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-ctx.clearRect(0, 0, canvas.width, canvas.height)
-ctx.beginPath();
-ctx.strokeStyle="black"
-ctx.lineWidth=1
-ctx.moveTo(0, 200);
-ctx.lineTo(400, 200);
-ctx.stroke();
-ctx.beginPath();
-ctx.strokeStyle="black"
-ctx.lineWidth=1
-ctx.moveTo(200, 0);
-ctx.lineTo(200, 400);
-ctx.stroke();
-
-
-
-
-
-
-ctx.beginPath();
-ctx.strokeStyle="blue"
-ctx.lineWidth=2
-ctx.moveTo(200, 200);
-ctx.lineTo(b1, b2);
-ctx.stroke();
-
-
-ctx.beginPath();
-ctx.strokeStyle="green"
-ctx.lineWidth=2
-ctx.moveTo(200, 200);
-ctx.lineTo(g1, g2);
-ctx.stroke();
-
-ctx.beginPath();
-ctx.strokeStyle="red"
-ctx.lineWidth=2
-ctx.moveTo(200, 200);
-ctx.lineTo(r1, r2);
-ctx.stroke();
-
-ctx.beginPath();
-ctx.strokeStyle="red"
-ctx.lineWidth=1
-ctx.setLineDash([3, 4])
-ctx.moveTo(pr1, pr2);
-ctx.lineTo(nr1, nr2 );
-ctx.stroke();
-ctx.setLineDash([3, 0])
-
-ctx.beginPath();
-ctx.strokeStyle="red"
-ctx.lineWidth=4
-ctx.setLineDash([2, 3])
-ctx.moveTo(200, 200);
-ctx.lineTo(br1, br2);
-ctx.stroke();
-ctx.setLineDash([3, 0])
-
-
-ctx.beginPath();
-ctx.strokeStyle="blue"
-ctx.lineWidth=4
-ctx.setLineDash([2, 3])
-ctx.moveTo(200, 200);
-ctx.lineTo(br1, br2);
-ctx.stroke();
-ctx.setLineDash([3, 0])
-
-
-ctx.beginPath();
-ctx.strokeStyle="blue"
-ctx.lineWidth=4
-ctx.setLineDash([2, 3])
-ctx.moveTo(gr1, gr2);
-ctx.lineTo(bg1, bg2);
-ctx.stroke();
-ctx.setLineDash([3, 0])
-
-
-
-ctx.beginPath();
-ctx.strokeStyle="green"
-ctx.lineWidth=4
-ctx.setLineDash([2, 3])
-ctx.moveTo(200, 200);
-ctx.lineTo(gr1, gr2);
-ctx.stroke();
-ctx.setLineDash([3, 0])
-
-
-
-ctx.beginPath();
-ctx.strokeStyle="green"
-ctx.lineWidth=4
-ctx.setLineDash([2, 3])
-ctx.moveTo(br1, br2);
-ctx.lineTo(bg1, bg2);
-ctx.stroke();
-ctx.setLineDash([3, 0])
-
-
-ctx.beginPath();
-ctx.strokeStyle="black"
-ctx.arc(bg1, bg2, 3, 0, 7);
-ctx.stroke();
-ctx.fill();
-
-}
-
-
-
-
-
-function fill(){
-
-
- gt=document.getElementById("greentip")
- bt=document.getElementById("bluetip")
- rt=document.getElementById("redtip")
-b1=bt.offsetLeft+10
-b2=bt.offsetTop+10
-g1=gt.offsetLeft+10
-g2=gt.offsetTop+10
-r1=rt.offsetLeft+10
-r2=rt.offsetTop+10
-
-
-B1=b1-200
-B2=200-b2
-G1=g1-200
-G2=200-g2
-R1=r1-200
-R2=200-r2
-
-
-document.getElementById("m11").value=Math.round(B1/1)/100
-document.getElementById("m21").value=Math.round(B2/1)/100
-document.getElementById("m12").value=Math.round(G1/1)/100
-document.getElementById("m22").value=Math.round(G2/1)/100
-document.getElementById("m13").value=Math.round(R1/1)/100
-document.getElementById("m23").value=Math.round(R2/1)/100
-
-
-
-make_mat()
-purp()
-}
-
-
-
-
-function mobilize(tip) {
+  function fix(color,params,vals){
+    document.getElementById(color[1]).value=vals[0]
+    document.getElementById(color[2]).value=vals[1]
+
+    if (params[0]==0){
+      document.getElementById(color[0]).onmousedown=null
+      document.getElementById(color[1]).disabled=true
+      document.getElementById(color[2]).disabled=true
+    }
+    if (params[0]==1){
+      document.getElementById(color[1]).disabled=false
+      document.getElementById(color[2]).disabled=false
+      mobilize(document.getElementById(color[0]))
+    }
+    match()
+  }
+
+  function make_mat(){
+    var a11=(document.getElementById("m11").value)
+    var a21=(document.getElementById("m21").value)
+
+    var a12=(document.getElementById("m12").value)
+    var a22=(document.getElementById("m22").value)
+
+    var a13=(document.getElementById("m13").value)
+    var a23=(document.getElementById("m23").value)
+
+    var i1=(document.getElementById("m13").value)
+    var i2=(document.getElementById("m23").value)
+    var c1=Math.round(10*(i1*a11+i2*a12))/10
+    var c2=Math.round(10*(i1*a21+i2*a22))/10
+
+    var Mat=document.getElementById('MatEq')
+  }
+
+  function draw(){
+    gt=document.getElementById("greentip")
+    bt=document.getElementById("bluetip")
+    rt=document.getElementById("redtip")
+
+    g1=gt.offsetLeft+10
+    g2=gt.offsetTop+10
+
+    b1=bt.offsetLeft+10
+    b2=bt.offsetTop+10
+
+    r1=rt.offsetLeft+10
+    r2=rt.offsetTop+10
+
+    G1=(g1-200)/100
+    G2=(200-g2)/100
+    B1=(b1-200)/100
+    B2=(200-b2)/100
+    R1=(r1-200)/100
+    R2=(200-r2)/100
+    NR1=-10*R1
+    NR2=-10*R2
+    PR1=10*R1
+    PR2=10*R2
+
+    BR1=R1*B1
+    BR2=R1*B2
+    GR1=R2*G1 
+    GR2=R2*G2
+    BG1=BR1+GR1 
+    BG2=BR2+GR2
+
+    br1=100*(BR1+2)
+    br2=100*(2-BR2)
+    gr1=100*(GR1+2)
+    gr2=100*(2-GR2)
+    bg1=100*(BG1+2)
+    bg2=100*(2-BG2)
+    nr1=100*(NR1+2)
+    nr2=100*(2-NR2)
+    pr1=100*(PR1+2)
+    pr2=100*(2-PR2)
+
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.beginPath();
+    ctx.strokeStyle="black"
+    ctx.lineWidth=1
+    ctx.moveTo(0, 200);
+    ctx.lineTo(400, 200);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle="black"
+    ctx.lineWidth=1
+    ctx.moveTo(200, 0);
+    ctx.lineTo(200, 400);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="blue"
+    ctx.lineWidth=2
+    ctx.moveTo(200, 200);
+    ctx.lineTo(b1, b2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="green"
+    ctx.lineWidth=2
+    ctx.moveTo(200, 200);
+    ctx.lineTo(g1, g2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="red"
+    ctx.lineWidth=2
+    ctx.moveTo(200, 200);
+    ctx.lineTo(r1, r2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="red"
+    ctx.lineWidth=1
+    ctx.setLineDash([3, 4])
+    ctx.moveTo(pr1, pr2);
+    ctx.lineTo(nr1, nr2 );
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+    ctx.beginPath();
+    ctx.strokeStyle="red"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(200, 200);
+    ctx.lineTo(br1, br2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+
+    ctx.beginPath();
+    ctx.strokeStyle="blue"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(200, 200);
+    ctx.lineTo(br1, br2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+
+    ctx.beginPath();
+    ctx.strokeStyle="blue"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(gr1, gr2);
+    ctx.lineTo(bg1, bg2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+
+
+    ctx.beginPath();
+    ctx.strokeStyle="green"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(200, 200);
+    ctx.lineTo(gr1, gr2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+    ctx.beginPath();
+    ctx.strokeStyle="green"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(br1, br2);
+    ctx.lineTo(bg1, bg2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+
+    ctx.beginPath();
+    ctx.strokeStyle="black"
+    ctx.arc(bg1, bg2, 3, 0, 7);
+    ctx.stroke();
+    ctx.fill();
+  }
+
+  function fill(){
+    gt=document.getElementById("greentip")
+    bt=document.getElementById("bluetip")
+    rt=document.getElementById("redtip")
+
+    b1=bt.offsetLeft+10
+    b2=bt.offsetTop+10
+    g1=gt.offsetLeft+10
+    g2=gt.offsetTop+10
+    r1=rt.offsetLeft+10
+    r2=rt.offsetTop+10
+
+    B1=b1-200
+    B2=200-b2
+    G1=g1-200
+    G2=200-g2
+    R1=r1-200
+    R2=200-r2
+
+    document.getElementById("m11").value=Math.round(B1/1)/100
+    document.getElementById("m21").value=Math.round(B2/1)/100
+    document.getElementById("m12").value=Math.round(G1/1)/100
+    document.getElementById("m22").value=Math.round(G2/1)/100
+    document.getElementById("m13").value=Math.round(R1/1)/100
+    document.getElementById("m23").value=Math.round(R2/1)/100
+
+    make_mat()
+    purp()
+  }
+
+  function mobilize(tip) {
     tip.onmousedown = move;  
 
-  function move(e) {
-    x0 = e.clientX;
-    y0 = e.clientY;
-    document.onmousemove = drag;
-    document.onmouseup = close;
+    function move(e) {
+      x0 = e.clientX;
+      y0 = e.clientY;
+      document.onmousemove = drag;
+      document.onmouseup = close;
+    }
+
+    function drag(e) {
+      dx = e.clientX-x0;
+      dy = e.clientY-y0;
+      x0 = e.clientX;
+      y0 = e.clientY;
+      tip.style.left = (tip.offsetLeft + dx) + "px";
+      tip.style.top = (tip.offsetTop + dy) + "px";
+      draw(tip.offsetLeft + dx + 10, tip.offsetTop + dy +10);
+      fill()
+    }
+
+    function close() {
+      document.onmouseup = null;
+      document.onmousemove = null;
+      tip.style.left = 1*Math.round(tip.offsetLeft/1) + "px";
+      tip.style.top = 1*Math.round(tip.offsetTop/1) + "px";
+      draw(tip.offsetLeft + dx + 10, tip.offsetTop + dy +10);
+      fill()
+      purp()
+    }
   }
 
-function drag(e) {
-    dx = e.clientX-x0;
-    dy = e.clientY-y0;
-    x0 = e.clientX;
-    y0 = e.clientY;
-    tip.style.left = (tip.offsetLeft + dx) + "px";
-    tip.style.top = (tip.offsetTop + dy) + "px";
-    draw(tip.offsetLeft + dx + 10, tip.offsetTop + dy +10);
-    fill()
+  function match(){
+    a11=document.getElementById("m11").value
+    a21=document.getElementById("m21").value
+
+    a12=document.getElementById("m12").value
+    a22=document.getElementById("m22").value
+
+    a13=document.getElementById("m13").value
+    a23=document.getElementById("m23").value
+
+    gt=document.getElementById("greentip")
+    bt=document.getElementById("bluetip")
+    rt=document.getElementById("redtip")
+
+    A11=100*a11+200-10
+    A21=200-100*a21-10
+    A12=100*a12+200-10
+    A22=200-100*a22-10
+    A13=100*a13+200-10
+    A23=200-100*a23-10
+
+    bt.style.left=A11+"px"
+    bt.style.top=A21+"px"
+
+    gt.style.left=A12+"px"
+    gt.style.top=A22+"px"
+
+    rt.style.left=A13+"px"
+    rt.style.top=A23+"px"
+
+    draw()
+    purp()
+    make_mat()
   }
 
-function close() {
-  document.onmouseup = null;
-  document.onmousemove = null;
-    tip.style.left = 1*Math.round(tip.offsetLeft/1) + "px";
-    tip.style.top = 1*Math.round(tip.offsetTop/1) + "px";
-    draw(tip.offsetLeft + dx + 10, tip.offsetTop + dy +10);
-        fill()
-        purp()
- }
-  
-  
-}
-
-
-
-
-
-function match(){
-
-a11=document.getElementById("m11").value
-a21=document.getElementById("m21").value
-
-
-a12=document.getElementById("m12").value
-a22=document.getElementById("m22").value
-
-a13=document.getElementById("m13").value
-a23=document.getElementById("m23").value
-
- gt=document.getElementById("greentip")
- bt=document.getElementById("bluetip")
- rt=document.getElementById("redtip")
-
-A11=100*a11+200-10
-A21=200-100*a21-10
-A12=100*a12+200-10
-A22=200-100*a22-10
-A13=100*a13+200-10
-A23=200-100*a23-10
-
-
-bt.style.left=A11+"px"
-bt.style.top=A21+"px"
-
-gt.style.left=A12+"px"
-gt.style.top=A22+"px"
-
-rt.style.left=A13+"px"
-rt.style.top=A23+"px"
-
-
-
-draw()
-purp()
-make_mat()
-}
-
-
-
-function purp(){
-
-a11=document.getElementById("m11").value
-a12=document.getElementById("m12").value
-a21=document.getElementById("m21").value
-a22=document.getElementById("m22").value
-
-
-
-x=document.getElementById("m13").value
-y=document.getElementById("m23").value
-
-
-r1=Math.round(100*(a11*x+a12*y)/x)/100
-r2=Math.round(100*(a21*x+a22*y)/y)/100
-
-X=Math.round(100*(a11*x+a12*y))/100
-Y=Math.round(100*(a21*x+a22*y))/100
-
-
-document.getElementById("w1").value=X
-document.getElementById("w2").value=Y
-document.getElementById("w1").innerHTML=X
-document.getElementById("w2").innerHTML=Y
-document.getElementById("r1").innerHTML=r1
-document.getElementById("r2").innerHTML=r2
-}
-
-
-
-
-
-
-function submit(){
-
-
-
-
-if (initialized==0){
-document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
-navigate(1)
-navigate(-1)
-}
-if (initialized==1){
-M11=document.getElementById("m11").value
-M21=document.getElementById("m21").value
-M12=document.getElementById("m12").value
-M22=document.getElementById("m22").value
-M13=document.getElementById("m13").value
-M23=document.getElementById("m23").value
-W1=document.getElementById("w1").value
-W2=document.getElementById("w2").value
-
-R1=document.getElementById("r1").value
-R2=document.getElementById("r2").value
-var feed=document.getElementById("try").innerText
-if (feed==""){
-document.getElementById("try").innerText="Try Again"}
-if (feed=="Not Quite"){
-document.getElementById("try").innerText="Try Again"}
-if (feed=="Try Again"){
-document.getElementById("try").innerText="Not Quite"}
-
-
-
-
-if (grade(page,M11,M21,M12,M22,M13,M23,W1,W2,R1,R2)==1)
-{
-document.getElementById("try").innerText=""
-
-
-var answeredQuestion = document.createElement('div')
-      answeredQuestion.innerHTML = quests[page]
-      answeredQuestion.innerHTML += ' Your answer: '+V1+'&times('+M11+','+M21+')'
-      answeredQuestion.innerHTML += ' + '+V2+'&times('+M12+','+M22+')'
-     answeredQuestion.style.color="grey"
-      var completedQuestions = document.getElementById("completed")
-      completedQuestions.appendChild(answeredQuestion)
-
-
-
-
-page+=1
-document.getElementById("question").innerText=quests[page]
-score()
-navigate(0)
-
-
-}
-
-
-
-
-}
-initialized=1
-}
-
-
-
-function navigate(i){
-
-
-  if (i==1){forward()}
-  if (i==-1){back()}
-var blue=["bluetip","m11","m21"]
-var green=["greentip","m12","m22"]
-var red=["redtip","m13","m23"]
-
-if (page==0){
-fix(blue,[0],[1.2,0.6])
-fix(green,[0],[1.2,1.2])
-fix(red,[1],[0.5,-1])
-}
-
-if (page==1){
-fix(blue,[0],[0,1])
-fix(green,[0],[1,0])
-fix(red,[1],[1.5,1])
-}
-
-
-if (page==2){
-fix(blue,[0],[-1,1])
-fix(green,[0],[1,1])
-fix(red,[1],[0.5,1])
-}
-
-
-if (page==3){
-fix(blue,[0],[1,1])
-fix(green,[0],[1,1])
-fix(red,[1],[0.5,-1])
-}
-
-if (page==4){
-
-fix(blue,[0,0],[1,1,-0.5])
-fix(green,[1,0],[0.8,-0.8,-0.5])
-fix(red,[0,0],[-0.2,1,1])
-}
-
-if (page==5){
-fix(blue,[1,0],[-1,-0.5,1])
-fix(green,[0,0],[1,0,1])
-fix(red,[0,0],[-1,0,0.5])
-}
-
-
-if (page==6){
-fix(blue,[1,1],[-1,-0.5,0.8])
-fix(green,[1,1],[0.5,0.5,1.8])
-fix(red,[1,1],[-1,0.2,0.8])
-}
-if (page==7){
-fix(blue,[1,1],[-1,0,-1])
-fix(green,[1,1],[1,-0.5,-1])
-fix(red,[1,1],[0.5,1,-1])
-}
-if (page==8){
-fix(blue,[0,0],[0.5,0,2])
-fix(green,[0,1],[0,-1,1.3])
-fix(red,[1,1],[-1,1,0.5])
-}
-
-if (page==9){
-fix(blue,[0,1],[-0.8,0.8,-1])
-fix(green,[1,1],[0.8,0,-2])
-fix(red,[0,0],[0.8,0.8,1])
-}
-
-if (page==10){
-fix(blue,[1,1],[0.5,-0.5,1])
-fix(green,[1,1],[0.5,0.5,1])
-fix(red,[1,1],[-1,0,1])
-}
-
-
-if (page==11){
-fix(blue,[0,1],[-0.4,-1.2,-1.5])
-fix(green,[0,1],[0.9,0.3,-2])
-fix(red,[0,1],[-0.8,0.8,-1.5])
-}
-
-if (page==12){
-fix(blue,[0,1],[1,1,0.5])
-fix(green,[0,1],[-1,-1,0.5])
-fix(red,[0,1],[1,1,0.5])
-}
-
-
-
-
-
-}
-
-
-function grade(p,m11,m21,m12,m22,m13,m23,w1,w2,r1,r2){
-correct=0
-
-if (p==0){
-  if(r1==r2 && m13<=0 && m23<=0){
-    correct = 1}}
-
-if (p==1){
-  if(r1==r2 && m13<=0 && m23>=0){
-    correct = 1}}
-
+  function purp(){
+    a11=document.getElementById("m11").value
+    a12=document.getElementById("m12").value
+    a21=document.getElementById("m21").value
+    a22=document.getElementById("m22").value
+
+    x=document.getElementById("m13").value
+    y=document.getElementById("m23").value
+
+    r1=Math.round(100*(a11*x+a12*y)/x)/100
+    r2=Math.round(100*(a21*x+a22*y)/y)/100
+
+    X=Math.round(100*(a11*x+a12*y))/100
+    Y=Math.round(100*(a21*x+a22*y))/100
+
+    document.getElementById("w1").value=X
+    document.getElementById("w2").value=Y
+    document.getElementById("w1").innerHTML=X
+    document.getElementById("w2").innerHTML=Y
+    document.getElementById("r1").innerHTML=r1
+    document.getElementById("r2").innerHTML=r2
+  }
+
+  function submit(){
+    if (initialized==0){
+      document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
+      navigate(1)
+      navigate(-1)
+    }
+    if (initialized==1){
+      M11=document.getElementById("m11").value
+      M21=document.getElementById("m21").value
+      M12=document.getElementById("m12").value
+      M22=document.getElementById("m22").value
+      M13=document.getElementById("m13").value
+      M23=document.getElementById("m23").value
+      W1=document.getElementById("w1").value
+      W2=document.getElementById("w2").value
+
+      R1=document.getElementById("r1").value
+      R2=document.getElementById("r2").value
+      var feed=document.getElementById("try").innerText
+      if (feed==""){
+      document.getElementById("try").innerText="Try Again"}
+      if (feed=="Not Quite"){
+      document.getElementById("try").innerText="Try Again"}
+      if (feed=="Try Again"){
+      document.getElementById("try").innerText="Not Quite"}
+
+      if (grade(page,M11,M21,M12,M22,M13,M23,W1,W2,R1,R2)==1){
+        document.getElementById("try").innerText=""
+
+        var answeredQuestion = document.createElement('div')
+        answeredQuestion.innerHTML = quests[page]
+        answeredQuestion.innerHTML += ' Your answer: '+V1+'&times('+M11+','+M21+')'
+        answeredQuestion.innerHTML += ' + '+V2+'&times('+M12+','+M22+')'
+        answeredQuestion.style.color="grey"
+        var completedQuestions = document.getElementById("completed")
+        completedQuestions.appendChild(answeredQuestion)
+
+      page+=1
+      document.getElementById("question").innerText=quests[page]
+      score()
+      navigate(0)
+    }
+    }
+    initialized=1
+  }
+
+  function navigate(i){
+    if (i==1){forward()}
+    if (i==-1){back()}
+    var blue=["bluetip","m11","m21"]
+    var green=["greentip","m12","m22"]
+    var red=["redtip","m13","m23"]
+
+    if (page==0){
+      fix(blue,[0],[1.2,0.6])
+      fix(green,[0],[1.2,1.2])
+      fix(red,[1],[0.5,-1])
+    }
+    if (page==1){
+      fix(blue,[0],[0,1])
+      fix(green,[0],[1,0])
+      fix(red,[1],[1.5,1])
+    }
+    if (page==2){
+      fix(blue,[0],[-1,1])
+      fix(green,[0],[1,1])
+      fix(red,[1],[0.5,1])
+    }
+    if (page==3){
+      fix(blue,[0],[1,1])
+      fix(green,[0],[1,1])
+      fix(red,[1],[0.5,-1])
+    }
+    if (page==4){
+      fix(blue,[0,0],[1,1,-0.5])
+      fix(green,[1,0],[0.8,-0.8,-0.5])
+      fix(red,[0,0],[-0.2,1,1])
+    }
+    if (page==5){
+      fix(blue,[1,0],[-1,-0.5,1])
+      fix(green,[0,0],[1,0,1])
+      fix(red,[0,0],[-1,0,0.5])
+    }
+    if (page==6){
+      fix(blue,[1,1],[-1,-0.5,0.8])
+      fix(green,[1,1],[0.5,0.5,1.8])
+      fix(red,[1,1],[-1,0.2,0.8])
+    }
+    if (page==7){
+      fix(blue,[1,1],[-1,0,-1])
+      fix(green,[1,1],[1,-0.5,-1])
+      fix(red,[1,1],[0.5,1,-1])
+    }
+    if (page==8){
+      fix(blue,[0,0],[0.5,0,2])
+      fix(green,[0,1],[0,-1,1.3])
+      fix(red,[1,1],[-1,1,0.5])
+    }
+    if (page==9){
+      fix(blue,[0,1],[-0.8,0.8,-1])
+      fix(green,[1,1],[0.8,0,-2])
+      fix(red,[0,0],[0.8,0.8,1])
+    }
+    if (page==10){
+      fix(blue,[1,1],[0.5,-0.5,1])
+      fix(green,[1,1],[0.5,0.5,1])
+      fix(red,[1,1],[-1,0,1])
+    }
+    if (page==11){
+      fix(blue,[0,1],[-0.4,-1.2,-1.5])
+      fix(green,[0,1],[0.9,0.3,-2])
+      fix(red,[0,1],[-0.8,0.8,-1.5])
+    }
+    if (page==12){
+      fix(blue,[0,1],[1,1,0.5])
+      fix(green,[0,1],[-1,-1,0.5])
+      fix(red,[0,1],[1,1,0.5])
+    }
+  }
+
+  function grade(p,m11,m21,m12,m22,m13,m23,w1,w2,r1,r2){
+    correct=0
+
+    if (p==0){
+      if(r1==r2 && m13<=0 && m23<=0){
+        correct = 1}
+    }
     if (p==1){
-  if(r1==r2 && m13>=0 && m23<=0){
-    correct = 1}}
-
-
+      if(r1==r2 && m13<=0 && m23>=0){
+        correct = 1}
+    }
     if (p==1){
-  if(r1==r2 && m13>=0 && m23>=0){
-    correct = 1}}
-
-
-if (p==3){
-  if(w1==0 && w2==0){
-    correct = 1}}
-
-if (p==4){
-  if(w1==0 && w2==0){
-    correct = 1}}
-
-if (p==5){
-  if(w1==0 && w2==0){
-    correct = 1}}
-
-
+      if(r1==r2 && m13>=0 && m23<=0){
+        correct = 1}
+    }
+    if (p==1){
+      if(r1==r2 && m13>=0 && m23>=0){
+        correct = 1}
+    }
+    if (p==3){
+      if(w1==0 && w2==0){
+        correct = 1}
+    }
+    if (p==4){
+      if(w1==0 && w2==0){
+        correct = 1}
+    }
+    if (p==5){
+      if(w1==0 && w2==0){
+        correct = 1}
+    }
     if (p==6){
-  if(v1==0 && v2==0 && v3==0){
-    correct = 1}}
-
+      if(v1==0 && v2==0 && v3==0){
+      correct = 1}
+    }
     if (p==7){
-  if(w1==0 && w2==0){
-    correct = 1}}
-
-
-if (p==8){
-
-  if(m13==0){
-    correct = 1}}   
-
+      if(w1==0 && w2==0){
+        correct = 1}
+    }
+    if (p==8){
+      if(m13==0){
+        correct = 1}
+    } 
     if (p==9){
-  if(m12==-m22){
-    correct = 1}}   
-
-
-
+      if(m12==-m22){
+        correct = 1}
+    }   
     if (p==10){
+      if (Math.abs(m11)==Math.abs(m12) && Math.abs(m12)==Math.abs(m13) && Math.abs(m21)==Math.abs(m22) && Math.abs(m22)==Math.abs(m23)){ 
+      equal=0
+      if (m11==m12 && m21==m22 ){
+      equal+=1
+      } 
+      if (m11==m13 && m21==m23 ){
+      equal+=1
+      } 
+      if (m12==m13 && m22==m23 ){
+      equal+=1
+      } 
+      if (equal==1){
+      correct=1}
+    } }
+    if (page==11){
+      if (parseFloat(v1)==0.3 && parseFloat(v2)==0.4 && parseFloat(v3)==0.3){
+        correct=1}
+    }
+    if (page==12){
+      if (parseFloat(v1)==1 && parseFloat(v2)==2 && parseFloat(v3)==1){
+        correct=1}
+    }
 
-  if (Math.abs(m11)==Math.abs(m12) && Math.abs(m12)==Math.abs(m13) && Math.abs(m21)==Math.abs(m22) && Math.abs(m22)==Math.abs(m23)){ 
+    if (correct==0){
+      grades[p][1]+=1}
+    if (correct==1){
+      grades[p][0]+=1}
 
-  equal=0
-  if (m11==m12 && m21==m22 ){
-  equal+=1
-  } 
-  if (m11==m13 && m21==m23 ){
-  equal+=1
-  } 
-  if (m12==m13 && m22==m23 ){
-  equal+=1
-  } 
-  if (equal==1){
-  correct=1}} }
-
-
-  if (page==11){
-
-if (parseFloat(v1)==0.3 && parseFloat(v2)==0.4 && parseFloat(v3)==0.3){
-  correct=1
-}
+    sql_record(Module_Number)
+    return(correct)
   }
-
-
-  if (page==12){
-
-if (parseFloat(v1)==1 && parseFloat(v2)==2 && parseFloat(v3)==1){
-  correct=1
-}
-  }
-
-
-    
-if (correct==0){
-grades[p][1]+=1}
-if (correct==1){
-grades[p][0]+=1
-}
-sql_record(Module_Number)
-return(correct)
-}
-
-
-
-
 </script>
 
 <script>
+  var Module_Number="19"
+  var initialized=0
+  var page=0
+  var quests=[
+  "1. Find a (non-zero) eigenvector for the given matrix that lies in the third quadrant.",
+  "2. Find a (non-zero) eigenvector for the given matrix that lies in the second quadrant.",
+  "3. Find a (non-zero) eigenvector for the given matrix that lies in the fourth quadrant.",
+  "4. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
+  "5. The matrix reflects vectors about the line /( y=2x /). Find a possible eigenvector for this matrix.",
+  "6. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
+  "7. Now, this matrix projects vectors on the line /( y=-2/3 x /). Find a possible eigenvector for this matrix.",
+  "8. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
+  "9. Find values for the entries in the rightmost column of the matrix such that NO vector whose first entry is 2 lies in the null space.",
+  "10. Find values for the entries in the middle column of the matrix such that NO vector whose last entry is 1 lies in the null space.",
+  "11. A 0-1 vector is a vector that includes only entries of 0s and/or 1s.  Find a matrix that has at least one nonzero entry in each column, such that there are precisely 3 (including the 0 vector itself) 0-1 vectors in the null space.",
+  "12. Find a vector in the null space of the given matrix such that the three coordinates of that vector add up to 1.",
+  "13. There are two (not including the 0 vector)  0-1 vectors in the null space of the given matrix. Enter as your solution the sum of these two vectors.",
 
+  "Good job!!!"]
+  the_time=Date.now()
+  make_grades(Module_Number)
+  draw()
 
-var Module_Number="19"
-var initialized=0
-var page=0
-var quests=[
-"1. Find a (non-zero) eigenvector for the given matrix that lies in the third quadrant.",
-"2. Find a (non-zero) eigenvector for the given matrix that lies in the second quadrant.",
-"3. Find a (non-zero) eigenvector for the given matrix that lies in the fourth quadrant.",
-"4. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
-"5. Manipulate the middle column of the matrix (or drag the green vector) until the given 3-entry vector lies in the null space.",
-"6. Manipulate the first column of the matrix (or drag the blue vector) until the given 3-entry vector lies in the null space.",
-"7. Find a vector that is in the null space of all matrices.",
-"8. Find a matrix for which every vector is in its null space.",
-"9. Find values for the entries in the rightmost column of the matrix such that NO vector whose first entry is 2 lies in the null space.",
-"10. Find values for the entries in the middle column of the matrix such that NO vector whose last entry is 1 lies in the null space.",
-"11. A 0-1 vector is a vector that includes only entries of 0s and/or 1s.  Find a matrix that has at least one nonzero entry in each column, such that there are precisely 3 (including the 0 vector itself) 0-1 vectors in the null space.",
-"12. Find a vector in the null space of the given matrix such that the three coordinates of that vector add up to 1.",
-"13. There are two (not including the 0 vector)  0-1 vectors in the null space of the given matrix. Enter as your solution the sum of these two vectors.",
-
-"Good job!!!"]
-the_time=Date.now()
-make_grades(Module_Number)
-draw()
-
-bt=document.getElementById("bluetip")
-mobilize(bt)
-gt=document.getElementById("greentip")
-mobilize(gt)
-rt=document.getElementById("redtip")
-mobilize(rt)
-match()
-make_mat()
-score()
+  bt=document.getElementById("bluetip")
+  mobilize(bt)
+  gt=document.getElementById("greentip")
+  mobilize(gt)
+  rt=document.getElementById("redtip")
+  mobilize(rt)
+  match()
+  make_mat()
+  score()
 </script>
-
-
-
-
 </body>
 </html>
