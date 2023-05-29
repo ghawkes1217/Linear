@@ -1,250 +1,245 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]},
+    }
+  </script>
   <!-- The following adds MathJax to render LaTeX notation -->
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
   <link rel="stylesheet" href="../styles.css">
   <script src="../site-scripts.js"></script>
   <style>
-#blank {
-  position: relative;
-}
+    #blank {
+      position: relative;
+    }
+    #outer {
+      position: absolute;
+      height: 400px;
+      width: 400px;
+      left: 0px;
+      top: 40px;
+      background-color: white;
+      text-align: center;
+      border: 9px solid #d3d3d3;
+    }
+    #bluetip {
+      opacity:0.7;
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 90px;
+      top: 90px;
+      background-color: grey;
+    }
+    #greentip {
+      opacity:0.7;
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 290px;
+      top: 90px;
+      background-color: grey;
+    }
+    #redtip {
+      opacity:0.7;
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 90px;
+      top: 290px;
+      background-color: grey;
+    }
 
-#outer {
-  position: absolute;
-  height: 400px;
-  width: 400px;
-  left: 0px;
-  top: 40px;
-  background-color: white;
-  text-align: center;
-  border: 9px solid #d3d3d3;}
-
- #bluetip {
-    opacity:0.7;
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 90px;
-  top: 90px;
-  background-color: grey;}
-  
-   #greentip {
-    opacity:0.7;
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 290px;
-  top: 90px;
-  background-color: grey;}
-
-
-  #redtip {
-    opacity:0.7;
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 90px;
-  top: 290px;
-  background-color: grey;}
-  
- #matrix {
-  position: absolute;
-  height: 200px;
-  width: 400px;
-  left: 425px;
-  top: 90px;
-  background-color: lightgrey;
-  text-align: center;}
-  
-  #M11 {
-  position: absolute;
-  height: 20px;
-  width: 75px;
-  left: 10px;
-  top: 50px;
-  background-color: blue;
-  text-align: center;}
-  
+    #matrix {
+      position: absolute;
+      height: 200px;
+      width: 400px;
+      left: 425px;
+      top: 90px;
+      background-color: lightgrey;
+      text-align: center;
+    }
+    #M11 {
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 10px;
+      top: 50px;
+      background-color: blue;
+      text-align: center;
+    }
     #M21 {
-  position: absolute;
-  height: 20px;
-  width: 75px;
-  left: 10px;
-  top: 70px;
-  background-color: blue;
-  text-align: center;}
-  
-  #M12 {
-  position: absolute;
-  height: 20px;
-  width: 75px;
-  left: 85px;
-  top: 50px;
-  background-color: green;
-  text-align: center;}
-
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 10px;
+      top: 70px;
+      background-color: blue;
+      text-align: center;
+    }
+    #M12 {
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 85px;
+      top: 50px;
+      background-color: green;
+      text-align: center;
+    }
     #M22 {
-  position: absolute;
-  height: 20px;
-  width: 75px;
-  left: 85px;
-  top: 70px;
-  background-color: green;
-  text-align: center;}
-
-  #times {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 160px;
-  top: 60px;
-  background-color: lightgrey;
-  text-align: center;}
-
-
- 
-  #V1 {
-  position: absolute;
-  height: 20px;
-  width: 75px;
-  left: 180px;
-  top: 50px;
-  background-color: red;
-  text-align: center;}
-  
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 85px;
+      top: 70px;
+      background-color: green;
+      text-align: center;
+    }
+    #times {
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 160px;
+      top: 60px;
+      background-color: lightgrey;
+      text-align: center;
+    }
+    #V1 {
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 180px;
+      top: 50px;
+      background-color: red;
+      text-align: center;
+    }
     #V2 {
-  position: absolute;
-  height: 20px;
-  width: 75px;
-  left: 180px;
-  top: 70px;
-  background-color: red;
-  text-align: center;}
-
-
-       #equals {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 255px;
-  top: 60px;
-  background-color: lightgrey;
-  text-align: center;}
-  
-  
-
-  #w1 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 275px;
-  top: 50px;
-  color: purple;
-  text-align: center;
-  border: 1px solid black;}
-  
-  
-  
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 180px;
+      top: 70px;
+      background-color: red;
+      text-align: center;
+    }
+    #equals {
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 255px;
+      top: 60px;
+      background-color: lightgrey;
+      text-align: center;
+    }
+    #w1 {
+      position: absolute;
+      height: 20px;
+      width: 45px;
+      left: 275px;
+      top: 50px;
+      color: purple;
+      text-align: center;
+      border: 1px solid black;
+    }
     #w2 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 275px;
-  top: 70px;
-  color: purple;
-  text-align: center;
-  border: 1px solid black;}
- 
+      position: absolute;
+      height: 20px;
+      width: 45px;
+      left: 275px;
+      top: 70px;
+      color: purple;
+      text-align: center;
+      border: 1px solid black;
+    }
 
-
-  #r1 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 245px;
-  top: 120px;
-  color: rgb(97, 94, 94);
-  text-align: center;
-  border: 1px solid grey;}
-  
-  
-  
+    #r1 {
+      position: absolute;
+      height: 20px;
+      width: 45px;
+      left: 245px;
+      top: 120px;
+      color: rgb(97, 94, 94);
+      text-align: center;
+      border: 1px solid grey;
+    } 
     #r2 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 245px;
-  top: 140px;
-  color: rgb(80, 77, 77);
-  text-align: center;
-  border: 1px solid grey;}
-
+      position: absolute;
+      height: 20px;
+      width: 45px;
+      left: 245px;
+      top: 140px;
+      color: rgb(80, 77, 77);
+      text-align: center;
+      border: 1px solid grey;
+    }
 
     #but {
-  position: absolute;
-  height: 30px;
-  width: 30px;
-  left: 290px;
-  top:30px;
-  background-color: black;
-  text-align: center;}
-  
-  #but2 {
-  position: absolute;
-  height: 30px;
-  width: 30px;
-  left: 235px;
-  top:10px;
-  background-color: black;
-  text-align: center;}
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      left: 290px;
+      top:30px;
+      background-color: black;
+      text-align: center;
+    }
+    #but2 {
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      left: 235px;
+      top:10px;
+      background-color: black;
+      text-align: center;
+    }
+    #sub {
+      position: absolute;
+      height: 30px;
+      width: 380px;
+      left: 40px;
+      top: 10px;
+      background-color: white;
+      text-align: center;
+    }
+    #try {
+      position: absolute;
+      height: 30px;
+      width: 80px;
+      left: 560px;
+      top: 10px;
+      background-color: white;
+      text-align: center;
+    }
 
- #sub {
-  position: absolute;
-  height: 30px;
-  width: 380px;
-  left: 40px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
-
-     #try {
-  position: absolute;
-  height: 30px;
-  width: 80px;
-  left: 560px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
-  
-
-  #score {
-  position: absolute;
-  height: 220px;
-  width: 90px;
-  left: 990px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
-  #MatEq {
-  position: absolute;
-  top: 105px;
-  height: 60px;
-  width: 200px;
-  left: 40px; 
-  background-color: lightgrey;
-  text-align: center;}
-
-  #completed {
-  position: absolute;
-  left: 10px;
-  top: 500px}
-
-  #question {
-  position: relative;
-  height: 35px;
-}
-  
+    #score {
+      position: absolute;
+      height: 220px;
+      width: 90px;
+      left: 990px;
+      top: 10px;
+      background-color: white;
+      text-align: center;
+    }
+    #MatEq {
+      position: absolute;
+      top: 105px;
+      height: 60px;
+      width: 200px;
+      left: 40px; 
+      background-color: lightgrey;
+      text-align: center;
+    }
+    #completed {
+      position: absolute;
+      left: 10px;
+      top: 500px
+    }
+    #question {
+      position: relative;
+      height: 35px;
+    }
   </style>
 </head>
  
@@ -254,7 +249,7 @@
     <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
   </div>
 
-  <h2><center>Eigenvectors</center></h2>
+  <h2><center>Module : Eigenvectors</center></h2>
   
   <p>
     This module explores the idea of eigenvectors and their associated eigenvalues for \(2 \times 2 \) matrices.
@@ -397,7 +392,7 @@
 </div>
 
 <script>
-  function fix(color,params,vals){
+  function fix(color, params, vals){
     document.getElementById(color[1]).value=vals[0]
     document.getElementById(color[2]).value=vals[1]
 
@@ -735,166 +730,118 @@
         var completedQuestions = document.getElementById("completed")
         completedQuestions.appendChild(answeredQuestion)
 
-      page+=1
-      document.getElementById("question").innerText=quests[page]
-      score()
-      navigate(0)
-    }
+        page+=1
+        document.getElementById("question").innerText=quests[page]
+        //score()
+        navigate(0)
+        MathJax.typesetPromise()
+      }
     }
     initialized=1
   }
 
   function navigate(i){
-    if (i==1){forward()}
-    if (i==-1){back()}
+    if (i==1){
+      forward()}
+    if (i==-1){
+      back()}
     var blue=["bluetip","m11","m21"]
     var green=["greentip","m12","m22"]
     var red=["redtip","m13","m23"]
-
     if (page==0){
-      fix(blue,[0],[1.2,0.6])
-      fix(green,[0],[1.2,1.2])
-      fix(red,[1],[0.5,-1])
-    }
-    if (page==1){
       fix(blue,[0],[0,1])
       fix(green,[0],[1,0])
       fix(red,[1],[1.5,1])
     }
-    if (page==2){
-      fix(blue,[0],[-1,1])
-      fix(green,[0],[1,1])
-      fix(red,[1],[0.5,1])
-    }
-    if (page==3){
+    if (page==1){
       fix(blue,[0],[1,1])
       fix(green,[0],[1,1])
       fix(red,[1],[0.5,-1])
     }
+    if (page==2){
+      fix(blue,[0],[-0.6, 0.8])
+      fix(green,[0],[0.8, 0.6])
+      fix(red,[1],[0.5, 0.5])
+    }
+    if (page==3){
+      fix(blue,[0],[-0.6, 0.8])
+      fix(green,[0],[0.8, 0.6])
+      fix(red,[1],[0.5, -0.5])
+    }
     if (page==4){
-      fix(blue,[0,0],[1,1,-0.5])
-      fix(green,[1,0],[0.8,-0.8,-0.5])
-      fix(red,[0,0],[-0.2,1,1])
+      fix(blue,[0],[0.8, -0.4])
+      fix(green,[0],[-0.4, 0.2])
+      fix(red,[1],[-1, 0])
     }
     if (page==5){
-      fix(blue,[1,0],[-1,-0.5,1])
-      fix(green,[0,0],[1,0,1])
-      fix(red,[0,0],[-1,0,0.5])
+      fix(blue,[0],[0.8, -0.4])
+      fix(green,[0],[-0.4, 0.2])
+      fix(red,[1],[0, 1])
     }
     if (page==6){
-      fix(blue,[1,1],[-1,-0.5,0.8])
-      fix(green,[1,1],[0.5,0.5,1.8])
-      fix(red,[1,1],[-1,0.2,0.8])
+      fix(blue,[0],[0.6, -0.1])
+      fix(green,[0],[-0.15, 0.65])
+      fix(red,[1],[-0.5, 1])
     }
     if (page==7){
-      fix(blue,[1,1],[-1,0,-1])
-      fix(green,[1,1],[1,-0.5,-1])
-      fix(red,[1,1],[0.5,1,-1])
+      fix(blue,[0],[0.6, -0.1])
+      fix(green,[0],[-0.15, 0.65])
+      fix(red,[1],[1, 0.5])
     }
-    if (page==8){
-      fix(blue,[0,0],[0.5,0,2])
-      fix(green,[0,1],[0,-1,1.3])
-      fix(red,[1,1],[-1,1,0.5])
-    }
-    if (page==9){
-      fix(blue,[0,1],[-0.8,0.8,-1])
-      fix(green,[1,1],[0.8,0,-2])
-      fix(red,[0,0],[0.8,0.8,1])
-    }
-    if (page==10){
-      fix(blue,[1,1],[0.5,-0.5,1])
-      fix(green,[1,1],[0.5,0.5,1])
-      fix(red,[1,1],[-1,0,1])
-    }
-    if (page==11){
-      fix(blue,[0,1],[-0.4,-1.2,-1.5])
-      fix(green,[0,1],[0.9,0.3,-2])
-      fix(red,[0,1],[-0.8,0.8,-1.5])
-    }
-    if (page==12){
-      fix(blue,[0,1],[1,1,0.5])
-      fix(green,[0,1],[-1,-1,0.5])
-      fix(red,[0,1],[1,1,0.5])
-    }
+    MathJax.typesetPromise()
   }
 
-  function grade(p,m11,m21,m12,m22,m13,m23,w1,w2,r1,r2){
+  function grade(p, m11, m21, m12, m22, m13, m23, w1, w2, r1, r2){
     correct=0
 
+    var error = Math.abs(m13*w2-m23*w1)
+    var tolerance = 0.05
     if (p==0){
-      if(r1==r2 && m13<=0 && m23<=0){
+      if(error<tolerance && m13<0 && m23>0){
         correct = 1}
     }
     if (p==1){
-      if(r1==r2 && m13<=0 && m23>=0){
+      if(error<tolerance && m13>0 && m23>0){
         correct = 1}
     }
-    if (p==1){
-      if(r1==r2 && m13>=0 && m23<=0){
-        correct = 1}
-    }
-    if (p==1){
-      if(r1==r2 && m13>=0 && m23>=0){
+
+    if (p==2){
+      if(error<tolerance && m13<0 && m23<0){
         correct = 1}
     }
     if (p==3){
-      if(w1==0 && w2==0){
+      if(error<tolerance && m13*m23<0){
         correct = 1}
     }
+
     if (p==4){
-      if(w1==0 && w2==0){
-        correct = 1}
-    }
-    if (p==5){
-      if(w1==0 && w2==0){
-        correct = 1}
-    }
-    if (p==6){
-      if(v1==0 && v2==0 && v3==0){
+      if(error<tolerance && m13>0 && m23<0){
       correct = 1}
     }
-    if (p==7){
-      if(w1==0 && w2==0){
+    if (p==5){
+      if(error<tolerance && m13*m23>0){
         correct = 1}
     }
-    if (p==8){
-      if(m13==0){
+
+    if (p==6){
+      if(error<tolerance && m13<0 && m23>0){
         correct = 1}
     } 
-    if (p==9){
-      if(m12==-m22){
+    if (p==7){
+      if(error<tolerance && m13*m23>0){
         correct = 1}
-    }   
-    if (p==10){
-      if (Math.abs(m11)==Math.abs(m12) && Math.abs(m12)==Math.abs(m13) && Math.abs(m21)==Math.abs(m22) && Math.abs(m22)==Math.abs(m23)){ 
-      equal=0
-      if (m11==m12 && m21==m22 ){
-      equal+=1
-      } 
-      if (m11==m13 && m21==m23 ){
-      equal+=1
-      } 
-      if (m12==m13 && m22==m23 ){
-      equal+=1
-      } 
-      if (equal==1){
-      correct=1}
-    } }
-    if (page==11){
-      if (parseFloat(v1)==0.3 && parseFloat(v2)==0.4 && parseFloat(v3)==0.3){
-        correct=1}
-    }
-    if (page==12){
-      if (parseFloat(v1)==1 && parseFloat(v2)==2 && parseFloat(v3)==1){
-        correct=1}
     }
 
     if (correct==0){
-      grades[p][1]+=1}
+      //grades[p][1]+=1
+      console.log("Answer is incorrect.")
+    }
     if (correct==1){
-      grades[p][0]+=1}
+      //grades[p][0]+=1
+      console.log("Answer is correct.")
+    }
 
-    sql_record(Module_Number)
+    //sql_record(Module_Number)
     return(correct)
   }
 </script>
@@ -904,23 +851,18 @@
   var initialized=0
   var page=0
   var quests=[
-  "1. Find a (non-zero) eigenvector for the given matrix that lies in the third quadrant.",
-  "2. Find a (non-zero) eigenvector for the given matrix that lies in the second quadrant.",
-  "3. Find a (non-zero) eigenvector for the given matrix that lies in the fourth quadrant.",
-  "4. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
-  "5. The matrix reflects vectors about the line /( y=2x /). Find a possible eigenvector for this matrix.",
-  "6. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
-  "7. Now, this matrix projects vectors on the line /( y=-2/3 x /). Find a possible eigenvector for this matrix.",
-  "8. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
-  "9. Find values for the entries in the rightmost column of the matrix such that NO vector whose first entry is 2 lies in the null space.",
-  "10. Find values for the entries in the middle column of the matrix such that NO vector whose last entry is 1 lies in the null space.",
-  "11. A 0-1 vector is a vector that includes only entries of 0s and/or 1s.  Find a matrix that has at least one nonzero entry in each column, such that there are precisely 3 (including the 0 vector itself) 0-1 vectors in the null space.",
-  "12. Find a vector in the null space of the given matrix such that the three coordinates of that vector add up to 1.",
-  "13. There are two (not including the 0 vector)  0-1 vectors in the null space of the given matrix. Enter as your solution the sum of these two vectors.",
-
-  "Good job!!!"]
+    "1. Find a (non-zero) eigenvector for the given matrix that lies in the second quadrant.",
+    "2. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
+    "3. The matrix reflects vectors about the line $y=2x$. Find a possible eigenvector for this matrix that lies in the third quadrant.",
+    "4. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
+    "5. Now, this matrix projects vectors on the line $y=-0.5x$. Find a possible eigenvector for this matrix that lies in the fourth quadrant.",
+    "6. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
+    "7. The given matrix dilates vectors by a scale factor of $0.75$ in one direction and by a scale factor of $0.5$ in another. Could you identify one possible eigenvector of this matrix that lies in the second quadrant?",
+    "8. Great, could you determine another possible eigenvector for the same matrix that is not in the span of the previous eigenvector?",
+    "Good job!!!"
+  ]
   the_time=Date.now()
-  make_grades(Module_Number)
+  //make_grades(Module_Number)
   draw()
 
   bt=document.getElementById("bluetip")
@@ -931,7 +873,7 @@
   mobilize(rt)
   match()
   make_mat()
-  score()
+  //score()
 </script>
 </body>
 </html>
