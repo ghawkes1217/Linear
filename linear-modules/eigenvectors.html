@@ -53,10 +53,10 @@
       background-color: grey;
     }
 
-    #matrix {
+    .matrixEnvironment {
       position: absolute;
-      height: 200px;
-      width: 400px;
+      height: 250px;
+      width: 450px;
       left: 425px;
       top: 90px;
       background-color: lightgrey;
@@ -222,13 +222,11 @@
       background-color: white;
       text-align: center;
     }
-    #MatEq {
+
+    .matrixEquation {
       position: absolute;
       top: 105px;
-      height: 60px;
-      width: 200px;
-      left: 40px; 
-      background-color: lightgrey;
+      left: 40px;
       text-align: center;
     }
     #completed {
@@ -270,12 +268,21 @@
   </p>  
 
   <p>
-    Below the matrix equation the factor by which the matrix scales the first and second coordinate of \(v\) are shown.
-    If \(v\) is an eigenvector then \(A\) scales all of \(v\) by the same factor, so these values must be the same.
+    Below the matrix equation, the factor by which the matrix scales the first and second coordinates of \(v\) are shown.
+    You can tell that \(v\) is an eigenvector precisely when \(A\) scales all of \(v\) by the same factor, so these shown values must be the same.
   </p>
 
   <div id="question">
     Ready to begin?  Click "Start" to view your first question.
+  </div>
+
+  <div class="multipleChoice" id="matrixChoice">
+    <input type="radio" id="rk" name="answer" value="rank">
+    <label for="rk">Rank of the matrix</label>
+    <input type="radio" id="tr" name="answer" value="trace">
+    <label for="tr">Trace of the matrix</label>
+    <input type="radio" id="det" name="answer" value="determinant">
+    <label for="det">Determinant of the matrix</label>
   </div>
 
   <div class="popup" onclick="pop()"><u>Question Statistics</u>
@@ -304,7 +311,7 @@
 </div>
 
 <div id="blank">
-  <div id="matrix">
+  <div class="matrixEnvironment">
     <h3>Matrix Equation:</h3>
     <div id="M11">
       <input type="number" id="m11"   style="width: 4em" value="-1" step=0.01 onChange="match()">
@@ -348,8 +355,15 @@
       1
     </div>
 
-    <div id="MatEq">
+    <div class="matrixEquation">
       <h2>Scaling Factors:</h2>
+    </div>
+
+    <div style="position:absolute; top:160px; left:50px">
+      <h3>Sum of Eigenvalues:</h3>
+      <input type="text" name="eigenvalueSum" id="eigenvalueSum" style="position:absolute; left:250px; top:20px; width:100px">
+      <h3>Product of Eigenvalues:</h3>
+      <input type="text" name="eigenvalueProduct" id="eigenvalueProduct" style="position:absolute; left:250px; top:60px; width:100px">
     </div>
   </div>
 
@@ -711,6 +725,21 @@
 
       R1=document.getElementById("r1").value
       R2=document.getElementById("r2").value
+
+      fillPages = [4,8]
+      Q1=null
+      Q2=null
+      if (fillPages.includes(page)){
+        Q1=parseFloat(document.getElementById("eigenvalueSum").value)
+        Q2=parseFloat(document.getElementById("eigenvalueProduct").value)
+      }
+
+      radioPages = [5,9]
+      A1=null
+      if (radioPages.includes(page)){
+        A1=document.querySelector('input[name="answer"]:checked').value
+      }
+
       var feed=document.getElementById("try").innerText
       if (feed==""){
       document.getElementById("try").innerText="Try Again"}
@@ -719,13 +748,13 @@
       if (feed=="Try Again"){
       document.getElementById("try").innerText="Not Quite"}
 
-      if (grade(page,M11,M21,M12,M22,M13,M23,W1,W2,R1,R2)==1){
+      if (grade(page,M11,M21,M12,M22,M13,M23,W1,W2,R1,R2,A1,Q1,Q2)==1){
         document.getElementById("try").innerText=""
 
         var answeredQuestion = document.createElement('div')
         answeredQuestion.innerHTML = quests[page]
-        answeredQuestion.innerHTML += ' Your answer: '+V1+'&times('+M11+','+M21+')'
-        answeredQuestion.innerHTML += ' + '+V2+'&times('+M12+','+M22+')'
+        //answeredQuestion.innerHTML += ' Your answer: '+V1+'&times('+M11+','+M21+')'
+        //answeredQuestion.innerHTML += ' + '+V2+'&times('+M12+','+M22+')'
         answeredQuestion.style.color="grey"
         var completedQuestions = document.getElementById("completed")
         completedQuestions.appendChild(answeredQuestion)
@@ -763,27 +792,27 @@
       fix(green,[0],[0.8, 0.6])
       fix(red,[1],[0.5, 0.5])
     }
-    if (page==3){
+    if (page==3 || page==4 || page==5){
       fix(blue,[0],[-0.6, 0.8])
       fix(green,[0],[0.8, 0.6])
       fix(red,[1],[0.5, -0.5])
     }
-    if (page==4){
+    if (page==6){
       fix(blue,[0],[0.8, -0.4])
       fix(green,[0],[-0.4, 0.2])
       fix(red,[1],[-1, 0])
     }
-    if (page==5){
+    if (page==7 || page==8 || page==9){
       fix(blue,[0],[0.8, -0.4])
       fix(green,[0],[-0.4, 0.2])
       fix(red,[1],[0, 1])
     }
-    if (page==6){
+    if (page==10){
       fix(blue,[0],[0.6, -0.1])
       fix(green,[0],[-0.15, 0.65])
       fix(red,[1],[-0.5, 1])
     }
-    if (page==7){
+    if (page==11){
       fix(blue,[0],[0.6, -0.1])
       fix(green,[0],[-0.15, 0.65])
       fix(red,[1],[1, 0.5])
@@ -791,11 +820,12 @@
     MathJax.typesetPromise()
   }
 
-  function grade(p, m11, m21, m12, m22, m13, m23, w1, w2, r1, r2){
+  function grade(p, m11, m21, m12, m22, m13, m23, w1, w2, r1, r2, a1, q1, q2){
     correct=0
 
     var error = Math.abs(m13*w2-m23*w1)
     var tolerance = 0.05
+    // error < tolerance verifies that the chosen vector is close to being an eigenvector
     if (p==0){
       if(error<tolerance && m13<0 && m23>0){
         correct = 1}
@@ -813,22 +843,47 @@
       if(error<tolerance && m13*m23<0){
         correct = 1}
     }
-
     if (p==4){
-      if(error<tolerance && m13>0 && m23<0){
-      correct = 1}
+      if(q2==-1){
+        correct = 1}
     }
     if (p==5){
-      if(error<tolerance && m13*m23>0){
+      if(a1=="determinant"){
         correct = 1}
     }
 
     if (p==6){
-      if(error<tolerance && m13<0 && m23>0){
+      if(q1==0){
         correct = 1}
-    } 
+    }
     if (p==7){
+      if(a1=="trace"){
+        correct = 1}
+    }
+
+    if (p==8){
+      if(error<tolerance && m13>0 && m23<0){
+      correct = 1}
+    }
+    if (p==9){
       if(error<tolerance && m13*m23>0){
+        correct = 1}
+    }
+    if (p==10){
+      if(q1==1){
+        correct = 1}
+    }
+    if (p==11){
+      if(a1=="trace"){
+        correct = 1}
+    }
+
+    if (p==12){
+      if(q2==0){
+        correct = 1}
+    }
+    if (p==13){
+      if(a1=="determinant"){
         correct = 1}
     }
 
@@ -855,10 +910,16 @@
     "2. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
     "3. The matrix reflects vectors about the line $y=2x$. Find a possible eigenvector for this matrix that lies in the third quadrant.",
     "4. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
-    "5. Now, this matrix projects vectors on the line $y=-0.5x$. Find a possible eigenvector for this matrix that lies in the fourth quadrant.",
-    "6. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
-    "7. The given matrix dilates vectors by a scale factor of $0.75$ in one direction and by a scale factor of $0.5$ in another. Could you identify one possible eigenvector of this matrix that lies in the second quadrant?",
-    "8. Great, could you determine another possible eigenvector for the same matrix that is not in the span of the previous eigenvector?",
+    "5. Enter the sum of the eigenvalues for this matrix in the provided blank space.",
+    "6. Based on your previous observations, what quantity does this sum equal to?",
+    "7. Enter the product of the eigenvalues for this matrix in the provided blank space.",
+    "8. Based on your previous observations, what quantity does this product equal to?",
+    "9. Now, this matrix projects vectors on the line $y=-0.5x$. Find a possible eigenvector for this matrix that lies in the fourth quadrant.",
+    "10. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
+    "11. Enter the sum of the eigenvalues for this matrix in the provided blank space.",
+    "12. Based on your previous observations, what quantity does this sum equal to?",
+    "13. Enter the sum of the eigenvalues for this matrix in the provided blank space.",
+    "14. Based on your previous observations, what quantity does this sum equal to?",
     "Good job!!!"
   ]
   the_time=Date.now()
