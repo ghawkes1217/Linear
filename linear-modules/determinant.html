@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- The following adds MathJax to render LaTeX notation -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="../styles.css">
+        <script src="../site-scripts.js"></script>
+      </head>
+<style>
+#blank {
+  position: relative;
+}
+
+#outer {
+  position: absolute;
+  height: 400px;
+  width: 400px;
+  left: 0px;
+  top: 180px;
+  background-color: white;
+  text-align: center;
+  border: 9px solid #d3d3d3;}
+
+
+
+  #fixout {
+  position: absolute;
+  height: 400px;
+  width: 400px;
+  left: 420px;
+  top: 180px;
+  background-color: white;
+  text-align: center;
+  border: 9px solid #d3d3d3;}
+
+   #greentip {
+
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 290px;
+  top: 90px;
+  background-color: grey;}
+
+
+  #redtip {
+
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 90px;
+  top: 290px;
+  background-color: grey;}
+  
+ #matrix {
+  position: absolute;
+  height: 120px;
+  width: 380px;
+  left: 25px;
+  top: 50px;
+  background-color: lightgrey;
+  text-align: center;}
+  
+  #M11 {
+  position: absolute;
+  height: 20px;
+  width: 75px;
+  left: 10px;
+  top: 50px;
+  background-color: red;
+  text-align: center;}
+  
+    #M21 {
+  position: absolute;
+  height: 20px;
+  width: 75px;
+  left: 10px;
+  top: 70px;
+  background-color: red;
+  text-align: center;}
+  
+  #M12 {
+  position: absolute;
+  height: 20px;
+  width: 75px;
+  left: 85px;
+  top: 50px;
+  background-color: green;
+  text-align: center;}
+
+    #M22 {
+  position: absolute;
+  height: 20px;
+  width: 75px;
+  left: 85px;
+  top: 70px;
+  background-color: green;
+  text-align: center;}
+
+ 
+
+
+
+  #fixmat {
+  position: absolute;
+  height: 120px;
+  width: 370px;
+  left: 445px;
+  top: 50px;
+  background-color: lightgrey;
+  text-align: center;}
+  
+  #N11 {
+  position: absolute;
+  height: 20px;
+  width: 75px;
+  left: 10px;
+  top: 50px;
+  background-color: red;
+  text-align: center;}
+  
+    #N21 {
+  position: absolute;
+  height: 20px;
+  width: 75px;
+  left: 10px;
+  top: 70px;
+  background-color: red;
+  text-align: center;}
+  
+  #N12 {
+  position: absolute;
+  height: 20px;
+  width: 75px;
+  left: 85px;
+  top: 50px;
+  background-color: green;
+  text-align: center;}
+
+    #N22 {
+  position: absolute;
+  height: 20px;
+  width: 75px;
+  left: 85px;
+  top: 70px;
+  background-color: green;
+  text-align: center;}
+
+
+
+
+    #but {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  left: 290px;
+  top:30px;
+  background-color: black;
+  text-align: center;}
+  
+  #but2 {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  left: 235px;
+  top:10px;
+  background-color: black;
+  text-align: center;}
+
+ #sub {
+  position: absolute;
+  height: 30px;
+  width: 380px;
+  left: 40px;
+  top: 10px;
+  background-color: white;
+  text-align: center;}
+
+     #try {
+  position: absolute;
+  height: 30px;
+  width: 80px;
+  left: 560px;
+  top: 10px;
+  background-color: white;
+  text-align: center;}
+  
+
+  #score {
+  position: absolute;
+  height: 220px;
+  width: 90px;
+  left: 990px;
+  top: 10px;
+  background-color: white;
+  text-align: center;}
+  #det {
+  position: absolute;
+  top: 55px;
+  height: 60px;
+  width: 150px;
+  left: 170px; 
+  background-color: lightgrey;
+  text-align: center;}
+
+
+  #fixdet {
+  position: absolute;
+  top: 55px;
+  height: 60px;
+  width: 150px;
+  left: 170px; 
+  background-color: lightgrey;
+  text-align: center;}
+
+  #completed {
+  position: absolute;
+  left: 10px;
+  top: 620px}
+
+  #question {
+  position: relative;
+  height: 35px;
+}
+  
+ </style>
+
+ 
+<body>
+<div>
+  <div style="position: absolute;">
+    <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
+  </div>
+    <h2><center>Determinants</center></h2>
+<p>
+This module is about determinants, in particular it analyzes the case of the \(2 \times 2\) determinant.   
+</p>
+
+<p>
+You may recall from module 7 that if you start with a matrix \(A\) that is invertible and you apply row operations to achieve RREF 
+then you must end up with the identity matrix.  On the other hand, if you start with a matrix 
+\(B\) that is not invertible and you apply row operations to achieve RREF then the 
+result cannot be the identity.  
+This is because row operations themselves do not change whether a matrix has an inverse.  Therefore, since \(A\) was invertible, 
+the RREF of \(A\) (and all of the intermediate matrices) must be invertible.  Since the only invertibale RREF is the identity 
+the identity must be the RREF of \(A\).  Moreover, since \(B\) was not invertible, 
+the RREF of \(B\) (and all of the intermediate matrices) must not be invertible. Therefore the RREF of \(B\) cannot be the identity.
+</p>
+
+<p>
+The determinant is a tool that can tell us whether or not a matrix is invertible without having to compute 
+the RREF.  The determinant test is quite simple.  If a matrix has a determinant of \(0\) it is not invertible. 
+If a matrix has any other determinant it is invertible.  This means that the matrix \(A\) along with its RREF 
+and all of its intermediate matrices have a non-zero determinant, whereas matrix \(B\), its RREF and all of its intermediate 
+matrices have a determinant of 0.  Note that none of the row operations applied to \(A\) or applied to \(B\) were ever able to
+change whether or not the determinant was zero or non-zero.  
+</p>
+<p>
+This is a general fact: row operations do not change whether the determinant is zero or non-zero.  Exactly how row operations 
+do change the determinant is one of the topics investigated in this module.  However, we also investigate how other operations 
+such as rotations and reflections (of the columns of the matrix) change the determinant.  We do these things by considering the 
+graphical representation given by associating the determinant to the (signed) area  inside the parallelogram formed by two column vectors of the matrix.  
+In the module, this area is shown in yellow (when the determinant is positive) or orange (when the determinant is negative).
+For questions 1-5,12, and 13 you will be manipulating the diagram on the left until it has the relationship to the diagram on 
+the right that is asked for.  In questions 6-11 you will experiment with the module to come up with the numerical answer 
+to the question that is asked (enter you answer in the input box).  If there is no single answer to the question, enter "na" 
+as your solution.
+</p>
+
+
+
+
+</p>
+<div id="question">
+Ready to begin?  Click "Start" to view your first question.
+</div>
+<div class="popup" onclick="pop()"><u>Question Statistics</u>
+  <div class="popuptext" id="myPopup">
+    <h3 id="selected" style="text-align:center;">No Question Selected</h3>
+    <table >
+
+      <tr>
+        <td>Users Who Have Attempted This Question</td>
+        <td id="users">0</td>
+      </tr>
+      <tr>
+        <td>Percentage of Users With a Correct Response</td>
+        <td id="eventual">0</td>
+      </tr>
+      <tr>
+        <td>Average Number of Attempts per User</td>
+        <td id="attempts">0</td>
+      </tr>
+      <tr>
+        <td>Percentage of Attempts that are Correct</td>
+        <td id="overall">0</td>
+      </tr>
+
+    </table>
+    
+
+
+  </div>
+</div>
+</div>
+<div id="blank">
+<div id="matrix">
+<h4>Changeable Matrix:</h4>
+<div id="M11">
+<input type="number" id="m11"   style="width: 4em" value="-1" step=0.1 onChange="match()">
+</div>
+<div id="M12">
+<input type="number" id="m12"   style="width: 4em" value="1" step=0.1 onChange="match()">
+</div>
+<div id="M21">
+<input type="number" id="m21"   style="width: 4em" value="0" step=0.1 onChange="match()">
+</div>
+<div id="M22">
+<input type="number" id="m22"   style="width: 4em" value="1" step=0.1 onChange="match()">
+</div>
+
+
+
+<div id="det">
+
+</div>
+</div>
+
+
+<div id="fixmat">
+    <h4>Fixed Matrix:</h4>
+    <div id="N11">
+    <input type="number" id="n11"   style="width: 4em" value="-1" step=0.1 disabled="True">
+    </div>
+    <div id="N12">
+    <input type="number" id="n12"   style="width: 4em" value="1" step=0.1 disabled="True">
+    </div>
+    <div id="N21">
+    <input type="number" id="n21"   style="width: 4em" value="0" step=0.1 disabled="True">
+    </div>
+    <div id="N22">
+    <input type="number" id="n22"   style="width: 4em" value="1" step=0.1 disabled="True">
+    </div>
+    
+    
+    
+    <div id="fixdet">
+    
+    </div>
+    </div>
+
+
+
+
+
+
+<div id="sub">
+    <span>
+      <button  onclick="submit()">Start</button>
+    </span>
+    <span>
+      <button  onclick="navigate(1)">Skip</button>
+    </span>
+    <span>
+      <button  onclick="navigate(-1)">Previous</button>
+    </span>
+    <input id="resp" style="width:50px" disabled="True"></input>
+  </div>
+<div id="try">
+
+</div>
+
+
+
+
+<div id="outer">
+
+
+<div id="greentip">
+</div>
+
+<div id="redtip">
+</div>
+
+
+<canvas id="myCanvas" width="400" height="400"
+style="border:1px solid #c3c3c3;">
+</canvas>
+</div>
+
+
+<div id="fixout">
+
+    
+    
+    <canvas id="fixCanvas" width="400" height="400"
+    style="border:1px solid #c3c3c3;">
+    </canvas>
+    </div>
+
+
+
+
+<div id="score">
+</div>
+<div id="completed">
+    <h2>Completed Questions:</h2>
+  </div>
+</div>
+
+
+
+</div>
+
+
+<script>
+
+
+
+function fix(color,params,vals){
+  document.getElementById(color[1]).value=vals[0]
+  document.getElementById(color[2]).value=vals[1]
+
+
+
+if (params[0]==0){
+  document.getElementById(color[0]).onmousedown=null
+  document.getElementById(color[1]).disabled=true
+  document.getElementById(color[2]).disabled=true
+}
+if (params[0]==1){
+  document.getElementById(color[1]).disabled=false
+  document.getElementById(color[2]).disabled=false
+  mobilize(document.getElementById(color[0]))
+
+}
+
+
+match()
+}
+
+
+
+    function make_mat(){
+var a11=(document.getElementById("m11").value)
+var a21=(document.getElementById("m21").value)
+
+var a12=(document.getElementById("m12").value)
+var a22=(document.getElementById("m22").value)
+
+
+
+
+
+
+document.getElementById("det").innerHTML="Determinant: "+Math.round(100*(a11*a22-a12*a21))/100
+
+
+
+ 
+
+
+}
+
+
+
+
+function draw(){
+
+
+
+ gt=document.getElementById("greentip")
+
+ rt=document.getElementById("redtip")
+ 
+
+
+g1=gt.offsetLeft+10
+g2=gt.offsetTop+10
+
+
+r1=rt.offsetLeft+10
+r2=rt.offsetTop+10
+
+
+
+G1=(g1-200)/100
+G2=(200-g2)/100
+R1=(r1-200)/100
+R2=(200-r2)/100
+
+
+
+GR1=G1+R1 
+GR2=G2+R2
+gr1=100*GR1+200
+gr2=-100*GR2+200
+
+
+
+
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+ctx.clearRect(0, 0, canvas.width, canvas.height)
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(0, 200);
+ctx.lineTo(400, 200);
+ctx.stroke();
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(200, 0);
+ctx.lineTo(200, 400);
+ctx.stroke();
+
+
+
+
+ctx.beginPath();
+    if (R1*G2-R2*G1>=0){
+    ctx.fillStyle = "yellow"
+    ctx.strokeStyle="yellow"}
+    if (R1*G2-R2*G1<=0){
+    ctx.fillStyle = "orange"
+    ctx.strokeStyle="orange"}
+    ctx.lineWidth=2
+    ctx.moveTo(200, 200);
+    ctx.lineTo(g1, g2);
+    ctx.lineTo(gr1, gr2);
+    ctx.lineTo(r1, r2);
+    ctx.lineTo(200, 200);
+    ctx.stroke();
+    ctx.fill();
+
+
+
+
+ctx.beginPath();
+ctx.strokeStyle="green"
+ctx.lineWidth=2
+ctx.moveTo(200, 200);
+ctx.lineTo(g1, g2);
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle="red"
+ctx.lineWidth=2
+ctx.moveTo(200, 200);
+ctx.lineTo(r1, r2);
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle="green"
+ctx.lineWidth=1
+ctx.setLineDash([3, 4])
+ctx.moveTo(r1, r2);
+ctx.lineTo(gr1, gr2 );
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle="red"
+ctx.lineWidth=1
+ctx.setLineDash([3, 4])
+ctx.moveTo(g1, g2);
+ctx.lineTo(gr1, gr2 );
+ctx.stroke();
+
+ctx.setLineDash([3, 0])
+
+
+
+}
+
+
+
+
+function setfix(R1,R2,G1,G2,resp_disabled){
+
+
+
+  document.getElementById("resp").disabled=resp_disabled
+  document.getElementById("resp").value=''
+
+
+document.getElementById("n11").value=R1
+document.getElementById("n21").value=R2
+document.getElementById("n12").value=G1
+document.getElementById("n22").value=G2
+document.getElementById("m11").value=R1
+document.getElementById("m21").value=R2
+document.getElementById("m12").value=G1
+document.getElementById("m22").value=G2
+document.getElementById("fixdet").innerHTML="Determinant: "+Math.round(100*(R1*G2-G1*R2))/100
+document.getElementById("det").innerHTML="Determinant: "+Math.round(100*(R1*G2-G1*R2))/100
+match()
+
+GR1=G1+R1 
+GR2=G2+R2
+gr1=100*GR1+200
+gr2=-100*GR2+200
+r1=100*R1+200
+r2=-100*R2+200
+g1=100*G1+200
+g2=-100*G2+200
+
+
+
+
+var canvas = document.getElementById("fixCanvas");
+var ctx = canvas.getContext("2d");
+ctx.clearRect(0, 0, canvas.width, canvas.height)
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(0, 200);
+ctx.lineTo(400, 200);
+ctx.stroke();
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(200, 0);
+ctx.lineTo(200, 400);
+ctx.stroke();
+
+
+
+
+ctx.beginPath();
+   if (R1*G2-R2*G1>=0){
+   ctx.fillStyle = "yellow"
+   ctx.strokeStyle="yellow"}
+   if (R1*G2-R2*G1<=0){
+   ctx.fillStyle = "orange"
+   ctx.strokeStyle="orange"}
+   ctx.lineWidth=2
+   ctx.moveTo(200, 200);
+   ctx.lineTo(g1, g2);
+   ctx.lineTo(gr1, gr2);
+   ctx.lineTo(r1, r2);
+   ctx.lineTo(200, 200);
+   ctx.stroke();
+   ctx.fill();
+
+
+
+
+ctx.beginPath();
+ctx.strokeStyle="green"
+ctx.lineWidth=2
+ctx.moveTo(200, 200);
+ctx.lineTo(g1, g2);
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle="red"
+ctx.lineWidth=2
+ctx.moveTo(200, 200);
+ctx.lineTo(r1, r2);
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle="green"
+ctx.lineWidth=1
+ctx.setLineDash([3, 4])
+ctx.moveTo(r1, r2);
+ctx.lineTo(gr1, gr2 );
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle="red"
+ctx.lineWidth=1
+ctx.setLineDash([3, 4])
+ctx.moveTo(g1, g2);
+ctx.lineTo(gr1, gr2 );
+ctx.stroke();
+
+ctx.setLineDash([3, 0])
+
+
+
+}
+
+
+
+
+
+
+
+
+function fill(){
+
+
+ gt=document.getElementById("greentip")
+ rt=document.getElementById("redtip")
+g1=gt.offsetLeft+10
+g2=gt.offsetTop+10
+r1=rt.offsetLeft+10
+r2=rt.offsetTop+10
+
+
+G1=g1-200
+G2=200-g2
+R1=r1-200
+R2=200-r2
+
+
+document.getElementById("m11").value=Math.round(R1/10)/10
+document.getElementById("m21").value=Math.round(R2/10)/10
+document.getElementById("m12").value=Math.round(G1/10)/10
+document.getElementById("m22").value=Math.round(G2/10)/10
+make_mat()
+
+
+
+
+}
+
+
+
+
+function mobilize(tip) {
+    tip.onmousedown = move;  
+
+  function move(e) {
+    x0 = e.clientX;
+    y0 = e.clientY;
+    document.onmousemove = drag;
+    document.onmouseup = close;
+  }
+
+function drag(e) {
+    dx = e.clientX-x0;
+    dy = e.clientY-y0;
+    x0 = e.clientX;
+    y0 = e.clientY;
+    tip.style.left = (tip.offsetLeft + dx) + "px";
+    tip.style.top = (tip.offsetTop + dy) + "px";
+    draw(tip.offsetLeft + dx + 10, tip.offsetTop + dy +10);
+    fill()
+  }
+
+function close() {
+  document.onmouseup = null;
+  document.onmousemove = null;
+    tip.style.left = 10*Math.round(tip.offsetLeft/10) + "px";
+    tip.style.top = 10*Math.round(tip.offsetTop/10) + "px";
+    draw(tip.offsetLeft + dx + 10, tip.offsetTop + dy +10);
+        fill()
+
+ }
+  
+  
+}
+
+
+
+
+
+function match(){
+
+a11=document.getElementById("m11").value
+a21=document.getElementById("m21").value
+
+
+a12=document.getElementById("m12").value
+a22=document.getElementById("m22").value
+
+
+
+ gt=document.getElementById("greentip")
+ rt=document.getElementById("redtip")
+
+A11=100*a11+200-10
+A21=200-100*a21-10
+A12=100*a12+200-10
+A22=200-100*a22-10
+
+
+
+
+
+gt.style.left=A12+"px"
+gt.style.top=A22+"px"
+
+rt.style.left=A11+"px"
+rt.style.top=A21+"px"
+
+
+
+draw()
+make_mat()
+}
+
+
+
+
+
+
+
+function submit(){
+
+
+
+
+if (initialized==0){
+document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
+navigate(0)
+document.getElementById("question").innerText=quests[page]
+}
+if (initialized==1){
+M11=document.getElementById("m11").value
+M21=document.getElementById("m21").value
+M12=document.getElementById("m12").value
+M22=document.getElementById("m22").value
+N11=document.getElementById("n11").value
+N21=document.getElementById("n21").value
+N12=document.getElementById("n12").value
+N22=document.getElementById("n22").value
+res=document.getElementById("resp").value
+var feed=document.getElementById("try").innerText
+if (feed==""){
+document.getElementById("try").innerText="Try Again"}
+if (feed=="Not Quite"){
+document.getElementById("try").innerText="Try Again"}
+if (feed=="Try Again"){
+document.getElementById("try").innerText="Not Quite"}
+
+
+
+
+if (grade(page,M11,M21,M12,M22,N11,N21,N12,N22,res)==1)
+{
+document.getElementById("try").innerText=""
+
+
+var answeredQuestion = document.createElement('div')
+      answeredQuestion.innerHTML = quests[page]
+     answeredQuestion.style.color="grey"
+      var completedQuestions = document.getElementById("completed")
+      completedQuestions.appendChild(answeredQuestion)
+
+
+
+
+page+=1
+document.getElementById("question").innerText=quests[page]
+score()
+navigate(0)
+
+
+}
+
+
+
+
+}
+initialized=1
+}
+
+
+
+function navigate(i){
+
+
+  if (i==1){forward()}
+  if (i==-1){back()}
+
+
+
+if (page==0){
+setfix(1,0.2,0.3,1.5,true)
+}
+
+if (page==1){
+setfix(1,0.2,0.3,1.5,true)
+}
+
+
+if (page==2){
+setfix(1,0.2,0.3,1.5,true)
+}
+
+
+if (page==3){
+  setfix(0.8,0.2,-0.3,0.9,true)
+}
+
+if (page==4){
+  setfix(0.8,0.8,-0.6,0,true)
+}
+
+if (page==5){
+  setfix(-0.5,0.5,-0.4,-0.3,false)
+}
+if (page==6){
+  setfix(-0.5,0.5,-0.4,-0.3,false)
+}
+
+if (page==7){
+  setfix(1.2,0,1,1,false)
+}
+
+if (page==8){
+  setfix(1.2,0,1,1,false)
+}
+
+
+if (page==9){
+  setfix(0.8,0.8,-1,0.5,false)
+}
+
+if (page==10){
+  setfix(0.8,0.8,-0.6,0,false)
+}
+
+
+if (page==11){
+  setfix(1,0,0,1,true)
+}
+
+if (page==12){
+  setfix(-1,-1,-1,0.5,true)
+}
+
+
+
+
+
+}
+
+
+function grade(p,m11,m21,m12,m22,n11,n21,n12,n22,res){
+correct=0    
+
+if (p==0){
+  if (m11<0 && m21>0 && m12<0 && m22>0 && m11*m11+m21*m21==n11*n11+n21*n21 && m12*m12+m22*m22==n12*n12+n22*n22 && m11*m22-m12*m21==n11*n22-n12*n21){
+    correct = 1}}
+
+    if (p==1){
+  if (m11>0 && m21<0 && m12<0 && m22>0 && m11*m11+m21*m21==n11*n11+n21*n21 && m12*m12+m22*m22==n12*n12+n22*n22 && m11*m22-m12*m21==n11*n22-n12*n21){
+    correct = 1
+  }}
+
+    if (p==2){
+  if (m11>0 && m21>0 && m12>0 && m22>0 && m11*m11+m21*m21==n12*n12+n22*n22 && m12*m12+m22*m22==n11*n11+n21*n21 && m11*m22-m12*m21==-n11*n22+n12*n21){
+    correct = 1}}
+
+    if (p==3){
+  if (m11*n21==m21*n11 &&  m12*n22==m22*n12  && m11*m22-m12*m21==2*(n11*n22-n12*n21)){
+    correct = 1}}
+
+
+
+
+if (p==4){
+  if (m11==n11 && m21==n21 && m11*m12+m21*m22>0 && m11*m22-m12*m21==n11*n22-n12*n21) {
+    correct = 1}}
+
+if (p==5){
+  if (res==2) {
+    correct = 1}}
+
+    if (p==6){
+  if (res==4) {
+    correct = 1}}
+
+    if (p==7){
+  if (res==1) {
+    correct = 1}}
+
+    if (p==8){
+  if (res=="na" || res=="NA" || res=="Na"|| res=="N/A") {
+    correct = 1}}
+
+    if (p==9){
+  if (res==-1) {
+    correct = 1}} 
+
+    if (p==10){
+  if (res==1) {
+    correct = 1}} 
+
+    if (p==11){
+  if (m11*m12+m21*m22==1 && m11*m22-m12*m21==-1) {
+    correct = 1}} 
+
+    if (p==12){
+      if (m11*m12+m21*m22==-1 && m11*m22-m12*m21==0) {
+    correct = 1}} 
+    
+
+    
+    
+if (correct==0){
+grades[p][1]+=1}
+if (correct==1){
+grades[p][0]+=1
+}
+sql_record(Module_Number)
+return(correct)
+}
+
+
+
+
+</script>
+
+<script>
+
+
+var Module_Number="17"
+var initialized=0
+var page=0
+var quests=[
+"1. Without changing the length of either column vector, find a new matrix with both column vectors in the second quadrant that has the same determinant as the given matrix.",
+"2. Without changing the length of either column vector, find a new matrix with one column vector in the second quadrant and one in the fourth that has the same determinant as the given matrix.",
+"3. Find a new matrix with both column vectors still in the first quadrant that creates the same shape parallelogram but has opposite determinant as the given matrix.",
+"4. Find a new matrix without changing the direction of either vector that has twice the determinant as the given matrix.",
+"5. Without changing the first column/red vector, find a matrix with the same determinant as the given matrix but with an acute angle between the two vectors.",
+"6. By what factor does scaling the one of the columns of a matrix by 2 change the determinant?",
+"7. By what factor does scaling the both columns of a matrix by 2 change the determinant?",
+"8. By what factor does rotating both of the columns of a matrix 90 degrees counterclockwise change the determinant?",
+"9. By what factor does rotating the one of the columns of a matrix 90 degrees counterclockwise change the determinant?",
+"10. By what factor does switching the columns of a matrix change the determinant?",
+"11. By what factor does adding a multiple of one column to the other change the determinant?",
+"12. Find a matrix such that the dot product of the two columns is 1 but such that the determinant is -1.",
+"13. Find a matrix such that the dot product of the two columns is -1 but such that the determinant is 0.",
+"Good job!!!"]
+the_time=Date.now()
+make_grades(Module_Number)
+draw()
+
+
+gt=document.getElementById("greentip")
+mobilize(gt)
+rt=document.getElementById("redtip")
+mobilize(rt)
+setfix(1,0,1,1)
+score()
+</script>
+
+
+
+
+</body>
+</html>
