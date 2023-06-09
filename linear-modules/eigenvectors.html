@@ -278,11 +278,10 @@
     As you answer the questions in this module, pay attention to all of the eigenvectors of the prompted matrix and their corresponding eigenvalues. 
     Then, take a look at the sums and products of these eigenvalues and relate these back to the matrices.
   </p>
-
+<div style="height:60px">
   <div id="question">
     Ready to begin?  Click "Start" to view your first question.
   </div>
-
   <div class="multipleChoice" id="matrixChoice" hidden>
     <input type="radio" id="rk" name="answer" value="rank">
     <label for="rk">Rank of the matrix</label>
@@ -291,7 +290,7 @@
     <input type="radio" id="det" name="answer" value="determinant">
     <label for="det">Determinant of the matrix</label>
   </div>
-
+</div>
   <div class="popup" onclick="pop()"><u>Question Statistics</u>
     <div class="popuptext" id="myPopup">
       <h3 id="selected" style="text-align:center;">No Question Selected</h3>
@@ -698,9 +697,14 @@
     x=document.getElementById("m13").value
     y=document.getElementById("m23").value
 
-    r1=Math.round(100*(a11*x+a12*y)/x)/100
-    r2=Math.round(100*(a21*x+a22*y)/y)/100
-
+    r1=Math.round(20*(a11*x+a12*y)/x)/20
+    if (Math.abs(r1)==Infinity || isNaN(r1)==true){
+ r1=''
+}
+r2=Math.round(20*(a21*x+a22*y)/y)/20
+    if (Math.abs(r2)==Infinity || isNaN(r2)==true){
+ r2=''
+}
     X=Math.round(100*(a11*x+a12*y))/100
     Y=Math.round(100*(a21*x+a22*y))/100
 
@@ -728,8 +732,8 @@
       W1=document.getElementById("w1").value
       W2=document.getElementById("w2").value
 
-      R1=document.getElementById("r1").value
-      R2=document.getElementById("r2").value
+      R1=document.getElementById("r1").innerHTML
+      R2=document.getElementById("r2").innerHTML
 
       fillPages = [4,6,10,12]
       Q1=null
