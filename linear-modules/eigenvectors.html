@@ -697,11 +697,11 @@
     x=document.getElementById("m13").value
     y=document.getElementById("m23").value
 
-    r1=Math.round(20*(a11*x+a12*y)/x)/20
+    r1=Math.round(100*(a11*x+a12*y)/x)/100
     if (Math.abs(r1)==Infinity || isNaN(r1)==true){
  r1=''
 }
-r2=Math.round(20*(a21*x+a22*y)/y)/20
+r2=Math.round(100*(a21*x+a22*y)/y)/100
     if (Math.abs(r2)==Infinity || isNaN(r2)==true){
  r2=''
 }
@@ -732,8 +732,8 @@ r2=Math.round(20*(a21*x+a22*y)/y)/20
       W1=document.getElementById("w1").value
       W2=document.getElementById("w2").value
 
-      R1=document.getElementById("r1").innerHTML
-      R2=document.getElementById("r2").innerHTML
+      R1=document.getElementById("r1").value
+      R2=document.getElementById("r2").value
 
       fillPages = [4,6,10,12]
       Q1=null
