@@ -245,10 +245,10 @@ function fix(j,location,movable){
   var z=document.getElementById(2+"point"+j)
 x.style.left=location[0]*100+190+"px"
 x.style.top=-location[1]*100+190+"px"  
-y.style.left=location[1]*100+190+"px"
+y.style.left=location[0]*100+190+"px"
 y.style.top=-location[2]*100+190+"px"  
-z.style.left=location[2]*100+190+"px"
-z.style.top=-location[0]*100+190+"px"  
+z.style.left=location[1]*100+190+"px"
+z.style.top=-location[2]*100+190+"px"  
 
 
 if (movable[0]==false){
@@ -482,8 +482,8 @@ draw(0)
 function close() {
   document.onmouseup = null;
   document.onmousemove = null;
-    tip.style.left = 1*Math.round(tip.offsetLeft/1) + "px";
-    tip.style.top = 1*Math.round(tip.offsetTop/1) + "px";
+    tip.style.left = 10*Math.round(tip.offsetLeft/10) + "px";
+    tip.style.top = 10*Math.round(tip.offsetTop/10) + "px";
     if (active==0){
     next.style.left=tip.offsetLeft+"px"
     nextnext.style.left=(400-tip.offsetTop-20)+"px"}
@@ -518,15 +518,15 @@ for (var j=0; j<3; j++){
 point=document.getElementById(i+"point"+j) 
 p1=point.offsetLeft/4+2.5
 p2=point.offsetTop/4+2.5
-P1=(p1-50)/25
-P2=(50-p2)/25
+P1=Math.round((p1-50)/2.5)/10
+P2=Math.round((p2-50)/2.5)/10
 
 if (i==0){
     document.getElementById("x"+j).innerHTML="("+P1+", "
-    document.getElementById("y"+j).innerHTML=P2+", "}
+    document.getElementById("y"+j).innerHTML=-P2+", "}
 if (i==1){
 
-    document.getElementById("z"+j).innerHTML=P2+")"}
+    document.getElementById("z"+j).innerHTML=-P2+")"}
 
 
 
@@ -631,10 +631,12 @@ if (initialized==1){
 
 var Points=[]
 for (var i=0; i<3; i++){
-    Points.push([])
-    for (var j=0; j<3; j++){   
-       Points[i].push(-1.90+parseFloat(document.getElementById(i+"point"+j).offsetLeft/100))}}
-
+    Points.push([]) 
+       Points[i].push(Math.round(-19+parseFloat(document.getElementById(0+"point"+i).offsetLeft/10))/10)
+       Points[i].push(-Math.round(-19+parseFloat(document.getElementById(0+"point"+i).offsetTop/10))/10)
+       Points[i].push(-Math.round(-19+parseFloat(document.getElementById(1+"point"+i).offsetTop/10))/10)
+      }
+console.log(Points)
 var feed=document.getElementById("try").innerText
 if (feed==""){
 document.getElementById("try").innerText="Try Again"}
@@ -684,58 +686,78 @@ function navigate(i){
 
 
 if (page==0){
-fix(0,[1,1,1],[false,false,false])
-fix(1,[1,-1,1],[false, true, true])
-fix(2,[-1,1,-1],[true,true,true])
+fix(2,[0,0,0],[false,true,true])
+fix(1,[0,0,0],[false, false, false])
+fix(0,[0,0,0],[false,false,false])
 }
 
 if (page==1){
-    fix(0,[0,0,0],[true,true,true])
-fix(1,[0,0,0],[true,true,true])
-fix(2,[-1,1,-1],[true,true,true])
+fix(2,[0,0,0],[true,true,true])
+fix(1,[0,0,0],[false,false,false])
+fix(0,[0,0,0],[false,false,false])
 }
 
 
 if (page==2){
 
+fix(2,[0,0,0],[false,true,true])
+fix(1,[0.8,0.4,0],[false,false,false])
+fix(0,[0,0,0],[false,false,false])
 }
 
 
 if (page==3){
-
+  fix(2,[0,0,0],[true,true,true])
+fix(1,[1,1,0.3],[false,false,false])
+fix(0,[0,0,0],[false,false,false])
 }
 
 if (page==4){
-
-
+  fix(2,[0,0,0],[true,true,true])
+fix(1,[1,1,0.5],[false,false,false])
+fix(0,[0,0,0],[false,false,false])
 }
 
 if (page==5){
-
+  fix(2,[0,0,0],[true,true,true])
+fix(1,[-1,-1,1],[false,false,false])
+fix(0,[0,0,0],[false,false,false])
 }
 
 
 if (page==6){
-
+  fix(2,[0,0,0],[true,true,true])
+fix(1,[1,-1,-1],[false,false,false])
+fix(0,[0,0,0],[false,false,false])
 }
 if (page==7){
-
+  fix(2,[0,0,0],[true,true,true])
+fix(1,[-1,-1,-0.5],[false,false,false])
+fix(0,[0,0,0],[false,false,false])
 }
 if (page==8){
-
+  fix(2,[0,0,0],[true,true,true])
+fix(1,[1,0.5,1],[false,false,false])
+fix(0,[0,0,0],[false,false,false])
 }
 
 if (page==9){
-
+  fix(2,[0,0,0],[true,true,true])
+fix(1,[1,1,-1],[false,false,false])
+fix(0,[0,0,0],[false,false,false])
 }
 
 if (page==10){
-
+  fix(2,[0,0,0],[true,true,true])
+fix(1,[1,1,1],[false,false,false])
+fix(0,[-1,0,0],[false,false,false])
 }
 
 
 if (page==11){
-
+  fix(2,[0,0,0],[true,true,true])
+fix(1,[-1,-1,0],[false,false,false])
+fix(0,[1,0,1],[false,false,false])
 }
 
 if (page==12){
@@ -749,61 +771,77 @@ if (page==12){
 }
 
 
+
+
 function grade(p,Points){
+
+function pr(i,j){
+return [Points[i][0]*Points[j][0],Points[i][1]*Points[j][1],Points[i][2]*Points[j][2]]
+}
+function le(i){
+return [Points[i][0]*Points[i][0],Points[i][1]*Points[i][1],Points[i][2]*Points[i][2]]
+}
+
+
 correct=0
-alert(Points[2])
+
 if (p==0){
-  if(Points[2][0]>0 && Points[2][1]>0 && Points[2][2]>0 ){
+  if (Points[2][0]==1 && Points[2][1]==1 && Points[2][2]==0){
+    correct = 1}}
+if (p==1){
+    if (Points[2][0]!=0 && Points[2][1]!=0 && Points[2][2]!=0){
+    correct = 1}}
+if (p==2){
+  if (Points[2][0]==0.8 && Points[2][1]==0.4 && Points[2][2]!=0){
+    correct = 1}}
+if (p==3){
+  if (pr(2,1)[0]+pr(2,1)[1]==0 && pr(2,1)[2]!=0){
+    correct = 1}}
+
+  if (p==4){
+  if (pr(2,1)[0]+pr(2,1)[1]==0 && pr(2,1)[0]+pr(2,1)[2]==0 && pr(2,1)[0]+pr(2,1)[1]+pr(2,1)[2]!=0){
     correct = 1}}
 
 
 
-
-    if (p==2){
-}
-
-
-if (p==3){
-}
-
-if (p==4){
-}
-
 if (p==5){
-}
+  if (pr(2,1)[0]+pr(2,1)[1]!=0 && pr(2,1)[0]+pr(2,1)[2]!=0 && pr(2,1)[1]+pr(2,1)[2]!=0 && pr(2,1)[0]+pr(2,1)[1]+pr(2,1)[2]==0) {
+  correct = 1}}
 
 
     if (p==6){
-}
+      if (le(2)[0]+le(2)[1]<le(1)[0]+le(1)[1] && le(2)[0]+le(2)[2]<le(1)[0]+le(1)[2] && le(2)[1]+le(2)[2]>le(1)[1]+le(1)[2]){
+correct=1}}
 
     if (p==7){
+      if (Points[2][0]==-1 && Points[2][1]==-1 && Points[2][2]==0.5 )
+      {correct=1}
 }
 
 
 if (p==8){
-
+  if (Points[2][0]==-0.5 && Points[2][1]==1 && Points[2][2]==1 )
+      {correct=1}
 }   
 
     if (p==9){
-
+      if (Points[2][0]==0 && Points[2][1]==1 && Points[2][2]==-1 )
+      {correct=1}
 }   
 
 
 
     if (p==10){
-
-    }
-
-  if (page==11){
+if ( pr(2,0)[0]+pr(2,0)[1]+pr(2,0)[2]==0 && pr(2,1)[0]+pr(2,1)[1]+pr(2,1)[2]==0) {
+    correct=1}}
 
 
-  }
+    if (p==11){
+if ( Points[2][0]==0 && Points[2][1]+Points[2][2]==0) {
+    correct=1}}
 
 
-  if (page==12){
 
-
-  }
 
 
     
@@ -828,19 +866,18 @@ var Module_Number="15"
 var initialized=0
 var page=0
 var quests=[
-"1. Make the grey vector lie in the positve octant.",
-"2. Find a (non-zero) eigenvector for the given matrix that lies in the second quadrant.",
-"3. Find a (non-zero) eigenvector for the given matrix that lies in the fourth quadrant.",
-"4. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
-"5. Manipulate the middle column of the matrix (or drag the green vector) until the given 3-entry vector lies in the null space.",
-"6. Manipulate the first column of the matrix (or drag the blue vector) until the given 3-entry vector lies in the null space.",
-"7. Find a vector that is in the null space of all matrices.",
-"8. Find a matrix for which every vector is in its null space.",
-"9. Find values for the entries in the rightmost column of the matrix such that NO vector whose first entry is 2 lies in the null space.",
-"10. Find values for the entries in the middle column of the matrix such that NO vector whose last entry is 1 lies in the null space.",
-"11. A 0-1 vector is a vector that includes only entries of 0s and/or 1s.  Find a matrix that has at least one nonzero entry in each column, such that there are precisely 3 (including the 0 vector itself) 0-1 vectors in the null space.",
-"12. Find a vector in the null space of the given matrix such that the three coordinates of that vector add up to 1.",
-"13. There are two (not including the 0 vector)  0-1 vectors in the null space of the given matrix. Enter as your solution the sum of these two vectors.",
+"1. Set the grey vector to \(1,1,0\) by only manipulating the \(x,z\) and \(y,z\) planes.",
+"2. Find vector that is longer than its projection onto the \(x,y\)-plane, the \(x,z\)-plane or the \(y,z\)-plane.",
+"3. By only manipulating the \(x,z\) and \(y,z\) planes find a vector (grey) not equal to the brown vector but whose projection onto the \(x,y\)-plane is same as the projection of the brown vector onto the \(x,y\)-plane. ",
+"4. Find a vector (grey) that is perpendicular to the brown vector when both vectors are projected into the \(x,y\)-plane but which is NOT perpendiular to the brown vector.",
+"5. Find a vector (grey) that is perpendicular to the brown vector when both vectors are projected into the \(x,y\)-plane or the \(x,z\)-plane  but which is NOT perpendiular to the brown vector.",
+"6. Find a vector (grey) that is perpendicular to the brown vector but NOT perpendicular when both vectors are projected onto any of the 3 planes shown.",
+"7. Find a vector (grey) that is such that when both grey and brown vectors are projected onto the \(x,y\) or \(x,z\) palne the grey is shorter but when projected onto the \(y,z\) the grey is longer.",
+"8. Set the grey vector to the reflection of the brown vector over the \(x,y\) plane.",
+"9. Set the grey vector to the result of rotating the brown vector 90  degrees counterclockwise about the \(z\)-axis",
+"10. Set the grey vector to the result of rotating the brown vector 90  degrees counterclockwise about the \(x\)-axis",
+"11. Set the grey vector equal to a nonzero vector that is perpendicular to both the brown and black vectors.",
+"12. Set the grey vector equal to a vector that lies in the same plane as the brown and black vectors and also in the \(y,z\)-plane.",
 
 "Good job!!!"]
 the_time=Date.now()

@@ -161,7 +161,7 @@ alert(gradestring)
       var icons=[]
       icons.push(["Home","index.html"])
       icons.push(["Lab Courses", "Linear Algebra", "linear-lab.html", "Calculus", "", "Probability", "", "Statistics", "", "Discrete Math", ""])
-      icons.push(["The Team", "Dr. Graham Hawkes", "graham.html", "Dr. Wencin Poh", "wencin.html", "Jeff Nichols", "jeff.html"])
+      icons.push(["The Team", "Dr. Graham Hawkes", "graham.html", "Dr. Wencin Poh", "wencin.html"])
       icons.push(["Contact","contact.html"])
       icons.push(["Research","research.html"])
       icons.push(["News","news.html"])
