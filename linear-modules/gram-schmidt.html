@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- The following adds MathJax to render LaTeX notation -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+        <link rel="stylesheet" href="../styles.css">
+        <script src="../site-scripts.js"></script>
+      </head>
+<style>
+#blank {
+  position: relative;
+}
+
+#outer {
+  position: absolute;
+  height: 400px;
+  width: 400px;
+  left: 0px;
+  top: 40px;
+  background-color: white;
+  text-align: center;
+  border: 9px solid #d3d3d3;}
+
+ #bluetip {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 90px;
+  top: 90px;
+  background-color: grey;}
+  
+   #greentip {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 290px;
+  top: 90px;
+  background-color: grey;}
+
+
+  #redtip {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 90px;
+  top: 290px;
+  background-color: grey;}
+  
+ #matrix {
+  position: absolute;
+  height: 260px;
+  width: 370px;
+  left: 425px;
+  top: 40px;
+  background-color: lightgrey;
+  text-align: center;}
+  
+  #M11 {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  left: 20px;
+  top: 50px;
+  background-color: blue;
+  text-align: center;}
+  
+    #M21 {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  left: 20px;
+  top: 70px;
+  background-color: blue;
+  text-align: center;}
+  
+  #M12 {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  left: 80px;
+  top: 50px;
+  background-color: red;
+  text-align: center;}
+
+    #M22 {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  left: 80px;
+  top: 70px;
+  background-color: red;
+  text-align: center;}
+  
+     #times {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 145px;
+  top: 60px;
+  background-color: lightgrey;
+  text-align: center;}
+
+       #equals {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 235px;
+  top: 60px;
+  background-color: lightgrey;
+  text-align: center;}
+  
+  
+  #V1 {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  left: 170px;
+  top: 50px;
+  background-color: blue;
+  text-align: center;}
+  
+    #V2 {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  left: 170px;
+  top: 70px;
+  background-color: red;
+  text-align: center;}
+  
+  #w1 {
+  position: absolute;
+  height: 20px;
+  width: 45px;
+  left: 265px;
+  top: 50px;
+  color: purple;
+  text-align: center;
+  border: 1px solid black;}
+  
+  
+  
+    #w2 {
+  position: absolute;
+  height: 20px;
+  width: 45px;
+  left: 265px;
+  top: 70px;
+  color: purple;
+  text-align: center;
+  border: 1px solid black;}
+ 
+    #but {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  left: 290px;
+  top:30px;
+  background-color: black;
+  text-align: center;}
+  
+  #but2 {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  left: 235px;
+  top:10px;
+  background-color: black;
+  text-align: center;}
+
+ #sub {
+  position: absolute;
+  height: 30px;
+  width: 380px;
+  left: 40px;
+  top: 10px;
+  background-color: white;
+  text-align: center;}
+
+     #try {
+  position: absolute;
+  height: 30px;
+  width: 80px;
+  left: 560px;
+  top: 10px;
+  background-color: white;
+  text-align: center;}
+  
+
+  #score {
+  position: absolute;
+  height: 220px;
+  width: 90px;
+  left: 990px;
+  top: 10px;
+  background-color: white;
+  text-align: center;}
+  #MatEq {
+  position: absolute;
+  top: 95px;
+  height: 60px;
+  width: 370px;
+  background-color: lightgrey;
+  text-align: center;}
+
+  #completed {
+  position: absolute;
+  left: 10px;
+  top: 500px}
+
+  #question {
+  position: relative;
+  height: 35px;
+}
+  
+ </style>
+
+ 
+<body>
+<div>
+  <div style="position: absolute;">
+    <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
+  </div>
+    <h2><center>Module 17: Orthogonalization and Gram-Schmidt</center></h2>
+<p>
+In this module you will be given 3 vectors \(\textcolor{red}{u}\), \(\textcolor{green}{v}\), \(\textcolor{blue}{w}\).
+Your goal will be to a new set of vectors \(\textcolor{red}{U}\), \(\textcolor{green}{V}\), \(\textcolor{blue}{W}\)
+with the following properties:
+
+<ul>
+  <li> \(\textcolor{red}{U}\) and \(\textcolor{green}{V}\) and \(\textcolor{blue}{W}\) are unit vectors</li>
+  <li> We have \(\textcolor{red}{U} \cdot \textcolor{green}{V}=0\), and
+    \(\textcolor{green}{V} \cdot \textcolor{blue}{W}=0\), and
+    \(\textcolor{red}{U} \cdot \textcolor{blue}{W}=0\), </li>
+    <li>
+      We have
+    \(\langle \textcolor{red}{u} \rangle= \langle \textcolor{red}{U} \rangle \), and
+    \(\langle \textcolor{red}{u}, \textcolor{green}{v} \rangle= \langle \textcolor{red}{U}, \textcolor{green}{V} \rangle \), and
+    \(\langle \textcolor{red}{u}, \textcolor{green}{v}, \textcolor{blue}{w}  \rangle= \langle \textcolor{red}{U}, \textcolor{green}{V}, \textcolor{blue}{W} \rangle \),
+  </li>
+
+</ul>
+
+Where the notation \( \langle \rangle \) signifies the vector space of all linear combinations of vectors in brackets.
+
+<p>
+  In order to achieve this goal you will follow these steps:
+<ul>
+<li>
+  Scale the vector \( \textcolor{red}{u} \) until it has unit length (take this to be  \( \textcolor{red}{U} \))
+</li>
+<li>
+Project \( \textcolor{green}{v} \) onto \( \textcolor{red}{U} \) and substract the result from \( \textcolor{green}{v} \).
+Then scale the result until it has unit length. This will be \( \textcolor{green}{V} \).
+</li>
+<li>
+Project \( \textcolor{blue}{w} \) onto \( \textcolor{red}{U} \) and substract the result from \( \textcolor{blue}{w} \).
+Then project the new \(\textcolor{blue}{w}\) onto \( \textcolor{green}{V} \) and substract the result from \(\textcolor{blue}{w}\).
+Finally, scale \(\textcolor{blue}{w}\) until it is a unit vector. The result is \(\textcolor{blue}{W}\).
+</li>
+</ul>
+
+This process of changing a basis of vectors into a new basis that is orthonormal (all vectors have 
+unit length and any two are perpendicular to each other) is known as the Gram-Schmidt orthogonalization 
+process.  Note that in the process, you never need to consider more than two vectors at any one time.
+In fact, in the interactive below you will only be able to view two vectors at a time:
+<ul>
+  <li>
+    Click the "red/green" button to see 
+a representation of the plane spanned by \( \textcolor{red}{u} \) and \( \textcolor{green}{v} \) and manipulate these vectors
+  </li>
+  <li>
+    Click the "green/blue" button to see 
+a representation of the plane spanned by \( \textcolor{green}{v}\) and \( \textcolor{blue}{w} \) and manipulate these vectors
+  </li>
+  <li>
+    Click the "red/blue" button to see 
+a representation of the plane spanned by \( \textcolor{red}{u} \) and \( \textcolor{blue}{w}\) and manipulate these vectors
+  </li>
+</ul>
+
+</p>
+
+</p>
+Interactive to be added at a later date.
+</p>  
+
+
+
+<p>
+
+</p>
+
+
+
+
+
+</body>
+</html>
