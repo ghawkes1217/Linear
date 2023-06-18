@@ -5,7 +5,7 @@ The live version of projectintuition.org may not be up to date with these files.
 
 
 
-The authors of this project include Graham Hawkes, Wencin Poh, and Jeff Nichols. More specifically:
+The authors of this project are  Graham Hawkes and Wencin Poh.  Jeff Nichols also contributed content. More specifically:
 
 Module 1: linear-combinations.html: <br>
 Graham: Intro, Questions, Software
@@ -38,7 +38,7 @@ Module 9: reduced-row-echelon-form.html:<br>
 Wencin: Intro, Questions, Software
 
 Module 10: inverses.html:<br>
-Wencin: Intro, Questions, Software
+Graham: Intro, Questions, Software
 
 Module 11: rref-free-variables.html:<br>
 Graham: Intro, Questions, Software
@@ -48,6 +48,28 @@ Graham: Intro, Questions, Software
 
 Module 13: null-space-geometry.html:<br>
 Graham: Intro, Questions, Software
+
+Module 14:  complete-solution.html:<br>
+Wencin: Intro
+
+Module 15:
+
+Module 16: projections.html<br>
+Graham: Intro, Questions, Software
+
+Module 17: gram-schmidt.html<br>
+Graham: Intro
+
+
+Module 18: determinant.html<br>
+Graham: Intro, Questions, Software
+
+Module 19: eigenvectors.html<br>
+Graham: Intro, Software
+Wencin: Questions 
+
+Module 20: diagonalization.html<br>
+Graham: Intro
 
 Additional contributions:
 
@@ -61,8 +83,7 @@ Wencin: Researching funding opportunities and applying for funding<br>
 Wencin: Contributions to CSS code <br>
 Wencin: Front end of "Your Progress" page
 
-Jeff: Researching relevant literature in education<br>
-Jeff: Creating instructional videos to accompany modules
+
 
 
 In addition all members attend weekly meetings to provide feedback to the other team members and collaborate  
