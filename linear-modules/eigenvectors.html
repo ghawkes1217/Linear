@@ -723,10 +723,10 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
       navigate(-1)
     }
     if (initialized==1){
-      M11=document.getElementById("m11").value
-      M21=document.getElementById("m21").value
-      M12=document.getElementById("m12").value
-      M22=document.getElementById("m22").value
+      M11=parseFloat(document.getElementById("m11").value)
+      M21=parseFloat(document.getElementById("m21").value)
+      M12=parseFloat(document.getElementById("m12").value)
+      M22=parseFloat(document.getElementById("m22").value)
       M13=document.getElementById("m13").value
       M23=document.getElementById("m23").value
       W1=document.getElementById("w1").value
@@ -735,12 +735,12 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
       R1=document.getElementById("r1").value
       R2=document.getElementById("r2").value
 
-      fillPages = [4,6,10,12]
+      fillPages = [10,12]
       Q1=null
       if (fillPages.includes(page)){
         Q1=parseFloat(document.getElementById("eigenvalues").value)}
 
-      radioPages = [5,7,11,13]
+      radioPages = [11,13]
       A1=null
       if (radioPages.includes(page)){
         A1=document.querySelector('input[name="answer"]:checked').value}
@@ -792,12 +792,27 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
       fix(green,[0],[1,1])
       fix(red,[1],[1.5,1])
     }
-    if (page==2 || page==4 || page==5){
+    if (page==2 || page==3){
+      fix(blue,[1],[1,-1])
+      fix(green,[1],[-1,-1])
+      fix(red,[1],[-0.5,0.5])
+    }
+    if (page==5){
+      fix(blue,[0],[-0.4,0.6])
+      fix(green,[1],[1,-1])
+      fix(red,[1],[0.5,-0.3])
+    }
+    if (page==4){
+      fix(blue,[1],[1,1])
+      fix(green,[0],[0.6,0.8])
+      fix(red,[1],[1,0])
+    }
+    if (page==6){
       fix(blue,[0],[-0.6, 0.8])
       fix(green,[0],[0.8, 0.6])
       fix(red,[1],[0.5, 0.5])
     }
-    if (page==3 || page==6 || page==7){
+    if (page==7){
       fix(blue,[0],[-0.6, 0.8])
       fix(green,[0],[0.8, 0.6])
       fix(red,[1],[0.5, -0.5])
@@ -812,26 +827,24 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
       fix(green,[0],[-0.4, 0.2])
       fix(red,[1],[0, 1])
     }
-    // Enable multiple choice for pages 5,7,11,13
-    matrixChoicePages = [5, 7, 11, 13]
+    // Enable multiple choice for pages 11,13
+    matrixChoicePages = [11, 13]
     matrixChoiceElement = document.getElementById("matrixChoice")
     if (matrixChoicePages.includes(page)){
       matrixChoiceElement.hidden = false}
     else {
       matrixChoiceElement.hidden = true}
 
-    // Change Sum to Product for pages 6, 12 and Product to Sum for pages 4, 10
-    sumPages = [4, 10]
-    productPages = [6, 12]
+    // Change Sum to Product for page 12 and Product to Sum for page 10
     eigenvaluesWrapper = document.getElementById("eigenvaluesInput")
     eigenvalueTitle = document.getElementById("eigenvalueTitle")
     eigenvaluesElement = document.getElementById("eigenvalues")
-    if (sumPages.includes(page)){
+    if (page==10){
       eigenvaluesWrapper.hidden = false
       eigenvalueTitle.textContent = "Sum of Eigenvalues:"
       eigenvaluesElement.style.left = "200px"
     }
-    else if (productPages.includes(page)){
+    else if (page==12){
       eigenvaluesWrapper.hidden = false
       eigenvalueTitle.textContent = "Product of Eigenvalues:"
       eigenvaluesElement.style.left = "230px"
@@ -870,34 +883,36 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
       if (error<tolerance && u1>0 && u2>0){
         correct = 1}
     }
-
     if (p==2){
-      if (error<tolerance && u1<0 && u2<0){
-        correct = 1}
+      tr = m11+m22
+      det = m11*m22-m12*m21
+      
+      if (Math.abs(tr+1.0)<tolerance && Math.abs(det+2.0)<tolerance){
+          correct = 1}
     }
     if (p==3){
-      if (error<tolerance && u1*u2<0){
+      tr = m11+m22
+      det = m11*m22-m12*m21
+
+      if (Math.abs(tr)<tolerance && Math.abs(det-(-0.25))<tolerance){
         correct = 1}
     }
-
     if (p==4){
-      if (q1==0){
+      if (Math.abs(m11-0.4)<tolerance && Math.abs(m21)<tolerance){
         correct = 1}
     }
     if (p==5){
-      if (a1=="trace"){
+      if (Math.abs(m12-0.5)<tolerance && Math.abs(m22-0.3)<tolerance){
         correct = 1}
     }
-
     if (p==6){
-      if (q1==-1){
+      if (error<tolerance && u1<0 && u2<0){
         correct = 1}
     }
     if (p==7){
-      if (a1=="determinant"){
+      if (error<tolerance && u1*u2<0){
         correct = 1}
-    }    
-
+    } 
     if (p==8){
       if (error<tolerance && u1>0 && u2<0){
       correct = 1}
@@ -914,7 +929,6 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
       if (a1=="trace"){
         correct = 1}
     }
-
     if (p==12){
       if (q1==0){
         correct = 1}
@@ -925,12 +939,12 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
     }
 
     if (correct==0){
+      //console.log("Answer is incorrect.")
       grades[p][1]+=1
-      console.log("Answer is incorrect.")
     }
     if (correct==1){
+      //console.log("Answer is correct.")
       grades[p][0]+=1
-      console.log("Answer is correct.")
     }
 
     sql_record(Module_Number)
@@ -945,12 +959,12 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
   var quests=[
     "1. Find a (non-zero) eigenvector for the given matrix that lies in the second quadrant.",
     "2. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
-    "3. The matrix reflects vectors about the line $y=2x$. Find a possible eigenvector for this matrix that lies in the third quadrant.",
-    "4. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
-    "5. Enter the sum of the eigenvalues for this matrix in the provided blank space.",
-    "6. Based on your previous observations, what quantity does this sum equal to?",
-    "7. Enter the product of the eigenvalues for this matrix in the provided blank space.",
-    "8. Based on your previous observations, what quantity does this product equal to?",
+    "3. Awesome, now determine a matrix with eigenvalues -2 and 1.",
+    "4. Determine a matrix with eigenvalues -0.5 and 0.5.",
+    "5. Find the first column of the matrix if $\\begin{bmatrix} 1\\\\ 0\\end{bmatrix}$ and $\\begin{bmatrix} -1.5\\\\ -1\\end{bmatrix}$ are eigenvectors of this matrix.",
+    "6. Fantastic, determine the second column of the matrix if $\\begin{bmatrix} 0.5\\\\ -0.3\\end{bmatrix}$ and $\\begin{bmatrix} 0.3\\\\ 0.6\\end{bmatrix}$ are eigenvectors of this matrix.",
+    "7. Great, let's look at special transformation matrices and their eigenvectors. The matrix reflects vectors about the line $y=2x$. Find a possible eigenvector for this matrix that lies in the third quadrant.",
+    "8. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
     "9. Now, this matrix projects vectors on the line $y=-0.5x$. Find a possible eigenvector for this matrix that lies in the fourth quadrant.",
     "10. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
     "11. Enter the sum of the eigenvalues for this matrix in the provided blank space.",

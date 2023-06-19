@@ -604,6 +604,38 @@
       return new RationalMatrix(matrixM)
     }
 
+    annihilates(vector){
+      if (vector.length != this.colDim){
+        return false}
+
+      let zero = new RationalNumber(0, 1)
+      for (let i=0; i<this.rowDim; i++){
+        let sum = zero
+        for (let j=0; j<this.colDim; j++){
+          sum = sum.add(this[i][j].multiply(vector[j]))
+        }
+        if (sum.doesNotEqual(zero)){
+          return false}
+      } 
+      return true
+    }
+
+    leftAnnihilates(vector){
+      if (vector.length != this.rowDim){
+        return false}
+
+      zero = new RationalNumber(0, 1)
+      for (let j=0; j<this.colDim; j++){
+        let sum = zero
+        for (let i=0; i<this.rowDim; i++){
+          sum = sum.add(this[i][j].multiply(vector[i]))
+        }
+        if (sum.doesNotEqual(zero)){
+          return false}
+      } 
+      return true
+    }
+
     swapRows(ithRow, jthRow){
       if (ithRow>=this.rowDim || jthRow>=this.rowDim){
         throw new Error("Row index out of reach.")
@@ -679,6 +711,24 @@
         M.push(this[i].slice(start-1, end))}
       return new RationalMatrix(M)
     }
+
+    appendColumns(columns){
+      for (let j=0; j<columns.length; j++){
+        if (columns[j].length != this.rowDim){
+          throw new Error("The number of rows for each column vector must match with the matrix.")
+          return
+        }
+      }
+
+      A = []
+      for (let i=0; i<this.rowDim; i++){
+        row = this[i]
+        for (let j=0; j<columns.length; j++){
+          row.push(columns[j][i])}
+        A.push(row)
+      }
+      return new RationalMatrix(A)
+    }
   }
 
   // This class structures a string as a response string that can be compared with other objects 
@@ -706,7 +756,6 @@
     return low + Math.floor(difference * Math.random())
   }
 
-  // Time complexity: O(n), where n is the number of elements
   function generatePermutation(n){
     array = []
     for (let i=0; i<n; i++){
@@ -722,7 +771,6 @@
     return array
   }
 
-  // Time complexity: O(k log k), where n is the number of elements
   function generateSubset(k, n){
     array = []
     for (let i=0; i<n; i++){
@@ -754,26 +802,31 @@
 
   function generateRationalTuple(rank){
     scalars = []
-    den = generateInteger(1, 10)
+    den = generateInteger(1, 5)
     for (let i=0; i<rank; i++){
-      scalars.push(generateRationalNumber(den, 3))
+      scalars.push(generateRationalNumber(den, 2))
     }
     return scalars
   }
 
-  /// Generates a rational (rxr)-upper/lower triangular matrix
-  function generateRationalTriangularMatrix(rank, upper=true){
+  /// Generates an invertible rational (rxr)-upper/lower triangular matrix
+  function generateRationalTriangularMatrix(rank, upper=true, maxDensity=1){
+    zero = new RationalNumber(0, 1)
     M = []
     for (let i=0; i<rank; i++){
       row = []
-      den = generateInteger(1, 10)
+      den = generateInteger(1, 4)
       for (let j=0; j<rank; j++){
         if ((i>j && upper) || (i<j && !upper)){
-          row.push(new RationalNumber(0,1))}
+          row.push(zero)}
         else if (i==j){
-          row.push(generateRationalNumber(den, 5, allowZero=false))}
+          row.push(generateRationalNumber(den, 3, allowZero=false))}
         else {
-          row.push(generateRationalNumber(den, 5))
+          flagValue = Math.random()
+          if (flagValue >= maxDensity){
+            row.push(zero)}
+          else {
+            row.push(generateRationalNumber(den, 3))}
         }
       }
       M.push(row)
@@ -782,18 +835,18 @@
   }
 
   // Generates a rational (mxr)-matrix with rank r
-  // Time complexity for fixed rank r: O(m), where m is the number of rows
+  // where m is the number of rows
   function generateRationalFixedRankMatrix(rowNum, rank){
     if (rank > rowNum){
       throw "Rank needs to be at most the number of rows."}
 
-    L = generateRationalTriangularMatrix(rank, upper=false)
-    U = generateRationalTriangularMatrix(rank, upper=true)
+    L = generateRationalTriangularMatrix(rank, upper=false, maxDensity=0.5)
+    U = generateRationalTriangularMatrix(rank, upper=true, maxDensity=0.5)
     A = L.multiply(U)
 
     G = []
     for (let i=0; i<rowNum; i++){
-      if (i<rank){
+      if (i < rank){
         G.push(A[i])}
       else {
         G.push(generateRationalTuple(rank))}
@@ -802,14 +855,13 @@
   }
 
   // Generates a rational (rxn)-matrix in RREF with rank r
-  // Time complexity for fixed rank r: O(n), where n is the number of columns
   function generateRationalRREF(colNum, rank){
     S = generateSubset(rank, colNum)
     R = []
 
     for (let i=0; i<rank; i++){
       row = []
-      den = generateInteger(1, 10)
+      den = generateInteger(1, 5)
       for (let j=0; j<colNum; j++){
         if (j < S[i]){
           row.push(new RationalNumber(0, 1))}
@@ -826,7 +878,56 @@
   }
 
   function generateAugmentedMatrix(rowNum, colNum, rank, isConsistent=true){
+    if (isConsistent==true && rank>rowNum){
+      throw new Error("Rank of matrix has to be at most the number of rows of the matrix for this case.")}
+    else if (isConsistent==false && rank>=rowNum){
+      throw new Error("Rank of matrix has to be less than the number of rows of the matrix for this case.")}
+    else {
+      // First, generate an (m x r)-matrix G of rank r 
+      G = generateRationalFixedRankMatrix(rowNum, rank)
+      // Then, generate an (r x (n-1))-matrix R of rank r in RREF 
+      R = generateRationalRREF(colNum-1, rank)
+      
+      if (isConsistent == true){
+        // Append some column vector to R to form M
+        M = R.appendColumns([generateRationalTuple(rank)])
 
+        // Now, we multiply G by M to make the matrix A
+        // Permute the rows of A to obtain a matrix B
+        A = G.multiply(M)
+      }
+      else {
+        one = new RationalNumber(1, 1)
+        zero = new RationalNumber(0, 1)
+
+        // Now, we multiply G by R to make the matrix M
+        M = G.multiply(R)
+
+        // Search for a basis vector in Q^m that is not in 
+        // the left nullspace of M
+        // The vector is guaranteed to be found because M 
+        // is not of full rank 
+        for (let i=0; i<rowNum; i++){
+          vector = []
+          for (let k=0; k<rowNum; k++){
+            vector.push(k==i ? one : zero)
+          }
+
+          if (!M.leftAnnihilates(vector)){
+            A = M.appendColumns([vector])
+            break
+          }
+        }
+      }
+      
+      p = generatePermutation(rowNum)
+      B = []
+      for (let i=0; i<rowNum; i++){
+        j = p[i]
+        B.push(A[j])
+      }
+      return new RationalMatrix(B)
+    }
   }
 
   function generateRationalMatrix(rowNum, colNum){
@@ -881,7 +982,24 @@
 
       displayVariables()
       createAugmentedMatrix()
-      A = generateRationalMatrix(numRows, numCols)
+      if (page < 6){
+        beingConsistent = true
+        if (page == 0){
+          rankValue = numRows-1}
+        else if (page == 1){
+          rankValue = numRows-1
+          beingConsistent = false
+        }
+        else if (page == 2 || page == 4){
+          rankValue = numRows}
+        else if (page == 3 || page == 5){
+          rankValue = numRows-1}
+        A = generateAugmentedMatrix(numRows, numCols, rankValue, beingConsistent)
+      }
+
+      else {
+        A = generateRationalMatrix(numRows, numCols)
+      }
       writeAugmentedMatrix(A)
     }
     else {
@@ -899,9 +1017,15 @@
       displayQuestion(0)
     }
     else if (initialized == 1){
-      page += 1
-      displayQuestion(page)
+      
+
+      //page += 1
+      //displayQuestion(page)
     }
+  }
+
+  function gradeResponse(){
+    
   }
 
   function createAugmentedMatrix(){    
