@@ -29,13 +29,19 @@
       font-size: 22px;
       top: 50px;
       width: 55px;
-      height: 40px;}
+      height: 35px;}
+
+    .solutionSet{
+      position: absolute;
+      background-color: lightyellow;
+      top: 100px;
+      width: 45px;
+      height: 25px;}
 
     #outer {
       position: absolute;
       left: 0px;
-      top: 200px;
-      background-color: white;
+      top: 210px;
       text-align: center;}
 
     #equations {
@@ -43,7 +49,7 @@
       height: 300px;
       width: 350px;
       left: 800px;
-      top: 200px;
+      top: 250px;
       background-color: black;
       text-align: center;}
     
@@ -60,7 +66,7 @@
       font-size: 30px;}
 
     .separators {
-      top: 0px;
+      top: 40px;
       position: absolute;
       background-color: black;
       width: 10px;}
@@ -184,7 +190,7 @@
     </ul>
   </p>
   
-  <p> 
+  <p>
     How do we distinguish these behaviors, you ask? For starters, consider the following framework. Suppose you have a system of $m$ linear equations in variables $x_1, x_2, x_3 \ldots, x_n$
 
     $$\begin{alignedat}{5}
@@ -286,9 +292,10 @@
         Find a set of solutions given another set of solutions when multiple solutions exist.
       </li>
     </ul>
+    In all of the questions, please demonstrate your work by putting the matrix in r.r.e.f. (Refer to Module 11 in case you wish to review this.)
   </p>
 
-  <p>
+  <!--<p>
     You may perform row operations onto the matrix shown below:
     <ul>
       <li>
@@ -303,37 +310,9 @@
     </ul>
     The result is always shown on the screen to the right of the matrix. 
     Feel free to hit 'Undo' if you would like to backtrack some performed operations.
-  </p>
-</div>
+  </p>-->
 
-<div id="blank">
-  <div id="score">
-  </div>
-
-  <div>
-    <h3>Current Question:</h3>
-
-    <div id="questionToDisplay" style="height: 50px"></div>
-    
-    <button id="submitButton" onclick="submitResponse()"> Start </button>
-    <button onclick="previousPage()"> Previous </button>
-    <button onclick="nextPage()"> Next </button>
-  </div>
-
-  <div>
-    <button onclick="revertState()"> Undo </button>
-    <button onclick="succeedAutomatically()"> Succeed Automatically </button>
-  </div>
-  
-  <div id="variables" style="position: absolute; top: 100px">
-  </div>
-
-  <div id="equations">
-  </div>
-
-  <!-- Displays augmented matrix gadget -->
-  <div id="outer">
-  </div>
+  <p> Interactives to be added at a later date.
 </div>
 
 <script type="text/javascript">
@@ -802,14 +781,14 @@
 
   function generateRationalTuple(rank){
     scalars = []
-    den = generateInteger(1, 5)
+    den = generateInteger(1, 4)
     for (let i=0; i<rank; i++){
       scalars.push(generateRationalNumber(den, 2))
     }
     return scalars
   }
 
-  /// Generates an invertible rational (rxr)-upper/lower triangular matrix
+  // Generates an invertible rational (rxr)-upper or lower triangular matrix
   function generateRationalTriangularMatrix(rank, upper=true, maxDensity=1){
     zero = new RationalNumber(0, 1)
     M = []
@@ -861,7 +840,7 @@
 
     for (let i=0; i<rank; i++){
       row = []
-      den = generateInteger(1, 5)
+      den = generateInteger(1, 4)
       for (let j=0; j<colNum; j++){
         if (j < S[i]){
           row.push(new RationalNumber(0, 1))}
@@ -903,20 +882,27 @@
         // Now, we multiply G by R to make the matrix M
         M = G.multiply(R)
 
-        // Search for a basis vector in Q^m that is not in 
+        // Search for a generic vector in Q^m that is not in 
         // the left nullspace of M
-        // The vector is guaranteed to be found because M 
-        // is not of full rank 
-        for (let i=0; i<rowNum; i++){
-          vector = []
-          for (let k=0; k<rowNum; k++){
-            vector.push(k==i ? one : zero)
-          }
+        // First, a vector with all distinct components is produced before it is rotated up to m times
+        // The vector with the required property is guaranteed to be found because M 
+        // is not of full rank but the span of the vector with its rotated versions span Q^m itself
+        vector = []
+        for (let k=0; k<rowNum; k++){    
+          q = generateRationalNumber(4, 2)
+          while (vector.includes(q)){
+            q = generateRationalNumber(4, 2)}
+          vector.push(q)
+        }
 
+        for (let i=0; i<rowNum; i++){
           if (!M.leftAnnihilates(vector)){
             A = M.appendColumns([vector])
             break
           }
+
+          x = vector[0]
+          vector = vector.slice(1, rowNum-1).push(x)
         }
       }
       
@@ -934,7 +920,7 @@
     A = []
     for (let i=0; i<rowNum; i++){
       row = []
-      den = generateInteger(1, 5)
+      den = generateInteger(1, 4)
       for (let j=0; j<colNum; j++){
         q = generateRationalNumber(den, 4)
         row.push(q)
@@ -949,7 +935,7 @@
   quests = [
     "1. Is this a consistent or an inconsistent system of linear equations?", // Can be consistent or incosistent
     "2. Which of these two types does this system of linear equations belong to?", // Can be consistent or inconsistent
-    "3. Great, now, find a set of values for each variable that satisfies the following system of linear equation. If there is none, click on 'No Solution' instead.", // Solution set need to exist
+    "3. Great, now, find a set of values for each variable that satisfies the following system of linear equation.", // Solution set need to exist
     "4. As a follow up, is there another set of solutions to the same system? If so, click on 'Multiple Solutions', otherwise, click on 'Unique Solution'.", // Can have unique or multiple solutions
     "5. Nice, can you find a set of values satisfying this system of linear equation?", // Solution set need to exist
     "6. Can there be another set of solutions to the same system?", // Can have unique or multiple solutions
@@ -971,17 +957,15 @@
 
     States = []
     if (page < 12){
-      if (page < 3){
+      smallPages = [0, 2, 3, 6, 7, 10]
+      if (smallPages.includes(page)){
         [numRows, numCols] = [3, 4]}
-      else if (page < 6){
+      else {
         [numRows, numCols] = [4, 5]}
-      else if (page < 9){
-        [numRows, numCols] = [5, 6]}
-      else if (page < 12){
-        [numRows, numCols] = [6, 7]}
 
       displayVariables()
       createAugmentedMatrix()
+
       if (page < 6){
         beingConsistent = true
         if (page == 0){
@@ -997,13 +981,12 @@
         A = generateAugmentedMatrix(numRows, numCols, rankValue, beingConsistent)
       }
 
-      else {
-        A = generateRationalMatrix(numRows, numCols)
-      }
+      
       writeAugmentedMatrix(A)
     }
     else {
-      writeAugmentedMatrix(initialMatrix)}
+      A = generateAugmentedMatrix(6, 7, 5)
+      writeAugmentedMatrix(A)}
     activateRows()
     equations()
     writeEquations()
@@ -1017,8 +1000,6 @@
       displayQuestion(0)
     }
     else if (initialized == 1){
-      
-
       //page += 1
       //displayQuestion(page)
     }
@@ -1049,7 +1030,7 @@
       input.type = "text"
       input.name = i+1
       input.id = "in"+(i+1)      
-      input.style.top = (75*i+5)+"px"
+      input.style.top = (75*i+45)+"px"
       outer.appendChild(input)
     }
 
@@ -1058,7 +1039,7 @@
       switchbar = document.createElement('button')
       switchbar.className = 'switches'
       switchbar.style.width = numCols*75+"px"
-      switchbar.style.top = (75*i+55)+"px"
+      switchbar.style.top = (75*i+95)+"px"
       switchbar.id = "switch"+(i+1)+(i+2)
       switchbar.name = i
       switchbar.addEventListener("click", function() {switchAdjacentRows()}, false)
@@ -1069,7 +1050,7 @@
     for (let i=0; i<numRows; i++){
       multiplier = document.createElement('button')
       multiplier.className = 'multiplyButtons'
-      multiplier.style.top = (75*i+5)+"px"
+      multiplier.style.top = (75*i+45)+"px"
       multiplier.id = "mult"+(i+1)
       multiplier.name = i+1
       multiplier.innerHTML = "&times"
@@ -1083,7 +1064,7 @@
       row = document.createElement('div')
       row.className = 'matrixRows'
       row.style.width = (numCols*75)+"px"
-      row.style.top = (75*i)+"px"
+      row.style.top = (75*i+40)+"px"
       row.style.backgroundColor = Colors[i]
       row.id = Colors[i]+"tip"
       outer.appendChild(row)
@@ -1113,6 +1094,17 @@
       variable.innerHTML = variables[i]
 
       boxes.appendChild(variable)
+    }
+
+    for (let i=0; i<numCols-1; i++){
+      solution = document.createElement('input')
+      solution.className = 'solutionSet'
+
+      solution.type = 'text'
+      solution.style.left = (75*i+110)+"px"
+      solution.id = variables[i]+'-val'
+
+      boxes.appendChild(solution)
     }
   }
 
@@ -1247,11 +1239,12 @@
   function addOrSwap(first, second){
     start = -1
     end = -1
+    shift = 40
 
     for (let i=0; i<numRows; i++){
-      if (75*i<first && first<75*i+50){
+      if (75*i+shift<first && first<75*i+50+shift){
         start=i}
-      if (75*i<second && second<75*i+50){
+      if (75*i+shift<second && second<75*i+50+shift){
         end=i}
     }
 
@@ -1297,14 +1290,15 @@
   function initializePage(){
     displayVariables()
     createAugmentedMatrix()
-    writeAugmentedMatrix(initialMatrix)
+    A = generateAugmentedMatrix(5, 6, 4)
+    writeAugmentedMatrix(A)
     activateRows()
     equations()
     writeEquations()
 
     States = []
     
-    //score()
+    score()
   }
 
   function activateRows(){
@@ -1413,11 +1407,12 @@
     }
     
     function close(e) {
+      shift = 40
       document.onmouseup = null;
       document.onmousemove = null;
       for (var v=0; v<numRows; v++){
         document.getElementById(colorList[v]+"tip").style.left = "100px";
-        document.getElementById(colorList[v]+"tip").style.top = 75*v+"px";
+        document.getElementById(colorList[v]+"tip").style.top = 75*v+shift+"px";
       }
       Y1 = e.clientY
       ABS = document.getElementById('outer').getBoundingClientRect()
@@ -1428,12 +1423,12 @@
 
   const colorList = ["dodgerblue", "green", "tomato", "yellow", "orange", "sienna"]
   const variables = ['u', 'v', 'w', 'x', 'y', 'z']
-  numRows = 6
-  numCols = 7
+  numRows = 5
+  numCols = 6
   var Module_Number="14"
   questions = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   the_time = Date.now()
-  //make_grades(Module_Number)
+  make_grades(Module_Number)
 
   //page = 0
 
@@ -1445,7 +1440,7 @@
     [0, 0, 0, 0, 0, 1, 0], 
     [0, 0, 0, 0, 0, 0, "5/4"]
     ])
-  initializePage()
+  //initializePage()
 
 </script>
 </body>
