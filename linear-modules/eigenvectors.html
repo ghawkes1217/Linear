@@ -271,7 +271,11 @@
 
   <p>
     Below the matrix equation, the factor by which the matrix scales the first and second coordinates of \(v\) are shown.
-    You can tell that \(v\) is an eigenvector precisely when \(A\) scales all of \(v\) by the same factor, so these shown values must be the same.
+    You can tell that \(v\) is an eigenvector precisely when \(A\) scales all of \(v\) by the same factor, so these shown values should be the same.
+    If you have trouble adjusting the controls to get the values the exact same your answer will still be 
+    accepted as long as these values are within a few hundreths of each other.  Also, whenever a coordinate of 
+    \(v\) is equal to 0 there will be no scaling factor.  In this case you just need to check that the corresponding 
+    entry of \(Av\) is also \(0\).
   </p>
 
   <p>
@@ -790,16 +794,24 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
     if (page==1){
       fix(blue,[0],[-1,1])
       fix(green,[0],[1,1])
-      fix(red,[1],[1.5,1])
+      fix(red,[1],[1,0.5])
     }
-    if (page==2 || page==3){
+    if (page==2 ){
       fix(blue,[1],[1,-1])
-      fix(green,[1],[-1,-1])
-      fix(red,[1],[-0.5,0.5])
+      fix(green,[0],[-1,-1])
+      fix(red,[0],[-0.5,0.5])
     }
+
+    if (page==3){
+      fix(blue,[0],[-0.8,-1])
+      fix(green,[1],[-1,0])
+      fix(red,[0],[1,-0.8])
+    }
+
+
     if (page==5){
       fix(blue,[0],[-0.4,0.6])
-      fix(green,[1],[1,-1])
+      fix(green,[1],[1,0])
       fix(red,[1],[0.5,-0.3])
     }
     if (page==4){
@@ -883,20 +895,13 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
       if (error<tolerance && u1>0 && u2>0){
         correct = 1}
     }
-    if (p==2){
-      tr = m11+m22
-      det = m11*m22-m12*m21
-      
-      if (Math.abs(tr+1.0)<tolerance && Math.abs(det+2.0)<tolerance){
+    if (p==2){ 
+      if (-2.05<m11 && m11<-1.95 && -0.05<m21 && m21<0.05){
           correct = 1}
     }
     if (p==3){
-      tr = m11+m22
-      det = m11*m22-m12*m21
-
-      if (Math.abs(tr)<tolerance && Math.abs(det-(-0.25))<tolerance){
-        correct = 1}
-    }
+      if (-1.7<m12 && m12<-1.60 && -0.79<m22 && m22<-0.71){
+          correct = 1}}
     if (p==4){
       if (Math.abs(m11-0.4)<tolerance && Math.abs(m21)<tolerance){
         correct = 1}
@@ -959,8 +964,8 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
   var quests=[
     "1. Find a (non-zero) eigenvector for the given matrix that lies in the second quadrant.",
     "2. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
-    "3. Awesome, now determine a matrix with eigenvalues -2 and 1.",
-    "4. Determine a matrix with eigenvalues -0.5 and 0.5.",
+    "3. Awesome, now determine a matrix with the given second column that has an eigenvalue of -1 for the given eigenvector.",
+    "4. Determine a matrix with the given first column that has an eigenvalue of 0.5 for the given eigenvector.",
     "5. Find the first column of the matrix if $\\begin{bmatrix} 1\\\\ 0\\end{bmatrix}$ and $\\begin{bmatrix} -1.5\\\\ -1\\end{bmatrix}$ are eigenvectors of this matrix.",
     "6. Fantastic, determine the second column of the matrix if $\\begin{bmatrix} 0.5\\\\ -0.3\\end{bmatrix}$ and $\\begin{bmatrix} 0.3\\\\ 0.6\\end{bmatrix}$ are eigenvectors of this matrix.",
     "7. Great, let's look at special transformation matrices and their eigenvectors. The matrix reflects vectors about the line $y=2x$. Find a possible eigenvector for this matrix that lies in the third quadrant.",
@@ -968,9 +973,9 @@ r2=Math.round(100*(a21*x+a22*y)/y)/100
     "9. Now, this matrix projects vectors on the line $y=-0.5x$. Find a possible eigenvector for this matrix that lies in the fourth quadrant.",
     "10. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
     "11. Enter the sum of the eigenvalues for this matrix in the provided blank space.",
-    "12. Based on your previous observations, what quantity does this sum equal to?",
+    "12. Based on your previous observations, what quantity is this sum equal to?",
     "13. Enter the product of the eigenvalues for this matrix in the provided blank space.",
-    "14. Based on your previous observations, what quantity does this product equal to?",
+    "14. Based on your previous observations, what quantity is this product equal to?",
     "Good job!!!"
   ]
   the_time=Date.now()
