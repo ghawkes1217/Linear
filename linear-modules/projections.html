@@ -564,7 +564,7 @@ for (var i=0; i<3; i++){
        Points[i].push(-Math.round(-19+parseFloat(document.getElementById(0+"point"+i).offsetTop/10))/10)
        Points[i].push(-Math.round(-19+parseFloat(document.getElementById(1+"point"+i).offsetTop/10))/10)
       }
-console.log(Points)
+
 var feed=document.getElementById("try").innerText
 if (feed==""){
 document.getElementById("try").innerText="Try Again"}
@@ -704,10 +704,10 @@ if (page==12){
 function grade(p,Points){
 
 function pr(i,j){
-return [Points[i][0]*Points[j][0],Points[i][1]*Points[j][1],Points[i][2]*Points[j][2]]
+return [Math.round(100*Points[i][0]*Points[j][0]),Math.round(100*Points[i][1]*Points[j][1]),Math.round(100*Points[i][2]*Points[j][2])]
 }
 function le(i){
-return [Points[i][0]*Points[i][0],Points[i][1]*Points[i][1],Points[i][2]*Points[i][2]]
+return [Math.round(100*Points[i][0]*Points[i][0]),Math.round(100*Points[i][1]*Points[i][1]),Math.round(100*Points[i][2]*Points[i][2])]
 }
 
 
@@ -733,6 +733,7 @@ if (p==3){
 
 
 if (p==5){
+
   if (pr(2,1)[0]+pr(2,1)[1]!=0 && pr(2,1)[0]+pr(2,1)[2]!=0 && pr(2,1)[1]+pr(2,1)[2]!=0 && pr(2,1)[0]+pr(2,1)[1]+pr(2,1)[2]==0) {
   correct = 1}}
 
@@ -797,7 +798,7 @@ var quests=[
 "1. Set the grey vector to \(1,1,0\) by only manipulating the vector from the \(y,z\)-plane and the \(z,x\)-plane.",
 "2. Find a vector (grey) that is longer than each of its projections: longer than its projection onto the \(x,y\)-plane, the \(y,z\)-plane, or the \(z,x\)-plane.",
 "3. By only manipulating from the \(y,z\)-plane and the \(z,x\)-plane find a vector (grey) not equal to the brown vector but whose projection onto the \(x,y\)-plane is same as the projection of the brown vector onto the \(x,y\)-plane. ",
-"4. Find a vector (grey) that is perpendicular to the brown vector when both vectors are projected onto the \(x,y\)-plane but which is NOT perpendiular to the brown vector in 3d space.",
+"4. Find a vector (grey) that is perpendicular to the brown vector when both vectors are projected onto the \(x,y\)-plane but which is NOT perpendicular to the brown vector in 3d space.",
 "5. Find a vector (grey) that is perpendicular to the brown vector when both vectors are projected onto the \(x,y\)-plane or the \(z,x\)-plane  but which is NOT perpendiular to the brown vector in 3d space.",
 "6. Find a vector (grey) that is perpendicular to the brown vector in 3d space but NOT perpendicular when both vectors are projected onto any of the 3 planes shown.",
 "7. Find a vector (grey) such that when both grey and brown vectors are projected onto the \(x,y\)-plane or \(z,x\)-plane, the grey is shorter than the brown, but when both are projected onto the \(y,z\)-plane, the grey is longer.",
