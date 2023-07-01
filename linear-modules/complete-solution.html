@@ -297,7 +297,7 @@
     In all of the questions, please demonstrate your work by putting the matrix in r.r.e.f. (Refer to Module 11 in case you wish to review this.)
   </p>
 
-  <!--<p>
+  <p>
     You may perform row operations onto the matrix shown below:
     <ul>
       <li>
@@ -312,9 +312,35 @@
     </ul>
     The result is always shown on the screen to the right of the matrix. 
     Feel free to hit 'Undo' if you would like to backtrack some performed operations.
-  </p>-->
+  </p>
 
-  <p> Interactives to be added at a later date.
+  <!--<p> Interactives to be added at a later date.</p>-->
+</div>
+
+<div id="blank">
+  <div id="score">
+  </div>
+
+  <div>
+    <h3>Current Question:</h3>
+
+    <div id="questionToDisplay" style="height: 50px"></div>
+    
+    <button id="submitButton" onclick="submitResponse()"> Start </button>
+    <button onclick="previousPage()"> Previous </button>
+    <button onclick="nextPage()"> Next </button>
+    <button onclick="revertState()"> Undo </button>
+  </div>
+  
+  <div id="variables" style="position: absolute; top: 100px">
+  </div>
+
+  <div id="equations">
+  </div>
+
+  <!-- Displays augmented matrix gadget -->
+  <div id="outer">
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -673,23 +699,74 @@
       return new RationalMatrix(matrixM)
     }
 
+    // Return the index of the first nonzero entry of row i of the matrix
+    firstNonZero(i){
+      zero = new RationalNumber(0, 1)
+      row = this[i]
+      j = this.colDim
+      for (let k=0; k<this.colDim; k++){
+        if (row[k].doesNotEqual(zero)){
+          j = k
+          break
+        }
+      }
+      return j
+    }
+
+    // Verifies that a rational matrix is in RREF
+    isInRREF(){
+      zero = new RationalNumber(0, 1)
+      one = new RationalNumber(1, 1)
+      // Checks that first nonzero entries of each row progresses from left to right
+      let first = this.firstNonZero(0)
+      let nonzeroRows = [first]
+
+      for (let i=1; i<this.rowDim; i++){
+        let second = this.firstNonZero(i)
+        if (first > second){
+          return false}
+        first = second
+        nonzeroRows.push(first)
+      }
+      
+      // Checks that pivots are normalized to 1 
+      // and that entries above and below pivots are 0s.
+      for (let i=0; i<nonzeroRows.length; i++){
+        first = nonzeroRows[i]
+        if (first >= this.colDim){
+          break}
+        for (let k=0; k<this.rowDim; k++){
+          let entry = this[k][first]
+          if (k == i){
+            if (entry.doesNotEqual(one)){
+              return false}
+          }
+          else {
+            if (entry.doesNotEqual(zero)){
+              return false}
+          }
+        }
+      }
+      return true
+    }
+
     limitColumns(start, end){
       n = this.colDim
-      if (start >= end){
-        throw new Error("Starting index must be smaller than ending index.")
+      if (start > end){
+        throw new Error("Starting index must be no greater than ending index.")
         return
       }
-      if (start > n || end <= 1){
-        throw new Error("Column indices should range between 1 and " + n + ".")
+      if (start > n || end < 0){
+        throw new Error("Column indices should range between 0 and " + n-1 + ".")
         return
       }
-      if (end > n){
-        return this.limitColumns(start-1, n)}
-      if (start < 1){
+      if (end > n-1){
+        return this.limitColumns(start, n-1)}
+      if (start < 0){
         return this.limitColumns(0, end)}
       let M = []
       for (let i=0; i<this.rowDim; i++){
-        M.push(this[i].slice(start-1, end))}
+        M.push(this[i].slice(start, end+1))}
       return new RationalMatrix(M)
     }
 
@@ -701,7 +778,7 @@
         }
       }
 
-      A = []
+      let A = []
       for (let i=0; i<this.rowDim; i++){
         row = this[i]
         for (let j=0; j<columns.length; j++){
@@ -790,146 +867,155 @@
     return scalars
   }
 
-  // Generates an invertible rational (rxr)-upper or lower triangular matrix
-  function generateRationalTriangularMatrix(rank, upper=true, maxDensity=1){
+  ////////////////////////////////////////////
+  // Generation of rational-valued matrices //
+  ////////////////////////////////////////////
+  function generateRREFMatrix(rowNum, colNum, rank) {
+    m = Math.min(rowNum, colNum)
+    if (m < rank){
+      throw new Error("Rank should be not exceed both number of rows and number of columns.")}
+
+    S = generateSubset(rank, colNum)
     zero = new RationalNumber(0, 1)
-    M = []
-    for (let i=0; i<rank; i++){
+    one = new RationalNumber(1, 1)
+
+    R = []
+    Dist = [1,1,2,2,2,3,3,4,5]
+    for (let i=0; i<rowNum; i++){
       row = []
-      den = generateInteger(1, 4)
-      for (let j=0; j<rank; j++){
-        if ((i>j && upper) || (i<j && !upper)){
-          row.push(zero)}
-        else if (i==j){
-          row.push(generateRationalNumber(den, 3, allowZero=false))}
-        else {
-          flagValue = Math.random()
-          if (flagValue >= maxDensity){
+      q = generateInteger(0, Dist.length-1)
+      den = Dist[q]
+      for (let j=0; j<colNum; j++){
+        if (i < S.length){
+          if (S[i]==j){
+            row.push(one)}
+          else if (j<S[i] || S.includes(j)){
             row.push(zero)}
           else {
-            row.push(generateRationalNumber(den, 3))}
+            row.push(generateRationalNumber(den, 2))}
         }
-      }
-      M.push(row)
-    }
-    return new RationalMatrix(M)
-  }
-
-  // Generates a rational (mxr)-matrix with rank r
-  // where m is the number of rows
-  function generateRationalFixedRankMatrix(rowNum, rank){
-    if (rank > rowNum){
-      throw "Rank needs to be at most the number of rows."}
-
-    L = generateRationalTriangularMatrix(rank, upper=false, maxDensity=0.5)
-    U = generateRationalTriangularMatrix(rank, upper=true, maxDensity=0.5)
-    A = L.multiply(U)
-
-    G = []
-    for (let i=0; i<rowNum; i++){
-      if (i < rank){
-        G.push(A[i])}
-      else {
-        G.push(generateRationalTuple(rank))}
-      }
-    return new RationalMatrix(G) 
-  }
-
-  // Generates a rational (rxn)-matrix in RREF with rank r
-  function generateRationalRREF(colNum, rank){
-    S = generateSubset(rank, colNum)
-    R = []
-
-    for (let i=0; i<rank; i++){
-      row = []
-      den = generateInteger(1, 4)
-      for (let j=0; j<colNum; j++){
-        if (j < S[i]){
-          row.push(new RationalNumber(0, 1))}
-        else if (j == S[i]){
-          row.push(new RationalNumber(1, 1))}
-        else if (j>S[i] && S.includes(j)){
-          row.push(new RationalNumber(0, 1))}
         else {
-          row.push(generateRationalNumber(den, 3))}
+          row.push(zero)
+        }
       }
       R.push(row)
     }
     return new RationalMatrix(R)
   }
 
-  function generateAugmentedMatrix(rowNum, colNum, rank, isConsistent=true){
+  function generateScalingMatrix(rowNum){
+    zero = new RationalNumber(0, 1)
+    K = []
+    for (let i=0; i<rowNum; i++){
+      row = []
+      for (let j=0; j<rowNum; j++){
+        if (i==j){
+          m = generateRationalNumber(1, 3, allowZero=false)
+          row.push(m)
+        }
+        else {
+          row.push(zero)}
+      }
+      K.push(row)
+    }
+    return new RationalMatrix(K)
+  }
+
+  function generateRowAdditionMatrix(rowNum, maxDepth=5){
+    zero = new RationalNumber(0, 1)
+    one = new RationalNumber(1, 1)
+
+    M = []
+    for (let i=0; i<rowNum; i++){
+      row = []
+      for (let j=0; j<rowNum; j++){
+        if (i == j){
+          row.push(one)
+        }
+        else {
+          row.push(zero)
+        }
+      }
+      M.push(row)
+    }
+    A = new RationalMatrix(M)
+    if (rowNum == 1){
+      return A}
+
+    for (let k=0; k<maxDepth; k++){
+      perm = generatePermutation(rowNum)
+      i = perm[0]
+      j = perm[1]
+      c = (-1)**generateInteger(1, 10)
+      A = A.addRows(i, j, c)
+    }
+
+    return A
+  }
+
+  function appendConsistentColumn(matrixR){
+    column = []
+    zero = new RationalNumber(0, 1)
+    for (let i=0; i<matrixR.rowDim; i++){
+      if (matrixR.firstNonZero(i)==matrixR.colDim){
+        column.push(zero)}
+      else {
+        den = generateInteger(1, 5)
+        column.push(generateRationalNumber(den, 2))}
+    }
+    return matrixR.appendColumns([column])
+  }
+
+  function makeAugmentedMatrix(rowNum, colNum, rank, isConsistent=true){
     if (isConsistent==true && rank>rowNum){
       throw new Error("Rank of matrix has to be at most the number of rows of the matrix for this case.")}
     else if (isConsistent==false && rank>=rowNum){
       throw new Error("Rank of matrix has to be less than the number of rows of the matrix for this case.")}
     else {
-      // First, generate an (m x r)-matrix G of rank r 
-      G = generateRationalFixedRankMatrix(rowNum, rank)
-      // Then, generate an (r x (n-1))-matrix R of rank r in RREF 
-      R = generateRationalRREF(colNum-1, rank)
-      
-      if (isConsistent == true){
-        // Append some column vector to R to form M
-        M = R.appendColumns([generateRationalTuple(rank)])
+      matrixR = generateRREFMatrix(rowNum, colNum-1, rank)
+      matrixC = generateScalingMatrix(rowNum)
+      matrixA = generateRowAdditionMatrix(rowNum, maxDepth=5)
 
-        // Now, we multiply G by M to make the matrix A
-        // Permute the rows of A to obtain a matrix B
-        A = G.multiply(M)
+      if (isConsistent==true){
+        matrixP = appendConsistentColumn(matrixR)
+        matrixM = (matrixA.multiply(matrixC)).multiply(matrixP)
       }
       else {
-        one = new RationalNumber(1, 1)
-        zero = new RationalNumber(0, 1)
-
-        // Now, we multiply G by R to make the matrix M
-        M = G.multiply(R)
-
-        // Search for a generic vector in Q^m that is not in 
-        // the left nullspace of M
-        // First, a vector with all distinct components is produced before it is rotated up to m times
-        // The vector with the required property is guaranteed to be found because M 
-        // is not of full rank but the span of the vector with its rotated versions span Q^m itself
+        matrixP = (matrixA.multiply(matrixC)).multiply(matrixR)
+        // Search for a generic vector in Q^m that is not in the left 
+        // nullspace of P.
+        // First, a vector with all distinct components is produced before 
+        // it is rotated up to m times
+        // The vector with the required property is guaranteed to be found 
+        // because P is not of full rank but the span of the vector with its 
+        // rotated versions span Q^m itself
         vector = []
-        for (let k=0; k<rowNum; k++){    
-          q = generateRationalNumber(4, 2)
-          while (vector.includes(q)){
-            q = generateRationalNumber(4, 2)}
+        for (let k=0; k<rowNum; k++){
+          den = generateInteger(1, 5)
+          q = generateRationalNumber(den, 2)
+          while (vector.some(x => q.equals(x))){
+            den = generateInteger(1, 5)
+            q = generateRationalNumber(den, 2)}
           vector.push(q)
         }
 
         for (let i=0; i<rowNum; i++){
-          if (!M.leftAnnihilates(vector)){
-            A = M.appendColumns([vector])
-            break
-          }
-
+          console.log(vector)
+          if (!matrixP.leftAnnihilates(vector)){
+            break}
           x = vector[0]
           vector = vector.slice(1, rowNum-1).push(x)
         }
+        matrixM = matrixP.appendColumns([vector])
       }
-      
       p = generatePermutation(rowNum)
       B = []
       for (let i=0; i<rowNum; i++){
         j = p[i]
-        B.push(A[j])
+        B.push(matrixM[j])
       }
       return new RationalMatrix(B)
     }
-  }
-
-  function generateRationalMatrix(rowNum, colNum){
-    A = []
-    for (let i=0; i<rowNum; i++){
-      row = []
-      den = generateInteger(1, 4)
-      for (let j=0; j<colNum; j++){
-        q = generateRationalNumber(den, 4)
-        row.push(q)
-      }
-      A.push(row)
-    }
-    return new RationalMatrix(A)
   }
 </script>
 
@@ -938,10 +1024,10 @@
     "1. Is this a consistent or an inconsistent system of linear equations?", // Can be consistent or incosistent
     "2. Which of these two types does this system of linear equations belong to?", // Can be consistent or inconsistent
     "3. Great, now, find a set of values for each variable that satisfies the following system of linear equation.", // Solution set need to exist
-    "4. As a follow up, is there another set of solutions to the same system? If so, click on 'Multiple Solutions', otherwise, click on 'Unique Solution'.", // Can have unique or multiple solutions
+    "4. As a follow up, is there another set of solutions to the same system? If so, give one such set and select 'Multiple Solutions', otherwise, select 'Unique Solution'.", // Can have unique or multiple solutions
     "5. Nice, can you find a set of values satisfying this system of linear equation?", // Solution set need to exist
-    "6. Can there be another set of solutions to the same system?", // Can have unique or multiple solutions
-    "7. Is there a nonzero vector that lies in the associated nullspace of this system? Click on 'None' if there is none.",
+    "6. Is there another set of solutions to the same system?", // Can have unique or multiple solutions
+    "7. Is there a nonzero vector that lies in the associated nullspace of this system? Enter one such vector if there is one, otherwise, select 'None'.",
     "8. Does there exist one or many sets of solution to this system?",
     "9. Alright, is there a nonzero vector that lies in the associated nullspace of this system?",
     "10. Does there exist one or many sets of solution to this system?",
@@ -952,42 +1038,30 @@
   initialized = 0
   page = 0
 
-  function displayQuestion(page){
+  function displayQuestion(pageNum){
     // Handles the display of questions and question prompts
     landingArea = document.getElementById("questionToDisplay") 
-    landingArea.innerHTML = quests[page]
+    landingArea.innerHTML = quests[pageNum]
 
     States = []
-    if (page < 12){
-      smallPages = [0, 2, 3, 6, 7, 10]
-      if (smallPages.includes(page)){
-        [numRows, numCols] = [3, 4]}
-      else {
-        [numRows, numCols] = [4, 5]}
-
+    if (pageNum < 12){
+      var page_string = (pageNum+1).toString()
+      params = parameter_dict[page_string]
+      numRows = params[0]
+      numCols = params[1]
+      rank = params[2]
+      beingConsistent = params[3]
       displayVariables()
       createAugmentedMatrix()
-
-      if (page < 6){
-        beingConsistent = true
-        if (page == 0){
-          rankValue = numRows-1}
-        else if (page == 1){
-          rankValue = numRows-1
-          beingConsistent = false
-        }
-        else if (page == 2 || page == 4){
-          rankValue = numRows}
-        else if (page == 3 || page == 5){
-          rankValue = numRows-1}
-        A = generateAugmentedMatrix(numRows, numCols, rankValue, beingConsistent)
-      }
-
-      
+      A = matrix_list[pageNum]
       writeAugmentedMatrix(A)
     }
     else {
-      A = generateAugmentedMatrix(6, 7, 5)
+      numRows = 6
+      numCols = 7
+      displayVariables()
+      createAugmentedMatrix()
+      A = makeAugmentedMatrix(6, 7, 4)
       writeAugmentedMatrix(A)}
     activateRows()
     equations()
@@ -1002,13 +1076,128 @@
       displayQuestion(0)
     }
     else if (initialized == 1){
-      //page += 1
-      //displayQuestion(page)
+      M = readAugmentedMatrix()
+      matrixA = M.limitColumns(0, M.colDim-1)
+      matrix_b = M.limitColumns(M.colDim-1, M.colDim-1)
+
+      matrix_x = readSolutionVector()
+
+      page += 1
+      displayQuestion(page)
     }
   }
 
-  function gradeResponse(){
+  function generateMatrixList(){   
+    parameterDict = {}
+    consistency = [false, true]
+
+    q1 = generateInteger(0, 1)
+    q2 = 1 - q1
+    c1 = consistency[q1]
+    c2 = consistency[q2]
+
+    A1 = makeAugmentedMatrix(3, 4, 2, c1)
+    parameterDict["1"] = [3, 4, 2, c1]
+    A2 = makeAugmentedMatrix(4, 5, 3, c2)
+    parameterDict["2"] = [4, 5, 3, c2]
+
+    q3 = generateInteger(0, 1)
+    q5 = 1 - q3
     
+    A3 = makeAugmentedMatrix(3, 4, 3-q3)
+    parameterDict["3"] = [3, 4, 3-q3, true]
+    A4 = A3
+    parameterDict["4"] = parameterDict["3"]
+    A5 = makeAugmentedMatrix(4, 5, 4-q5)
+    parameterDict["5"] = [4, 5, 4-q5, true]
+    A6 = A5
+    parameterDict["6"] = parameterDict["5"]
+
+    q7 = generateInteger(0, 1)
+    q9 = 1 - q7
+
+    A7 = makeAugmentedMatrix(3, 4, 3-q7)
+    parameterDict["7"] = [3, 4, 3-q7, true]
+    A8 = A7
+    parameterDict["8"] = parameterDict["7"]
+    A9 = makeAugmentedMatrix(4, 5, 4-q5)
+    parameterDict["9"] = [4, 5, 4-q9, true]
+    A10 = A9
+    parameterDict["10"] = parameterDict["9"]
+
+    A11 = makeAugmentedMatrix(3, 4, 2)
+    parameterDict["11"] = [3, 4, 2, true]
+    A12 = makeAugmentedMatrix(4, 5, 3)
+    parameterDict["12"] = [4, 5, 3, true]
+
+    matrixList = [
+      A1, A2, A3, A4, A5, A6, 
+      A7, A8, A9, A10, A11, A12
+      ]
+
+    return [matrixList, parameterDict]
+  }
+
+  function expectedResponse(matrixList, parameterDict, page){
+    pageString = (page+1).toString()
+    if (page==0 || page==1){
+      cons = parameterDict[pageString][3]
+      if (cons){
+        return new ResponseString("consistent")}
+      else {
+        return new ResponseString("inconsistent")}
+    }
+    else if (page==3 || page==5 || page==7 || page==9){
+      row_number = parameterDict[pageString][0]
+      rank = parameterDict[pageString][2]
+      if (row_number != rank){
+        return new ResponseString("multiple solution")
+      }
+      else {
+        return new ResponseString("unique solution")
+      }
+    }
+    else if (page==6 || page==8){
+      row_number = parameterDict[pageString][0]
+      rank = parameterDict[pageString][2]
+      if (row_number != rank){
+        return new ResponseString("nontrivial nullspace")
+      }
+      else {
+        return new ResponseString("trivial nullspace")
+      }
+    }
+    else {
+      return new ResponseString("")
+    }
+  }
+
+  function gradeResponse(page, matrices, userResponse, expected_response){
+    correct = 0
+    
+    matrixA = matrices[0]
+    if (!matrixA.isInRREF()){
+      alert("The matrix is not yet in RREF.")
+      return 
+    }
+
+    if (page==2 || page==4){
+      vector_b = matrices[1]
+      vector_x = userResponse[0]
+      if ((matrixA.multiply(vector_x)).equals(vector_b)){
+        correct = 1}
+    }
+    else if (page==10 || page==11){
+      vector_b = matrices[1]
+      vector_x = userResponse[0]
+      if ((matrixA.multiply(vector_x)).equals(vector_b)){
+        correct = 1}
+    }
+    else if (expected_response.equals(userResponse)){
+      correct = 1
+    }
+
+    return correct
   }
 
   function createAugmentedMatrix(){    
@@ -1127,13 +1316,22 @@
     A = []
     for (let i=0; i<numRows; i++){
       row = []
-      for (var j=0; j<numCols; j++){
+      for (let j=0; j<numCols; j++){
         address = document.getElementById(colorList[i]+(j+1)) 
         row.push(parseRational(address.textContent))
       }
       A.push(row)
     }
     return new RationalMatrix(A)
+  }
+
+  function readSolutionVector(){
+    x = []
+    for (let j=0; j<numCols-1; j++){
+      address = document.getElementById(variables[j]+"-val")
+      x.push([address.value])
+    }
+    return new RationalMatrix(x)
   }
 
   function writeEquations(){
@@ -1197,14 +1395,6 @@
       page -= 1
       displayQuestion(page)
     }
-  }
-
-  function succeedAutomatically(){
-    if (initialized != 1){
-      return }
-    if (page < quests.length){
-      page += 1}
-    displayQuestion(page)
   }
 
   function equations(){
@@ -1290,17 +1480,22 @@
   }
 
   function initializePage(){
+    numRows = 5
+    numCols = 6
     displayVariables()
     createAugmentedMatrix()
-    A = generateAugmentedMatrix(5, 6, 4)
+    A = makeAugmentedMatrix(5, 6, 4)
     writeAugmentedMatrix(A)
+    pair = generateMatrixList()
+    matrix_list = pair[0]
+    parameter_dict = pair[1]
     activateRows()
     equations()
     writeEquations()
 
     States = []
     
-    score()
+    //score()
   }
 
   function activateRows(){
@@ -1425,25 +1620,15 @@
 
   const colorList = ["dodgerblue", "green", "tomato", "yellow", "orange", "sienna"]
   const variables = ['u', 'v', 'w', 'x', 'y', 'z']
-  numRows = 5
-  numCols = 6
+  var numRows
+  var numCols
+  var rank
+  var beingConsistent 
   var Module_Number="14"
   questions = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   the_time = Date.now()
-  make_grades(Module_Number)
-
-  //page = 0
-
-  initialMatrix = new RationalMatrix([
-    [1, "1/5", "-2/5", 0, 0, 0, "3/5"], 
-    [1, "1/3", "-2/3", 0, 0, 0, "-4/3"], 
-    [0, 0, 0, 1, 0, 0, "1/4"], 
-    [0, 0, 0, 0, 1, 0, "-1/2"], 
-    [0, 0, 0, 0, 0, 1, 0], 
-    [0, 0, 0, 0, 0, 0, "5/4"]
-    ])
-  //initializePage()
-
+  //make_grades(Module_Number)
+  initializePage()
 </script>
 </body>
 </html>
