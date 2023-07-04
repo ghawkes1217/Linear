@@ -96,14 +96,13 @@
 
     .matrixRows {
       position: absolute;
-      height: 55px;
+      height: 50px;
       left: 100px;
       opacity: 0.8;}
 
     .matrixColumns {
       position: absolute;
       height: 45px;
-      width: 75px;
       top: 10px;
       opacity: 0.8;
       background-color: #FFFFFF10;}
@@ -313,8 +312,6 @@
     The result is always shown on the screen to the right of the matrix. 
     Feel free to hit 'Undo' if you would like to backtrack some performed operations.
   </p>
-
-  <!--<p> Interactives to be added at a later date.</p>-->
 </div>
 
 <div id="blank">
@@ -325,11 +322,22 @@
     <h3>Current Question:</h3>
 
     <div id="questionToDisplay" style="height: 50px"></div>
+    <div>
+      <div id="multipleChoice" hidden>
+        <input type="radio" id="answer1" name="multipleChoice" value="consistent">
+        <label id="label1" for="answer1">Consistent System</label>
+        <input type="radio" id="answer2" name="multipleChoice" value="inconsistent">
+        <label id="label2" for="answer2">Inconsistent System</label>
+      </div>
+      
+      <div class="feedbackArea" id="feedback"></div>
+    </div>
     
     <button id="submitButton" onclick="submitResponse()"> Start </button>
     <button onclick="previousPage()"> Previous </button>
     <button onclick="nextPage()"> Next </button>
     <button onclick="revertState()"> Undo </button>
+    <button id="none" onclick="submitResponse()" hidden> None </button>
   </div>
   
   <div id="variables" style="position: absolute; top: 100px">
@@ -814,6 +822,7 @@
     return low + Math.floor(difference * Math.random())
   }
 
+  // Return a permutation of the set {0,1,2,...,n-1}
   function generatePermutation(n){
     array = []
     for (let i=0; i<n; i++){
@@ -829,6 +838,7 @@
     return array
   }
 
+  // Return a subset of size k of the set {0,1,2,...,n-1}
   function generateSubset(k, n){
     array = []
     for (let i=0; i<n; i++){
@@ -860,7 +870,9 @@
 
   function generateRationalTuple(rank){
     scalars = []
-    den = generateInteger(1, 4)
+    Dist = [1,1,1,1,2,2,2,3,3,4,5]
+    q = generateInteger(0, Dist.length-1)
+    den = Dist[q]
     for (let i=0; i<rank; i++){
       scalars.push(generateRationalNumber(den, 2))
     }
@@ -880,7 +892,7 @@
     one = new RationalNumber(1, 1)
 
     R = []
-    Dist = [1,1,2,2,2,3,3,4,5]
+    Dist = [1,1,1,1,2,2,2,3,3,4,5]
     for (let i=0; i<rowNum; i++){
       row = []
       q = generateInteger(0, Dist.length-1)
@@ -956,21 +968,21 @@
   function appendConsistentColumn(matrixR){
     column = []
     zero = new RationalNumber(0, 1)
+    Dist = [1,1,1,1,2,2,2,3,3,4,5]
     for (let i=0; i<matrixR.rowDim; i++){
       if (matrixR.firstNonZero(i)==matrixR.colDim){
         column.push(zero)}
       else {
-        den = generateInteger(1, 5)
+        q = generateInteger(0, Dist.length-1)
+        den = Dist[q]
         column.push(generateRationalNumber(den, 2))}
     }
     return matrixR.appendColumns([column])
   }
 
   function makeAugmentedMatrix(rowNum, colNum, rank, isConsistent=true){
-    if (isConsistent==true && rank>rowNum){
+    if (rank>rowNum){
       throw new Error("Rank of matrix has to be at most the number of rows of the matrix for this case.")}
-    else if (isConsistent==false && rank>=rowNum){
-      throw new Error("Rank of matrix has to be less than the number of rows of the matrix for this case.")}
     else {
       matrixR = generateRREFMatrix(rowNum, colNum-1, rank)
       matrixC = generateScalingMatrix(rowNum)
@@ -978,36 +990,27 @@
 
       if (isConsistent==true){
         matrixP = appendConsistentColumn(matrixR)
-        matrixM = (matrixA.multiply(matrixC)).multiply(matrixP)
       }
-      else {
-        matrixP = (matrixA.multiply(matrixC)).multiply(matrixR)
-        // Search for a generic vector in Q^m that is not in the left 
-        // nullspace of P.
-        // First, a vector with all distinct components is produced before 
-        // it is rotated up to m times
+      else { 
+        // Create a generic vector in Q^m that is not in the range of R.
         // The vector with the required property is guaranteed to be found 
-        // because P is not of full rank but the span of the vector with its 
-        // rotated versions span Q^m itself
+        // because R is in RREF and is not of full rank but the final component of the vector is nonzero.
         vector = []
-        for (let k=0; k<rowNum; k++){
-          den = generateInteger(1, 5)
-          q = generateRationalNumber(den, 2)
-          while (vector.some(x => q.equals(x))){
-            den = generateInteger(1, 5)
-            q = generateRationalNumber(den, 2)}
-          vector.push(q)
-        }
-
+        Dist = [1,1,1,1,2,2,2,3,3,4,5]
         for (let i=0; i<rowNum; i++){
-          console.log(vector)
-          if (!matrixP.leftAnnihilates(vector)){
-            break}
-          x = vector[0]
-          vector = vector.slice(1, rowNum-1).push(x)
+          den = Dist[q]
+          q = generateInteger(0, Dist.length-1)
+            den = Dist[q]
+          if (i<rank){
+            Q = generateRationalNumber(den, 2)}
+          else {
+            Q = generateRationalNumber(den, 2, allowZero=false)}
+          vector.push(Q)
         }
-        matrixM = matrixP.appendColumns([vector])
+        matrixP = matrixR.appendColumns([vector])
       }
+
+      matrixM = (matrixA.multiply(matrixC)).multiply(matrixP)
       p = generatePermutation(rowNum)
       B = []
       for (let i=0; i<rowNum; i++){
@@ -1023,16 +1026,18 @@
   quests = [
     "1. Is this a consistent or an inconsistent system of linear equations?", // Can be consistent or incosistent
     "2. Which of these two types does this system of linear equations belong to?", // Can be consistent or inconsistent
-    "3. Great, now, find a set of values for each variable that satisfies the following system of linear equation.", // Solution set need to exist
-    "4. As a follow up, is there another set of solutions to the same system? If so, give one such set and select 'Multiple Solutions', otherwise, select 'Unique Solution'.", // Can have unique or multiple solutions
-    "5. Nice, can you find a set of values satisfying this system of linear equation?", // Solution set need to exist
-    "6. Is there another set of solutions to the same system?", // Can have unique or multiple solutions
-    "7. Is there a nonzero vector that lies in the associated nullspace of this system? Enter one such vector if there is one, otherwise, select 'None'.",
-    "8. Does there exist one or many sets of solution to this system?",
-    "9. Alright, is there a nonzero vector that lies in the associated nullspace of this system?",
+    "3. Nice, is this a consistent or an inconsistent system of linear equations?", // Can be consistent or incosistent
+    "4. Which kind of a linear system of equations is this?", // Can be consistent or inconsistent
+    "5. Great, now, find a set of values for each variable that satisfies the following system of linear equation.", // Solution set need to exist
+    "6. As a follow up, is there another set of solutions to the same system? If so, give one such set and select 'Multiple Solutions', otherwise, select 'Unique Solution'.", // Can have unique or multiple solutions
+    "7. Nice, can you find a set of values satisfying this system of linear equation?", // Solution set need to exist
+    "8. Is there another set of solutions to the same system?", // Can have unique or multiple solutions
+    "9. Is there a nonzero vector that lies in the associated nullspace of this system? Enter one such vector if there is one, otherwise, select 'None'.",
     "10. Does there exist one or many sets of solution to this system?",
-    "11. Let's switch gears. You are given a set of solutions to the following system. Can you use it to find another set of solutions?",
-    "12. Good, given this set of solution, can you use it to find another set of solutions?",
+    "11. Alright, is there a nonzero vector that lies in the associated nullspace of this system? If so, enter this vector and if not, select None.",
+    "12. Does there exist one or many sets of solution to this system?",
+    "13. Let's switch gears. You are given a set of solutions to the following system. Can you use it to find another set of solutions?",
+    "14. Good, given this set of solution, can you use it to find another set of solutions?",
     "Awesome!"
   ]
   initialized = 0
@@ -1044,17 +1049,47 @@
     landingArea.innerHTML = quests[pageNum]
 
     States = []
-    if (pageNum < 12){
+    if (pageNum < 14){
       var page_string = (pageNum+1).toString()
       params = parameter_dict[page_string]
       numRows = params[0]
       numCols = params[1]
-      rank = params[2]
-      beingConsistent = params[3]
       displayVariables()
       createAugmentedMatrix()
       A = matrix_list[pageNum]
-      writeAugmentedMatrix(A)
+
+      multipleChoiceArea = document.getElementById("multipleChoice")
+      button = document.getElementById("none")
+
+      multipleChoicePages = [0,1,2,3,5,7,9,11]
+      consistencyPages = [0,1,2,3]
+      uniquenessPages = [5,7,9,11]
+      nullspacePages = [8,10]
+
+      if (multipleChoicePages.includes(pageNum)){
+        multipleChoiceArea.hidden = false
+        button.hidden = true
+
+        label1 = document.getElementById("label1")
+        label2 = document.getElementById("label2")
+
+        if (consistencyPages.includes(pageNum)){
+          label1.textContent = "Consistent System"
+          label2.textContent = "Inconsistent System"
+        }
+        else if (uniquenessPages.includes(pageNum)){
+          label1.textContent = "Unique Solution"
+          label2.textContent = "Multiple Solutions" 
+        }
+      }
+      else {
+        multipleChoiceArea.hidden = true
+
+        if (nullspacePages.includes(pageNum)){
+          button.hidden = false}
+        else {
+          button.hidden = true}
+      }
     }
     else {
       numRows = 6
@@ -1062,7 +1097,8 @@
       displayVariables()
       createAugmentedMatrix()
       A = makeAugmentedMatrix(6, 7, 4)
-      writeAugmentedMatrix(A)}
+    }
+    writeAugmentedMatrix(A)
     activateRows()
     equations()
     writeEquations()
@@ -1077,13 +1113,44 @@
     }
     else if (initialized == 1){
       M = readAugmentedMatrix()
-      matrixA = M.limitColumns(0, M.colDim-1)
+      matrixA = M.limitColumns(0, M.colDim-2)
       matrix_b = M.limitColumns(M.colDim-1, M.colDim-1)
+      matrices = [matrixA, matrix_b]
 
-      matrix_x = readSolutionVector()
+      vectorPages = [4, 5, 6, 7, 8, 10, 12, 13]
+      consistencyPages = [0, 1, 2, 3]
 
-      page += 1
-      displayQuestion(page)
+      responseScore = -1
+
+      if (vectorPages.includes(page)){
+        matrix_x = readSolutionVector()
+      }
+
+      else {
+        if (consistencyPages.includes(page)){
+          expected_response = expectedResponse(parameter_dict, page)
+          responseValue = document.querySelector('input[name="multipleChoice"]:checked').value        
+          userResponse = new ResponseString(responseValue) 
+          responseScore = gradeResponse(page, matrices, userResponse, expected_response)
+        }
+        else {
+
+        }
+      }
+
+      feedbackArea = document.getElementById("feedback")
+
+      if (correct == 1){
+        feedbackArea.textContent = ""
+        alert("Awesome, your answer is correct!")
+        page += 1
+        displayQuestion(page)
+      }
+      else if (correct == 0){
+        feedbackArea.textContent = "Try again"
+        alert("Sorry, that was either incorrect or that you did not show complete work.")
+      }
+      
     }
   }
 
@@ -1095,77 +1162,91 @@
     q2 = 1 - q1
     c1 = consistency[q1]
     c2 = consistency[q2]
+    a1 = generateInteger(0, 1)
+    r1 = c1==true ? a1 : 1
+    r2 = c2==true ? a1 : 1
 
-    A1 = makeAugmentedMatrix(3, 4, 2, c1)
-    parameterDict["1"] = [3, 4, 2, c1]
-    A2 = makeAugmentedMatrix(4, 5, 3, c2)
-    parameterDict["2"] = [4, 5, 3, c2]
+    A1 = makeAugmentedMatrix(3, 4, 3-r1, c1)
+    parameterDict["1"] = [3, 4, 3-r1, c1]
+    A2 = makeAugmentedMatrix(4, 5, 4-r2, c2)
+    parameterDict["2"] = [4, 5, 4-r2, c2]
 
     q3 = generateInteger(0, 1)
-    q5 = 1 - q3
+    q4 = 1 - q3
+    a3 = generateInteger(0, 1)
+    c3 = consistency[q3]
+    c4 = consistency[q4]
+    r3 = c3==true ? a3 : 1
+    r4 = c4==true ? a3 : 1
+
+    A3 = makeAugmentedMatrix(3, 4, 3-r3, c3)
+    parameterDict["3"] = [3, 4, 3-r3, c3]
+    A4 = makeAugmentedMatrix(4, 5, 4-r4, c4)
+    parameterDict["4"] = [4, 5, 4-r4, c4]
+
+    q5 = generateInteger(0, 1)
+    q7 = 1 - q5
     
-    A3 = makeAugmentedMatrix(3, 4, 3-q3)
-    parameterDict["3"] = [3, 4, 3-q3, true]
-    A4 = A3
-    parameterDict["4"] = parameterDict["3"]
-    A5 = makeAugmentedMatrix(4, 5, 4-q5)
-    parameterDict["5"] = [4, 5, 4-q5, true]
+    A5 = makeAugmentedMatrix(3, 4, 3-q5)
+    parameterDict["5"] = [3, 4, 3-q5, true]
     A6 = A5
     parameterDict["6"] = parameterDict["5"]
 
-    q7 = generateInteger(0, 1)
-    q9 = 1 - q7
-
-    A7 = makeAugmentedMatrix(3, 4, 3-q7)
-    parameterDict["7"] = [3, 4, 3-q7, true]
+    A7 = makeAugmentedMatrix(4, 5, 4-q7)
+    parameterDict["7"] = [4, 5, 4-q7, true]
     A8 = A7
     parameterDict["8"] = parameterDict["7"]
-    A9 = makeAugmentedMatrix(4, 5, 4-q5)
-    parameterDict["9"] = [4, 5, 4-q9, true]
+
+    q9 = generateInteger(0, 1)
+    q11 = 1 - q9
+
+    A9 = makeAugmentedMatrix(3, 4, 3-q9)
+    parameterDict["9"] = [3, 4, 3-q9, true]
     A10 = A9
     parameterDict["10"] = parameterDict["9"]
+    
+    A11 = makeAugmentedMatrix(4, 5, 4-q11)
+    parameterDict["11"] = [4, 5, 4-q11, true]
+    A12 = A11
+    parameterDict["12"] = parameterDict["11"]
 
-    A11 = makeAugmentedMatrix(3, 4, 2)
-    parameterDict["11"] = [3, 4, 2, true]
-    A12 = makeAugmentedMatrix(4, 5, 3)
-    parameterDict["12"] = [4, 5, 3, true]
+    A13 = makeAugmentedMatrix(3, 4, 2)
+    parameterDict["13"] = [3, 4, 2, true]
+    A14 = makeAugmentedMatrix(4, 5, 3)
+    parameterDict["14"] = [4, 5, 3, true]
 
     matrixList = [
-      A1, A2, A3, A4, A5, A6, 
-      A7, A8, A9, A10, A11, A12
+      A1, A2, A3, A4, A5, A6, A7,
+      A8, A9, A10, A11, A12, A13, A14
       ]
 
     return [matrixList, parameterDict]
   }
 
-  function expectedResponse(matrixList, parameterDict, page){
+  function expectedResponse(parameterDict, page){
     pageString = (page+1).toString()
-    if (page==0 || page==1){
+    if (page==0 || page==1 || page==2 || page==3){
       cons = parameterDict[pageString][3]
       if (cons){
         return new ResponseString("consistent")}
       else {
         return new ResponseString("inconsistent")}
     }
-    else if (page==3 || page==5 || page==7 || page==9){
+    else if (page==5 || page==7 || page==9 || page==11){
       row_number = parameterDict[pageString][0]
       rank = parameterDict[pageString][2]
       if (row_number != rank){
-        return new ResponseString("multiple solution")
-      }
+        return new ResponseString("multiple solutions")}
       else {
-        return new ResponseString("unique solution")
-      }
+        return new ResponseString("unique solution")}
     }
-    else if (page==6 || page==8){
+    else if (page==8 || page==10){
       row_number = parameterDict[pageString][0]
       rank = parameterDict[pageString][2]
-      if (row_number != rank){
-        return new ResponseString("nontrivial nullspace")
-      }
+      if (row_number == rank){
+        return new ResponseString("trivial nullspace")}
       else {
-        return new ResponseString("trivial nullspace")
-      }
+        return new ResponseString("")}
     }
     else {
       return new ResponseString("")
@@ -1181,13 +1262,13 @@
       return 
     }
 
-    if (page==2 || page==4){
+    if (page==4 || page==6){
       vector_b = matrices[1]
       vector_x = userResponse[0]
       if ((matrixA.multiply(vector_x)).equals(vector_b)){
         correct = 1}
     }
-    else if (page==10 || page==11){
+    else if (page==12 || page==13){
       vector_b = matrices[1]
       vector_x = userResponse[0]
       if ((matrixA.multiply(vector_x)).equals(vector_b)){
@@ -1200,18 +1281,19 @@
     return correct
   }
 
-  function createAugmentedMatrix(){    
+  function createAugmentedMatrix(width=70){    
+    w = width
     outer.value = [numRows, numCols]
-    outer.style.height = 75*6+50+"px"
-    outer.style.width = 75*numCols+90+"px"
+    outer.style.height = w*6+50+"px"
+    outer.style.width = w*numCols+90+"px"
     while (outer.firstChild){
       outer.removeChild(outer.lastChild)}
 
     // separator for augmented matrix
     separator = document.createElement('div')
     separator.className = 'separators'
-    separator.style.left = 75*numCols+15+"px"
-    separator.style.height = 75*numRows-20+"px"
+    separator.style.left = w*numCols+15+"px"
+    separator.style.height = w*numRows-20+"px"
     outer.appendChild(separator)
 
     // inputs
@@ -1221,7 +1303,7 @@
       input.type = "text"
       input.name = i+1
       input.id = "in"+(i+1)      
-      input.style.top = (75*i+45)+"px"
+      input.style.top = (w*i+45)+"px"
       outer.appendChild(input)
     }
 
@@ -1229,8 +1311,8 @@
     for (let i=0; i<numRows-1; i++){
       switchbar = document.createElement('button')
       switchbar.className = 'switches'
-      switchbar.style.width = numCols*75+"px"
-      switchbar.style.top = (75*i+95)+"px"
+      switchbar.style.width = numCols*w+"px"
+      switchbar.style.top = (w*i+90)+"px"
       switchbar.id = "switch"+(i+1)+(i+2)
       switchbar.name = i
       switchbar.addEventListener("click", function() {switchAdjacentRows()}, false)
@@ -1241,7 +1323,7 @@
     for (let i=0; i<numRows; i++){
       multiplier = document.createElement('button')
       multiplier.className = 'multiplyButtons'
-      multiplier.style.top = (75*i+45)+"px"
+      multiplier.style.top = (w*i+45)+"px"
       multiplier.id = "mult"+(i+1)
       multiplier.name = i+1
       multiplier.innerHTML = "&times"
@@ -1254,8 +1336,8 @@
     for (let i=0; i<numRows; i++){
       row = document.createElement('div')
       row.className = 'matrixRows'
-      row.style.width = (numCols*75)+"px"
-      row.style.top = (75*i+40)+"px"
+      row.style.width = (numCols*w)+"px"
+      row.style.top = (w*i+40)+"px"
       row.style.backgroundColor = Colors[i]
       row.id = Colors[i]+"tip"
       outer.appendChild(row)
@@ -1263,14 +1345,16 @@
       for (let j=0; j<numCols; j++){
         col = document.createElement('div')
         col.className = 'matrixColumns center'
-        col.style.left=(75*j)+"px"
+        col.style.width = w+"px"
+        col.style.left=(w*j)+"px"
         col.id = colorList[i]+(j+1)
         row.appendChild(col)
       }
     }
   }
 
-  function displayVariables(){
+  function displayVariables(width=70){
+    w = width
     boxes = document.getElementById("variables")
     while (boxes.firstChild){
       boxes.removeChild(boxes.lastChild)}
@@ -1279,7 +1363,7 @@
       variable = document.createElement('button')
       variable.className = 'variables'
 
-      variable.style.left = (75*i+110)+"px"
+      variable.style.left = (w*i+110)+"px"
       variable.id = variables[i]
       variable.name = variables[i]
       variable.innerHTML = variables[i]
@@ -1290,9 +1374,9 @@
     for (let i=0; i<numCols-1; i++){
       solution = document.createElement('input')
       solution.className = 'solutionSet'
-
+      solution.name = variables[i]+'-val'
       solution.type = 'text'
-      solution.style.left = (75*i+110)+"px"
+      solution.style.left = (w*i+110)+"px"
       solution.id = variables[i]+'-val'
 
       boxes.appendChild(solution)
@@ -1334,7 +1418,8 @@
     return new RationalMatrix(x)
   }
 
-  function writeEquations(){
+  function writeEquations(width=70){
+    w = width
     Entries = readAugmentedMatrix()
 
     Colors = []
@@ -1377,7 +1462,7 @@
       newEquation = document.createElement('div')
       newEquation.className = 'equationElement'
       newEquation.innerHTML = equationList[i]
-      newEquation.style.top = 15+75*i+"px"
+      newEquation.style.top = 15+w*i+"px"
       newEquation.style.color = Colors[i]
       equationElement.appendChild(newEquation)
     }
@@ -1397,10 +1482,11 @@
     }
   }
 
-  function equations(){
+  function equations(width=70){
+    w = width
     equationBox = document.getElementById("equations")
-    equationBox.style.left = 75*numCols+150+"px"
-    equationBox.style.height = 75*numRows-10+"px"
+    equationBox.style.left = w*numCols+150+"px"
+    equationBox.style.height = w*numRows-10+"px"
   }
 
   function multiplyByScalar(){
@@ -1428,15 +1514,16 @@
     writeEquations()
   }
 
-  function addOrSwap(first, second){
+  function addOrSwap(first, second, width=70){
+    w = width
     start = -1
     end = -1
     shift = 40
 
     for (let i=0; i<numRows; i++){
-      if (75*i+shift<first && first<75*i+50+shift){
+      if (w*i+shift<first && first<w*i+50+shift){
         start=i}
-      if (75*i+shift<second && second<75*i+50+shift){
+      if (w*i+shift<second && second<w*i+50+shift){
         end=i}
     }
 
@@ -1494,7 +1581,6 @@
     writeEquations()
 
     States = []
-    
     //score()
   }
 
@@ -1582,7 +1668,8 @@
       document.selection.empty()}
   }
 
-  function mobilize(tip){
+  function mobilize(tip, width=70){
+    w = width
     tip.onmousedown = move
 
     function move(e) {
@@ -1609,7 +1696,7 @@
       document.onmousemove = null;
       for (var v=0; v<numRows; v++){
         document.getElementById(colorList[v]+"tip").style.left = "100px";
-        document.getElementById(colorList[v]+"tip").style.top = 75*v+shift+"px";
+        document.getElementById(colorList[v]+"tip").style.top = w*v+shift+"px";
       }
       Y1 = e.clientY
       ABS = document.getElementById('outer').getBoundingClientRect()
@@ -1622,10 +1709,12 @@
   const variables = ['u', 'v', 'w', 'x', 'y', 'z']
   var numRows
   var numCols
-  var rank
-  var beingConsistent 
   var Module_Number="14"
-  questions = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  questions = [
+    0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 
+    0, 0, 0, 0
+    ]
   the_time = Date.now()
   //make_grades(Module_Number)
   initializePage()
