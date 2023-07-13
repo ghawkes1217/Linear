@@ -619,6 +619,14 @@
       return new RationalMatrix(matrixM)
     }
 
+    isNonZero(){
+      for (let i=0; i<this.rowDim; i++){
+        if (this.firstNonZero(i) < this.colDim){
+          return true}
+      }
+      return false
+    }
+
     annihilates(vector){
       if (vector.length != this.colDim){
         return false}
@@ -1053,10 +1061,11 @@
       multipleChoiceArea = document.getElementById("multipleChoice")
       button = document.getElementById("none")
 
-      multipleChoicePages = [0,1,2,3,5,7,9,11]
-      consistencyPages = [0,1,2,3]
-      uniquenessPages = [5,7,9,11]
-      nullspacePages = [8,10]
+      multipleChoicePages = [0, 1, 2, 3, 5, 7, 9, 11]
+      vectorInputPages = [4, 5, 6, 7, 8, 10]
+      consistencyPages = [0, 1, 2, 3]
+      uniquenessInferencePages = [5, 7]
+      nullspaceInferencePages = [9, 11]
 
       if (multipleChoicePages.includes(pageNum)){
         multipleChoiceArea.hidden = false
@@ -1073,7 +1082,7 @@
           answer1.value = "consistent"
           answer2.value = "inconsistent"
         }
-        else if (uniquenessPages.includes(pageNum)){
+        else if (uniquenessInferencePages.includes(pageNum) || nullspaceInferencePages.includes(pageNum)){
           label1.textContent = "Unique Solution"
           label2.textContent = "Multiple Solutions"
           answer1.value = "unique solution"
@@ -1083,10 +1092,23 @@
       else {
         multipleChoiceArea.hidden = true
 
-        if (nullspacePages.includes(pageNum)){
+        if (nullspaceInferencePages.includes(pageNum)){
           button.hidden = false}
         else {
           button.hidden = true}
+      }
+
+      if (vectorInputPages.includes(pageNum)){
+        for (let i=0; i<numCols-1; i++){
+          variableInput = document.getElementById(variables[i]+'-val')
+          variableInput.disabled = false
+        }
+      }
+      else {
+        for (let i=0; i<numCols-1; i++){
+          variableInput = document.getElementById(variables[i]+'-val')
+          variableInput.disabled = true
+        }
       }
     }
     else {
@@ -1095,6 +1117,9 @@
       displayVariables()
       createAugmentedMatrix()
       A = makeAugmentedMatrix(6, 7, 4)
+
+      multipleChoiceArea = document.getElementById("multipleChoice")
+      multipleChoiceArea.hidden = true
     }
     writeAugmentedMatrix(A)
     activateRows()
@@ -1122,7 +1147,6 @@
       }
 
       vectorInputPages = [4, 5, 6, 7, 8, 10]
-
       uniquenessPages = [4, 6]
       uniquenessInferencePages = [5, 7]
       nullspacePages = [8, 10]
@@ -1136,35 +1160,38 @@
           rowValue = parameter_dict[pageString][0]
           rankValue = parameter_dict[pageString][2]
 
-          // If the matrix for the system is of full rank, then 'None' should be the correct answer
+          // If the matrix for the system is of full rank, then 'None' should 
+          // be the correct answer
           if (rowValue==rankValue && impossibleAnswer==true){
             correct = 1}
-          // If the matrix for the system is not of full rank, then the matrix should annihilate the vector
+          // If the matrix for the system is not of full rank, then the matrix 
+          // should annihilate the nonzero vector
           else if (rowValue>rankValue && impossibleAnswer==false){
             vector_x = readSolutionVector()
-            if (matrixA.annihilates(vector_x)){
+            if (matrixA.annihilates(vector_x) && vector_x.isNonZero()){
               correct = 1}
           }
         }
         // For Questions 6 and 8
         else if (uniquenessInferencePages.includes(page)){
-          rowNumber = parameter_dict[0]
-          rank = parameter_dict[2]
-          expected_response = expectedResponse(parameter_dict, page)
+          pageString = (page+1).toString()
+          rowNumber = parameter_dict[pageString][0]
+          rank = parameter_dict[pageString][2]
+
+          // Collect user response from radio input
+          expectedResponse = getExpectedResponse(parameter_dict, page)
           responseValue = document.querySelector('input[name="multipleChoice"]:checked').value
           userResponse = new ResponseString(responseValue)
           // If matrix is not of full rank, multiple solutions are possible
           if (rowNumber>rank){
             vector_x = readSolutionVector()
             if ((matrixA.multiply(vector_x)).equals(vector_b) && userResponse.equals(expectedResponse)){
-              correct = 1
-            }
+              correct = 1}
           }
           // If matrix is of full rank, unique solution is forced
           else {
             if (userResponse.equals(expectedResponse)){
-              correct = 1
-            }
+              correct = 1}
           }
         }
         // For Questions 5 and 7
@@ -1176,10 +1203,11 @@
       }
       // For Questions 1, 2, 3, 4, 10, 12
       else {
-        expected_response = expectedResponse(parameter_dict, page)
+        // Collect user response from radio input
+        expectedResponse = getExpectedResponse(parameter_dict, page)
         responseValue = document.querySelector('input[name="multipleChoice"]:checked').value
         userResponse = new ResponseString(responseValue)
-        if (expected_response.equals(userResponse)){
+        if (userResponse.equals(expectedResponse)){
           correct = 1}
         }
 
@@ -1261,13 +1289,14 @@
     return [matrixList, parameterDict]
   }
 
-  function expectedResponse(parameterDict, page){
+  function getExpectedResponse(parameterDict, page){
     consistencyPages = [0, 1, 2, 3]
     uniquenessInferencePages = [5, 7]
-    nullspacePages = [8, 10]
     nullspaceInferencePages = [9, 11]
 
     pageString = (page+1).toString()
+
+    // For Questions 1, 2, 3, 4
     if (consistencyPages.includes(page)){
       cons = parameterDict[pageString][3]
       if (cons){
@@ -1275,6 +1304,7 @@
       else {
         return new ResponseString("inconsistent")}
     }
+    // For Questions 6, 8, 10, 12
     else if (uniquenessInferencePages.includes(page) || nullspaceInferencePages.includes(page)){
       rowNumber = parameterDict[pageString][0]
       rank = parameterDict[pageString][2]
@@ -1282,14 +1312,6 @@
         return new ResponseString("multiple solutions")}
       else {
         return new ResponseString("unique solution")}
-    }
-    else if (nullspacePages.includes(page)){
-      rowNumber = parameterDict[pageString][0]
-      rank = parameterDict[pageString][2]
-      if (rowNumber == rank){
-        return new ResponseString("trivial nullspace")}
-      else {
-        return new ResponseString("")}
     }
     else {
       return new ResponseString("")
