@@ -1110,105 +1110,90 @@
       displayQuestion(0)
     }
     else if (initialized == 1){
-      correct = 0
+      var correct = 0
 
       M = readAugmentedMatrix()
       matrixA = M.limitColumns(0, M.colDim-2)
-      matrix_b = M.limitColumns(M.colDim-1, M.colDim-1)
-      matrices = [matrixA, matrix_b]
+      vector_b = M.limitColumns(M.colDim-1, M.colDim-1)
+
+      if (!matrixA.isInRREF()){
+        alert("The matrix is not yet in RREF.")
+        return 
+      }
 
       vectorInputPages = [4, 5, 6, 7, 8, 10]
-      consistencyPages = [0, 1, 2, 3]
+
       uniquenessPages = [4, 6]
       uniquenessInferencePages = [5, 7]
       nullspacePages = [8, 10]
-      nullspaceInferencePages = [9, 11]
 
-      responseScore = -1
-
+      // For Questions 5, 6, 7, 8, 9, 11
+      // where a solution vector is expected
       if (vectorInputPages.includes(page)){
-        if (!matrixA.isInRREF()){
-          alert("The matrix is not yet in RREF.")
-          return 
-        }
-
         // For Questions 9 and 11
         if (nullspacePages.includes(page)){
           pageString = (page+1).toString()
           rowValue = parameter_dict[pageString][0]
           rankValue = parameter_dict[pageString][2]
+
           // If the matrix for the system is of full rank, then 'None' should be the correct answer
           if (rowValue==rankValue && impossibleAnswer==true){
-            responseScore = 1}
+            correct = 1}
           // If the matrix for the system is not of full rank, then the matrix should annihilate the vector
           else if (rowValue>rankValue && impossibleAnswer==false){
-            matrix_x = readSolutionVector()
-            if (matrixA.annihilates(matrix_x)){
-              responseScore = 1}
-            else {
-              responseScore = 0}
+            vector_x = readSolutionVector()
+            if (matrixA.annihilates(vector_x)){
+              correct = 1}
           }
-          // All other responses are graded as being incorrect
+        }
+        // For Questions 6 and 8
+        else if (uniquenessInferencePages.includes(page)){
+          rowNumber = parameter_dict[0]
+          rank = parameter_dict[2]
+          expected_response = expectedResponse(parameter_dict, page)
+          responseValue = document.querySelector('input[name="multipleChoice"]:checked').value
+          userResponse = new ResponseString(responseValue)
+          // If matrix is not of full rank, multiple solutions are possible
+          if (rowNumber>rank){
+            vector_x = readSolutionVector()
+            if ((matrixA.multiply(vector_x)).equals(vector_b) && userResponse.equals(expectedResponse)){
+              correct = 1
+            }
+          }
+          // If matrix is of full rank, unique solution is forced
           else {
-            responseScore = 0}
-        }
-      }
-
-      else {
-        // For Questions 1, 2, 3 and 4
-        if (consistencyPages.includes(page)){
-          expected_response = expectedResponse(parameter_dict, page)
-          responseValue = document.querySelector('input[name="multipleChoice"]:checked').value        
-          userResponse = new ResponseString(responseValue) 
-          responseScore = gradeResponse(page, matrices, userResponse, expected_response)
-        }
-        // For Questions 10 and 12
-        else if (nullspaceInferencePages.includes(page)){
-          expected_response = expectedResponse(parameter_dict, page)
-          responseValue = document.querySelector('input[name="multipleChoice"]:checked').value        
-          userResponse = new ResponseString(responseValue) 
-          responseScore = gradeResponse(page, matrices, userResponse, expected_response)
-        }
-        // For Questions 5, 6, 7 and 8
-        else {
-          // For Questions 5 and 7, mostly
-          if (uniquenessInferencePages.includes(page)){
-
-            rowNumber = parameter_dict[0]
-            rank = parameter_dict[2]
-            if (rowNumber>rank || uniquenessPages.includes(page)){
-              vector_x = readSolutionVector()
-              userResponse = vector_x
-              expected_response = expectedResponse(parameter_dict, page)
-              responseScore = gradeResponse(page, matrices, userResponse, expected_response)
+            if (userResponse.equals(expectedResponse)){
+              correct = 1
             }
-            // For Questions 6 and 8
-            else {
-              if (true){
-
-              }
-              expected_response = expectedResponse(parameter_dict, page)
-              responseScore = gradeResponse(page, matrices, userResponse, expected_response)
-            }
-            
           }
-
+        }
+        // For Questions 5 and 7
+        else {
+          vector_x = readSolutionVector()
+          if ((matrixA.multiply(vector_x)).equals(vector_b)){
+            correct = 1}
         }
       }
+      // For Questions 1, 2, 3, 4, 10, 12
+      else {
+        expected_response = expectedResponse(parameter_dict, page)
+        responseValue = document.querySelector('input[name="multipleChoice"]:checked').value
+        userResponse = new ResponseString(responseValue)
+        if (expected_response.equals(userResponse)){
+          correct = 1}
+        }
 
       feedbackArea = document.getElementById("feedback")
-
-      if (responseScore == 1){
+      if (correct == 1){
         feedbackArea.textContent = ""
         alert("Awesome, your answer is correct!")
         page += 1
         displayQuestion(page)
       }
-      else if (responseScore == 0){
+      else {
         feedbackArea.textContent = "Try again"
         alert("Sorry, that was either incorrect or that you did not show complete work.")
-      }
-      
+        }
     }
   }
 
@@ -1290,7 +1275,7 @@
       else {
         return new ResponseString("inconsistent")}
     }
-    else if (uniquenessInferencePages.includes(pages) || nullspaceInferencePages.includes(pages)){
+    else if (uniquenessInferencePages.includes(page) || nullspaceInferencePages.includes(page)){
       rowNumber = parameterDict[pageString][0]
       rank = parameterDict[pageString][2]
       if (rowNumber != rank){
@@ -1309,63 +1294,6 @@
     else {
       return new ResponseString("")
     }
-  }
-
-  function gradeResponse(page, matrices, userResponse, expected_response){
-    
-    
-    matrixA = matrices[0]
-    if (!matrixA.isInRREF()){
-      alert("The matrix is not yet in RREF.")
-      return 
-    }
-
-    consistencyPages = [0, 1, 2, 3] //
-    uniquenessPages = [4, 6] //
-    uniquenessInferencePages = [5, 7]
-    nullspacePages = [8, 10]
-    nullspaceInferencePages = [9, 11] //
-
-    // For Questions 5, 7, 13 and 14
-    if (uniquenessPages.includes(page) || newSolutionPages.includes(page)){
-      vector_b = matrices[1]
-      vector_x = userResponse
-      if ((matrixA.multiply(vector_x)).equals(vector_b)){
-        correct = 1}
-    }
-
-    // For Questions 6 and 8
-    else if (uniquenessInferencePages.includes(page)){
-      vector_b = matrices[1]
-      vector_x = userResponse
-
-      if ((matrixA.multiply(vector_x)).equals(vector_b) && true){
-        correct = 1}
-    }
-
-    // For Questions 9 and 11
-    else if (nullspacePages.includes(page)){
-      if (true){
-        vector_x = userResponse
-        if (matrixA.annihilates(vector_x)){
-          correct = 1
-        }
-      }
-      
-    }
-
-    // For Questions 10 and 12
-    else if (nullspaceInferencePages.includes(page)){
-      if (expected_response.equals(userResponse)){
-        correct = 1}
-    }
-
-    // For Questions 1, 2, 3 and 4
-    else {
-      if (expected_response.equals(userResponse)){
-        correct = 1}
-    }
-    return correct
   }
 
   function createAugmentedMatrix(width=70){    
