@@ -337,7 +337,7 @@
     <button onclick="previousPage()"> Previous </button>
     <button onclick="nextPage()"> Next </button>
     <button onclick="revertState()"> Undo </button>
-    <button id="none" onclick="submitResponse()" hidden> None </button>
+    <button id="none" onclick="submitResponse(impossibleAnswer=true)" hidden> None </button>
   </div>
   
   <div id="variables" style="position: absolute; top: 100px">
@@ -624,31 +624,25 @@
         return false}
 
       let zero = new RationalNumber(0, 1)
+      let o = []
       for (let i=0; i<this.rowDim; i++){
-        let sum = zero
-        for (let j=0; j<this.colDim; j++){
-          sum = sum.add(this[i][j].multiply(vector[j]))
-        }
-        if (sum.doesNotEqual(zero)){
-          return false}
-      } 
-      return true
+        o.push([zero])}
+      let zeroVector = new RationalMatrix(o)
+
+      return zeroVector.equals(this.multiply(vector))
     }
 
     leftAnnihilates(vector){
       if (vector.length != this.rowDim){
         return false}
 
-      zero = new RationalNumber(0, 1)
-      for (let j=0; j<this.colDim; j++){
-        let sum = zero
-        for (let i=0; i<this.rowDim; i++){
-          sum = sum.add(this[i][j].multiply(vector[i]))
-        }
-        if (sum.doesNotEqual(zero)){
-          return false}
-      } 
-      return true
+      let zero = new RationalNumber(0, 1)
+      let o = []
+      for (let i=0; i<this.colDim; i++){
+        o.push(zero)}
+      let zeroVector = new RationalMatrix(o)
+
+      return zeroVector.equals(vector.multiply(this))
     }
 
     swapRows(ithRow, jthRow){
@@ -759,7 +753,7 @@
     }
 
     limitColumns(start, end){
-      n = this.colDim
+      let n = this.colDim
       if (start > end){
         throw new Error("Starting index must be no greater than ending index.")
         return
@@ -995,7 +989,7 @@
         // Create a generic vector in Q^m that is not in the range of R.
         // The vector with the required property is guaranteed to be found 
         // because R is in RREF and is not of full rank but the final component of the vector is nonzero.
-        vector = []
+        vect = []
         Dist = [1,1,1,1,2,2,2,3,3,4,5]
         for (let i=0; i<rowNum; i++){
           den = Dist[q]
@@ -1005,9 +999,9 @@
             Q = generateRationalNumber(den, 2)}
           else {
             Q = generateRationalNumber(den, 2, allowZero=false)}
-          vector.push(Q)
+          vect.push(Q)
         }
-        matrixP = matrixR.appendColumns([vector])
+        matrixP = matrixR.appendColumns([vect])
       }
 
       matrixM = (matrixA.multiply(matrixC)).multiply(matrixP)
@@ -1036,8 +1030,6 @@
     "10. Does there exist one or many sets of solution to this system?",
     "11. Alright, is there a nonzero vector that lies in the associated nullspace of this system? If so, enter this vector and if not, select None.",
     "12. Does there exist one or many sets of solution to this system?",
-    "13. Let's switch gears. You are given a set of solutions to the following system. Can you use it to find another set of solutions?",
-    "14. Good, given this set of solution, can you use it to find another set of solutions?",
     "Awesome!"
   ]
   initialized = 0
@@ -1049,7 +1041,7 @@
     landingArea.innerHTML = quests[pageNum]
 
     States = []
-    if (pageNum < 14){
+    if (pageNum < 12){
       var page_string = (pageNum+1).toString()
       params = parameter_dict[page_string]
       numRows = params[0]
@@ -1072,14 +1064,20 @@
 
         label1 = document.getElementById("label1")
         label2 = document.getElementById("label2")
+        answer1 = document.getElementById("answer1")
+        answer2 = document.getElementById("answer2")
 
         if (consistencyPages.includes(pageNum)){
           label1.textContent = "Consistent System"
           label2.textContent = "Inconsistent System"
+          answer1.value = "consistent"
+          answer2.value = "inconsistent"
         }
         else if (uniquenessPages.includes(pageNum)){
           label1.textContent = "Unique Solution"
-          label2.textContent = "Multiple Solutions" 
+          label2.textContent = "Multiple Solutions"
+          answer1.value = "unique solution"
+          answer2.value = "multiple solutions"
         }
       }
       else {
@@ -1104,7 +1102,7 @@
     writeEquations()
   }
   
-  function submitResponse(){
+  function submitResponse(impossibleAnswer=false){
     if (initialized == 0){
       button = document.getElementById("submitButton")
       button.innerHTML = "Submit"
@@ -1112,41 +1110,101 @@
       displayQuestion(0)
     }
     else if (initialized == 1){
+      correct = 0
+
       M = readAugmentedMatrix()
       matrixA = M.limitColumns(0, M.colDim-2)
       matrix_b = M.limitColumns(M.colDim-1, M.colDim-1)
       matrices = [matrixA, matrix_b]
 
-      vectorPages = [4, 5, 6, 7, 8, 10, 12, 13]
+      vectorInputPages = [4, 5, 6, 7, 8, 10]
       consistencyPages = [0, 1, 2, 3]
+      uniquenessPages = [4, 6]
+      uniquenessInferencePages = [5, 7]
+      nullspacePages = [8, 10]
+      nullspaceInferencePages = [9, 11]
 
       responseScore = -1
 
-      if (vectorPages.includes(page)){
-        matrix_x = readSolutionVector()
+      if (vectorInputPages.includes(page)){
+        if (!matrixA.isInRREF()){
+          alert("The matrix is not yet in RREF.")
+          return 
+        }
+
+        // For Questions 9 and 11
+        if (nullspacePages.includes(page)){
+          pageString = (page+1).toString()
+          rowValue = parameter_dict[pageString][0]
+          rankValue = parameter_dict[pageString][2]
+          // If the matrix for the system is of full rank, then 'None' should be the correct answer
+          if (rowValue==rankValue && impossibleAnswer==true){
+            responseScore = 1}
+          // If the matrix for the system is not of full rank, then the matrix should annihilate the vector
+          else if (rowValue>rankValue && impossibleAnswer==false){
+            matrix_x = readSolutionVector()
+            if (matrixA.annihilates(matrix_x)){
+              responseScore = 1}
+            else {
+              responseScore = 0}
+          }
+          // All other responses are graded as being incorrect
+          else {
+            responseScore = 0}
+        }
       }
 
       else {
+        // For Questions 1, 2, 3 and 4
         if (consistencyPages.includes(page)){
           expected_response = expectedResponse(parameter_dict, page)
           responseValue = document.querySelector('input[name="multipleChoice"]:checked').value        
           userResponse = new ResponseString(responseValue) 
           responseScore = gradeResponse(page, matrices, userResponse, expected_response)
         }
+        // For Questions 10 and 12
+        else if (nullspaceInferencePages.includes(page)){
+          expected_response = expectedResponse(parameter_dict, page)
+          responseValue = document.querySelector('input[name="multipleChoice"]:checked').value        
+          userResponse = new ResponseString(responseValue) 
+          responseScore = gradeResponse(page, matrices, userResponse, expected_response)
+        }
+        // For Questions 5, 6, 7 and 8
         else {
+          // For Questions 5 and 7, mostly
+          if (uniquenessInferencePages.includes(page)){
+
+            rowNumber = parameter_dict[0]
+            rank = parameter_dict[2]
+            if (rowNumber>rank || uniquenessPages.includes(page)){
+              vector_x = readSolutionVector()
+              userResponse = vector_x
+              expected_response = expectedResponse(parameter_dict, page)
+              responseScore = gradeResponse(page, matrices, userResponse, expected_response)
+            }
+            // For Questions 6 and 8
+            else {
+              if (true){
+
+              }
+              expected_response = expectedResponse(parameter_dict, page)
+              responseScore = gradeResponse(page, matrices, userResponse, expected_response)
+            }
+            
+          }
 
         }
       }
 
       feedbackArea = document.getElementById("feedback")
 
-      if (correct == 1){
+      if (responseScore == 1){
         feedbackArea.textContent = ""
         alert("Awesome, your answer is correct!")
         page += 1
         displayQuestion(page)
       }
-      else if (correct == 0){
+      else if (responseScore == 0){
         feedbackArea.textContent = "Try again"
         alert("Sorry, that was either incorrect or that you did not show complete work.")
       }
@@ -1210,40 +1268,40 @@
     A12 = A11
     parameterDict["12"] = parameterDict["11"]
 
-    A13 = makeAugmentedMatrix(3, 4, 2)
-    parameterDict["13"] = [3, 4, 2, true]
-    A14 = makeAugmentedMatrix(4, 5, 3)
-    parameterDict["14"] = [4, 5, 3, true]
-
     matrixList = [
-      A1, A2, A3, A4, A5, A6, A7,
-      A8, A9, A10, A11, A12, A13, A14
+      A1, A2, A3, A4, A5, A6, 
+      A7, A8, A9, A10, A11, A12
       ]
 
     return [matrixList, parameterDict]
   }
 
   function expectedResponse(parameterDict, page){
+    consistencyPages = [0, 1, 2, 3]
+    uniquenessInferencePages = [5, 7]
+    nullspacePages = [8, 10]
+    nullspaceInferencePages = [9, 11]
+
     pageString = (page+1).toString()
-    if (page==0 || page==1 || page==2 || page==3){
+    if (consistencyPages.includes(page)){
       cons = parameterDict[pageString][3]
       if (cons){
         return new ResponseString("consistent")}
       else {
         return new ResponseString("inconsistent")}
     }
-    else if (page==5 || page==7 || page==9 || page==11){
-      row_number = parameterDict[pageString][0]
+    else if (uniquenessInferencePages.includes(pages) || nullspaceInferencePages.includes(pages)){
+      rowNumber = parameterDict[pageString][0]
       rank = parameterDict[pageString][2]
-      if (row_number != rank){
+      if (rowNumber != rank){
         return new ResponseString("multiple solutions")}
       else {
         return new ResponseString("unique solution")}
     }
-    else if (page==8 || page==10){
-      row_number = parameterDict[pageString][0]
+    else if (nullspacePages.includes(page)){
+      rowNumber = parameterDict[pageString][0]
       rank = parameterDict[pageString][2]
-      if (row_number == rank){
+      if (rowNumber == rank){
         return new ResponseString("trivial nullspace")}
       else {
         return new ResponseString("")}
@@ -1254,7 +1312,7 @@
   }
 
   function gradeResponse(page, matrices, userResponse, expected_response){
-    correct = 0
+    
     
     matrixA = matrices[0]
     if (!matrixA.isInRREF()){
@@ -1262,22 +1320,51 @@
       return 
     }
 
-    if (page==4 || page==6){
+    consistencyPages = [0, 1, 2, 3] //
+    uniquenessPages = [4, 6] //
+    uniquenessInferencePages = [5, 7]
+    nullspacePages = [8, 10]
+    nullspaceInferencePages = [9, 11] //
+
+    // For Questions 5, 7, 13 and 14
+    if (uniquenessPages.includes(page) || newSolutionPages.includes(page)){
       vector_b = matrices[1]
-      vector_x = userResponse[0]
+      vector_x = userResponse
       if ((matrixA.multiply(vector_x)).equals(vector_b)){
         correct = 1}
-    }
-    else if (page==12 || page==13){
-      vector_b = matrices[1]
-      vector_x = userResponse[0]
-      if ((matrixA.multiply(vector_x)).equals(vector_b)){
-        correct = 1}
-    }
-    else if (expected_response.equals(userResponse)){
-      correct = 1
     }
 
+    // For Questions 6 and 8
+    else if (uniquenessInferencePages.includes(page)){
+      vector_b = matrices[1]
+      vector_x = userResponse
+
+      if ((matrixA.multiply(vector_x)).equals(vector_b) && true){
+        correct = 1}
+    }
+
+    // For Questions 9 and 11
+    else if (nullspacePages.includes(page)){
+      if (true){
+        vector_x = userResponse
+        if (matrixA.annihilates(vector_x)){
+          correct = 1
+        }
+      }
+      
+    }
+
+    // For Questions 10 and 12
+    else if (nullspaceInferencePages.includes(page)){
+      if (expected_response.equals(userResponse)){
+        correct = 1}
+    }
+
+    // For Questions 1, 2, 3 and 4
+    else {
+      if (expected_response.equals(userResponse)){
+        correct = 1}
+    }
     return correct
   }
 
@@ -1413,6 +1500,10 @@
     x = []
     for (let j=0; j<numCols-1; j++){
       address = document.getElementById(variables[j]+"-val")
+      if (!address.value){
+        alert("Rational entries are expected for each variable.")
+        return
+      }
       x.push([address.value])
     }
     return new RationalMatrix(x)
@@ -1713,7 +1804,7 @@
   questions = [
     0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 
-    0, 0, 0, 0
+    0, 0
     ]
   the_time = Date.now()
   //make_grades(Module_Number)
