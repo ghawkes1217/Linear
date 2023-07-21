@@ -1049,6 +1049,7 @@
     landingArea.innerHTML = quests[pageNum]
 
     States = []
+    recordState()
     if (pageNum < 12){
       var page_string = (pageNum+1).toString()
       params = parameter_dict[page_string]
@@ -1064,13 +1065,13 @@
       multipleChoicePages = [0, 1, 2, 3, 5, 7, 9, 11]
       vectorInputPages = [4, 5, 6, 7, 8, 10]
       consistencyPages = [0, 1, 2, 3]
-      uniquenessInferencePages = [5, 7]
-      nullspaceInferencePages = [9, 11]
+      inferencePages = [5, 7, 9, 11]
+      nullspacePages = [8, 10]
 
+      button.hidden = true
       if (multipleChoicePages.includes(pageNum)){
         multipleChoiceArea.hidden = false
-        button.hidden = true
-
+        
         label1 = document.getElementById("label1")
         label2 = document.getElementById("label2")
         answer1 = document.getElementById("answer1")
@@ -1082,7 +1083,7 @@
           answer1.value = "consistent"
           answer2.value = "inconsistent"
         }
-        else if (uniquenessInferencePages.includes(pageNum) || nullspaceInferencePages.includes(pageNum)){
+        else if (inferencePages.includes(pageNum)){
           label1.textContent = "Unique Solution"
           label2.textContent = "Multiple Solutions"
           answer1.value = "unique solution"
@@ -1091,11 +1092,8 @@
       }
       else {
         multipleChoiceArea.hidden = true
-
-        if (nullspaceInferencePages.includes(pageNum)){
-          button.hidden = false}
-        else {
-          button.hidden = true}
+        if (nullspacePages.includes(pageNum)){
+            button.hidden = false}
       }
 
       if (vectorInputPages.includes(pageNum)){
@@ -1146,7 +1144,7 @@
         return 
       }
 
-      vectorInputPages = [4, 5, 6, 7, 8, 10]
+      vectorInputPages = [4, 5, 6, 7, 8, 10, 12]
       uniquenessPages = [4, 6]
       uniquenessInferencePages = [5, 7]
       nullspacePages = [8, 10]
@@ -1199,6 +1197,9 @@
           vector_x = readSolutionVector()
           if ((matrixA.multiply(vector_x)).equals(vector_b)){
             correct = 1}
+          if (page==12 && correct==1){
+            alert("Fantastic, you have unlocked a secret for this module! Try to find another solution.")
+          }
         }
       }
       // For Questions 1, 2, 3, 4, 10, 12
@@ -1215,12 +1216,14 @@
       if (correct == 1){
         feedbackArea.textContent = ""
         alert("Awesome, your answer is correct!")
-        page += 1
-        displayQuestion(page)
+        if (page < 11){
+          page += 1
+          displayQuestion(page)  
+        }
       }
       else {
         feedbackArea.textContent = "Try again"
-        alert("Sorry, that was either incorrect or that you did not show complete work.")
+        alert("Sorry, that was incorrect.")
         }
     }
   }
@@ -1622,6 +1625,7 @@
     writeEquations()
 
     States = []
+    recordState()
     //score()
   }
 
@@ -1653,16 +1657,15 @@
     States.push(state)
   }
 
-  // removes the most recently performed operation from memory
+  // Removes the most recently performed operation from memory
   function revertState(){
-    lastState = States[States.length-1]
-
-    Entries = readAugmentedMatrix()
-    for (let i=0; i<Entries.length; i++){
-      for (let j=0; j<Entries[i].length; j++){
-        Entries[i][j].textContent = lastState[0][i][j].toString()
-      }
+    if (States.length == 1){
+      alert("There are no operations to undo!")
+      return
     }
+
+    lastState = States[States.length-1]
+    writeAugmentedMatrix(lastState[0])
     
     COL = []
     for (let j=0; j<numRows; j++){
@@ -1670,6 +1673,7 @@
       colortip.style.backgroundColor = lastState[1][j]
     } 
     States.splice(States.length-1, 1)
+    writeEquations()
   }
 
   function switchAdjacentRows(){
@@ -1682,23 +1686,13 @@
     FirstColor = COL[i-1].style.backgroundColor
     SecondColor = COL[i].style.backgroundColor
     
-    var Entries = readAugmentedMatrix()
-    First = Entries[i-1]
-    Second = Entries[i]
-    
-    var FirstHTML = []
-    var SecondHTML = []
-    for (let j=0; j<numCols; j++){
-      FirstHTML.push(First[j].innerHTML)
-      SecondHTML.push(Second[j].innerHTML)
-    }
-    for (let j=0; j<numCols; j++){
-      First[j].innerHTML = SecondHTML[j]
-      Second[j].innerHTML = FirstHTML[j]
-    }
-    
     COL[i-1].style.backgroundColor = SecondColor
     COL[i].style.backgroundColor = FirstColor
+
+    A = readAugmentedMatrix()
+    A = A.swapRows(i-1, i)
+    writeAugmentedMatrix(A)
+    
     writeEquations()
   }
 
