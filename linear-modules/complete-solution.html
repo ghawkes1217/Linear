@@ -126,6 +126,12 @@
       height: 30px;
       font-size: 20px;
       left: 50px;}
+
+    #completed {
+      position: absolute;
+      left: 10px;
+      top: 650px
+    }
   </style>
 </head>
 
@@ -348,6 +354,10 @@
 
   <!-- Displays augmented matrix gadget -->
   <div id="outer">
+  </div>
+
+  <div id="completed">
+    <h2>Completed Questions:</h2>
   </div>
 </div>
 
@@ -1095,19 +1105,6 @@
         if (nullspacePages.includes(pageNum)){
             button.hidden = false}
       }
-
-      if (vectorInputPages.includes(pageNum)){
-        for (let i=0; i<numCols-1; i++){
-          variableInput = document.getElementById(variables[i]+'-val')
-          variableInput.disabled = false
-        }
-      }
-      else {
-        for (let i=0; i<numCols-1; i++){
-          variableInput = document.getElementById(variables[i]+'-val')
-          variableInput.disabled = true
-        }
-      }
     }
     else {
       numRows = 6
@@ -1178,7 +1175,12 @@
 
           // Collect user response from radio input
           expectedResponse = getExpectedResponse(parameter_dict, page)
-          responseValue = document.querySelector('input[name="multipleChoice"]:checked').value
+          selectedResponse = document.querySelector('input[name="multipleChoice"]:checked')
+          if (selectedResponse==null){
+            alert("A choice needs to be selected.")
+            return 
+          }
+          responseValue = selectedResponse.value
           userResponse = new ResponseString(responseValue)
           // If matrix is not of full rank, multiple solutions are possible
           if (rowNumber>rank){
@@ -1206,7 +1208,12 @@
       else {
         // Collect user response from radio input
         expectedResponse = getExpectedResponse(parameter_dict, page)
-        responseValue = document.querySelector('input[name="multipleChoice"]:checked').value
+        selectedResponse = document.querySelector('input[name="multipleChoice"]:checked')
+        if (selectedResponse==null){
+          alert("A choice needs to be selected.")
+          return 
+        }
+        responseValue = selectedResponse.value
         userResponse = new ResponseString(responseValue)
         if (userResponse.equals(expectedResponse)){
           correct = 1}
@@ -1216,7 +1223,14 @@
       if (correct == 1){
         feedbackArea.textContent = ""
         alert("Awesome, your answer is correct!")
-        if (page < 11){
+
+        var answeredQuestion = document.createElement('div')
+        answeredQuestion.innerHTML = quests[page]
+        answeredQuestion.style.color="grey"
+        var completedQuestions = document.getElementById("completed")
+        completedQuestions.appendChild(answeredQuestion)
+        
+        if (page < 12){
           page += 1
           displayQuestion(page)  
         }
@@ -1411,15 +1425,18 @@
       boxes.appendChild(variable)
     }
 
-    for (let i=0; i<numCols-1; i++){
-      solution = document.createElement('input')
-      solution.className = 'solutionSet'
-      solution.name = variables[i]+'-val'
-      solution.type = 'text'
-      solution.style.left = (w*i+110)+"px"
-      solution.id = variables[i]+'-val'
+    vectorInputPages = [4, 5, 6, 7, 8, 10, 12]
+    if (vectorInputPages.includes(page)){
+      for (let i=0; i<numCols-1; i++){
+        solution = document.createElement('input')
+        solution.className = 'solutionSet'
+        solution.name = variables[i]+'-val'
+        solution.type = 'text'
+        solution.style.left = (w*i+110)+"px"
+        solution.id = variables[i]+'-val'
 
-      boxes.appendChild(solution)
+        boxes.appendChild(solution)
+      }
     }
   }
 
@@ -1692,7 +1709,7 @@
     A = readAugmentedMatrix()
     A = A.swapRows(i-1, i)
     writeAugmentedMatrix(A)
-    
+
     writeEquations()
   }
 
