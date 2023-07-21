@@ -63,7 +63,7 @@
 
     .center {
       text-align: center;
-      font-size: 30px;}
+      font-size: 24px;}
 
     .separators {
       top: 40px;
@@ -75,7 +75,7 @@
       position: absolute;
       background-color: lightyellow;
       left: 5px;
-      font-size: 22px;
+      font-size: 24px;
       width: 55px;
       height: 40px;}
 
@@ -87,7 +87,7 @@
     }
 
     .multiplyButtons {
-      font-size: 22px;
+      font-size: 24px;
       position: absolute;
       height: 46px;
       width: 28px;
@@ -306,7 +306,7 @@
     You may perform row operations onto the matrix shown below:
     <ul>
       <li>
-        To swap two rows, drag one of them and release it onto another, 
+        To swap two rows, drag one of them and release it onto another; clicking on switchbars swaps two adjacent rows, 
       </li>
       <li>
         To scale a row, enter a rational number (of the form $a/b$) next to that row and click on the $\times$ symbol next to it,
@@ -315,7 +315,7 @@
         To add a multiple of one row to another, enter a rational number next to the row to be multiplied, then drag release it onto the target row.
       </li>
     </ul>
-    The result is always shown on the screen to the right of the matrix. 
+    The resulting system of equations is always shown on the screen to the right of the matrix. 
     Feel free to hit 'Undo' if you would like to backtrack some performed operations.
   </p>
 </div>
@@ -882,7 +882,7 @@
 
   function generateRationalTuple(rank){
     scalars = []
-    Dist = [1,1,1,1,2,2,2,3,3,4,5]
+    Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4,5]
     q = generateInteger(0, Dist.length-1)
     den = Dist[q]
     for (let i=0; i<rank; i++){
@@ -904,7 +904,7 @@
     one = new RationalNumber(1, 1)
 
     R = []
-    Dist = [1,1,1,1,2,2,2,3,3,4,5]
+    Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4,5]
     for (let i=0; i<rowNum; i++){
       row = []
       q = generateInteger(0, Dist.length-1)
@@ -980,7 +980,7 @@
   function appendConsistentColumn(matrixR){
     column = []
     zero = new RationalNumber(0, 1)
-    Dist = [1,1,1,1,2,2,2,3,3,4,5]
+    Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4,5]
     for (let i=0; i<matrixR.rowDim; i++){
       if (matrixR.firstNonZero(i)==matrixR.colDim){
         column.push(zero)}
@@ -1008,7 +1008,7 @@
         // The vector with the required property is guaranteed to be found 
         // because R is in RREF and is not of full rank but the final component of the vector is nonzero.
         vect = []
-        Dist = [1,1,1,1,2,2,2,3,3,4,5]
+        Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4,5]
         for (let i=0; i<rowNum; i++){
           den = Dist[q]
           q = generateInteger(0, Dist.length-1)
