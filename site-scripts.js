@@ -1,4 +1,7 @@
 
+
+
+
 function pop() {
   sql_retrieve(Module_Number)
       var popup = document.getElementById("myPopup");
@@ -143,7 +146,6 @@ alert(gradestring)
     MathJax.typesetPromise()
   }
   }
-
 
 
 
