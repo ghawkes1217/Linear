@@ -1,222 +1,219 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!-- The following adds MathJax to render LaTeX notation -->
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
-        <link rel="stylesheet" href="../styles.css">
-        <script src="../site-scripts.js"></script>
-      </head>
+<head>
+  <!-- The following adds MathJax to render LaTeX notation -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../site-scripts.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]},
+    }
+  </script>
+</head>
 <style>
-#blank {
-  position: relative;
-}
+  #blank {
+    position: relative;}
 
-#outer {
-  position: absolute;
-  height: 400px;
-  width: 400px;
-  left: 0px;
-  top: 40px;
-  background-color: white;
-  text-align: center;
-  border: 9px solid #d3d3d3;}
+  #outer {
+    position: absolute;
+    height: 400px;
+    width: 400px;
+    left: 0px;
+    top: 40px;
+    background-color: white;
+    text-align: center;
+    border: 9px solid #d3d3d3;}
 
- #bluetip {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 90px;
-  top: 90px;
-  background-color: grey;}
+  #bluetip {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 90px;
+    top: 90px;
+    background-color: grey;}
   
-   #greentip {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 290px;
-  top: 90px;
-  background-color: grey;}
-
+  #greentip {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 290px;
+    top: 90px;
+    background-color: grey;}
 
   #redtip {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 90px;
-  top: 290px;
-  background-color: grey;}
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 90px;
+    top: 290px;
+    background-color: grey;}
   
- #matrix {
-  position: absolute;
-  height: 260px;
-  width: 370px;
-  left: 425px;
-  top: 40px;
-  background-color: lightgrey;
-  text-align: center;}
+  #matrix {
+    position: absolute;
+    height: 260px;
+    width: 370px;
+    left: 425px;
+    top: 40px;
+    background-color: lightgrey;
+    text-align: center;}
   
   #M11 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 20px;
-  top: 50px;
-  background-color: blue;
-  text-align: center;}
+    position: absolute;
+    height: 20px;
+    width: 60px;
+    left: 20px;
+    top: 50px;
+    background-color: blue;
+    text-align: center;}
   
-    #M21 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 20px;
-  top: 70px;
-  background-color: blue;
-  text-align: center;}
+  #M21 {
+    position: absolute;
+    height: 20px;
+    width: 60px;
+    left: 20px;
+    top: 70px;
+    background-color: blue;
+    text-align: center;}
   
   #M12 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 80px;
-  top: 50px;
-  background-color: red;
-  text-align: center;}
+    position: absolute;
+    height: 20px;
+    width: 60px;
+    left: 80px;
+    top: 50px;
+    background-color: red;
+    text-align: center;}
 
-    #M22 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 80px;
-  top: 70px;
-  background-color: red;
-  text-align: center;}
+  #M22 {
+    position: absolute;
+    height: 20px;
+    width: 60px;
+    left: 80px;
+    top: 70px;
+    background-color: red;
+    text-align: center;}
   
-     #times {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 145px;
-  top: 60px;
-  background-color: lightgrey;
-  text-align: center;}
+  #times {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 145px;
+    top: 60px;
+    background-color: lightgrey;
+    text-align: center;}
 
-       #equals {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 235px;
-  top: 60px;
-  background-color: lightgrey;
-  text-align: center;}
-  
+  #equals {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 235px;
+    top: 60px;
+    background-color: lightgrey;
+    text-align: center;}
   
   #V1 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 170px;
-  top: 50px;
-  background-color: blue;
-  text-align: center;}
+    position: absolute;
+    height: 20px;
+    width: 60px;
+    left: 170px;
+    top: 50px;
+    background-color: blue;
+    text-align: center;}
   
-    #V2 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 170px;
-  top: 70px;
-  background-color: red;
-  text-align: center;}
+  #V2 {
+    position: absolute;
+    height: 20px;
+    width: 60px;
+    left: 170px;
+    top: 70px;
+    background-color: red;
+    text-align: center;}
   
   #w1 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 265px;
-  top: 50px;
-  color: purple;
-  text-align: center;
-  border: 1px solid black;}
+    position: absolute;
+    height: 20px;
+    width: 45px;
+    left: 265px;
+    top: 50px;
+    color: purple;
+    text-align: center;
+    border: 1px solid black;}
   
-  
-  
-    #w2 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 265px;
-  top: 70px;
-  color: purple;
-  text-align: center;
-  border: 1px solid black;}
+  #w2 {
+    position: absolute;
+    height: 20px;
+    width: 45px;
+    left: 265px;
+    top: 70px;
+    color: purple;
+    text-align: center;
+    border: 1px solid black;}
  
-    #but {
-  position: absolute;
-  height: 30px;
-  width: 30px;
-  left: 290px;
-  top:30px;
-  background-color: black;
-  text-align: center;}
+  #but {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    left: 290px;
+    top:30px;
+    background-color: black;
+    text-align: center;}
   
   #but2 {
-  position: absolute;
-  height: 30px;
-  width: 30px;
-  left: 235px;
-  top:10px;
-  background-color: black;
-  text-align: center;}
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    left: 235px;
+    top:10px;
+    background-color: black;
+    text-align: center;}
 
- #sub {
-  position: absolute;
-  height: 30px;
-  width: 380px;
-  left: 40px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
+  #sub {
+    position: absolute;
+    height: 30px;
+    width: 380px;
+    left: 40px;
+    top: 10px;
+    background-color: white;
+    text-align: center;}
 
-     #try {
-  position: absolute;
-  height: 30px;
-  width: 80px;
-  left: 560px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
-  
+  #try {
+    position: absolute;
+    height: 30px;
+    width: 80px;
+    left: 560px;
+    top: 10px;
+    background-color: white;
+    text-align: center;}  
 
   #score {
-  position: absolute;
-  height: 220px;
-  width: 90px;
-  left: 990px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
+    position: absolute;
+    height: 220px;
+    width: 90px;
+    left: 990px;
+    top: 10px;
+    background-color: white;
+    text-align: center;}
+
   #MatEq {
-  position: absolute;
-  top: 95px;
-  height: 60px;
-  width: 370px;
-  background-color: lightgrey;
-  text-align: center;}
+    position: absolute;
+    top: 95px;
+    height: 60px;
+    width: 370px;
+    background-color: lightgrey;
+    text-align: center;}
 
   #completed {
-  position: absolute;
-  left: 10px;
-  top: 500px}
+    position: absolute;
+    left: 10px;
+    top: 500px}
 
   #question {
-  position: relative;
-  height: 35px;
-}
-  
+    position: relative;
+    height: 35px;}
  </style>
 
- 
 <body>
 <div>
   <div style="position: absolute;">
@@ -226,10 +223,12 @@
     <a href="../feedback.html">Provide Feedback &#8594</a>
   </div>
     <h2><center>Module 15: Span and Dimension</center></h2>
+</div>
+
 <p>
-The span of a set of vectors \(v_1,v_2,\ldots,v_n\) is the set of all linear combinations 
-of these vectors.  We denote the span by \( \langle v_1,v_2,\ldots,v_n\ \rangle\). It can be 
-shown that the span of any set of vectors is a vector subspace.  
+  The span of a set of vectors $v_1,v_2,\ldots,v_n$ is the set of all linear combinations of these vectors.  
+  We denote the span by $\langle v_1,v_2,\ldots,v_n\ \rangle$. 
+  It can be shown that the span of any set of vectors is a vector subspace.  
 </p>
 
 <p>
@@ -237,51 +236,38 @@ shown that the span of any set of vectors is a vector subspace.
   The dimension of a vector subspace is the smallest number of vectors needed to span 
   that subspace.  
 </p>
-<p>
-  For instance, the span of  \( \langle \begin{bmatrix} 1\\-1\\0 \end{bmatrix}, 
-   \begin{bmatrix} 0\\1\\-1 \end{bmatrix}, \begin{bmatrix} 1\\0\\-1 \end{bmatrix}\rangle\)
-  is the vector subspace that is equal to all vectors in \(\mathbb{R}^3\) whose coordinates 
-  sum to 0.  However, this subspace has dimension two.  This is because this  can be written 
-  as the span of just two vectors as  \( \langle \begin{bmatrix} 1\\-1\\0 \end{bmatrix}, 
-   \begin{bmatrix} 0\\1\\-1 \end{bmatrix}\rangle \).  (But there is no way 
-  to write this subspace as the span of just one vector.) 
-</p>
-
-
-
-
-
-
 
 <p>
-In this module there are 5 vectors, \(v_1,v_2,v_3,v_4,v_5\) each with 5 entries.  You are tasked with filling in 
-the entries of these vectors in such a way that satisfies the conditions of the problem. In some 
-problems some of the entries will be fixed.  In addition, some problems will be "True or False."
-In the case that they are false, you are tasked with finding a counterexample to the statement.
-To check the dimension of the subspace spanned by any subset of the five vectors simply select 
-each vector in that subset.  For instance to check the dimension of \( \langle v_1,v_2,v_4 \rangle \)
-simply click the select buttons below \(v_1\), \(v_2\), and \(v_4\).  To check a different subset 
-click the "clear selection" button.
-
-
+  For instance, the span of  
+  $\left\langle 
+   \begin{bmatrix} 1\\-1\\0 \end{bmatrix}, 
+   \begin{bmatrix} 0\\1\\-1 \end{bmatrix}, 
+   \begin{bmatrix} 1\\0\\-1 \end{bmatrix}
+   \right\rangle$
+  is the vector subspace that is equal to all vectors in $\mathbb{R}^3$ whose coordinates sum to $0$. 
+  However, this subspace has dimension two. 
+  This is because this  can be written as the span of just two vectors as 
+  $\left\langle 
+   \begin{bmatrix} 1\\-1\\0 \end{bmatrix}, 
+   \begin{bmatrix} 0\\1\\-1 \end{bmatrix}
+  \right\rangle$.  
+  However, there is no way to write this subspace as the span of just one vector as the vectors $\begin{bmatrix} 1\\-1\\0 \end{bmatrix}$ and $\begin{bmatrix} 0\\1\\-1 \end{bmatrix}$ are not parallel.
 </p>
-
-
-
-
-
-Interactive to be added at a later date.
-</p>  
-
-
 
 <p>
-
+  In this module there are five vectors, $v_1,v_2,v_3,v_4,v_5$, each with five entries. 
+  You are tasked with filling in the entries of these vectors in such a way that satisfies the conditions of the problem. 
+  In some problems some of the entries will be fixed. 
+  In addition, some problems will expect "True" or "False" responses.
+  In the case that "False" is expected, you need to finding a counterexample to the statement.
+  To check the dimension of the subspace spanned by any subset of the five vectors simply select 
+  each vector in that subset. 
+  For instance to check the dimension of $\langle v_1,v_2,v_4 \rangle$ simply click the select buttons below $v_1$, $v_2$, and $v_4$. 
+  To check a different subset click the "Clear Selection" button.
 </p>
 
-
-
-
-
+<p>
+  Interactive to be added at a later date.
+</p>
 </body>
 </html>
