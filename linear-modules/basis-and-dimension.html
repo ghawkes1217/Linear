@@ -13,179 +13,15 @@
   </script>
 </head>
 <style>
-  #blank {
-    position: relative;}
-
-  #outer {
-    position: absolute;
-    height: 400px;
-    width: 400px;
-    left: 0px;
-    top: 40px;
-    background-color: white;
-    text-align: center;
-    border: 9px solid #d3d3d3;}
-
-  #bluetip {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 90px;
-    top: 90px;
-    background-color: grey;}
-  
-  #greentip {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 290px;
-    top: 90px;
-    background-color: grey;}
-
-  #redtip {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 90px;
-    top: 290px;
-    background-color: grey;}
-  
-  #matrix {
-    position: absolute;
-    height: 260px;
-    width: 370px;
-    left: 425px;
-    top: 40px;
-    background-color: lightgrey;
-    text-align: center;}
-  
-  #M11 {
-    position: absolute;
-    height: 20px;
+  .variables {
     width: 60px;
-    left: 20px;
-    top: 50px;
-    background-color: blue;
-    text-align: center;}
-  
-  #M21 {
-    position: absolute;
-    height: 20px;
-    width: 60px;
-    left: 20px;
-    top: 70px;
-    background-color: blue;
-    text-align: center;}
-  
-  #M12 {
-    position: absolute;
-    height: 20px;
-    width: 60px;
-    left: 80px;
-    top: 50px;
-    background-color: red;
-    text-align: center;}
+  }
 
-  #M22 {
-    position: absolute;
-    height: 20px;
-    width: 60px;
-    left: 80px;
-    top: 70px;
-    background-color: red;
-    text-align: center;}
-  
-  #times {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 145px;
-    top: 60px;
-    background-color: lightgrey;
-    text-align: center;}
-
-  #equals {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 235px;
-    top: 60px;
-    background-color: lightgrey;
-    text-align: center;}
-  
-  #V1 {
-    position: absolute;
-    height: 20px;
-    width: 60px;
-    left: 170px;
-    top: 50px;
-    background-color: blue;
-    text-align: center;}
-  
-  #V2 {
-    position: absolute;
-    height: 20px;
-    width: 60px;
-    left: 170px;
-    top: 70px;
-    background-color: red;
-    text-align: center;}
-  
-  #w1 {
-    position: absolute;
-    height: 20px;
-    width: 45px;
-    left: 265px;
-    top: 50px;
-    color: purple;
-    text-align: center;
-    border: 1px solid black;}
-  
-  #w2 {
-    position: absolute;
-    height: 20px;
-    width: 45px;
-    left: 265px;
-    top: 70px;
-    color: purple;
-    text-align: center;
-    border: 1px solid black;}
- 
-  #but {
-    position: absolute;
-    height: 30px;
-    width: 30px;
-    left: 290px;
-    top:30px;
-    background-color: black;
-    text-align: center;}
-  
-  #but2 {
-    position: absolute;
-    height: 30px;
-    width: 30px;
-    left: 235px;
-    top:10px;
-    background-color: black;
-    text-align: center;}
-
-  #sub {
-    position: absolute;
-    height: 30px;
-    width: 380px;
-    left: 40px;
-    top: 10px;
-    background-color: white;
-    text-align: center;}
-
-  #try {
-    position: absolute;
-    height: 30px;
-    width: 80px;
-    left: 560px;
-    top: 10px;
-    background-color: white;
-    text-align: center;}  
+  .entries {
+    width: 50px;
+    background-color: lightyellow;
+    border: 3px steelblue ridge;
+  } 
 
   #score {
     position: absolute;
@@ -194,14 +30,6 @@
     left: 990px;
     top: 10px;
     background-color: white;
-    text-align: center;}
-
-  #MatEq {
-    position: absolute;
-    top: 95px;
-    height: 60px;
-    width: 370px;
-    background-color: lightgrey;
     text-align: center;}
 
   #completed {
@@ -225,49 +53,661 @@
     <h2><center>Module 15: Span and Dimension</center></h2>
 </div>
 
-<p>
-  The span of a set of vectors $v_1,v_2,\ldots,v_n$ is the set of all linear combinations of these vectors.  
-  We denote the span by $\langle v_1,v_2,\ldots,v_n\ \rangle$. 
-  It can be shown that the span of any set of vectors is a vector subspace.  
-</p>
+<div id="introduction">
+  <p>
+    The span of a set of vectors $v_1,v_2,\ldots,v_n$ is the set of all linear combinations of these vectors.  
+    We denote the span by $\langle v_1,v_2,\ldots,v_n\ \rangle$. 
+    It can be shown that the span of any set of vectors is a vector subspace.  
+  </p>
 
-<p>
-  On the other hand, any vector subspace can be written as the span of some set of vectors.
-  The dimension of a vector subspace is the smallest number of vectors needed to span 
-  that subspace.  
-</p>
+  <p>
+    On the other hand, any vector subspace can be written as the span of some set of vectors.
+    The dimension of a vector subspace is the smallest number of vectors needed to span 
+    that subspace.  
+  </p>
 
-<p>
-  For instance, the span of  
-  $\left\langle 
-   \begin{bmatrix} 1\\-1\\0 \end{bmatrix}, 
-   \begin{bmatrix} 0\\1\\-1 \end{bmatrix}, 
-   \begin{bmatrix} 1\\0\\-1 \end{bmatrix}
-   \right\rangle$
-  is the vector subspace that is equal to all vectors in $\mathbb{R}^3$ whose coordinates sum to $0$. 
-  However, this subspace has dimension two. 
-  This is because this  can be written as the span of just two vectors as 
-  $\left\langle 
-   \begin{bmatrix} 1\\-1\\0 \end{bmatrix}, 
-   \begin{bmatrix} 0\\1\\-1 \end{bmatrix}
-  \right\rangle$.  
-  However, there is no way to write this subspace as the span of just one vector as the vectors $\begin{bmatrix} 1\\-1\\0 \end{bmatrix}$ and $\begin{bmatrix} 0\\1\\-1 \end{bmatrix}$ are not parallel.
-</p>
+  <p>
+    For instance, the span of  
+    $\left\langle 
+     \begin{bmatrix} 1\\-1\\0 \end{bmatrix}, 
+     \begin{bmatrix} 0\\1\\-1 \end{bmatrix}, 
+     \begin{bmatrix} 1\\0\\-1 \end{bmatrix}
+     \right\rangle$
+    is the vector subspace that is equal to all vectors in $\mathbb{R}^3$ whose coordinates sum to $0$. 
+    However, this subspace has dimension two. 
+    This is because this  can be written as the span of just two vectors as 
+    $\left\langle 
+     \begin{bmatrix} 1\\-1\\0 \end{bmatrix}, 
+     \begin{bmatrix} 0\\1\\-1 \end{bmatrix}
+    \right\rangle$.  
+    However, there is no way to write this subspace as the span of just one vector as the vectors $\begin{bmatrix} 1\\-1\\0 \end{bmatrix}$ and $\begin{bmatrix} 0\\1\\-1 \end{bmatrix}$ are not parallel.
+  </p>
+</div>
 
-<p>
-  In this module there are five vectors, $v_1,v_2,v_3,v_4,v_5$, each with five entries. 
-  You are tasked with filling in the entries of these vectors in such a way that satisfies the conditions of the problem. 
-  In some problems some of the entries will be fixed. 
-  In addition, some problems will expect "True" or "False" responses.
-  In the case that "False" is expected, you need to finding a counterexample to the statement.
-  To check the dimension of the subspace spanned by any subset of the five vectors simply select 
-  each vector in that subset. 
-  For instance to check the dimension of $\langle v_1,v_2,v_4 \rangle$ simply click the select buttons below $v_1$, $v_2$, and $v_4$. 
-  To check a different subset click the "Clear Selection" button.
-</p>
+<div id="instructions">
+  <p>
+    In this module there are five vectors, $v_1,v_2,v_3,v_4,v_5$, each with five entries. 
+    You are tasked with filling in the entries of these vectors in such a way that satisfies the conditions of the problem. 
+    In some problems some of the entries will be fixed. 
+    In addition, some problems will expect "True" or "False" responses.
+    In the case that "False" is expected, you need to finding a counterexample to the statement.
+    To check the dimension of the subspace spanned by any subset of the five vectors simply select 
+    each vector in that subset. 
+    For instance to check the dimension of $\langle v_1,v_2,v_4 \rangle$ simply click the select buttons below $v_1$, $v_2$, and $v_4$. 
+    To check a different subset click the "Clear Selection" button.
+  </p>
 
-<p>
-  Interactive to be added at a later date.
-</p>
+  <!--<p>
+    Interactive to be added at a later date.
+  </p>-->
+</div>
+
+<div class="questionArea">
+  <p id="questionToDisplay">Click 'Start' whenever you are ready. Good luck!</p>
+</div>
+<button onclick ="gradeSubmission()" id="submitButton">Start</button>
+<button onclick="previousPage()">Previous</button>
+<button onclick="nextPage()">Next</button>
+
+<div class="popup" onclick="pop()"><u>Question Statistics</u>
+  <div class="popuptext" id="myPopup">
+    <h3 id="selected" style="text-align:center;">No Question Selected</h3>
+    <table>
+      <tr>
+        <td>Users Who Have Attempted This Question</td>
+        <td id="users">0</td>
+      </tr>
+      <tr>
+        <td>Percentage of Users With a Correct Response</td>
+        <td id="eventual">0</td>
+      </tr>
+      <tr>
+        <td>Average Number of Attempts per User</td>
+        <td id="attempts">0</td>
+      </tr>
+      <tr>
+        <td>Percentage of Attempts that are Correct</td>
+        <td id="overall">0</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div>
+  <div id="variables">    
+  </div>
+
+  <div id="vectors">    
+  </div>
+</div>
+
+<script type="text/javascript">
+  initialized = 0
+  quests = 
+  [
+    "1. Find a vector $v_5$ such that it lies in the span of the vectors $v_1, v_2, v_3$ and $v_4$.",
+    "2. Find a vector $v_1$ such that it does not lie in the span of the vectors $v_2, v_3, v_4$ and $v_5$.",
+    "3. Fill in the entries for $v_4$ and $v_5$ so that all the five vectors span a 3-dimensional subspace.",
+    "4. What should the entries of $v_2$ and $v_3$ be so that all five vectors do not lie within any 3-dimensional subspace?",
+    "5. True or False?: These five vectors span a two-dimensional vector space.",
+    "6. True or False?: These five vectors does not span a three-dimensional vector space.",
+    "7. True or False?: These five vectors do not span the whole of $\\mathbb{R}^5$.",
+    "8. True or False?: These five vectors span the whole of $\\mathbb{R}^5$.",
+    "Awesome!!"
+  ]
+
+  function gradeSubmission(){
+    if (initialized == 0){
+      button = document.getElementById("submitButton")
+      button.textContent = "Submit"
+      initialized = 1
+      displayQuestion(0)
+      return } 
+    else if (initialized == 1){
+      E = readRationalMatrix("e")
+      if (page >= quests.length){
+        return }
+      if (gradeElementaryMatrices(page, E)=="true"){
+        grades[page][0] += 1
+        document.getElementById("response").textContent = ""
+        appendCompletedQuestion(page)
+        nextPage()
+      } 
+      else {
+        grades[page][1] += 1
+        pointOut()} 
+      }
+      //sql_record(Module_Number)
+  }
+
+  function displayQuestion(page){
+    landingArea = document.getElementById("questionToDisplay") 
+    landingArea.innerHTML = quests[page]
+    MathJax.typesetPromise()
+  }
+
+  function nextPage(){
+    if (page<quests.length-1 && initialized==1){
+      //document.getElementById("response").textContent = ""
+      page += 1
+      displayQuestion(page)}
+  }
+
+  function previousPage(){
+    if (page>0 && initialized==1){
+      //document.getElementById("response").textContent = ""
+      page -= 1
+      displayQuestion(page)}
+  }
+
+  function displayVariables(width=50){
+    boxes = document.getElementById("variables")
+    while (boxes.firstChild){
+      boxes.removeChild(boxes.lastChild)}
+
+    for (let i=0; i<5; i++){
+      vectorName = document.createElement('button')
+      vectorName.className = 'variables'
+
+      vectorName.id = "v"+(i+1)
+      vectorName.name = "v"+(i+1)
+      vectorName.textContent = "$v_"+(i+1)+"$"
+
+      boxes.appendChild(vectorName)
+    }
+  }
+
+  function displayVectors(width=50){
+    columns = document.getElementById("vectors")
+    while (columns.firstChild){
+      columns.removeChild(columns.lastChild)}
+
+    for (let i=0; i<5; i++){
+      columnWrapper = document.createElement("div")
+      columnWrapper.className = 'columns'
+      for (let j=0; j<5; j++){
+        entry = document.createElement("input")
+        entry.type = 'text'
+        entry.className = 'entries'
+
+        entry.id = "v"+(i+1)+(j+1)
+        entry.name = "v"+(i+1)+(j+1)
+
+        columnWrapper.appendChild(entry)
+      }
+      columns.appendChild(columnWrapper)
+    }
+
+  }
+
+  var Module_Number = '15'
+  page = 0
+  displayVariables()
+  displayVectors()
+</script>
+
+<script type="text/javascript">
+  // Returns the gcd of two integers
+  function gcd(a, b){
+    if (a == 0 && b == 0){
+      throw "Both integers cannot be both zero."
+      return }
+    if (a == 0){
+      return Math.abs(b)}
+    if (b == 0){
+      return Math.abs(a)}
+    if (b < 0){
+      return gcd(a, -b)}
+    if (a < 0){
+      return gcd(-a, b)}
+    return gcd(b, a%b)
+  }
+
+  // Defines a class of rational numbers
+  class RationalNumber{
+    constructor(a, b){
+      if (b < 0){
+        a = -a
+        b = -b}
+      let d = gcd(a,b)
+      this.numerator = a/d
+      this.denominator = b/d}
+
+    toString(){
+      if (this.denominator==1){
+        return String(this.numerator)}
+      return String(this.numerator)+"/"+String(this.denominator)}
+
+    equals(that){
+      return that instanceof RationalNumber && 
+             this.numerator == that.numerator && 
+             this.denominator == that.denominator
+    }
+
+    doesNotEqual(that){
+      return !this.equals(that)}
+
+    greaterThan(that){
+      return this.numerator*that.denominator > this.denominator*that.numerator}
+
+    greaterThanOrEquals(that){
+      return this.numerator*that.denominator >= this.denominator*that.numerator}
+
+    lessThan(that){
+      return !this.greaterOrEquals(that)}
+
+    lessThanOrEquals(that){
+      return !this.greaterThan(that)}
+
+    add(that){
+      let m = this.numerator*that.denominator + this.denominator*that.numerator
+      let n = this.denominator*that.denominator
+      return new RationalNumber(m, n)}
+
+    negate(){
+      return new RationalNumber(-this.numerator, this.denominator)}
+
+    subtract(that){
+      return this.add(that.negate())}
+
+    multiply(that){
+      let m = this.numerator*that.numerator
+      let n = this.denominator*that.denominator
+      return new RationalNumber(m, n)}
+
+    invert(){
+      if (this.numerator==0){
+        alert("One does not simply divide by zero.")}
+      return new RationalNumber(this.denominator, this.numerator)}
+
+    divide(that){
+      return this.multiply(that.invert())}
+  }
+
+  function parseRational(input){
+    // if input is already an instance of a rational number, do nothing
+    if (input instanceof RationalNumber){
+      return input}
+
+    // if input is an integer, return is as a rational number
+    if (!isNaN(input) && parseInt(input)==input){
+      return new RationalNumber(input, 1)}
+
+    n = input.length
+    let numberExist = [false, false]
+    let index = -1
+    for (let i=0; i<n; i++){
+      if (input[i] == '-'){
+        if (i!=index+1 || i==n-1){
+          throw new Error("This is not a rational number.")
+          return 
+        } 
+      } 
+      else if (input[i] == '/'){
+        if (i==0 || i==n-1 || index>0){
+          throw new Error("This is not a rational number.")
+          return 
+        }
+        index = i
+      }
+      else if (isNaN(input[i])){
+        throw new Error("This is not a rational number.")
+        return 
+      } 
+      else {
+        if (!numberExist[0] && index==-1){
+          numberExist[0] = true} 
+        else if (!numberExist[1] && index > 0){
+            numberExist[1] = true} 
+      }
+    }
+
+    if(index==-1){
+      if (!numberExist[0]){
+        throw new Error("This is not a rational number.")
+        return }
+      let a = parseInt(input)
+      return new RationalNumber(a, 1)}
+
+    if (!numberExist[0] || !numberExist[1]){
+      throw new Error("This is not a rational number.")
+      return }
+    let a = parseInt(input.slice(0, index))
+    let b = parseInt(input.slice(index+1, n))
+    return new RationalNumber(a, b)
+  }
+
+  // Defines a class of rational-valued matrices
+  class RationalMatrix extends Array{
+    constructor(M){
+      for (let i=1; i<M.length; i++){
+        if (M[i].length != M[0].length){
+          alert("Given array must be rectangular.")
+          throw new Error("Given array must be rectangular.")
+        }
+      }
+
+      let matrixM = []
+      for (let i=0; i<M.length; i++){
+        let row = []
+        for (let j=0; j<M[0].length; j++){
+          let entry = parseRational(M[i][j])
+          if (entry == undefined){
+            throw new Error("Entry is not a rational number.")
+            return 
+          }
+          row.push(entry)
+        }
+        matrixM.push(row)
+      }
+      super(...matrixM)
+      this.rowDim = matrixM.length
+      this.colDim = matrixM[0].length
+      }
+
+    toString(){
+      let string = "["
+      for (let i=0; i<this.length; i++){
+        string += "["
+        for (let j=0; j<this[0].length; j++){
+          string += this[i][j].toString()
+          if (j < this[i].length-1){
+            string += ", "
+          }
+        }
+        string += "]"
+        if (i < this.length-1){
+          string += ", "}
+      }
+      string += "]"
+      return string
+    }
+
+    LaTeX(){
+      let string = "\\begin{bmatrix} \n"
+      for (let i=0; i<this.rowDim; i++){
+        for (let j=0; j<this.colDim; j++){
+          string += String(this[i][j]) + " "
+          if (j < this.colDim-1){
+            string += "& "}
+        } 
+        if (i < this.rowDim-1){
+          string += "\\\\\n"}
+      }
+      string += "\n\\end{bmatrix}"
+      return string
+    }
+
+    equals(that){
+      if (!that instanceof RationalMatrix){
+        return false}
+      if (this.rowDim != that.rowDim || this[0].colDim != that[0].colDim){
+        return false}
+      for (let i=0; i<this.rowDim; i++){
+        for (let j=0; j<this.colDim; j++){
+          if (this[i][j].doesNotEqual(that[i][j])){
+            return false}
+        }
+      }
+      return true
+    }
+
+    doesNotEqual(that){
+      return !this.equals(that)}
+
+    transpose(){
+      let matrixM = []
+      for (let j=0; j<this.colDim; j++){
+        row = []
+        for (let i=0; i<this.rowDim; i++){
+          row.push(this[i][j])
+        }
+        matrixM.push(row)
+      }
+      return new RationalMatrix(matrixM)
+    }
+
+    add(that){
+      let matrixM = []
+      for (let i=0; i<this.rowDim; i++){
+        row = []
+        for (let j=0; j<this.colDim; j++){
+          row.push(this[i][j].add(that[i][j]))
+        }
+        matrixM.push(row)
+      }
+      return new RationalMatrix(matrixM)
+    }
+
+    negate(){
+      let matrixM = []
+      for (let i=0; i<this.rowDim; i++){
+        row = []
+        for (let j=0; j<this.colDim; j++){
+          row.push(this[i][j].negate())
+        }
+        matrixM.push(row)
+      }
+      return new RationalMatrix(matrixM)
+    }
+
+    subtract(that){
+      return this.add(that.negate())}
+
+    multiply(that){
+      if (this.colDim != that.rowDim){
+        throw new Error("Dimensions of matrices must agree.")
+        return 
+      }
+
+      let matrixM = []
+      for (let i=0; i<this.rowDim; i++){
+        row = []
+        for (let j=0; j<that.colDim; j++){
+          let sum = parseRational("0")
+          for (let k=0; k<this.colDim; k++){
+            sum = sum.add(this[i][k].multiply(that[k][j]))}
+          row.push(sum)
+        }
+        matrixM.push(row)
+      }
+      return new RationalMatrix(matrixM)
+    }
+
+    isNonZero(){
+      for (let i=0; i<this.rowDim; i++){
+        if (this.firstNonZero(i) < this.colDim){
+          return true}
+      }
+      return false
+    }
+
+    annihilates(vector){
+      if (vector.length != this.colDim){
+        return false}
+
+      let zero = new RationalNumber(0, 1)
+      let o = []
+      for (let i=0; i<this.rowDim; i++){
+        o.push([zero])}
+      let zeroVector = new RationalMatrix(o)
+
+      return zeroVector.equals(this.multiply(vector))
+    }
+
+    leftAnnihilates(vector){
+      if (vector.length != this.rowDim){
+        return false}
+
+      let zero = new RationalNumber(0, 1)
+      let o = []
+      for (let i=0; i<this.colDim; i++){
+        o.push(zero)}
+      let zeroVector = new RationalMatrix(o)
+
+      return zeroVector.equals(vector.multiply(this))
+    }
+
+    swapRows(ithRow, jthRow){
+      if (ithRow>=this.rowDim || jthRow>=this.rowDim){
+        throw new Error("Row index out of reach.")
+        return 
+      }
+      let matrixM = []
+      for (let k=0; k<this.rowDim; k++){
+        if (k!=ithRow && k!=jthRow){
+          matrixM.push(this[k])}
+        else {
+          matrixM.push(this[ithRow+jthRow-k])}
+      }
+      return new RationalMatrix(matrixM)
+    }
+
+    scaleRows(ithRow, cScalar){
+      if (ithRow >= this.rowDim){
+        throw new Error("Row index out of reach.")
+        return
+      }
+      let matrixM = []
+      for (let k=0; k<this.rowDim; k++){
+        if (k != ithRow){
+          matrixM.push(this[k])}
+        else {
+          row = []
+          for (let h=0; h<this.colDim; h++){
+            row.push(this[k][h].multiply(parseRational(cScalar)))
+          }
+          matrixM.push(row)
+        }
+      }
+      return new RationalMatrix(matrixM)
+    }
+
+    addRows(ithRow, jthRow, cScalar){
+      if (ithRow>=this.rowDim || jthRow>=this.rowDim){
+        throw new Error("Row index out of reach.")
+        return
+      }
+      let matrixM = []
+      for (let k=0; k<this.rowDim; k++){
+        if (k != jthRow){
+          matrixM.push(this[k])}
+        else {
+          row = []
+          for (let h=0; h<this.colDim; h++){
+            let entry = this[k][h].add(this[ithRow][h].multiply(parseRational(cScalar)))
+            row.push(entry)
+          }
+          matrixM.push(row)
+        }
+      }
+      return new RationalMatrix(matrixM)
+    }
+
+    // Return the index of the first nonzero entry of row i of the matrix
+    firstNonZero(i){
+      zero = new RationalNumber(0, 1)
+      row = this[i]
+      j = this.colDim
+      for (let k=0; k<this.colDim; k++){
+        if (row[k].doesNotEqual(zero)){
+          j = k
+          break
+        }
+      }
+      return j
+    }
+
+    // Verifies that a rational matrix is in RREF
+    isInRREF(){
+      zero = new RationalNumber(0, 1)
+      one = new RationalNumber(1, 1)
+      // Checks that first nonzero entries of each row progresses from left to right
+      let first = this.firstNonZero(0)
+      let nonzeroRows = [first]
+
+      for (let i=1; i<this.rowDim; i++){
+        let second = this.firstNonZero(i)
+        if (first > second){
+          return false}
+        first = second
+        nonzeroRows.push(first)
+      }
+      
+      // Checks that pivots are normalized to 1 
+      // and that entries above and below pivots are 0s.
+      for (let i=0; i<nonzeroRows.length; i++){
+        first = nonzeroRows[i]
+        if (first >= this.colDim){
+          break}
+        for (let k=0; k<this.rowDim; k++){
+          let entry = this[k][first]
+          if (k == i){
+            if (entry.doesNotEqual(one)){
+              return false}
+          }
+          else {
+            if (entry.doesNotEqual(zero)){
+              return false}
+          }
+        }
+      }
+      return true
+    }
+
+    limitColumns(start, end){
+      let n = this.colDim
+      if (start > end){
+        throw new Error("Starting index must be no greater than ending index.")
+        return
+      }
+      if (start > n || end < 0){
+        throw new Error("Column indices should range between 0 and " + n-1 + ".")
+        return
+      }
+      if (end > n-1){
+        return this.limitColumns(start, n-1)}
+      if (start < 0){
+        return this.limitColumns(0, end)}
+      let M = []
+      for (let i=0; i<this.rowDim; i++){
+        M.push(this[i].slice(start, end+1))}
+      return new RationalMatrix(M)
+    }
+
+    appendColumns(columns){
+      for (let j=0; j<columns.length; j++){
+        if (columns[j].length != this.rowDim){
+          throw new Error("The number of rows for each column vector must match with the matrix.")
+          return
+        }
+      }
+
+      let A = []
+      for (let i=0; i<this.rowDim; i++){
+        row = this[i]
+        for (let j=0; j<columns.length; j++){
+          row.push(columns[j][i])}
+        A.push(row)
+      }
+      return new RationalMatrix(A)
+    }
+  }
+
+  // This class structures a string as a response string that can be compared with other objects 
+  class ResponseString{
+    constructor(string){
+      this.response = string}
+
+    toString(){
+      return String(this.response)}
+
+    equals(that){
+      return that instanceof ResponseString && this.response == that.response}
+
+    doesNotEqual(that){
+      return !this.equals(that)}
+  }
+</script>
 </body>
 </html>
