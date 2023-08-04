@@ -573,7 +573,7 @@
         if (k != ithRow){
           matrixM.push(this[k])}
         else {
-          row = []
+          var row = []
           for (let h=0; h<this.colDim; h++){
             row.push(this[k][h].multiply(parseRational(cScalar)))
           }
@@ -593,7 +593,7 @@
         if (k != jthRow){
           matrixM.push(this[k])}
         else {
-          row = []
+          var row = []
           for (let h=0; h<this.colDim; h++){
             let entry = this[k][h].add(this[ithRow][h].multiply(parseRational(cScalar)))
             row.push(entry)
@@ -606,11 +606,11 @@
 
     // Return the index of the first nonzero entry of row i of the matrix
     firstNonZero(i){
-      zero = new RationalNumber(0, 1)
-      row = this[i]
-      j = this.colDim
+      var zero = new RationalNumber(0, 1)
+      var currentRow = this[i]
+      var j = this.colDim
       for (let k=0; k<this.colDim; k++){
-        if (row[k].doesNotEqual(zero)){
+        if (currentRow[k].doesNotEqual(zero)){
           j = k
           break
         }
@@ -620,8 +620,8 @@
 
     // Verifies that a rational matrix is in RREF
     isInRREF(){
-      zero = new RationalNumber(0, 1)
-      one = new RationalNumber(1, 1)
+      var zero = new RationalNumber(0, 1)
+      var one = new RationalNumber(1, 1)
       // Checks that first nonzero entries of each row progresses from left to right
       let first = this.firstNonZero(0)
       let nonzeroRows = [first]
@@ -691,6 +691,50 @@
         A.push(row)
       }
       return new RationalMatrix(A)
+    }
+
+    findRREF(){
+      A = this
+      for (let i=0; i<this.rowDim; i++){
+        // Search for the row with the leftmost pivot
+        // Swap if necessary
+        // If all rows below are zero, then terminate
+        var rowIndex = i
+        var leftmostIndex = A.firstNonZero(i)
+        for (let k=i+1; k<this.rowDim; k++){
+          if (A.firstNonZero(k) < leftmostIndex){
+            leftmostIndex = A.firstNonZero(k)
+            rowIndex = k
+          }
+        }
+        if (leftmostIndex == this.colDim){
+          break}
+        else if (rowIndex > i){
+          A = A.swapRows(i, rowIndex)}
+
+        // Scale the pivot entry to 1
+        // Eliminate all entries above and below pivot entry
+        var jp = leftmostIndex
+        var c = A[i][jp]
+        A = A.scaleRows(i, c.invert())
+        for (let k=0; k<this.rowDim; k++){
+          if (k==i){
+            continue}
+          var d = A[k][jp]
+          A = A.addRows(i, k, d.negate())
+        }
+      }
+      return new RationalMatrix(A)
+    }
+
+    computeRank(){
+      A = this.findRREF()
+      var pivotNumber = 0
+      for (let i=0; i<this.rowDim; i++){
+        if (A.firstNonZero(i) < this.colDim){
+          pivotNumber += 1}
+      }
+      return pivotNumber
     }
   }
 
