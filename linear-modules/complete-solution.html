@@ -204,10 +204,10 @@
     How do we distinguish these behaviors, you ask? For starters, consider the following framework. Suppose you have a system of $m$ linear equations in variables $x_1, x_2, x_3 \ldots, x_n$
 
     $$\begin{alignedat}{5}
-      a_{1,1} x_1 & + a_{1,2} x_2 & + \ldots & + a_{1,n} x_n & = c_1,\\
-      a_{2,1} x_1 & + a_{2,2} x_2 & + \ldots & + a_{2,n} x_n & = c_2,\\
+      a_{1,1} x_1 & + a_{1,2} x_2 & + \ldots & + a_{1,n} x_n & = b_1,\\
+      a_{2,1} x_1 & + a_{2,2} x_2 & + \ldots & + a_{2,n} x_n & = b_2,\\
       \vdots      &               &   \vdots &               & \\
-      a_{m,1} x_1 & + a_{m,2} x_2 & + \ldots & + a_{m,n} x_n & = c_m,\\
+      a_{m,1} x_1 & + a_{m,2} x_2 & + \ldots & + a_{m,n} x_n & = b_m,\\
     \end{alignedat}$$
 
     with real constants $a_{i,j}$ and $c_i$, where $1\leq i\leq m$, $1\leq j\leq n$.
@@ -220,7 +220,7 @@
       a_{m,1} & a_{m,2} & \ldots & a_{m,n}\\
     \end{bmatrix},\quad 
     x = \begin{bmatrix} x_1\\ x_2\\ \vdots\\ x_n \end{bmatrix},\quad 
-    b = \begin{bmatrix} c_1\\ c_2\\ \vdots\\ c_m \end{bmatrix}.$$
+    b = \begin{bmatrix} b_1\\ b_2\\ \vdots\\ b_m \end{bmatrix}.$$
     
     We may compute the r.r.e.f. of the augmented matrix $M=[A\;|\; b\;]$ to simplify our viewpoint of the same system. Based on the r.r.e.f. $M'$ of $M$, we could deduce three distinct behaviors:
     <ul>
@@ -265,7 +265,7 @@
         Similar to the previous case, this system is said to be <b><em>consistent</em></b> as we also have at least one solution set.
       </li>
       <li> 
-        Not all on the left part of $M'$ contain a pivot; furthermore, there is a row of zeros on the left part of $M'$ but is followed by a nonzero entry.
+        Not all columns on the left part of $M'$ contain a pivot; furthermore, there is a row of zeros on the left part of $M'$ but is followed by a nonzero entry.
 
         In this case, there is no consistent set of values that can be assigned to each variable. We would have no solution here. 
 
