@@ -96,10 +96,6 @@
     For instance to check the dimension of $\langle v_1,v_2,v_4 \rangle$ simply click the select buttons below $v_1$, $v_2$, and $v_4$. 
     To check a different subset click the "Clear Selection" button.
   </p>
-
-  <!--<p>
-    Interactive to be added at a later date.
-  </p>-->
 </div>
 
 <div class="questionArea">
@@ -155,6 +151,23 @@
     "8. True or False?: These five vectors span the whole of $\\mathbb{R}^5$.",
     "Awesome!!"
   ]
+
+  function isInSubspace(vectorList, vector){
+    if (vectorList.length == 0){
+      matrix = new RationalMatrix(vector)
+      return !matrix.isNonZero()
+    }
+
+    array = []
+    for (let i=0; i<vectorList.length; i++){
+      array.push(vectorList[i])
+    }
+    
+    var matrixOne = new RationalMatrix(array)
+    var matrixTwo = matrixOne.appendRows([vector])
+    
+    return matrixOne.computeRank() >= matrixTwo.computeRank()
+  }
 
   function gradeSubmission(){
     if (initialized == 0){
@@ -676,16 +689,14 @@
     }
 
     appendColumns(columns){
-      for (let j=0; j<columns.length; j++){
-        if (columns[j].length != this.rowDim){
-          throw new Error("The number of rows for each column vector must match with the matrix.")
-          return
-        }
+      if (!columns.every(x => x.length == this.rowDim)){
+        throw new Error("The number of rows for each column vector must match with the matrix.")
+        return
       }
 
       let A = []
       for (let i=0; i<this.rowDim; i++){
-        row = this[i]
+        let row = this[i]
         for (let j=0; j<columns.length; j++){
           row.push(columns[j][i])}
         A.push(row)
@@ -693,8 +704,28 @@
       return new RationalMatrix(A)
     }
 
+    appendRows(rows){
+      if (!rows.every(x => x.length == this.colDim)){
+        throw new Error("The number of columns for each row vector must match with the matrix.")
+        return
+      }
+
+      let A = []
+      for (let i=0; i<this.rowDim+rows.length; i++){
+        var row
+        if (i<this.rowDim){
+          row = this[i]
+        }
+        else {
+          row = rows[i-this.rowDim]
+        }
+        A.push(row)
+      }
+      return new RationalMatrix(A)
+    }
+
     findRREF(){
-      A = this
+      var A = this
       for (let i=0; i<this.rowDim; i++){
         // Search for the row with the leftmost pivot
         // Swap if necessary
@@ -728,7 +759,7 @@
     }
 
     computeRank(){
-      A = this.findRREF()
+      var A = this.findRREF()
       var pivotNumber = 0
       for (let i=0; i<this.rowDim; i++){
         if (A.firstNonZero(i) < this.colDim){
@@ -751,6 +782,237 @@
 
     doesNotEqual(that){
       return !this.equals(that)}
+  }
+</script>
+
+<script type="text/javascript">
+  // Random generation of mathematical objects
+
+  // Returns an integer in the interval [low, high]
+  function generateInteger(low, high){
+    difference = high - low + 1
+    return low + Math.floor(difference * Math.random())
+  }
+
+  // Return a permutation of the set {0,1,2,...,n-1}
+  function generatePermutation(n){
+    array = []
+    for (let i=0; i<n; i++){
+      array.push(i)
+    }
+
+    for (let i=0; i<n-1; i++){
+      j = i + generateInteger(0, n-1-i)
+      temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    return array
+  }
+
+  // Return a subset of size k of the set {0,1,2,...,n-1}
+  function generateSubset(k, n){
+    array = []
+    for (let i=0; i<n; i++){
+      array.push(i)
+    }
+
+    for (let i=0; i<k-1; i++){
+      j = i + generateInteger(0, n-1-i)
+      temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    S = array.splice(0, k)
+    return S.sort()
+  }
+
+  function generateRationalNumber(den, maxRange, allowZero=true){
+    maxNum = maxRange * den
+
+    if (allowZero){
+      num = generateInteger(-maxNum, maxNum)
+      return new RationalNumber(num, den)
+    }
+
+    sign = (-1)**generateInteger(0, 1)
+    unsignedNum = generateInteger(1, maxNum)
+    return new RationalNumber(sign*unsignedNum, den)
+  }
+
+  function generateRationalTuple(rank){
+    scalars = []
+    Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4,5]
+    q = generateInteger(0, Dist.length-1)
+    den = Dist[q]
+    for (let i=0; i<rank; i++){
+      scalars.push(generateRationalNumber(den, 2))
+    }
+    return scalars
+  }
+
+  ////////////////////////////////////////////
+  // Generation of rational-valued matrices //
+  ////////////////////////////////////////////
+  function generateRREFMatrix(rowNum, colNum, rank) {
+    m = Math.min(rowNum, colNum)
+    if (m < rank){
+      throw new Error("Rank should be not exceed both number of rows and number of columns.")}
+
+    S = generateSubset(rank, colNum)
+    zero = new RationalNumber(0, 1)
+    one = new RationalNumber(1, 1)
+
+    R = []
+    Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4,5]
+    for (let i=0; i<rowNum; i++){
+      row = []
+      q = generateInteger(0, Dist.length-1)
+      den = Dist[q]
+      for (let j=0; j<colNum; j++){
+        if (i < S.length){
+          if (S[i]==j){
+            row.push(one)}
+          else if (j<S[i] || S.includes(j)){
+            row.push(zero)}
+          else {
+            row.push(generateRationalNumber(den, 2))}
+        }
+        else {
+          row.push(zero)
+        }
+      }
+      R.push(row)
+    }
+    return new RationalMatrix(R)
+  }
+
+  function generateScalingMatrix(rowNum){
+    zero = new RationalNumber(0, 1)
+    K = []
+    for (let i=0; i<rowNum; i++){
+      row = []
+      for (let j=0; j<rowNum; j++){
+        if (i==j){
+          m = generateRationalNumber(1, 3, allowZero=false)
+          row.push(m)
+        }
+        else {
+          row.push(zero)}
+      }
+      K.push(row)
+    }
+    return new RationalMatrix(K)
+  }
+
+  function generateRowAdditionMatrix(rowNum, maxDepth=5){
+    zero = new RationalNumber(0, 1)
+    one = new RationalNumber(1, 1)
+
+    M = []
+    for (let i=0; i<rowNum; i++){
+      row = []
+      for (let j=0; j<rowNum; j++){
+        if (i == j){
+          row.push(one)
+        }
+        else {
+          row.push(zero)
+        }
+      }
+      M.push(row)
+    }
+    A = new RationalMatrix(M)
+    if (rowNum == 1){
+      return A}
+
+    for (let k=0; k<maxDepth; k++){
+      perm = generatePermutation(rowNum)
+      i = perm[0]
+      j = perm[1]
+      c = (-1)**generateInteger(1, 10)
+      A = A.addRows(i, j, c)
+    }
+
+    return A
+  }
+
+  function makeMatrix(rowNum, rank){
+    if (rank>rowNum){
+      throw new Error("Rank of matrix has to be at most the number of rows of the matrix for this case.")
+      return
+    }
+
+    matrixR = generateRREFMatrix(rowNum, 5, rank)
+    matrixC = generateScalingMatrix(rowNum)
+    matrixA = generateRowAdditionMatrix(rowNum, maxDepth=5)
+    matrixM = (matrixA.multiply(matrixC)).multiply(matrixR)
+    p = generatePermutation(rowNum)
+    newArray = []
+    for (let i=0; i<rowNum; i++){
+      j = p[i]
+      newArray.push(matrixM[j])
+    }
+    return new RationalMatrix(newArray)
+  }
+
+  // Write vectors from matrixA to display with fillingInstructions and partialFilling
+  // fillingInstructions would be a hashmap with key being in column index and value being either 'full', 'partial', 'empty'
+  // Column indices with 'partial' will be filled at only the prescribed components
+  // Column indices with 'empty' will be skipped
+  function writeVectors(matrixA, fillingInstructions, partialFilling){
+    for (let i=0; i<5; i++){
+      for (let j=0; j<5; j++){
+        var entry = document.getElementById("v"+(j+1)+(i+1))
+        entry.value = ''
+      }
+    }
+
+    var k = 0
+    for (let i=0; i<5; i++){
+      if (fillingInstructions.get(i)=='empty'){
+        continue}
+
+      for (let j=0; j<5; j++){
+        var entry = document.getElementById("v"+(j+1)+(i+1))
+        if (fillingInstructions.get(i)=='partial'){
+          if (partialFilling.get(i).includes(j)){
+            entry.value = matrixA[k][j].toString()
+          }
+        }
+        else if (fillingInstructions.get(i)=='full'){
+          entry.value = matrixA[k][j].toString()
+        }
+      }
+      k += 1
+      if (k == matrixA.rowDim){
+        break}
+    }
+  }
+
+  function makeParameters(questionNumber){
+    var matrixM
+    var fillingInstructions
+    var partialFilling
+    var matrixRank
+    switch(questionNumber){
+      case 0:
+      {
+        matrixRank = generateInteger(1, 4)
+        matrixM = makeMatrix(4, matrixRank)
+        fillingInstructions = Map([[0, 'full'], [1, 'full'], [2, 'full'], [3, 'full'], [4, 'empty']])
+        break
+      }
+      case 1:
+      {
+        matrixRank = generateInteger(1, 4)
+        matrixM = makeMatrix(4, matrixRank)
+        fillingInstructions = Map([[0, 'full'], [1, 'full'], [2, 'full'], [3, 'full'], [4, 'empty']])
+        break
+      }
+
+    }
+    return [matrixM, fillingInstructions, partialFilling]
   }
 </script>
 </body>
