@@ -1232,7 +1232,7 @@
         answeredQuestion.style.color="grey"
         var completedQuestions = document.getElementById("completed")
         completedQuestions.appendChild(answeredQuestion)
-        grades[page][1] += 1
+        grades[page][0] += 1
         
         if (page < 12){
           page += 1
@@ -1242,9 +1242,10 @@
       else {
         feedbackArea.textContent = "Try again"
         alert("Sorry, that was incorrect.")
-        grades[page][0] += 1
+        grades[page][1] += 1
         }
       sql_record(Module_Number)
+      score()
     }
   }
 

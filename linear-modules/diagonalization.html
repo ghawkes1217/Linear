@@ -1,223 +1,295 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!-- The following adds MathJax to render LaTeX notation -->
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
-        <link rel="stylesheet" href="../styles.css">
-        <script src="../site-scripts.js"></script>
-      </head>
-<style>
-#blank {
-  position: relative;
-}
+<head>
+  <title>Linear Algebra: Eigenvectors</title>
 
-#outer {
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]},
+    }
+  </script>
+  <!-- The following adds MathJax to render LaTeX notation -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../site-scripts.js"></script>
+  <style>
+    #blank {
+      position: relative;
+    }
+    #outer {
+      position: absolute;
+      height: 400px;
+      width: 400px;
+      left: 0px;
+      top: 40px;
+      background-color: white;
+      text-align: center;
+      border: 9px solid #d3d3d3;
+    }
+
+    #outer2 {
+      position: absolute;
+      height: 400px;
+      width: 400px;
+      left: 0px;
+      top: 440px;
+      background-color: white;
+      text-align: center;
+      border: 9px solid #d3d3d3;
+    }
+
+    #blueinv {
+      opacity:0.7;
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 170px;
+      top: 70px;
+      background-color: grey;
+    }
+
+    #redinv {
+      opacity:0.7;
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 90px;
+      top: 50px;
+      background-color: grey;
+    }
+    #bluetip {
+      opacity:0.7;
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 90px;
+      top: 90px;
+      background-color: grey;
+    }
+    #greentip {
+      opacity:0.7;
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 290px;
+      top: 90px;
+      background-color: grey;
+    }
+    #redtip {
+      opacity:0.7;
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 90px;
+      top: 290px;
+      background-color: grey;
+    }
+
+    .matrixEnvironment {
+      position: absolute;
+      height: 230px;
+      width: 400px;
+      left: 475px;
+      top: 90px;
+      background-color: lightgrey;
+      text-align: center;
+    }
+
+
+    #inversion {
   position: absolute;
-  height: 400px;
-  width: 400px;
+  height: 290px;
+  width: 370px;
   left: 0px;
-  top: 40px;
-  background-color: white;
-  text-align: center;
-  border: 9px solid #d3d3d3;}
-
- #bluetip {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 90px;
-  top: 90px;
-  background-color: grey;}
-  
-   #greentip {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 290px;
-  top: 90px;
-  background-color: grey;}
-
-
-  #redtip {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 90px;
-  top: 290px;
-  background-color: grey;}
-  
- #matrix {
-  position: absolute;
-  height: 260px;
-  width: 370px;
-  left: 425px;
-  top: 40px;
+  top: 410px;
   background-color: lightgrey;
   text-align: center;}
-  
-  #M11 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 20px;
-  top: 50px;
-  background-color: blue;
-  text-align: center;}
-  
+
+
+
+    #M11 {
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 40px;
+      top: 50px;
+      background-color: blue;
+      text-align: center;
+    }
     #M21 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 20px;
-  top: 70px;
-  background-color: blue;
-  text-align: center;}
-  
-  #M12 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 80px;
-  top: 50px;
-  background-color: red;
-  text-align: center;}
-
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 40px;
+      top: 70px;
+      background-color: blue;
+      text-align: center;
+    }
+    #M12 {
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 115px;
+      top: 50px;
+      background-color: green;
+      text-align: center;
+    }
     #M22 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 80px;
-  top: 70px;
-  background-color: red;
-  text-align: center;}
-  
-     #times {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 145px;
-  top: 60px;
-  background-color: lightgrey;
-  text-align: center;}
-
-       #equals {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 235px;
-  top: 60px;
-  background-color: lightgrey;
-  text-align: center;}
-  
-  
-  #V1 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 170px;
-  top: 50px;
-  background-color: blue;
-  text-align: center;}
-  
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 115px;
+      top: 70px;
+      background-color: green;
+      text-align: center;
+    }
+    #times {
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 190px;
+      top: 60px;
+      background-color: lightgrey;
+      text-align: center;
+    }
+    #V1 {
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 210px;
+      top: 50px;
+      background-color: red;
+      text-align: center;
+    }
     #V2 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 170px;
-  top: 70px;
-  background-color: red;
-  text-align: center;}
-  
-  #w1 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 265px;
-  top: 50px;
-  color: purple;
-  text-align: center;
-  border: 1px solid black;}
-  
-  
-  
+      position: absolute;
+      height: 20px;
+      width: 75px;
+      left: 210px;
+      top: 70px;
+      background-color: red;
+      text-align: center;
+    }
+    #equals {
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 285px;
+      top: 60px;
+      background-color: lightgrey;
+      text-align: center;
+    }
+    #w1 {
+      position: absolute;
+      height: 20px;
+      width: 45px;
+      left: 305px;
+      top: 50px;
+      color: purple;
+      text-align: center;
+      border: 1px solid black;
+    }
     #w2 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 265px;
-  top: 70px;
-  color: purple;
-  text-align: center;
-  border: 1px solid black;}
- 
+      position: absolute;
+      height: 20px;
+      width: 45px;
+      left: 305px;
+      top: 70px;
+      color: purple;
+      text-align: center;
+      border: 1px solid black;
+    }
+
+    #r1 {
+      position: absolute;
+      height: 20px;
+      width: 45px;
+      left: 260px;
+      top: 120px;
+      color: rgb(97, 94, 94);
+      text-align: center;
+      border: 1px solid grey;
+    } 
+    #r2 {
+      position: absolute;
+      height: 20px;
+      width: 45px;
+      left: 260px;
+      top: 140px;
+      color: rgb(80, 77, 77);
+      text-align: center;
+      border: 1px solid grey;
+    }
+
     #but {
-  position: absolute;
-  height: 30px;
-  width: 30px;
-  left: 290px;
-  top:30px;
-  background-color: black;
-  text-align: center;}
-  
-  #but2 {
-  position: absolute;
-  height: 30px;
-  width: 30px;
-  left: 235px;
-  top:10px;
-  background-color: black;
-  text-align: center;}
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      left: 290px;
+      top:30px;
+      background-color: black;
+      text-align: center;
+    }
+    #but2 {
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      left: 235px;
+      top:10px;
+      background-color: black;
+      text-align: center;
+    }
+    #sub {
+      position: absolute;
+      height: 30px;
+      width: 380px;
+      left: 40px;
+      top: 10px;
+      background-color: white;
+      text-align: center;
+    }
+    #try {
+      position: absolute;
+      height: 30px;
+      width: 80px;
+      left: 560px;
+      top: 10px;
+      background-color: white;
+      text-align: center;
+    }
 
- #sub {
-  position: absolute;
-  height: 30px;
-  width: 380px;
-  left: 40px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
+    #score {
+      position: absolute;
+      height: 220px;
+      width: 90px;
+      left: 990px;
+      top: 10px;
+      background-color: white;
+      text-align: center;
+    }
 
-     #try {
-  position: absolute;
-  height: 30px;
-  width: 80px;
-  left: 560px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
-  
-
-  #score {
-  position: absolute;
-  height: 220px;
-  width: 90px;
-  left: 990px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
-  #MatEq {
-  position: absolute;
-  top: 95px;
-  height: 60px;
-  width: 370px;
-  background-color: lightgrey;
-  text-align: center;}
-
-  #completed {
-  position: absolute;
-  left: 10px;
-  top: 500px}
-
-  #question {
-  position: relative;
-  height: 35px;
-}
-  
- </style>
-
+    .matrixEquation {
+      position: absolute;
+      top: 105px;
+      left: 60px;
+      text-align: center;
+    }
+    #completed {
+      position: absolute;
+      left: 10px;
+      top: 900px
+    }
+    #question {
+      position: relative;
+      height: 35px;
+    }
+  </style>
+</head>
  
 <body>
+  
+  
 <div>
   <div style="position: absolute;">
     <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
@@ -225,7 +297,7 @@
   <div style="position: absolute; left:1099px;" class="backto" >
     <a href="../feedback.html">Provide Feedback &#8594</a>
   </div>
-    <h2><center>Module 20: Diagonalization</center></h2>
+  <h2><center>Module 20: Diagonalization</center></h2>
 <p>
 This module practices the procedure of diagonalization of a \(2 \times 2\) matrix.  It will combine concepts 
 from Module 19 and Module 8.  
@@ -263,21 +335,1339 @@ from Module 19 and Module 8.
 
 </p>
 
+<div style="height:60px">
+  <div id="question">
+    Ready to begin?  Click "Start" to view your first question.
+  </div>
+  <div class="multipleChoice" id="matrixChoice" hidden>
+    <input type="radio" id="rk" name="answer" value="rank">
+    <label for="rk">Rank of the matrix</label>
+    <input type="radio" id="tr" name="answer" value="trace">
+    <label for="tr">Trace of the matrix</label>
+    <input type="radio" id="det" name="answer" value="determinant">
+    <label for="det">Determinant of the matrix</label>
+  </div>
+</div>
+  <div class="popup" onclick="pop()"><u>Question Statistics</u>
+    <div class="popuptext" id="myPopup">
+      <h3 id="selected" style="text-align:center;">No Question Selected</h3>
+      <table>
+        <tr>
+          <td>Users Who Have Attempted This Question</td>
+          <td id="users">0</td>
+        </tr>
+        <tr>
+          <td>Percentage of Users With a Correct Response</td>
+          <td id="eventual">0</td>
+        </tr>
+        <tr>
+          <td>Average Number of Attempts per User</td>
+          <td id="attempts">0</td>
+        </tr>
+        <tr>
+          <td>Percentage of Attempts that are Correct</td>
+          <td id="overall">0</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="blank">
+  <div class="matrixEnvironment">
+    <h3>Matrix Equation:</h3>
+    <div id="M11">
+      <input type="number" id="m11"   style="width: 4em" value="-1" step=0.01 onChange="match()">
+    </div>
+    <div id="M12">
+      <input type="number" id="m12"   style="width: 4em" value="1" step=0.01 onChange="match()">
+    </div>
+    <div id="M21">
+      <input type="number" id="m21"   style="width: 4em" value="0" step=0.01 onChange="match()">
+    </div>
+    <div id="M22">
+      <input type="number" id="m22"   style="width: 4em" value="1" step=0.01 onChange="match()">
+    </div>
+
+    <div id="times">
+      <b>&times</b>
+    </div>
+
+    <div id="V1">
+      <input type="number" id="m13"   style="width: 4em" value="0.5" step=0.01 onChange="match()">
+    </div>
+    <div id="V2">
+      <input type="number" id="m23"   style="width: 4em" value="1.1" step=0.01 onChange="match()">
+    </div>
+
+    <div id="equals">
+      <b>=</b>
+    </div>
+
+    <div id="w1">
+      0
+    </div>
+    <div id="w2">
+      1
+    </div>
+
+    <div id="r1">
+      0
+    </div>
+    <div id="r2">
+      1
+    </div>
+
+    <div class="matrixEquation">
+      <h2>Scaling Factors:</h2>
+    </div>
 
 
 
-Interactive to be added at a later date.
-</p>  
+ </div>
+
+
+  <div id="sub">
+    <span>
+      <button  onclick="submit()">Start</button>
+    </span>
+    <span>
+      <button  onclick="navigate(1)">Skip</button>
+    </span>
+    <span>
+      <button  onclick="navigate(-1)">Previous</button>
+    </span>
+  </div>
+
+  <div id="try">
+  </div>
+
+<div id="inversion" style="left:500px; top:520px"></div>
+
+
+  <div id="outer">
+  
+   
+
+  <div id="bluetip">
+  </div>
+
+  <div id="greentip">
+  </div>
+
+  <div id="redtip">
+  </div>
+    <canvas id="myCanvas" width="400" height="400"
+    style="border:1px solid #c3c3c3;">
+    </canvas>
+  </div>
+ 
+  <div id ="outer2">
+    <div id="redinv">
+    </div>
+    <div id="blueinv">
+    </div>
+    <canvas id="invCanvas" width="400" height="400" top="20px"
+    style="border:1px solid #c3c3c3;">
+    </canvas>
+  </div>
+
+
+   
+
+  <div style="position:absolute; top:360px; left:475px" id="eigenvaluesInput" >
+
+    <span style="position:absolute; left:-15px; top:-10px; width:90px">Eigenvalue e</span>
+    <span style="position:absolute; left:105px; top:-10px; width:90px">Eigenvector u</span>
+    <span style="position:absolute; left:225px; top:-10px; width:90px">Eigenvalue f</span>
+    <span style="position:absolute; left:345px; top:-10px; width:90px">Eigenvector v</span>
+    <input type="text" name="e" id="e" style="position:absolute; left:0px; top:20px; width:40px" onchange="fillmats()">
+    <input type="text"  name="u1" id="u1" style="position:absolute; left:120px;  top:10px; width:40px" onchange="fillmats()">
+    <input type="text" name="u2" id="u2" style="position:absolute; left:120px; top:30px; width:40px" onchange="fillmats()">
+    <input type="text"  name="f" id="f" style="position:absolute; left:240px; top:20px; width:40px" onchange="fillmats()">
+    <input type="text"  name="v1" id="v1" style="position:absolute; left:360px;  top:10px; width:40px" onchange="fillmats()">
+    <input type="text" name="v2" id="v2" style="position:absolute; left:360px; top:30px; width:40px" onchange="fillmats()">
+    <span style="position:absolute; left:15px; top:70px; width:90px">Matrix P</span>
+    <span style="position:absolute; left:155px; top:70px; width:90px">Matrix D</span>
+    <span style="position:absolute; left:295px; top:70px; width:90px">Matrix Q</span>
+    <input type="text"   id="P11" style="position:absolute; left:0px;  top:90px; width:40px" disabled="true">
+    <input type="text"  id="P21" style="position:absolute; left:0px; top:110px; width:40px" disabled="true">
+    <input type="text"   id="P12" style="position:absolute; left:40px;  top:90px; width:40px" disabled="true">
+    <input type="text"  id="P22" style="position:absolute; left:40px; top:110px; width:40px" disabled="true">
+    <input type="text"   id="D11" style="position:absolute; left:140px;  top:90px; width:40px" disabled="true">
+    <input type="text"  id="D21" style="position:absolute; left:140px; top:110px; width:40px;" value="0" disabled="true">
+    <input type="text"   id="D12" style="position:absolute; left:180px;  top:90px; width:40px" value="0" disabled="true">
+    <input type="text"  id="D22" style="position:absolute; left:180px; top:110px; width:40px" disabled="true">
+    <input type="text"   id="Q11" style="position:absolute; left:280px;  top:90px; width:40px">
+    <input type="text"  id="Q21" style="position:absolute; left:280px; top:110px; width:40px">
+    <input type="text"   id="Q12" style="position:absolute; left:320px;  top:90px; width:40px">
+    <input type="text"  id="Q22" style="position:absolute; left:320px; top:110px; width:40px">
+
+  </div>
 
 
 
-<p>
 
-</p>
+  <div id="score">
+  </div>
+
+  <div id="completed">
+    <h2>Completed Questions:</h2>
+  </div>
+
+
+<script>
+
+class Matrix{
+    constructor(a, b, c, d){
+      this.a11 = a
+      this.a21=b
+    this.a12=c
+  this.a22=d}
+
+    equals(that){
+      var Zero=true
+        if (Math.abs(this.a11-that.a11)>0.05){
+        Zero=false}
+        if (Math.abs(this.a21-that.a21)>0.05){
+        Zero=false}
+        if (Math.abs(this.a12-that.a21)>0.05){
+        Zero=false}
+        if (Math.abs(this.a22-that.a22)>0.05){
+        Zero=false}
+      return Zero}
+
+    times(that){
+      var A=this.a11*that.a11+this.a12*that.a21
+      var B=this.a21*that.a11+this.a22*that.a21
+      var C=this.a11*that.a12+this.a12*that.a22
+      var D=this.a21*that.a12+this.a22*that.a22
+
+      return new Matrix(A,B,C,D)
+    }
+  }
+
+function fillmats(){
+  var e=document.getElementById("e").value
+  var f=document.getElementById("f").value
+  var u1=document.getElementById("u1").value
+  var u2=document.getElementById("u2").value
+  var v1=document.getElementById("v1").value
+  var v2=document.getElementById("v2").value
+document.getElementById("D11").value=e
+document.getElementById("D22").value=f
+document.getElementById("P11").value=u1
+document.getElementById("P21").value=u2
+document.getElementById("P12").value=v1
+document.getElementById("P22").value=v2
+if (u1!=''){
+document.getElementById("a11").value=u1}
+if (u2!=''){
+document.getElementById("a21").value=u2}
+if (v1!=''){
+document.getElementById("a12").value=v1}
+if (v2!=''){
+document.getElementById("a22").value=v2}
+draw_inv()
+}
+
+
+function clearMats(){
+document.getElementById("e").value=''
+ document.getElementById("f").value=''
+document.getElementById("u1").value=''
+document.getElementById("u2").value=''
+document.getElementById("v1").value=''
+document.getElementById("v2").value=''
+document.getElementById("D11").value=''
+document.getElementById("D22").value=''
+document.getElementById("P11").value=''
+document.getElementById("P21").value=''
+document.getElementById("P12").value=''
+document.getElementById("P22").value=''
+document.getElementById("Q11").value=''
+document.getElementById("Q21").value=''
+document.getElementById("Q12").value=''
+document.getElementById("Q22").value=''
+
+
+}
+
+
+
+
+  function fix(color, params, vals){
+    document.getElementById(color[1]).value=vals[0]
+    document.getElementById(color[2]).value=vals[1]
+
+    if (params[0]==0){
+      document.getElementById(color[0]).onmousedown=null
+      document.getElementById(color[1]).disabled=true
+      document.getElementById(color[2]).disabled=true
+    }
+    if (params[0]==1){
+      document.getElementById(color[1]).disabled=false
+      document.getElementById(color[2]).disabled=false
+      mobilize(document.getElementById(color[0]))
+    }
+    match()
+  }
+
+  function make_mat(){
+    var a11=(document.getElementById("m11").value)
+    var a21=(document.getElementById("m21").value)
+
+    var a12=(document.getElementById("m12").value)
+    var a22=(document.getElementById("m22").value)
+
+    var a13=(document.getElementById("m13").value)
+    var a23=(document.getElementById("m23").value)
+
+    var i1=(document.getElementById("m13").value)
+    var i2=(document.getElementById("m23").value)
+    var c1=Math.round(10*(i1*a11+i2*a12))/10
+    var c2=Math.round(10*(i1*a21+i2*a22))/10
+
+    var Mat=document.getElementById('MatEq')
+  }
+
+  function draw(){
+    gt=document.getElementById("greentip")
+    bt=document.getElementById("bluetip")
+    rt=document.getElementById("redtip")
+
+    g1=gt.offsetLeft+10
+    g2=gt.offsetTop+10
+
+    b1=bt.offsetLeft+10
+    b2=bt.offsetTop+10
+
+    r1=rt.offsetLeft+10
+    r2=rt.offsetTop+10
+
+    G1=(g1-200)/100
+    G2=(200-g2)/100
+    B1=(b1-200)/100
+    B2=(200-b2)/100
+    R1=(r1-200)/100
+    R2=(200-r2)/100
+    NR1=-10*R1
+    NR2=-10*R2
+    PR1=10*R1
+    PR2=10*R2
+
+    BR1=R1*B1
+    BR2=R1*B2
+    GR1=R2*G1 
+    GR2=R2*G2
+    BG1=BR1+GR1 
+    BG2=BR2+GR2
+
+    br1=100*(BR1+2)
+    br2=100*(2-BR2)
+    gr1=100*(GR1+2)
+    gr2=100*(2-GR2)
+    bg1=100*(BG1+2)
+    bg2=100*(2-BG2)
+    nr1=100*(NR1+2)
+    nr2=100*(2-NR2)
+    pr1=100*(PR1+2)
+    pr2=100*(2-PR2)
+
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.beginPath();
+    ctx.strokeStyle="black"
+    ctx.lineWidth=1
+    ctx.moveTo(0, 200);
+    ctx.lineTo(400, 200);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle="black"
+    ctx.lineWidth=1
+    ctx.moveTo(200, 0);
+    ctx.lineTo(200, 400);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="blue"
+    ctx.lineWidth=2
+    ctx.moveTo(200, 200);
+    ctx.lineTo(b1, b2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="green"
+    ctx.lineWidth=2
+    ctx.moveTo(200, 200);
+    ctx.lineTo(g1, g2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="red"
+    ctx.lineWidth=2
+    ctx.moveTo(200, 200);
+    ctx.lineTo(r1, r2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle="red"
+    ctx.lineWidth=1
+    ctx.setLineDash([3, 4])
+    ctx.moveTo(pr1, pr2);
+    ctx.lineTo(nr1, nr2 );
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+    ctx.beginPath();
+    ctx.strokeStyle="red"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(200, 200);
+    ctx.lineTo(br1, br2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+
+    ctx.beginPath();
+    ctx.strokeStyle="blue"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(200, 200);
+    ctx.lineTo(br1, br2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+
+    ctx.beginPath();
+    ctx.strokeStyle="blue"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(gr1, gr2);
+    ctx.lineTo(bg1, bg2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+
+
+    ctx.beginPath();
+    ctx.strokeStyle="green"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(200, 200);
+    ctx.lineTo(gr1, gr2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+    ctx.beginPath();
+    ctx.strokeStyle="green"
+    ctx.lineWidth=4
+    ctx.setLineDash([2, 3])
+    ctx.moveTo(br1, br2);
+    ctx.lineTo(bg1, bg2);
+    ctx.stroke();
+    ctx.setLineDash([3, 0])
+
+
+    ctx.beginPath();
+    ctx.strokeStyle="black"
+    ctx.arc(bg1, bg2, 3, 0, 7);
+    ctx.stroke();
+    ctx.fill();
+  }
+
+  function fill(){
+    gt=document.getElementById("greentip")
+    bt=document.getElementById("bluetip")
+    rt=document.getElementById("redtip")
+
+    b1=bt.offsetLeft+10
+    b2=bt.offsetTop+10
+    g1=gt.offsetLeft+10
+    g2=gt.offsetTop+10
+    r1=rt.offsetLeft+10
+    r2=rt.offsetTop+10
+
+    B1=b1-200
+    B2=200-b2
+    G1=g1-200
+    G2=200-g2
+    R1=r1-200
+    R2=200-r2
+
+    document.getElementById("m11").value=Math.round(B1/1)/100
+    document.getElementById("m21").value=Math.round(B2/1)/100
+    document.getElementById("m12").value=Math.round(G1/1)/100
+    document.getElementById("m22").value=Math.round(G2/1)/100
+    document.getElementById("m13").value=Math.round(R1/1)/100
+    document.getElementById("m23").value=Math.round(R2/1)/100
+
+    make_mat()
+    purp()
+  }
+
+  function mobilize(tip) {
+    tip.onmousedown = move;  
+
+    function move(e) {
+      x0 = e.clientX;
+      y0 = e.clientY;
+      document.onmousemove = drag;
+      document.onmouseup = close;
+    }
+
+    function drag(e) {
+      dx = e.clientX-x0;
+      dy = e.clientY-y0;
+      x0 = e.clientX;
+      y0 = e.clientY;
+      tip.style.left = (tip.offsetLeft + dx) + "px";
+      tip.style.top = (tip.offsetTop + dy) + "px";
+      draw(tip.offsetLeft + dx + 10, tip.offsetTop + dy +10);
+      fill()
+      draw_inv()
+      fill_inv()
+      fill_ba()
+    }
+
+    function close() {
+      document.onmouseup = null;
+      document.onmousemove = null;
+      tip.style.left = 1*Math.round(tip.offsetLeft/1) + "px";
+      tip.style.top = 1*Math.round(tip.offsetTop/1) + "px";
+      draw(tip.offsetLeft + dx + 10, tip.offsetTop + dy +10);
+      fill()
+      purp()
+    }
+  }
+
+  function match(){
+    a11=document.getElementById("m11").value
+    a21=document.getElementById("m21").value
+
+    a12=document.getElementById("m12").value
+    a22=document.getElementById("m22").value
+
+    a13=document.getElementById("m13").value
+    a23=document.getElementById("m23").value
+
+    gt=document.getElementById("greentip")
+    bt=document.getElementById("bluetip")
+    rt=document.getElementById("redtip")
+
+    A11=100*a11+200-10
+    A21=200-100*a21-10
+    A12=100*a12+200-10
+    A22=200-100*a22-10
+    A13=100*a13+200-10
+    A23=200-100*a23-10
+
+    bt.style.left=A11+"px"
+    bt.style.top=A21+"px"
+
+    gt.style.left=A12+"px"
+    gt.style.top=A22+"px"
+
+    rt.style.left=A13+"px"
+    rt.style.top=A23+"px"
+
+    draw()
+    purp()
+    make_mat()
+  }
+
+  function purp(){
+    a11=document.getElementById("m11").value
+    a12=document.getElementById("m12").value
+    a21=document.getElementById("m21").value
+    a22=document.getElementById("m22").value
+
+    x=document.getElementById("m13").value
+    y=document.getElementById("m23").value
+
+    r1=Math.round(100*(a11*x+a12*y)/x)/100
+    if (Math.abs(r1)==Infinity || isNaN(r1)==true){
+      r1=''}
+    r2=Math.round(100*(a21*x+a22*y)/y)/100
+    if (Math.abs(r2)==Infinity || isNaN(r2)==true){
+      r2=''}
+    X=Math.round(100*(a11*x+a12*y))/100
+    Y=Math.round(100*(a21*x+a22*y))/100
+
+    document.getElementById("w1").value=X
+    document.getElementById("w2").value=Y
+    document.getElementById("w1").innerHTML=X
+    document.getElementById("w2").innerHTML=Y
+    document.getElementById("r1").innerHTML=r1
+    document.getElementById("r2").innerHTML=r2
+  }
+
+
+
+</script>
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+
+//Inverse
+
+
+
+function make_mats(){
+mat=document.getElementById("inversion")
+var label=document.createElement('h3')
+label.style.position="absolute"
+label.style.top="10px"
+label.style.left="210px"
+label.innerHTML="Matrix P"
+mat.appendChild(label)
+for  (var i=0; i<2; i++){
+    for (var j=0; j<2; j++){
+        var entry=document.createElement('div')
+        entry.style.position="absolute"
+        entry.style.width="60px"
+        entry.style.height="20px"
+        if (j==0){
+        entry.style.backgroundColor="blue"}
+        if (j==1){
+        entry.style.backgroundColor="red"}
+        entry.style.top=(60+i*20)+"px"
+        entry.style.left=(180+j*60)+"px"
+        var inp=document.createElement("input")
+        inp.style.width="40px"
+        inp.style.height="15px"
+        inp.type="number" 
+        inp.id="a"+(i+1)+(j+1)   
+        inp.value=(i+j)/2
+        inp.step=0.1 
+        inp.disabled="true"
+        inp.setAttribute("onchange","match_inv()")
+        entry.appendChild(inp)
+mat.appendChild(entry)
+
+    }
+}
+
+
+
+
+
+}
+
+
+
+function make_inv(){
+
+
+mat=document.getElementById("inversion")
+var label=document.createElement('h3')
+label.style.position="absolute"
+label.style.top="10px"
+label.style.left="75px"
+label.innerHTML="Matrix Q"
+mat.appendChild(label)
+for  (var i=0; i<2; i++){
+    for (var j=0; j<2; j++){
+        var entry=document.createElement('div')
+        entry.style.position="absolute"
+        entry.style.width="60px"
+        entry.style.height="20px"
+        if (i==0){
+        entry.style.backgroundColor="red"}
+        if (i==1){
+        entry.style.backgroundColor="blue"}
+        entry.style.top=(60+i*20)+"px"
+        entry.style.left=(50+j*50)+"px"
+        var inp=document.createElement('div')
+        var inp=document.createElement("input")
+        inp.style.width="40px"
+        inp.style.height="15px"
+        inp.type="number" 
+        inp.id="b"+(i+1)+(j+1)
+        inp.Color="black"
+        inp.step=0.1 
+        inp.value=(1+1.5*i-j)/2
+        inp.setAttribute("onchange","match_inv()")
+        entry.appendChild(inp)
+
+mat.appendChild(entry)
+
+    }
+}
+
+
+
+}
+
+
+function make_prod(){
+
+
+mat=document.getElementById("inversion")
+var label=document.createElement('h3')
+label.style.position="absolute"
+label.style.top="100px"
+label.style.left="130px"
+label.innerHTML="Matrix QP"
+mat.appendChild(label)
+for  (var i=0; i<2; i++){
+    for (var j=0; j<2; j++){
+        var entry=document.createElement('div')
+        entry.style.position="absolute"
+        entry.style.width="60px"
+        entry.style.height="20px"
+        if (i==j){
+        entry.style.backgroundColor="purple"}
+        if (i==0 && j==1){
+        entry.style.backgroundColor="red"}
+        if (i==1 && j==0){
+        entry.style.backgroundColor="blue"}
+        entry.style.top=(150+i*20)+"px"
+        entry.style.left=(120+j*50)+"px"
+        var inp=document.createElement('div')
+        var inp=document.createElement("input")
+        inp.style.width="50px"
+        inp.style.height="15px"
+        inp.type="number" 
+        inp.id="ba"+(i+1)+(j+1)
+        inp.Color="black"
+        inp.disabled=true
+        entry.appendChild(inp)
+mat.appendChild(entry)
+
+    }
+}
+
+}
+
+
+
+
+function make_deg(){
+
+
+mat=document.getElementById("inversion")
+var label=document.createElement('h3')
+label.id="red_angle"
+label.style.position="absolute"
+label.style.top="205px"
+label.style.left="75px"
+label.style.color="red"
+label.innerHTML="Red Angle = " 
+mat.appendChild(label)
+mat=document.getElementById("inversion")
+var label=document.createElement('h3')
+label.style.position="absolute"
+label.style.top="240px"
+label.style.left="75px"
+label.style.color="blue"
+label.id="blue_angle"
+label.innerHTML="Blue Angle = " 
+mat.appendChild(label)
+}
+
+
+
+
+function fill_ba(){
+a11=document.getElementById("a11").value
+a21=document.getElementById("a21").value
+a12=document.getElementById("a12").value
+a22=document.getElementById("a22").value
+b11=document.getElementById("b11").value
+b21=document.getElementById("b21").value
+b12=document.getElementById("b12").value
+b22=document.getElementById("b22").value
+ba11=b11*a11+b12*a21
+ba12=b11*a12+b12*a22
+ba21=b21*a11+b22*a21
+ba22=b21*a12+b22*a22
+document.getElementById("ba11").value=ba11.toFixed(2)
+document.getElementById("ba12").value=ba12.toFixed(2)
+document.getElementById("ba21").value=ba21.toFixed(2)
+document.getElementById("ba22").value=ba22.toFixed(2)
+}
+
+
+
+
+function draw_inv(){
+
+var canvas = document.getElementById("invCanvas");
+var ctx = canvas.getContext("2d");
+ctx.clearRect(0, 0, canvas.width, canvas.height)
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(0, 200);
+ctx.lineTo(400, 200);
+ctx.stroke();
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(200, 0);
+ctx.lineTo(200, 400);
+ctx.stroke();
+
+
+
+
+
+
+    rt=document.getElementById("redinv")
+    bt=document.getElementById("blueinv")
+
+    r1=rt.offsetLeft+10
+    r2=rt.offsetTop+10
+    b1=bt.offsetLeft+10
+    b2=bt.offsetTop+10
+  
+
+    N11=r1-200
+    N12=200-r2
+    N21=b1-200
+    N22=200-b2
+
+
+
+ctx.beginPath();
+ctx.strokeStyle="red"
+ctx.lineWidth=3
+ctx.setLineDash([4, 4])
+ctx.moveTo(200, 200);
+ctx.lineTo(r1, r2);
+ctx.stroke();
+ctx.setLineDash([3, 0])
+
+ctx.beginPath();
+ctx.strokeStyle="blue"
+ctx.lineWidth=3
+ctx.setLineDash([4, 4])
+ctx.moveTo(200, 200);
+ctx.lineTo(b1, b2);
+ctx.stroke();
+ctx.setLineDash([3, 0])
+
+
+
+
+m11=document.getElementById("a11").value
+m21=document.getElementById("a21").value
+m12=document.getElementById("a12").value
+m22=document.getElementById("a22").value
+
+n11=N11/100
+n12=N12/100
+n21=N21/100
+n22=N22/100
+
+
+rangle=360/2/Math.PI*Math.acos((n11*m12+n12*m22)/Math.pow((n11*n11+n12*n12)*(m12*m12+m22*m22),0.5))
+bangle=360/2/Math.PI*Math.acos((n21*m11+n22*m21)/Math.pow((n21*n21+n22*n22)*(m11*m11+m21*m21),0.5))
+document.getElementById("red_angle").innerHTML="Red Angle = "+rangle.toFixed(1)+" degrees"
+document.getElementById("blue_angle").innerHTML="Blue Angle = "+bangle.toFixed(1)+" degrees"
+
+
+rbdot=(N11*m11+N12*m21)/100
+brdot=(N21*m12+N22*m22)/100
+
+rbx=m11*rbdot/Math.pow(m11*m11+m21*m21,0.5)
+rby=m21*rbdot/Math.pow(m11*m11+m21*m21,0.5)
+brx=m12*brdot/Math.pow(m12*m12+m22*m22,0.5)
+bry=m22*brdot/Math.pow(m12*m12+m22*m22,0.5)
+RBX=200+100*rbx
+RBY=200-100*rby
+BRX=200+100*brx
+BRY=200-100*bry
+
+
+
+M11=200+100*m11
+M21=200-100*m21
+M12=200+100*m12
+M22=200-100*m22
+
+ctx.beginPath();
+ctx.strokeStyle="blue"
+ctx.lineWidth=2
+ctx.moveTo(200, 200);
+ctx.lineTo(M11, M21);
+ctx.stroke();
+
+
+
+ctx.beginPath();
+ctx.strokeStyle="red"
+ctx.lineWidth=2
+ctx.moveTo(200, 200);
+ctx.lineTo(M12, M22);
+ctx.stroke();
+
+
+
+ctx.beginPath();
+ctx.strokeStyle="blue"
+ctx.lineWidth=2
+ctx.moveTo(M11,M21);
+ctx.beginPath();
+ctx.arc(M11, M21, 0.5, 0, 7);
+ctx.stroke();
+ctx.fillStyle="blue";
+ctx.fill();
+
+ctx.beginPath();
+ctx.strokeStyle="red"
+ctx.lineWidth=2
+ctx.moveTo(M12, M22);
+ctx.beginPath();
+ctx.arc(M12, M22, 0.5, 0, 7);
+ctx.stroke();
+ctx.fillStyle="red";
+ctx.fill();
+
+
+ctx.beginPath();
+ctx.strokeStyle="red"
+ctx.lineWidth=5
+ctx.moveTo(RBX, RBY);
+ctx.beginPath();
+ctx.arc(RBX, RBY, 4, 0, 7);
+ctx.stroke();
+ctx.fillStyle="red";
+ctx.fill();
+
+
+ctx.beginPath();
+ctx.strokeStyle="blue"
+ctx.lineWidth=5
+ctx.moveTo(BRX, BRY);
+ctx.beginPath();
+ctx.arc(BRX, BRY, 4, 0, 7);
+ctx.stroke();
+ctx.fillStyle="blue";
+ctx.fill();
+
+
+ctx.beginPath();
+ctx.strokeStyle="black"
+ctx.lineWidth=1
+ctx.moveTo(200, 200);
+ctx.beginPath();
+ctx.arc(200,200,100, 0, 7);
+ctx.stroke();
+
+
+
+
+}
+
+
+
+
+function fill_inv(){
+
+
+ gt=document.getElementById("redinv")
+ bt=document.getElementById("blueinv")
+b1=bt.offsetLeft+10
+b2=bt.offsetTop+10
+g1=gt.offsetLeft+10
+g2=gt.offsetTop+10
+
+
+B1=b1-200
+B2=200-b2
+G1=g1-200
+G2=200-g2
+
+
+document.getElementById("b21").value=Math.round(B1/10)/10
+document.getElementById("b22").value=Math.round(B2/10)/10
+document.getElementById("b11").value=Math.round(G1/10)/10
+document.getElementById("b12").value=Math.round(G2/10)/10
+
+
+}
+
+
+
+
+
+
+function match_inv(){
+
+n11=document.getElementById("b11").value
+n21=document.getElementById("b21").value
+n12=document.getElementById("b12").value
+n22=document.getElementById("b22").value
+
+
+
+ rt=document.getElementById("redinv")
+ bt=document.getElementById("blueinv")
+
+
+N11=100*n11+200-10
+N12=200-100*n12-10
+N21=100*n21+200-10
+N22=200-100*n22-10
+
+
+rt.style.left=N11+"px"
+rt.style.top=N12+"px"
+
+bt.style.left=N21+"px"
+bt.style.top=N22+"px"
+
+draw_inv()
+
+}
+
+
+
+
+
+
+
+
+
+
+
+make_mats()
+make_inv()
+make_prod()
+
+fill_ba()
+make_deg()
+match_inv()
+
+//Inverse
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+  
+  function submit(){
+    if (initialized==0){
+      document.getElementById("sub").getElementsByTagName("button")[0].innerText="Submit"
+      navigate(1)
+      navigate(-1)
+    }
+    if (initialized==1){
+      p11=parseFloat(document.getElementById("P11").value)
+      p12=parseFloat(document.getElementById("P12").value)
+      p21=parseFloat(document.getElementById("P21").value)
+      p22=parseFloat(document.getElementById("P22").value)
+      q11=parseFloat(document.getElementById("Q11").value)
+      q12=parseFloat(document.getElementById("Q12").value)
+      q21=parseFloat(document.getElementById("Q21").value)
+      q22=parseFloat(document.getElementById("Q22").value)
+      m11=parseFloat(document.getElementById("m11").value)
+      m12=parseFloat(document.getElementById("m12").value)
+      m21=parseFloat(document.getElementById("m21").value)
+      m22=parseFloat(document.getElementById("m22").value)
+      d11=document.getElementById("e").value
+      d22=document.getElementById("f").value
+
+P=new Matrix(p11,p21,p12,p22)
+Q=new Matrix(q11,q21,q12,q22)
+D=new Matrix(d11,0,0,d22)
+M=new Matrix(m11,m21,m12,m22)
+
+      fillPages = [10,12]
+      Q1=null
+      if (fillPages.includes(page)){
+        Q1=parseFloat(document.getElementById("eigenvalues").value)}
+
+      radioPages = [11,13]
+      A1=null
+      if (radioPages.includes(page)){
+        A1=document.querySelector('input[name="answer"]:checked').value}
+
+      var feed=document.getElementById("try").innerText
+      if (feed==""){
+      document.getElementById("try").innerText="Try Again"}
+      if (feed=="Not Quite"){
+      document.getElementById("try").innerText="Try Again"}
+      if (feed=="Try Again"){
+      document.getElementById("try").innerText="Not Quite"}
+
+      if (grade(page,P,D,Q,M)==1){
+        document.getElementById("try").innerText=""
+
+        var answeredQuestion = document.createElement('div')
+        answeredQuestion.innerHTML = quests[page]
+        //answeredQuestion.innerHTML += ' Your answer: '+V1+'&times('+M11+','+M21+')'
+        //answeredQuestion.innerHTML += ' + '+V2+'&times('+M12+','+M22+')'
+        answeredQuestion.style.color="grey"
+        var completedQuestions = document.getElementById("completed")
+        completedQuestions.appendChild(answeredQuestion)
+
+        page+=1
+        clearMats()
+        document.getElementById("question").innerText=quests[page]
+        score()
+        navigate(0)
+        MathJax.typesetPromise()
+      }
+    }
+    initialized=1
+  }
+
+  function navigate(i){
+    if (i==1){
+      forward()}
+    if (i==-1){
+      back()}
+    var blue=["bluetip","m11","m21"]
+    var green=["greentip","m12","m22"]
+    var red=["redtip","m13","m23"]
+    if (page==0){
+      fix(blue,[0],[0,1])
+      fix(green,[0],[1,0])
+      fix(red,[1],[1.5,1])
+    }
+    if (page==1){
+      fix(blue,[0],[-1,1])
+      fix(green,[0],[1,1])
+      fix(red,[1],[1,0.5])
+    }
+    if (page==2 ){
+      fix(blue,[1],[1,-1])
+      fix(green,[0],[-1,-1])
+      fix(red,[0],[-0.5,0.5])
+    }
+
+    if (page==3){
+      fix(blue,[0],[-0.8,-1])
+      fix(green,[1],[-1,0])
+      fix(red,[0],[1,-0.8])
+    }
+
+
+    if (page==5){
+      fix(blue,[0],[-0.4,0.6])
+      fix(green,[1],[1,0])
+      fix(red,[1],[0.5,-0.3])
+    }
+    if (page==4){
+      fix(blue,[1],[1,1])
+      fix(green,[0],[0.6,0.8])
+      fix(red,[1],[1,0])
+    }
+    if (page==6){
+      fix(blue,[0],[-0.6, 0.8])
+      fix(green,[0],[0.8, 0.6])
+      fix(red,[1],[0.5, 0.5])
+    }
+    if (page==7){
+      fix(blue,[0],[-0.6, 0.8])
+      fix(green,[0],[0.8, 0.6])
+      fix(red,[1],[0.5, -0.5])
+    }
+    if (page==8 || page==10 || page==11){
+      fix(blue,[0],[0.8, -0.4])
+      fix(green,[0],[-0.4, 0.2])
+      fix(red,[1],[-1, 0])
+    }
+    if (page==9 || page==12 || page==13){
+      fix(blue,[0],[0.8, -0.4])
+      fix(green,[0],[-0.4, 0.2])
+      fix(red,[1],[0, 1])
+    }
+    
+
+    MathJax.typesetPromise()
+  }
+
+  function normalizeVector(a, b){
+    if (a==0 && b==0){
+      return [a, b]}
+    norm = Math.sqrt(a*a + b*b)
+    return [a/norm, b/norm]
+  }
+
+  function grade(p, P,D,Q,M){
+    correct=0
+
+
+    // error < tolerance verifies that the chosen vector is close to being an eigenvector
+    if (p==0){
+      prod=(P.times(D)).times(Q)
+      if (prod.equals(M)){
+        correct = 1}
+    }
+    if (p==1){
+      if (error<tolerance && u1>0 && u2>0){
+        correct = 1}
+    }
+    if (p==2){ 
+      if (-2.05<m11 && m11<-1.95 && -0.05<m21 && m21<0.05){
+          correct = 1}
+    }
+    if (p==3){
+      if (-1.7<m12 && m12<-1.60 && -0.79<m22 && m22<-0.71){
+          correct = 1}}
+    if (p==4){
+      if (Math.abs(m11-0.4)<tolerance && Math.abs(m21)<tolerance){
+        correct = 1}
+    }
+    if (p==5){
+      if (Math.abs(m12-0.5)<tolerance && Math.abs(m22-0.3)<tolerance){
+        correct = 1}
+    }
+    if (p==6){
+      if (error<tolerance && u1<0 && u2<0){
+        correct = 1}
+    }
+    if (p==7){
+      if (error<tolerance && u1*u2<0){
+        correct = 1}
+    } 
+    if (p==8){
+      if (error<tolerance && u1>0 && u2<0){
+      correct = 1}
+    }
+    if (p==9){
+      if (error<tolerance && u1*u2>0){
+        correct = 1}
+    }
+    if (p==10){
+      if (q1==1){
+        correct = 1}
+    }
+    if (p==11){
+      if (a1=="trace"){
+        correct = 1}
+    }
+    if (p==12){
+      if (q1==0){
+        correct = 1}
+    }
+    if (p==13){
+      if (a1=="determinant"){
+        correct = 1}
+    }
+
+    if (correct==0){
+      //console.log("Answer is incorrect.")
+      grades[p][1]+=1
+    }
+    if (correct==1){
+      //console.log("Answer is correct.")
+      grades[p][0]+=1
+    }
+
+    sql_record(Module_Number)
+    return(correct)
+  }
+</script>
+
+<script>
+  var Module_Number="20"
+  var initialized=0
+  var page=0
+  var quests=[
+    "1. Write the matrix $\\begin{bmatrix} 0 && 1 \\\\ 1 && 0 \\end{bmatrix}$ as a product PDQ where $D$ is diagonal and $Q=P^{-1}$.",
+    "2. Find a (non-zero) eigenvector for the given matrix that lies in the first quadrant.",
+    "3. Awesome, now determine a matrix with the given second column that has an eigenvalue of -1 for the given eigenvector.",
+    "4. Determine a matrix with the given first column that has an eigenvalue of 0.5 for the given eigenvector.",
+    "5. Find the first column of the matrix if $\\begin{bmatrix} 1\\\\ 0\\end{bmatrix}$ and $\\begin{bmatrix} -1.5\\\\ -1\\end{bmatrix}$ are eigenvectors of this matrix.",
+    "6. Fantastic, determine the second column of the matrix if $\\begin{bmatrix} 0.5\\\\ -0.3\\end{bmatrix}$ and $\\begin{bmatrix} 0.3\\\\ 0.6\\end{bmatrix}$ are eigenvectors of this matrix.",
+    "7. Great, let's look at special transformation matrices and their eigenvectors. The matrix reflects vectors about the line $y=2x$. Find a possible eigenvector for this matrix that lies in the third quadrant.",
+    "8. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
+    "9. Now, this matrix projects vectors on the line $y=-0.5x$. Find a possible eigenvector for this matrix that lies in the fourth quadrant.",
+    "10. Could you find another eigenvector for the same matrix that is not in the span of the previous eigenvector?",
+    "11. Enter the sum of the eigenvalues for this matrix in the provided blank space.",
+    "12. Based on your previous observations, what quantity is this sum equal to?",
+    "13. Enter the product of the eigenvalues for this matrix in the provided blank space.",
+    "14. Based on your previous observations, what quantity is this product equal to?",
+    "Good job!!!"
+  ]
+  the_time=Date.now()
+  make_grades(Module_Number)
+  draw()
+
+  bt=document.getElementById("bluetip")
+  mobilize(bt)
+  gt=document.getElementById("greentip")
+  mobilize(gt)
+  rt=document.getElementById("redtip")
+  mobilize(rt)
+  ri=document.getElementById("redinv")
+  mobilize(ri)
+  bi=document.getElementById("blueinv")
+  mobilize(bi)
+  match()
+  make_mat()
+  score()
+</script>
 </body>
 </html>
+   
+
+
+
+
+
+
