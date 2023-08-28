@@ -55,6 +55,14 @@
     background-color: steelblue;
   }
 
+  #computeDimension:hover {
+    background-color: lightblue;
+  }
+
+  #computeDimension:active {
+    background-color: steelblue;
+  }
+
   .entries {
     position: relative;
     top: 10px;
@@ -139,7 +147,7 @@
     In the case that "False" is expected, you need to finding a counterexample to the statement.
   </p>
 
-  <p>  
+  <p>
     To check the dimension of the subspace spanned by any subset of the four vectors, 
     simply select each vector in that subset and then hit the 'Compute Dimension' button.
     For instance, to check the dimension of $\langle v_1,v_2,v_4 \rangle$ , activate $v_1$, $v_2$, and $v_4$ (but leave $v_3$ untouched) and click on 'Compute Dimension'. 
@@ -150,6 +158,12 @@
 
 <div class="questionArea">
   <p id="questionToDisplay">Click 'Start' whenever you are ready. Good luck!</p>
+  <div class="multipleChoice" id="multipleChoiceElement" hidden=true>
+    <input type="radio" id="True" name="answer" value="true">
+    <label for="True"> True </label>
+    <input type="radio" id="False" name="answer" value="false">
+    <label for="False"> False </label>
+  </div>
 </div>
 <button onclick ="gradeSubmission()" id="submitButton">Start</button>
 <button onclick="previousPage()">Previous</button>
@@ -191,187 +205,9 @@
   <div style="position: relative; left: 300px; top:-160px">
     <h3 style="display: inline-block"> Dimension: </h3> 
     <div style="display: inline-block; font-size: 22px; color: blue; font-weight: 600" id="dimensionValue"> 0 </div>
-    <button style="display: block; font-size:15px; border-radius: 5px" onclick="updateDimensions()"> Compute Dimension </button>
+    <button id='computeDimension' style="display: block; font-size:15px; border-radius: 5px" onclick="updateDimensions()"> Compute Dimension </button>
   </div>
 </div>
-  
-
-<script type="text/javascript">
-  initialized = 0
-  quests = 
-  [
-    "1. Find a vector $v_4$ such that it lies in the span of the vectors $v_1, v_2$ and $v_3$.",
-    "2. Find a vector $v_1$ such that it does not lie in the span of the vectors $v_2, v_3$ and $v_4$.",
-    "3. Fill in the entries for $v_3$ and $v_4$ so that all the four vectors span a 3-dimensional subspace.",
-    "4. What should the entries of $v_2$ and $v_3$ be so that the four vectors do not all lie within the same 2-dimensional subspace?",
-    "5. True or False?: These four vectors span a two-dimensional vector space.",
-    "6. True or False?: These four vectors does not span a three-dimensional vector space.",
-    "7. True or False?: These four vectors do not span the whole of $\\mathbb{R}^4$.",
-    "8. True or False?: These four vectors span the whole of $\\mathbb{R}^4$.",
-    "Awesome!!"
-  ]
-
-  function isInSubspace(vectorList, vector){
-    if (vectorList.length == 0){
-      matrix = new RationalMatrix(vector)
-      return !matrix.isNonZero()
-    }
-
-    array = []
-    for (let i=0; i<vectorList.length; i++){
-      array.push(vectorList[i])
-    }
-    
-    var matrixOne = new RationalMatrix(array)
-    var matrixTwo = matrixOne.appendRows([vector])
-    
-    return matrixOne.computeRank() >= matrixTwo.computeRank()
-  }
-
-  function gradeSubmission(){
-    if (initialized == 0){
-      button = document.getElementById("submitButton")
-      button.textContent = "Submit"
-      initialized = 1
-      displayQuestion(0)
-      return } 
-    else if (initialized == 1){
-      //E = readRationalMatrix("e")
-      if (page >= quests.length){
-        return }
-      /*if (gradeElementaryMatrices(page, E)=="true"){
-        grades[page][0] += 1
-        document.getElementById("response").textContent = ""
-        appendCompletedQuestion(page)
-        nextPage()
-      } 
-      else {
-        grades[page][1] += 1
-        pointOut()} */
-      }
-      //sql_record(Module_Number)
-  }
-
-  function displayQuestion(page){
-    landingArea = document.getElementById("questionToDisplay") 
-    landingArea.innerHTML = quests[page]
-    MathJax.typesetPromise()
-  }
-
-  function nextPage(){
-    if (page<quests.length-1 && initialized==1){
-      //document.getElementById("response").textContent = ""
-      page += 1
-      displayQuestion(page)}
-  }
-
-  function previousPage(){
-    if (page>0 && initialized==1){
-      //document.getElementById("response").textContent = ""
-      page -= 1
-      displayQuestion(page)}
-  }
-
-  function displayVariables(width=50){
-    boxes = document.getElementById("variables")
-    while (boxes.firstChild){
-      boxes.removeChild(boxes.lastChild)}
-
-    for (let i=0; i<4; i++){
-      divElement = document.createElement('div')
-      divElement.className = 'divVariables'
-      divElement.style.left = (2*i)+'px' 
-
-      vectorName = document.createElement('input')
-      vectorName.type = 'checkbox'
-      vectorName.className = 'checkboxes'
-      vectorName.id = "v"+(i+1)
-      vectorName.name = "v"+(i+1)
-
-      label = document.createElement('label')
-      label.className = 'variables'
-      label.textContent = "$v_"+(i+1)+"$"
-      label.setAttribute('for', vectorName.name)
-
-      divElement.appendChild(vectorName)
-      divElement.appendChild(label)
-      boxes.appendChild(divElement)
-    }
-  }
-
-  function enableAllEntries(disabledValue=false){
-    for (let i=0; i<4; i++){
-      for (let j=0; j<4; j++){
-        entryAddress = document.getElementById("v"+(i+1)+(j+1))
-        entryAddress.disabled = disabledValue
-      }
-    }
-  }
-
-  function parseVector(index){
-    vector = []
-    for (let i=0; i<4; i++){
-      entryAddress = document.getElementById('v'+(i+1)+(index+1))
-      entryValue = entryAddress.value
-
-      let q
-      try {
-        q = parseRational(entryValue)
-        vector.push(q)
-      } 
-      catch(error){
-        alert("Please ensure that all entries for v_"+(index+1)+" are rational numbers.")
-        return
-      }
-    }
-    return vector
-  }
-
-  function updateDimensions(){
-    let array = []
-    for (let j=0; j<4; j++){
-      let checkbox = document.getElementById("v"+(j+1))
-      if (checkbox.checked){
-        array.push(parseVector(j))
-      }
-    }
-    dimensionValueAddress = document.getElementById("dimensionValue")
-    if (array.length > 0){
-      matrixA = new RationalMatrix(array)
-      dimensionValueAddress.textContent = matrixA.computeRank()
-    }
-    else {
-      dimensionValueAddress.textContent = 0
-    }
-  }
-
-  function displayVectors(width=50){
-    columns = document.getElementById("vectors")
-    while (columns.firstChild){
-      columns.removeChild(columns.lastChild)}
-
-    for (let i=0; i<4; i++){
-      columnWrapper = document.createElement("div")
-      columnWrapper.className = 'columns'
-      for (let j=0; j<4; j++){
-        entry = document.createElement("input")
-        entry.type = 'text'
-        entry.className = 'entries'
-
-        entry.id = "v"+(i+1)+(j+1)
-        entry.name = "v"+(i+1)+(j+1)
-
-        columnWrapper.appendChild(entry)
-      }
-      columns.appendChild(columnWrapper)
-    }
-  }
-
-  var Module_Number = '15'
-  page = 0
-  displayVariables()
-  displayVectors()
-</script>
 
 <script type="text/javascript">
   // Returns the gcd of two integers
@@ -1012,7 +848,7 @@
       row = []
       for (let j=0; j<rowNum; j++){
         if (i==j){
-          m = generateRationalNumber(1, 3, allowZero=false)
+          m = generateRationalNumber(1, 2, allowZero=false)
           row.push(m)
         }
         else {
@@ -1108,7 +944,7 @@
     }
   }
 
-  function makeParameters(questionNumber){
+  function getParameters(questionNumber){
     let matrixM
     let fillingInstructions
     let partialFilling
@@ -1124,7 +960,7 @@
       }
       case 1:
       {
-        matrixRank = 4
+        matrixRank = 3
         matrixM = makeMatrix(3, matrixRank)
         fillingInstructions = new Map([[0, 'empty'], [1, 'full'], [2, 'full'], [3, 'full']])
         partialFilling = new Map()
@@ -1140,20 +976,13 @@
       }
       case 3:
       {
-        matrixRank = 3
+        matrixRank = 2
         matrixM = makeMatrix(4, matrixRank)
         fillingInstructions = new Map([[0, 'full'], [1, 'partial'], [2, 'partial'], [3, 'full']])
         partialFilling = new Map([[1, [0,1]], [2, [0,2,3]]])
         break
       }
       case 4:
-      {
-        matrixRank = generateInteger(2, 4)
-        matrixM = makeMatrix(4, matrixRank)
-        fillingInstructions = new Map([[0, 'full'], [1, 'full'], [2, 'full'], [3, 'full']])
-        partialFilling = new Map()
-        break
-      }
       case 5:
       {
         matrixRank = generateInteger(2, 4)
@@ -1162,7 +991,8 @@
         partialFilling = new Map()
         break
       }
-    case 6:
+      case 6:
+      case 7:
       {
         matrixRank = generateInteger(3, 4)
         matrixM = makeMatrix(4, matrixRank)
@@ -1170,17 +1000,211 @@
         partialFilling = new Map()
         break
       }
-    case 7:
-      {
-        matrixRank = generateInteger(3, 4)
-        matrixM = makeMatrix(4, matrixRank)
-        fillingInstructions = new Map([[0, 'full'], [1, 'full'], [2, 'full'], [3, 'full']])
-        partialFilling = new Map()
-        break
-      }
+      case 8:
+      case 9:
+      case 10:
+      case 11:
     }
     return [matrixM, fillingInstructions, partialFilling]
   }
+
+  function generateParameters(){
+    params = new Map()
+    for (let i=0; i<8; i++){
+      params.set(i, getParameters(i))
+    }
+    return params
+  }
+</script>
+
+<script type="text/javascript">
+  initialized = 0
+  quests = 
+  [
+    "1. Find a vector $v_4$ such that it lies in the span of the vectors $v_1, v_2$ and $v_3$.",
+    "2. Find a vector $v_1$ such that it does not lie in the span of the vectors $v_2, v_3$ and $v_4$.",
+    "3. Fill in the entries for $v_3$ and $v_4$ so that all the four vectors span a 3-dimensional subspace.",
+    "4. What should the entries of $v_2$ and $v_3$ be so that the four vectors do not all lie within the same 2-dimensional subspace?",
+    "5. True or False?: These four vectors span a two-dimensional vector space.",
+    "6. True or False?: These four vectors does not span a three-dimensional vector space.",
+    "7. True or False?: These four vectors do not span the whole of $\\mathbb{R}^4$.",
+    "8. True or False?: These four vectors span the whole of $\\mathbb{R}^4$.",
+    "Awesome!!"
+  ]
+  problemParameters = generateParameters()
+
+  function isInSubspace(vectorList, vector){
+    if (vectorList.length == 0){
+      matrix = new RationalMatrix(vector)
+      return !matrix.isNonZero()
+    }
+
+    array = []
+    for (let i=0; i<vectorList.length; i++){
+      array.push(vectorList[i])
+    }
+    
+    var matrixOne = new RationalMatrix(array)
+    var matrixTwo = matrixOne.appendRows([vector])
+    
+    return matrixOne.computeRank() >= matrixTwo.computeRank()
+  }
+
+  function gradeSubmission(){
+    if (initialized == 0){
+      button = document.getElementById("submitButton")
+      button.textContent = "Submit"
+      initialized = 1
+      displayQuestion(0)
+      return } 
+    else if (initialized == 1){
+      //E = readRationalMatrix("e")
+      if (page >= quests.length){
+        return }
+      /*if (gradeElementaryMatrices(page, E)=="true"){
+        grades[page][0] += 1
+        document.getElementById("response").textContent = ""
+        appendCompletedQuestion(page)
+        nextPage()
+      } 
+      else {
+        grades[page][1] += 1
+        pointOut()} */
+      }
+      //sql_record(Module_Number)
+  }
+
+  function gradeProblem(matrixResponse, choiceResponse=null){}
+
+  function displayQuestion(page){
+    landingArea = document.getElementById("questionToDisplay") 
+    landingArea.innerHTML = quests[page]
+    if (page < 8){
+      writeVectors(...problemParameters.get(page))
+    }
+    multipleChoiceArea = document.getElementById("multipleChoiceElement")
+    if (5-1<=page && page<8){
+      multipleChoiceArea.hidden = false
+    }
+    else {
+      multipleChoiceArea.hidden = true
+    }
+    MathJax.typesetPromise()
+  }
+
+  function nextPage(){
+    if (page<quests.length-1 && initialized==1){
+      //document.getElementById("response").textContent = ""
+      page += 1
+      displayQuestion(page)}
+  }
+
+  function previousPage(){
+    if (page>0 && initialized==1){
+      //document.getElementById("response").textContent = ""
+      page -= 1
+      displayQuestion(page)}
+  }
+
+  function displayVariables(width=50){
+    boxes = document.getElementById("variables")
+    while (boxes.firstChild){
+      boxes.removeChild(boxes.lastChild)}
+
+    for (let i=0; i<4; i++){
+      divElement = document.createElement('div')
+      divElement.className = 'divVariables'
+      divElement.style.left = (2*i)+'px' 
+
+      vectorName = document.createElement('input')
+      vectorName.type = 'checkbox'
+      vectorName.className = 'checkboxes'
+      vectorName.id = "v"+(i+1)
+      vectorName.name = "v"+(i+1)
+
+      label = document.createElement('label')
+      label.className = 'variables'
+      label.textContent = "$v_"+(i+1)+"$"
+      label.setAttribute('for', vectorName.name)
+
+      divElement.appendChild(vectorName)
+      divElement.appendChild(label)
+      boxes.appendChild(divElement)
+    }
+  }
+
+  function enableAllEntries(disabledValue=false){
+    for (let i=0; i<4; i++){
+      for (let j=0; j<4; j++){
+        entryAddress = document.getElementById("v"+(i+1)+(j+1))
+        entryAddress.disabled = disabledValue
+      }
+    }
+  }
+
+  function parseVector(index){
+    vector = []
+    for (let i=0; i<4; i++){
+      entryAddress = document.getElementById('v'+(i+1)+(index+1))
+      entryValue = entryAddress.value
+
+      let q
+      try {
+        q = parseRational(entryValue)
+        vector.push(q)
+      } 
+      catch(error){
+        alert("Please ensure that all entries for v_"+(index+1)+" are rational numbers.")
+        return
+      }
+    }
+    return vector
+  }
+
+  function updateDimensions(){
+    let array = []
+    for (let j=0; j<4; j++){
+      let checkbox = document.getElementById("v"+(j+1))
+      if (checkbox.checked){
+        array.push(parseVector(j))
+      }
+    }
+    dimensionValueAddress = document.getElementById("dimensionValue")
+    if (array.length > 0){
+      matrixA = new RationalMatrix(array)
+      dimensionValueAddress.textContent = matrixA.computeRank()
+    }
+    else {
+      dimensionValueAddress.textContent = 0
+    }
+  }
+
+  function displayVectors(width=50){
+    columns = document.getElementById("vectors")
+    while (columns.firstChild){
+      columns.removeChild(columns.lastChild)}
+
+    for (let i=0; i<4; i++){
+      columnWrapper = document.createElement("div")
+      columnWrapper.className = 'columns'
+      for (let j=0; j<4; j++){
+        entry = document.createElement("input")
+        entry.type = 'text'
+        entry.className = 'entries'
+
+        entry.id = "v"+(i+1)+(j+1)
+        entry.name = "v"+(i+1)+(j+1)
+
+        columnWrapper.appendChild(entry)
+      }
+      columns.appendChild(columnWrapper)
+    }
+  }
+
+  var Module_Number = '15'
+  page = 0
+  displayVariables()
+  displayVectors()
 </script>
 </body>
 </html>
