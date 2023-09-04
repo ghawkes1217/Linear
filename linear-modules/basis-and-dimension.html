@@ -796,7 +796,7 @@
 
   function generateRationalTuple(rank){
     scalars = []
-    Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4,5]
+    Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4]
     q = generateInteger(0, Dist.length-1)
     den = Dist[q]
     for (let i=0; i<rank; i++){
@@ -818,7 +818,7 @@
     one = new RationalNumber(1, 1)
 
     R = []
-    Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4,5]
+    Dist = [1,1,1,1,2,2,2,2,3,3,3,4,4]
     for (let i=0; i<rowNum; i++){
       row = []
       q = generateInteger(0, Dist.length-1)
@@ -1049,32 +1049,103 @@
     
     return matrixOne.computeRank() >= matrixTwo.computeRank()
   }
-
+  
   function gradeSubmission(){
     if (initialized == 0){
       button = document.getElementById("submitButton")
       button.textContent = "Submit"
       initialized = 1
       displayQuestion(0)
-      return } 
+      return }
+    
     else if (initialized == 1){
-      //E = readRationalMatrix("e")
-      if (page >= quests.length){
+      if (page >= quests.length-1){
         return }
-      /*if (gradeElementaryMatrices(page, E)=="true"){
-        grades[page][0] += 1
-        document.getElementById("response").textContent = ""
-        appendCompletedQuestion(page)
+      let matrixResponse = readMatrix()
+      let choiceResponse = null
+      if (5-1<=page && page<8){
+        let responseString = document.querySelector('input[name="answer"]:checked').value
+        choiceResponse = responseString=="true" ? true : false
+      }
+      if (gradeProblem(page, matrixResponse, choiceResponse) == 1){
+        //grades[page][0] += 1
+        alert("Awesome, you got that right!")
+        //appendCompletedQuestion(page)
         nextPage()
-      } 
+      }
       else {
-        grades[page][1] += 1
-        pointOut()} */
+        //grades[page][1] += 1
+        alert("Sorry, please try again.")
+        //pointOut()
       }
       //sql_record(Module_Number)
+    }
   }
 
-  function gradeProblem(matrixResponse, choiceResponse=null){}
+  function gradeProblem(pageNumber, matrixResponse, choiceResponse=null){
+    let correct = 0
+    switch (pageNumber){
+      case 0:
+      {
+        let matrixA = new RationalMatrix([matrixResponse[0], matrixResponse[1], matrixResponse[2]])
+        if (matrixA.computeRank() == matrixResponse.computeRank()){
+          correct = 1}
+        break
+      }
+      case 1:
+      {
+        let matrixA = new RationalMatrix([matrixResponse[1], matrixResponse[2], matrixResponse[3]])
+        if (matrixA.computeRank() < matrixResponse.computeRank()){
+          correct = 1}
+        break
+      }
+      case 2:
+      {
+        if (matrixResponse.computeRank() == 3){
+          correct = 1}
+        break
+      }
+      case 3:
+      {
+        if (matrixResponse.computeRank() >= 3){
+          correct = 1}
+        break
+      }
+      case 4:
+      {
+        if (matrixResponse.computeRank()==2 && choiceResponse===true){
+          correct = 1}
+        else if (matrixResponse.computeRank()!=2 && choiceResponse===false){
+          correct = 1}
+        break
+      }
+      case 5:
+      {
+        if (matrixResponse.computeRank()!=3 && choiceResponse===true){
+          correct = 1}
+        if (matrixResponse.computeRank()==3 && choiceResponse===false){
+          correct = 1}
+        break
+      }
+      case 6:
+      {
+        if (matrixResponse.computeRank()!=4 && choiceResponse===true){
+          correct = 1}
+        else if (matrixResponse.computeRank()==4 && choiceResponse===false){
+          correct = 1}
+        break
+      }
+      case 7:
+      {
+        if (matrixResponse.computeRank()==4 && choiceResponse===true){
+          correct = 1}
+        else if (matrixResponse.computeRank()!=4 && choiceResponse===false){
+          correct = 1}
+        break
+      }
+    }
+    return correct
+  }
 
   function displayQuestion(page){
     landingArea = document.getElementById("questionToDisplay") 
@@ -1159,6 +1230,20 @@
       }
     }
     return vector
+  }
+  
+  function readMatrix(){
+    let array = []
+    for (let i=0; i<4; i++){
+      try {
+        array.push(parseVector(i))
+      }
+      catch(error){
+        alert(error)
+        return
+      }
+    }
+    return new RationalMatrix(array)
   }
 
   function updateDimensions(){
