@@ -86,14 +86,14 @@
     background-color: white;
     text-align: center;}
 
-  #completed {
-    position: absolute;
-    left: 10px;
-    top: 500px}
-
   #question {
     position: relative;
     height: 35px;}
+
+  #completed {
+    position: absolute;
+    left: 10px;
+    top: 825px}
  </style>
 
 <body>
@@ -207,6 +207,10 @@
     <div style="display: inline-block; font-size: 22px; color: blue; font-weight: 600" id="dimensionValue"> 0 </div>
     <button id='computeDimension' style="display: block; font-size:15px; border-radius: 5px" onclick="updateDimensions()"> Compute Dimension </button>
   </div>
+</div>
+
+<div id="completed">
+  <h2>Completed Questions:</h2>
 </div>
 
 <script type="text/javascript">
@@ -924,23 +928,28 @@
 
     var k = 0
     for (let i=0; i<4; i++){
-      if (fillingInstructions.get(i)=='empty'){
-        continue}
-
       for (let j=0; j<4; j++){
         var entry = document.getElementById("v"+(j+1)+(i+1))
-        if (fillingInstructions.get(i)=='partial'){
+        if (fillingInstructions.get(i)=='empty'){
+          entry.disabled = false
+        }
+        else if (fillingInstructions.get(i)=='partial'){
           if (partialFilling.get(i).includes(j)){
             entry.value = matrixA[k][j].toString()
+            entry.disabled = true
+          }
+          else {
+            entry.disabled = false
           }
         }
         else if (fillingInstructions.get(i)=='full'){
           entry.value = matrixA[k][j].toString()
+          entry.disabled = true
         }
       }
-      k += 1
-      if (k == matrixA.rowDim){
-        break}
+      if (fillingInstructions.get(i)=='full' || fillingInstructions.get(i)=='partial'){
+        k += 1
+      }
     }
   }
 
@@ -976,7 +985,7 @@
       }
       case 3:
       {
-        matrixRank = 2
+        matrixRank = 3
         matrixM = makeMatrix(4, matrixRank)
         fillingInstructions = new Map([[0, 'full'], [1, 'partial'], [2, 'partial'], [3, 'full']])
         partialFilling = new Map([[1, [0,1]], [2, [0,2,3]]])
@@ -1003,14 +1012,28 @@
       case 8:
       case 9:
       case 10:
+      {
+        matrixRank = 0
+        matrixM = makeMatrix(4, matrixRank)
+        fillingInstructions = new Map([[0, 'empty'], [1, 'empty'], [2, 'empty'], [3, 'full']])
+        partialFilling = new Map()
+        break
+      }
       case 11:
+      {
+        matrixRank = 0
+        matrixM = makeMatrix(4, matrixRank)
+        fillingInstructions = new Map([[0, 'empty'], [1, 'empty'], [2, 'empty'], [3, 'empty']])
+        partialFilling = new Map()
+        break
+      }
     }
     return [matrixM, fillingInstructions, partialFilling]
   }
 
   function generateParameters(){
     params = new Map()
-    for (let i=0; i<8; i++){
+    for (let i=0; i<12; i++){
       params.set(i, getParameters(i))
     }
     return params
@@ -1065,24 +1088,51 @@
     else if (initialized == 1){
       if (page >= quests.length-1){
         return }
-      let matrixResponse = readMatrix()
+      let matrixResponse = new RationalMatrix([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]])
       let choiceResponse = null
       if (5-1<=page && page<8){
+        matrixResponse = readMatrix()
         let responseString = document.querySelector('input[name="answer"]:checked').value
         choiceResponse = responseString=="true" ? true : false
       }
+      else if (9-1<=page && page<12){
+        let responseString = document.querySelector('input[name="answer"]:checked').value
+        choiceResponse = responseString=="true" ? true : false
+        if (choiceResponse===false){
+          try {
+            matrixResponse = readMatrix()
+          }
+          catch(error){
+            alert("You need to give a counterexample if you chose 'False' as an answer.")
+            return
+          }
+        }
+      }
+      else {
+        matrixResponse = readMatrix()
+      }
+
       if (gradeProblem(page, matrixResponse, choiceResponse) == 1){
-        //grades[page][0] += 1
         alert("Awesome, you got that right!")
-        //appendCompletedQuestion(page)
+        grades[page][0] += 1
+        appendCompletedQuestion(page)
         nextPage()
       }
       else {
-        //grades[page][1] += 1
         alert("Sorry, please try again.")
-        //pointOut()
+        grades[page][1] += 1
       }
-      //sql_record(Module_Number)
+      sql_record(Module_Number)
+    }
+  }
+
+  function appendCompletedQuestion(page){
+    if (grades[page][0] == 1){
+      score()
+      let answeredQuestion = document.createElement('div')
+      answeredQuestion.textContent = quests[page]
+      answeredQuestion.setAttribute('class', 'greytext')
+      document.getElementById("completed").appendChild(answeredQuestion)
     }
   }
 
@@ -1147,6 +1197,51 @@
           correct = 1}
         break
       }
+      case 8:
+      {
+        let M = matrixResponse
+        let b1 = new RationalMatrix([M[0], M[1]])
+        let b2 = new RationalMatrix([M[1], M[2]])
+        if (choiceResponse===false){  
+          if (b1.computeRank()==2 && b2.computeRank()==2 && M.computeRank()!=3){
+            correct = 1
+          }
+        }
+        break
+      }
+      case 9:
+      {
+        let M = matrixResponse
+        let b1 = new RationalMatrix([M[0], M[1]])
+        let b2 = new RationalMatrix([M[1], M[2]])
+        let b3 = new RationalMatrix([M[0], M[2]])
+        if (choiceResponse===false){  
+          if (b1.computeRank()==2 && b2.computeRank()==2 && b3.computeRank()==2 && M.computeRank()!=3){
+            correct = 1
+          }
+        }
+        break
+      }
+      case 10:
+      {
+        if (choiceResponse===true){
+          correct = 1
+        }
+        break
+      }
+      case 11:
+      {
+        let M = matrixResponse
+        let b1 = new RationalMatrix([M[0], M[3]])
+        let b2 = new RationalMatrix([M[0], M[1], M[2]])
+        let b3 = new RationalMatrix([M[1], M[2], M[3]])
+        if (choiceResponse===false){  
+          if (b1.computeRank()==2 && b2.computeRank()==3 && b3.computeRank()==3 && M.computeRank()!=4){
+            correct = 1
+          }
+        }
+        break
+      }
     }
     return correct
   }
@@ -1154,11 +1249,11 @@
   function displayQuestion(page){
     landingArea = document.getElementById("questionToDisplay") 
     landingArea.innerHTML = quests[page]
-    if (page < 8){
+    if (page < 12){
       writeVectors(...problemParameters.get(page))
     }
     multipleChoiceArea = document.getElementById("multipleChoiceElement")
-    if (5-1<=page && page<8){
+    if (5-1<=page && page<12){
       multipleChoiceArea.hidden = false
     }
     else {
@@ -1243,7 +1338,7 @@
         array.push(parseVector(i))
       }
       catch(error){
-        alert(error)
+        //alert(error)
         return
       }
     }
