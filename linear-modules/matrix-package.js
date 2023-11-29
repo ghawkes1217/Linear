@@ -1,4 +1,14 @@
 class DecimalNumber{
+  static parseEntry(entry){
+    if (entry instanceof DecimalNumber){
+      return entry}
+
+    if (isNaN(entry)){
+      throw new Error("Entry should be in a decimal.")
+    }
+    return new DecimalNumber(entry)
+  }
+
   constructor(x){
     if (isNaN(x)){
       throw new Error("x should be in a decimal.")
@@ -22,16 +32,20 @@ class DecimalNumber{
   }
 
   greaterThan(that){
-      return this.value > that.value}
+      return this.value > that.value
+  }
 
   greaterThanOrEquals(that){
-    return this.value >= that.value}
+    return this.value >= that.value
+  }
 
   lessThan(that){
-    return !this.greaterThanOrEquals(that)}
+    return !this.greaterThanOrEquals(that)
+  }
 
   lessThanOrEquals(that){
-    return !this.greaterThan(that)}
+    return !this.greaterThan(that)
+  }
 
   add(that){
     return new DecimalNumber(this.value + that.value)
@@ -151,7 +165,8 @@ class DecimalMatrix extends Array{
   }
 
   doesNotEqual(that){
-    return !this.equals(that)}
+    return !this.equals(that)
+  }
 
   transpose(){
     let matrixM = []
@@ -216,7 +231,8 @@ class DecimalMatrix extends Array{
   }
 
   subtract(that){
-    return this.add(that.negate())}
+    return this.add(that.negate())
+  }
 
   multiply(that){
     if (this.colDim != that.rowDim){
@@ -294,5 +310,86 @@ class DecimalMatrix extends Array{
       }
     }
     return new DecimalMatrix(matrixM)
-  }    
+  }
+
+  // Verifies that a rational matrix is in RREF
+  isInRREF(){
+    let zero = new DecimalNumber(0.0)
+    let one = new DecimalNumber(1.0)
+    // Checks that first nonzero entries of each row progresses from left to right
+    let first = this.firstNonZero(0)
+    let nonzeroRows = [first]
+
+    for (let i=1; i<this.rowDim; i++){
+      let second = this.firstNonZero(i)
+      if (first > second){
+        return false}
+      first = second
+      nonzeroRows.push(first)
+    }
+    
+    // Checks that pivots are normalized to 1 
+    // and that entries above and below pivots are 0s.
+    for (let i=0; i<nonzeroRows.length; i++){
+      first = nonzeroRows[i]
+      if (first >= this.colDim){
+        break}
+      for (let k=0; k<this.rowDim; k++){
+        let entry = this[k][first]
+        if (k == i){
+          if (entry.doesNotEqual(one)){
+            return false}
+        }
+        else {
+          if (entry.doesNotEqual(zero)){
+            return false}
+        }
+      }
+    }
+    return true
+  }
+
+  findRREF(){
+    let A = this
+    for (let i=0; i<this.rowDim; i++){
+      // Search for the row with the leftmost pivot
+      // Swap if necessary
+      // If all rows below are zero, then terminate
+      let rowIndex = i
+      let leftmostIndex = A.firstNonZero(i)
+      for (let k=i+1; k<this.rowDim; k++){
+        if (A.firstNonZero(k) < leftmostIndex){
+          leftmostIndex = A.firstNonZero(k)
+          rowIndex = k
+        }
+      }
+      if (leftmostIndex == this.colDim){
+        break}
+      else if (rowIndex > i){
+        A = A.swapRows(i, rowIndex)}
+
+      // Scale the pivot entry to 1
+      // Eliminate all entries above and below pivot entry
+      let jp = leftmostIndex
+      let c = A[i][jp]
+      A = A.scaleRows(i, c.invert())
+      for (let k=0; k<this.rowDim; k++){
+        if (k==i){
+          continue}
+        let d = A[k][jp]
+        A = A.addRows(i, k, d.negate())
+      }
+    }
+    return new DecimalMatrix(A)
+  }
+
+  computeRank(){
+    let A = this.findRREF()
+    let pivotNumber = 0
+    for (let i=0; i<this.rowDim; i++){
+      if (A.firstNonZero(i) < this.colDim){
+        pivotNumber += 1}
+    }
+    return pivotNumber
+  }
 }
