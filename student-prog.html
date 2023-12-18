@@ -234,7 +234,10 @@
     }
 
     function computeModuleCompletionProgress(userData, questionWeights){
+      
       n = questionWeights.length
+
+      
       if (userData.length < 2*n){
         throw new Error("Given user data is insufficient.")}
 
@@ -245,10 +248,12 @@
         weightedSum += completed*questionWeights[i]
         weightTotal += questionWeights[i]
       }
+ 
       return 100 * weightedSum / weightTotal
     }
 
     function computeCourseCompletionProgress(moduleProgress, moduleWeights){
+ 
       if (moduleProgress.length < moduleWeights.length){
         throw new Error("Given module data is insufficient.")}
 
@@ -259,10 +264,12 @@
         weightedSum += score*moduleWeights[i]
         weightTotal += moduleWeights[i]
       }
+ 
       return weightedSum / weightTotal
     }
 
     function updateCourseProgress(courseName, moduleData){
+
       courseCode = associations[courseName][0]
       moduleList = associations[courseName][1]
       courseWeights = associations[courseName][4]
@@ -270,13 +277,18 @@
       moduleProgress = []
       moduleWeights = []
       for (let i=0; i<moduleList.length; i++){
+ 
         userData = moduleData[String(i+1)]
         moduleName = moduleList[i]
+        
         questionWeights = courseWeights[moduleName][0]
         moduleWeights.push(courseWeights[moduleName][1])
-        
+       
+
         score = computeModuleCompletionProgress(userData, questionWeights)
+
         moduleProgress.push(score)
+      
 
         buttonElement = document.getElementById(courseCode + (i+1) + "-button")
         anchorElement = buttonElement.children[0]
@@ -313,14 +325,19 @@
       }
 
       courseProgress = computeCourseCompletionProgress(moduleProgress, moduleWeights)
+   
       parent = document.getElementsByClassName(courseCode)[0]
       progressArea = parent.children[1]
       progressArea.textContent = "Completion Progress: " + courseProgress.toFixed(2) + "%"}
+
+
+
+
       function greetUser(){
       document.getElementById("greeting").textContent = "Welcome, " + user
       //document.getElementById("login").textContent = "logged in as " + loginName
     }
-  
+   
   </script>
   
   <script>
@@ -421,7 +438,13 @@ function wencinData(){
       "Null Space",
     "Geometry of the Null Space",
   "Complete solution to Ax=B",
-"Span and Dimension"]
+"Span and Dimension",
+"Projections",
+"Orthogonalization and Gram-Schmidt",
+"Determinant",
+"Eigenvectors",
+"Diagonalization"
+]
     linearAlgebraModuleAddresses = {
       "Linear Combinations": "linear-combinations.html", 
       "Dot Product": "dot-product.html", 
@@ -460,10 +483,10 @@ function wencinData(){
       "Complete solution to Ax=B": [[1,1,1,1,1, 1,1,1,1,1, 1,1], 1],
       "Span and Dimension":  [[1,1,1,1,1, 1,1,1,1,1, 1,1], 1],
       "Projections": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1], 1],
-      "Orthogonalization and Gram-Schmidt": [[1], 0],
+      "Orthogonalization and Gram-Schmidt": [[1], 1],
       "Determinant": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1], 1],
       "Eigenvectors": [[1,1,1,1,1, 1,1,1,1,1, 1,1,1,1], 1],
-      "Diagonalization": [[1,1,1,1,1, 1,1,1,1,1, 1,1], 0],
+      "Diagonalization": [[1,1,1,1,1, 1,1], 1],
 
     }
 
@@ -603,7 +626,7 @@ function wencinData(){
             0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0],
             "19": [0,0, 0,0, 0,0, 0,0, 0,0,
             0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0],
-            "20": [0,0,]
+            "20": [0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0]
 
           }
 

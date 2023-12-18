@@ -1,301 +1,1133 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!-- The following adds MathJax to render LaTeX notation -->
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
-        <link rel="stylesheet" href="../styles.css">
-        <script src="../site-scripts.js"></script>
-      </head>
+  <head>
+    <!-- The following adds MathJax to render LaTeX notation -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../site-scripts.js"></script>
+  </head>
+  
+
 <style>
+
+
 #blank {
   position: relative;
 }
 
+
 #outer {
   position: absolute;
-  height: 400px;
-  width: 400px;
-  left: 0px;
-  top: 40px;
+  left: 120px;
+  top: 90px;
   background-color: white;
-  text-align: center;
-  border: 9px solid #d3d3d3;}
+  text-align: center}
 
- #bluetip {
+
+
+  #olddot {
   position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 90px;
+  height: 500px;
+  width: 300px;
+  left: 600px;
   top: 90px;
-  background-color: grey;}
-  
-   #greentip {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 290px;
-  top: 90px;
-  background-color: grey;}
+  background-color: lightblue;
+  text-align: center}
 
-
-  #redtip {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 90px;
-  top: 290px;
-  background-color: grey;}
-  
- #matrix {
-  position: absolute;
-  height: 260px;
-  width: 370px;
-  left: 425px;
-  top: 40px;
-  background-color: lightgrey;
-  text-align: center;}
-  
-  #M11 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 20px;
-  top: 50px;
-  background-color: blue;
-  text-align: center;}
-  
-    #M21 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 20px;
-  top: 70px;
-  background-color: blue;
-  text-align: center;}
-  
-  #M12 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 80px;
-  top: 50px;
-  background-color: red;
-  text-align: center;}
-
-    #M22 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 80px;
-  top: 70px;
-  background-color: red;
-  text-align: center;}
-  
-     #times {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 145px;
-  top: 60px;
-  background-color: lightgrey;
-  text-align: center;}
-
-       #equals {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 235px;
-  top: 60px;
-  background-color: lightgrey;
-  text-align: center;}
-  
-  
-  #V1 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 170px;
-  top: 50px;
-  background-color: blue;
-  text-align: center;}
-  
-    #V2 {
-  position: absolute;
-  height: 20px;
-  width: 60px;
-  left: 170px;
-  top: 70px;
-  background-color: red;
-  text-align: center;}
-  
-  #w1 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 265px;
-  top: 50px;
-  color: purple;
-  text-align: center;
-  border: 1px solid black;}
-  
-  
-  
-    #w2 {
-  position: absolute;
-  height: 20px;
-  width: 45px;
-  left: 265px;
-  top: 70px;
-  color: purple;
-  text-align: center;
-  border: 1px solid black;}
  
-    #but {
-  position: absolute;
-  height: 30px;
-  width: 30px;
-  left: 290px;
-  top:30px;
-  background-color: black;
-  text-align: center;}
+ 
+ 
   
-  #but2 {
+  
+  #line {
   position: absolute;
-  height: 30px;
-  width: 30px;
-  left: 235px;
-  top:10px;
-  background-color: black;
-  text-align: center;}
+  height: 280px;
+  width: 5px;
+  left: 400px;
+  top: 0px;
+  background-color: black;}
 
- #sub {
+
+
+
+  .center {
+  text-align: center;
+  font-size: 30px;
+}
+
+
+  .inp {
   position: absolute;
+  left: 5px;
+  height: 40px;
+  width: 99px;
+  background-color: white;}
+
+ 
+  #difficulty  {
+    position: absolute;
   height: 30px;
-  width: 380px;
-  left: 40px;
-  top: 10px;
+  width: 390px;
+  left: 490px;
+  top: 0px;
+  background-color: white;
+  text-align: center;}
+  #diff_buttons  {
+    position: absolute;
+  height: 30px;
+  width: 390px;
+  left: 490px;
+  top: 30px;
   background-color: white;
   text-align: center;}
 
-     #try {
-  position: absolute;
-  height: 30px;
-  width: 80px;
-  left: 560px;
-  top: 10px;
-  background-color: white;
-  text-align: center;}
-  
 
   #score {
   position: absolute;
   height: 220px;
   width: 90px;
-  left: 990px;
-  top: 10px;
+  left: 1200px;
+  top: 0px;
   background-color: white;
   text-align: center;}
-  #MatEq {
-  position: absolute;
-  top: 95px;
-  height: 60px;
-  width: 370px;
-  background-color: lightgrey;
-  text-align: center;}
 
-  #completed {
-  position: absolute;
-  left: 10px;
-  top: 500px}
-
-  #question {
-  position: relative;
-  height: 35px;
-}
   
  </style>
+ 
+ 
+ 
+ 
 
  
+ 
+ 
 <body>
-<div>
   <div style="position: absolute;">
     <a href="../linear-lab.html" class="backto">&#8592 Back to Linear Lab</a>
   </div>
   <div style="position: absolute; left:1099px;" class="backto" >
     <a href="../feedback.html">Provide Feedback &#8594</a>
   </div>
-    <h2><center>Module 17: Orthogonalization and Gram-Schmidt</center></h2>
-<p>
-In this module you will be given 3 vectors \(\textcolor{red}{u}\), \(\textcolor{green}{v}\), \(\textcolor{blue}{w}\).
-Your goal will be to a new set of vectors \(\textcolor{red}{U}\), \(\textcolor{green}{V}\), \(\textcolor{blue}{W}\)
-with the following properties:
 
-<ul>
-  <li> \(\textcolor{red}{U}\) and \(\textcolor{green}{V}\) and \(\textcolor{blue}{W}\) are unit vectors</li>
-  <li> We have \(\textcolor{red}{U} \cdot \textcolor{green}{V}=0\), and
-    \(\textcolor{green}{V} \cdot \textcolor{blue}{W}=0\), and
-    \(\textcolor{red}{U} \cdot \textcolor{blue}{W}=0\), </li>
-    <li>
-      We have
-    \(\langle \textcolor{red}{u} \rangle= \langle \textcolor{red}{U} \rangle \), and
-    \(\langle \textcolor{red}{u}, \textcolor{green}{v} \rangle= \langle \textcolor{red}{U}, \textcolor{green}{V} \rangle \), and
-    \(\langle \textcolor{red}{u}, \textcolor{green}{v}, \textcolor{blue}{w}  \rangle= \langle \textcolor{red}{U}, \textcolor{green}{V}, \textcolor{blue}{W} \rangle \),
-  </li>
-
-</ul>
-
-Where the notation \( \langle \rangle \) signifies the vector space of all linear combinations of vectors in brackets.
-
-<p>
-  In order to achieve this goal you will follow these steps:
-<ul>
-<li>
-  Scale the vector \( \textcolor{red}{u} \) until it has unit length (take this to be  \( \textcolor{red}{U} \))
-</li>
-<li>
-Project \( \textcolor{green}{v} \) onto \( \textcolor{red}{U} \) and substract the result from \( \textcolor{green}{v} \).
-Then scale the result until it has unit length. This will be \( \textcolor{green}{V} \).
-</li>
-<li>
-Project \( \textcolor{blue}{w} \) onto \( \textcolor{red}{U} \) and substract the result from \( \textcolor{blue}{w} \).
-Then project the new \(\textcolor{blue}{w}\) onto \( \textcolor{green}{V} \) and substract the result from \(\textcolor{blue}{w}\).
-Finally, scale \(\textcolor{blue}{w}\) until it is a unit vector. The result is \(\textcolor{blue}{W}\).
-</li>
-</ul>
-
-This process of changing a basis of vectors into a new basis that is orthonormal (all vectors have 
-unit length and any two are perpendicular to each other) is known as the Gram-Schmidt orthogonalization 
-process.  Note that in the process, you never need to consider more than two vectors at any one time.
-In fact, in the interactive below you will only be able to view two vectors at a time:
-<ul>
-  <li>
-    Click the "red/green" button to see 
-a representation of the plane spanned by \( \textcolor{red}{u} \) and \( \textcolor{green}{v} \) and manipulate these vectors
-  </li>
-  <li>
-    Click the "green/blue" button to see 
-a representation of the plane spanned by \( \textcolor{green}{v}\) and \( \textcolor{blue}{w} \) and manipulate these vectors
-  </li>
-  <li>
-    Click the "red/blue" button to see 
-a representation of the plane spanned by \( \textcolor{red}{u} \) and \( \textcolor{blue}{w}\) and manipulate these vectors
-  </li>
-</ul>
-
-</p>
-
-</p>
-Interactive to be added at a later date.
-</p>  
-
+  <h2> <center>Module 17: Orthogonalization and Gram Schmidt </center></h2>
 
 
 <p>
-
+ 
 </p>
 
 
+
+
+
+
+<div class="popup" onclick="pop()"  ><u>Level Statistics</u>
+  <div class="popuptext" id="myPopup" >
+    <h3 id="selected" style="text-align:center;">No Level Selected</h3>
+    <table >
+
+      <tr>
+        <td>Users Who Have Attempted This Level</td>
+        <td id="users">0</td>
+      </tr>
+      <tr>
+        <td>Percentage of Users With a Correct Response</td>
+        <td id="eventual">0</td>
+      </tr>
+      <tr>
+        <td>Average Number of Attempts per User</td>
+        <td id="attempts">0</td>
+      </tr>
+      <tr>
+        <td>Percentage of Attempts that are Correct</td>
+        <td id="overall">0</td>
+      </tr>
+
+    </table>
+    
+
+
+  </div>
+</div>
+
+
+<div id="blank">
+  <div id="score">
+
+  </div>
+  <div id="submit" style="left: 10px; top:20px; position:absolute">
+  <button onclick="compare()">
+    Submit
+  </button>
+</div>
+<div id="undo" style="left:10px; top:50px; position:absolute">
+<button  onclick="revert()">Undo</button>
+</div>
+<div id="diff_buttons">
+  <button style="background-color:white" onclick="diff(1)">&#8593</button>
+  <button style="background-color:white" onclick="diff(-1)">&#8595</button>
+  </div>
+  <div id="difficulty">
+    Difficulty Level: 1
+    </div>
+
+
+
+
+
+
+
+
+
+<div id="olddot">
+List of dot products computed in reverse chronological order:
+<div id="dotList">
+
+</div>
+</div>
+
+
+
+
+
+
+<div id="outer">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+
+
+function compare(){
+
+
+var correct=1
+
+
+record_state()
+  var Entries=get_entries()
+
+
+for (var m=0; m<Entries.length; m++){
+for (var n=m+1; n<Entries.length; n++){
+startRow=Entries[m]
+ endRow=Entries[n]
+var dot=[0,1]
+ for (i=0; i<startRow.length; i++){
+var S=rationalize(startRow[i].innerHTML)
+var E=rationalize(endRow[i].innerHTML)
+
+SE=[S[0]*E[0],S[1]*E[1]]
+console.log('a'+SE)
+SE=simplify(SE)
+console.log('b'+SE)
+dot=[dot[0]*SE[1]+dot[1]*SE[0],dot[1]*SE[1]]
+console.log('c'+dot)
+dot=simplify(dot)
+console.log('d'+dot)
+ }
+
+console.log(dot)
+
+if (dot[0]!=0){
+  console.log(dot)
+  correct=0}
+}}
+
+
+
+
+
+
+if (correct==1){
+  alert("Good Job!")
+  grades[difficulty-1][0]+=1
+  diff(1)
+  initialize()
+  sql_record(Module_Number)
+
+}
+if (correct==0){
+  grades[difficulty-1][1]+=1
+  sql_record(Module_Number)
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function create_matrix(){
+
+
+
+
+
+
+var outer=document.getElementById('outer')
+outer.value=[numRows,numCols]
+outer.style.height=75*6+50+"px"
+outer.style.width=75*numCols+15+"px"
+while (outer.firstChild) {
+    outer.removeChild(outer.lastChild);
+  }
+
+
+  
+  
+  //inputs
+
+for (var i=0; i<numRows; i++){
+    var inp=document.createElement('input')
+    inp.style.top=(75*i+5)+"px"
+    inp.style.position="absolute"
+    inp.style.backgroundColor="white"
+    inp.style.left="5px"
+    inp.id="in"+(i+1)
+    inp.type="text" 
+    inp.style.fontSize="20px"
+    inp.style.left="-40px"
+    inp.style.width="105px"
+    inp.style.height="40px"
+    inp.name=i
+    outer.appendChild(inp)
+}
+
+
+//switches
+
+for (var i=0; i<numRows-1; i++){
+  var swit=document.createElement('button')
+  swit.id="switch"+(i+1)+(i+2)
+
+  swit.style.position="absolute"
+  swit.style.backgroundColor="white"
+  swit.style.height="20px"
+  swit.style.width=numCols*75+"px"
+  swit.style.left="100px"
+  swit.style.top=(75*i+55)+"px"
+  swit.name=i
+  outer.appendChild(swit)}
+
+
+
+
+//multipliers
+for (var i=0; i<numRows; i++){
+  var multi=document.createElement('button')
+  multi.style.fontSize="22px"
+  multi.id="mult"+(i+1)
+  multi.innerHTML="&times"
+  multi.addEventListener("click",function() {mult()},false)
+  multi.style.position="absolute"
+  multi.style.height="46px"
+  multi.style.width="28px"
+  multi.style.left="70px"
+  multi.style.top=(75*i+5)+"px"
+  multi.style.backgroundColor="rgb(179, 172, 172)"
+  multi.name=i
+  outer.appendChild(multi)}
+
+
+//rows
+var Colors=colorList
+var outer=document.getElementById("outer")
+for (var i=0; i<numRows; i++){
+var row=document.createElement('div')
+row.style.position="absolute";
+row.style.height="55px";
+row.style.width=(numCols*75)+"px";
+row.style.left="100px";
+row.style.top=(75*i)+"px";
+row.style.opacity=0.8;
+row.style.backgroundColor=Colors[i];
+row.id=Colors[i]+"tip"
+outer.appendChild(row)
+for (var j=0; j<numCols; j++){
+    var col=document.createElement('div')
+col.style.position="absolute";
+col.style.height="45px";
+col.style.width="75px";
+col.style.left=(75*j)+"px";
+col.style.top="10px";
+col.style.opacity=0.8;
+col.style.backgroundColor="rgba(0, 0, 0, 0)";
+col.id=colorList[i]+(j+1)
+col.className="center"
+row.appendChild(col)
+}}
+
+}
+
+
+
+function diff(k){
+  if (difficulty+k<11 && difficulty+k>0){
+  difficulty+=k
+numRows=Math.round(3+difficulty/20+Math.random()*difficulty/10)
+numCols=Math.round(3+difficulty/15+Math.random()*difficulty/20)
+document.getElementById("dotList").innerHTML=''
+  page+=k
+
+
+  initialize()}
+  if (difficulty==10){
+  score()}
+  document.getElementById("difficulty").innerText='Difficulty Level: ' + difficulty}
+
+
+function get_entries(){
+var Col=[]
+for (var i=0; i<numRows; i++){
+    Col.push([])
+    for (var j=0; j<numCols; j++){
+Col[i].push(document.getElementById(colorList[i]+(j+1)))
+    }
+}
+return(Col)}
+
+function fractionalize(A){
+  if (A[1]==1 || A[0]==0){
+          f=A[0]
+        }    
+        if (A[1]!=1 && A[0]!=0){
+          f=A[0]+'/'+A[1]
+        }
+        return(f)
+}
+
+function rationalize(fraction){
+
+
+
+if (fraction.includes('.')){
+numerator=parseFloat(fraction)
+denominator=1
+
+  while (Number.isInteger(numerator)==false & denominator<1000){
+    numerator*=10
+    denominator*=10
+  }
+}
+
+else{
+  numerator=fraction
+denominator=1
+
+    var slash_index=0
+      for (var k=0; k<fraction.length; k++){
+
+
+    
+        if ('-0123456789'.includes(fraction[k])==false){
+            slash_index=k}
+          }
+
+      if (slash_index>0){
+        numerator=fraction.substring(0,slash_index)
+    denominator=fraction.substring(slash_index+1,fraction.length)}
+numerator=parseFloat(numerator)
+denominator=parseFloat(denominator)
+        if (isNaN(numerator) || isNaN(denominator)){
+          denominator=0
+        }
+
+        if (denominator<0){
+          denominator*=-1
+          numerator*=-1
+        }}
+    return([numerator, denominator])
+      }
+
+
+
+
+function sum(X,i,j){
+  var s=0
+  for (var k=i; k<j; k++){
+    s+=X[k]
+  }
+  return(s)
+}
+
+
+function randrat(){
+  var num=Math.round(10*(Math.random()*Math.random()-0.2))
+      var den=1
+return([num,den])
+}
+
+
+function set(complexity){
+ Pivots=[]
+
+
+if (Math.random()>0.08){
+    Pivots.push(1)}
+    else{
+Pivots.push(0)}
+
+    
+for (var j=1; j<numCols; j++){
+
+if (Math.random()>0.15+sum(Pivots,0,j)/12 && sum(Pivots,0,j)<numRows){
+    Pivots.push(1)}
+    else{
+Pivots.push(0)}
+    }
+
+
+    
+
+var Matrix=[]
+for (var i=0; i<numRows; i++){
+    Matrix.push([])
+    for (var j=0; j<numCols; j++){
+        if (sum(Pivots,0,j+1)<i+1){
+          Matrix[i].push([0,1])
+        }
+        if (sum(Pivots,0,j+1)==i+1 && Pivots[j]==1){
+          Matrix[i].push([1,1])
+        }
+
+        if (sum(Pivots,0,j)>=i+1){
+          if (Pivots[j]==1){
+            Matrix[i].push([0,1])
+          }
+          if (Pivots[j]==0){
+            let r=randrat()
+            Matrix[i].push(r)
+          }
+
+
+        }
+    
+
+    }
+
+}
+
+
+Initial=[]
+for (var m=0; m<Matrix.length; m++){
+  Initial.push([])
+  for (var n=0; n<Matrix[m].length; n++){
+    Initial[m].push(simplify(Matrix[m][n]))
+}
+}
+
+
+Vectors=[]
+Dependents=[]
+for (var i=0; i<numCols-1; i++){
+if (Pivots[i]==0){
+  v=[]
+  d=[]
+  for (var j=0; j<numCols-1; j++){
+    if (j<i){
+      if (Pivots[j]==1){
+        v.push([-1*Initial[sum(Pivots,0,j+1)-1][i][0],Initial[sum(Pivots,0,j+1)-1][i][1]])
+        d.push(1)
+      }
+      if (Pivots[j]==0){
+        v.push([0,1])
+        d.push(0)
+      }
+    }
+    if (j==i){
+      v.push([1,1])
+      d.push(0)}
+      if (j>i){
+        v.push([0,1])
+        d.push(0)}
+      }
+      Vectors.push(v)
+      Dependents.push(d)
+    }
+
+}
+
+
+
+
+//set rank
+
+
+
+
+for (j=0; j<complexity; j++){
+
+  //Switch 2 rows
+    if (Math.random()<0.5){
+        m=Math.floor(numRows*Math.random())
+        n=Math.floor(numRows*Math.random())
+        var Row1=Matrix[m]
+        var Row2=Matrix[n]
+        Matrix[m]=Row2
+        Matrix[n]=Row1}
+
+  //Multiply row by integer
+    if (Math.random()<0.5){
+        m=Math.floor(numRows*Math.random())
+        c=Math.round(10*Math.random())-5
+        if (c!=0){
+            for (k=0; k<numCols; k++){
+              Matrix[m][k]=simplify([c*Matrix[m][k][0],Matrix[m][k][1]])}}}
+
+    //Divide row by positive integer
+      if (Math.random()<0.0){
+        m=Math.floor(numRows*Math.random())
+        c=Math.ceil(numRows*Math.random())
+            for (k=0; k<numCols; k++){
+              Matrix[m][k]=simplify([Matrix[m][k][0],c*Matrix[m][k][1]])}}
+
+//Add one row to another
+    if (Math.random()<0.9){
+        m=Math.floor(numRows*Math.random())
+        n=Math.floor(numRows*Math.random())
+        for (k=0; k<numCols; k++){
+                var t0=Matrix[m][k][0]*Matrix[n][k][1]
+                    +Matrix[m][k][1]*Matrix[n][k][0]
+                var t1=Matrix[m][k][1]*Matrix[n][k][1]
+                Matrix[n][k]=simplify([t0,t1])
+            }}
+       
+}
+
+
+    var Entries=get_entries()
+
+    for (p=0; p<numRows; p++){
+
+      for (q=0; q<numCols; q++){
+
+        if (Matrix[p][q][1]==1 || Matrix[p][q][0]==0){
+          Entries[p][q].innerHTML=Matrix[p][q][0]
+        }    
+        if (Matrix[p][q][1]!=1 && Matrix[p][q][0]!=0){
+          Entries[p][q].innerHTML=Matrix[p][q][0]+'&frasl;'+Matrix[p][q][1]
+        }
+    }
+  }
+
+
+  pivDex=[]
+
+for (var j=0; j<Pivots.length;j++){
+  if (Pivots[j]==1){
+pivDex.push(j)}}
+
+let r=Math.random()
+for (var k=0; k<pivDex.length; k++){
+  if (r>k/pivDex.length && r<(k+1)/pivDex.length){
+    PIV= pivDex[k]
+  }
+  }
+
+
+
+}
+
+
+
+
+
+function write_equations(){
+
+ Entries=get_entries()
+
+    Colors=[]
+    for (var i=0; i<numRows; i++){
+      Colors.push(document.getElementById(colorList[i]+"tip").style.backgroundColor)
+    }
+
+    Eq_el=document.getElementById("equations")
+    
+
+
+    
+    
+  while(Eq_el.firstChild){
+  Eq_el.removeChild(Eq_el.firstChild)}
+  var label=document.createElement("div")
+  label.innerHTML="Special Vectors"
+  Eq_el.appendChild(label)
+for (i=0; i<Vectors.length; i++){
+  var spec_vec = document.createElement('div');
+  spec_vec.style.position='absolute'
+  spec_vec.style.width='60px'
+  spec_vec.style.height='230px'
+  spec_vec.style.fontSize='20px'
+  spec_vec.style.top="30px"
+  spec_vec.style.left=15+75*i+"px"
+  Eq_el.appendChild(spec_vec)
+  for (j=0; j<numCols-1; j++){
+  var spec_inp = document.createElement('input');
+  spec_inp.type='text'
+  spec_inp.style.position='absolute'
+  spec_inp.style.width='50px'
+  spec_inp.style.fontSize='20px'
+  spec_inp.style.top=30*j+"px"
+  spec_inp.style.left="10px"
+  spec_inp.id=String(i)+String(j)+"spec"
+  if (difficulty<4 && Dependents[i][j]==0){
+    spec_inp.value=Vectors[i][j][0]
+    spec_inp.disabled=true
+  }
+  if (difficulty<7 && Pivots[j]==0){
+    spec_inp.value=Vectors[i][j][0]
+    spec_inp.disabled=true
+  }
+  if (difficulty<9 && Pivots[j]==0 && Vectors[i][j][0]==1){
+    spec_inp.value=Vectors[i][j][0]
+    spec_inp.disabled=true
+  }
+  if (Pivots[j]==0 && Vectors[i][j][0]==1 && i<Vectors.length-1){
+    spec_inp.value=Vectors[i][j][0]
+    spec_inp.disabled=true
+  }
+  spec_vec.appendChild(spec_inp)
+  }
+}
+}
+
+
+
+
+
+
+
+function initialize(){
+
+
+create_matrix()
+set(Math.round(3.5+difficulty/6))
+reduce()
+
+
+
+States=[]
+for (var p=0; p<numRows; p++){
+var inp = document.getElementById("in"+(p+1));
+
+inp.addEventListener("keydown", function (e) {
+  if (e.code === "Enter") { 
+      mult();
+  }
+})
+}
+for (var ind=0; ind<numRows; ind++){
+mobilize(document.getElementById(colorList[ind]+"tip"))}
+score()
+}
+
+
+function record_state(){
+    Entries=get_entries()
+
+
+
+COLORS=[]
+for (var j=0; j<numRows; j++){
+ COLORS.push(document.getElementById(colorList[j]+"tip").style.backgroundColor)
+}   
+var state=[]
+for (var i=0; i<Entries.length; i++){
+  var rowstate=[]
+  for (var j=0; j<Entries[i].length; j++){
+    rowstate.push(Entries[i][j].innerHTML)
+  }
+  state.push(rowstate)
+}
+state.push(COLORS)
+States.push(state)
+}
+
+
+
+
+function revert(){
+  S=States[States.length-1]
+
+var Entries=get_entries()
+for (i=0; i<Entries.length; i++){
+  for (j=0; j<Entries[i].length; j++){
+Entries[i][j].innerHTML=S[i][j]
+}}
+COL=[]
+for (var j=0; j<numRows; j++){
+document.getElementById(colorList[j]+"tip").style.backgroundColor=S[S.length-1][j]
+}
+
+   
+  States.splice(States.length-1,1)
+}
+
+
+
+
+
+function swi(){
+    (document.activeElement)
+var i =1+parseFloat(document.activeElement.name)
+  record_state()
+  
+
+
+  COL=[]
+for (var j=0; j<numRows; j++){
+ COL.push( document.getElementById(colorList[j]+"tip"))
+}
+   var Entries=get_entries()
+
+    First=Entries[i-1]
+    Second=Entries[i]
+    FirstColor=COL[i-1].style.backgroundColor
+    SecondColor=COL[i].style.backgroundColor
+    var FirstHTML=[]
+    var SecondHTML=[]
+    for (var j=0; j<numCols; j++){
+    FirstHTML.push(First[j].innerHTML)
+    SecondHTML.push(Second[j].innerHTML)
+    }
+    for (var j=0; j<numCols; j++){
+    First[j].innerHTML=SecondHTML[j]
+    Second[j].innerHTML=FirstHTML[j]
+    }
+  
+
+    COL[i-1].style.backgroundColor=SecondColor
+    COL[i].style.backgroundColor=FirstColor
+   
+    }
+
+    function mult(){
+    var i =1+parseFloat(document.activeElement.name)
+
+      record_state()
+
+    constants=[]
+    for (var j=0; j<numRows; j++){
+      constants.push(document.getElementById("in"+(j+1)))
+    }
+   
+
+   var  Entries=get_entries()
+    Row=Entries[i-1]
+    Constant=rationalize(constants[i-1].value)
+
+
+
+  
+    if (Constant[1]==0){
+      alert("Please enter a number or fraction, or exact decimal")
+    }
+
+
+if (Constant[0]==0){
+      alert("If you multiply an equation by 0 you will lose all the information \
+  contained in that equation!")
+    }
+
+
+    if (Constant[0]!=0  && Constant[1]!=0){
+
+  var rowVals=[]
+    for (var j=0; j<numCols; j++){
+    rowVals.push(rationalize(Row[j].innerHTML))
+    }
+
+
+       for (var j=0; j<numCols; j++){
+        rowVals[j][0]*=Constant[0]
+        rowVals[j][1]*=Constant[1]}}
+
+
+
+    for (var j=0; j<numCols; j++){
+      if (rowVals[j][1]==1){
+        Row[j].innerHTML=rowVals[j][0]
+      }
+      if (rowVals[j][1]!=1){
+    Row[j].innerHTML=rowVals[j][0]+"&frasl;"+rowVals[j][1]
+    }
+    }
+  
+
+
+    constants[i-1].value=''
+    reduce()
+
+    }
+
+function add(Z0,Z1){
+
+start=99
+end=99
+
+for (var i=0; i<numRows; i++){
+    if (75*i<Z0 && Z0<75*i+50){start=i}
+    if (75*i<Z1 && Z1<75*i+50){end=i}}
+
+      record_state()
+  var Entries=get_entries()
+
+  constants=[]
+    for (var j=0; j<numRows; j++){
+      constants.push(document.getElementById("in"+(j+1)))
+    }
+
+  if (constants[start].value==''){
+
+COL=[]
+for (var j=0; j<numRows; j++){
+ COL.push( document.getElementById(colorList[j]+"tip"))
+}
+
+startRow=Entries[start]
+ endRow=Entries[end]
+var dot=[0,1]
+ for (i=0; i<startRow.length; i++){
+var S=rationalize(startRow[i].innerHTML)
+var E=rationalize(endRow[i].innerHTML)
+
+SE=[S[0]*E[0],S[1]*E[1]]
+console.log('a'+SE)
+SE=simplify(SE)
+console.log('b'+SE)
+dot=[dot[0]*SE[1]+dot[1]*SE[0],dot[1]*SE[1]]
+console.log('c'+dot)
+dot=simplify(dot)
+console.log('d'+dot)
+ }
+
+dot=fractionalize(dot)
+console.log(dot)
+
+document.getElementById("dotList").innerHTML=" "+dot+" <br>   " +document.getElementById("dotList").innerHTML
+}
+
+if (constants[start].value!='' && start>end){
+alert('If you use lower rows to alter upper rows you may alter the span of the upper rows!')}
+
+if (constants[start].value!='' && start<end){
+var C=(rationalize(constants[start].value.toString()))
+
+ startRow=Entries[start]
+ endRow=Entries[end]
+ newVals=[]
+ for (i=0; i<startRow.length; i++){
+var S=rationalize(startRow[i].innerHTML)
+var E=rationalize(endRow[i].innerHTML)
+newVals.push([C[0]*S[0]*E[1]+E[0]*C[1]*S[1],C[1]*S[1]*E[1]])}
+
+       for (var j=0; j<numCols; j++){
+        numer=newVals[j][0]
+        denom=newVals[j][1]
+        if (denom==1){Entries[end][j].innerHTML=numer}
+        if (denom!=1){Entries[end][j].innerHTML=numer+"&frasl;"+denom}}
+
+    constants[start].value=''
+    reduce()}
+
+
+    
+
+
+       }
+    
+  
+function simplifi(n){
+var n0=n[0]
+var n1=n[1]
+var gcd=1
+for (var m=1; m<n1+1; m++){
+
+
+  if (Number.isInteger(n1/m)==true && Number.isInteger(n0/m)==true){
+    gcd=m
+  }
+}
+
+n0/=gcd
+n1/=gcd
+return([n0,n1])}
+
+function simplify(n){
+if (n[0]==0){
+    return([0,1])}
+else{
+    b=Math.max(n[0],n[1])
+    s=Math.min(n[0],n[1])
+    while (b%s!=0){
+        p=b%s
+        b=s
+        s=p}
+    return([n[0]/s,n[1]/s])}
+}
+
+
+    function reduce(){
+  
+
+    var Entries=get_entries()
+
+
+   for (var i=0; i<Entries.length; i++){
+    for (var j=0; j<Entries[i].length; j++){
+     var n=rationalize(Entries[i][j].innerHTML)
+
+
+var n0=n[0]
+var n1=n[1]
+var lcm=1
+for (var m=1; m<n1+1; m++){
+
+  if (Number.isInteger(n1/m)==true && Number.isInteger(n0/m)==true){
+    gcd=m
+  }
+}
+
+n0/=gcd
+n1/=gcd
+
+if (n1==1){
+  Entries[i][j].innerHTML=n0}
+  if (n1!=1){
+  Entries[i][j].innerHTML=n0+"&frasl;"+n1}
+ 
+    }
+  }
+
+
+}
+    
+
+
+
+ 
+
+
+
+
+function clear()
+{
+ if (window.getSelection) {window.getSelection().removeAllRanges();}
+ else if (document.selection) {document.selection.empty();}
+}
+
+
+
+function mobilize(tip) {
+    tip.onmousedown = move;  
+
+  function move(e) {
+    Y0 = e.clientY;
+    x0 = e.clientX;
+    y0 = e.clientY;
+    document.onmousemove = drag;
+    document.onmouseup = close;
+  }
+
+function drag(e) {
+    dx = e.clientX-x0;
+    dy = e.clientY-y0;
+    x0 = e.clientX;
+    y0 = e.clientY;
+    tip.style.left = (tip.offsetLeft + dx) + "px";
+    tip.style.top = (tip.offsetTop + dy) + "px";
+    clear()
+  }
+
+function close(e) {
+	document.onmouseup = null;
+	document.onmousemove = null;
+  for (var v=0; v<numRows; v++){
+    document.getElementById(colorList[v]+"tip").style.left="100px";
+    document.getElementById(colorList[v]+"tip").style.top=75*v+"px";
+  }
+    Y1=e.clientY
+    ABS=document.getElementById('outer').getBoundingClientRect()
+    off=(ABS.top)
+    add(Y0-off,Y1-off)
+ }
+  
+  
+}
+
+
+const colorList=["blue","green","red","yellow","orange","brown"]
+const variables=['a','b','c','d','e','f','g','h']
+numRows=3
+numCols=5
+var Module_Number="17"
+quests=[0,0,0,0,0,0,0,0,0,0,0]
+the_time=Date.now()
+make_grades(Module_Number)
+
+difficulty=1
+page=difficulty-1
+
+
+
+initialize()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
 
 
 
