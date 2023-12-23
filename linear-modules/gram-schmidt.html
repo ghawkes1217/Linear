@@ -123,8 +123,8 @@ combination of \(v_1\) and \(v_2\), etc.
 <p>
 You can add a multiple of one row to another by entering the multiple in the input to the left and 
 then dragging that vector to the vector you'd like to add to.  You can scale the vectors (useful for getting 
-rid of denominators) by putting a number in the input to the left of the vector and clicking on 
-the times sigen or by hitting "Enter."  To see the dot product of one vector with itself, just click on
+rid of denominators or for dividing out by a common factor) by putting a number in the input to the left of the vector and clicking on 
+the times sign or by hitting "Enter."  To see the dot product of one vector with itself, just click on
 that vector.  To see the dot product of one vector with another drag the one on top of the other (while both
 input boxes are empty).  The dot products you compute will be displayed in the light blue box to the left 
 for each problem.  Once all vectors are pairwise orthogonal, submit your solution.
@@ -420,7 +420,7 @@ function diff(k){
   if (difficulty+k<11 && difficulty+k>0){
   difficulty+=k
 numRows=Math.round(3+difficulty/20+Math.random()*difficulty/10)
-numCols=Math.round(3+difficulty/15+Math.random()*difficulty/20)
+numCols=Math.round(3.5+difficulty/10+Math.random()*difficulty/20)
 document.getElementById("dotList").innerHTML=''
   page+=k
 
@@ -507,7 +507,7 @@ function sum(X,i,j){
 
 
 function randrat(){
-  var num=Math.round(10*(Math.random()*Math.random()-0.2))
+  var num=Math.round(5*(Math.random()-0.2))
       var den=1
 return([num,den])
 }
@@ -517,7 +517,7 @@ function set(complexity){
  Pivots=[]
 
 
-if (Math.random()>0.08){
+if (Math.random()>0.05){
     Pivots.push(1)}
     else{
 Pivots.push(0)}
@@ -610,7 +610,7 @@ if (Pivots[i]==0){
 
 
 
-for (j=0; j<complexity; j++){
+for (j=0; j<Math.pow(complexity,0.5)+2; j++){
 
   //Switch 2 rows
     if (Math.random()<0.5){
@@ -624,7 +624,7 @@ for (j=0; j<complexity; j++){
   //Multiply row by integer
     if (Math.random()<0.5){
         m=Math.floor(numRows*Math.random())
-        c=Math.round(10*Math.random())-5
+        c=Math.round(4*Math.random()*Math.random())-2
         if (c!=0){
             for (k=0; k<numCols; k++){
               Matrix[m][k]=simplify([c*Matrix[m][k][0],Matrix[m][k][1]])}}}
@@ -1114,9 +1114,9 @@ function close(e) {
 const colorList=["blue","green","red","yellow","orange","brown"]
 const variables=['a','b','c','d','e','f','g','h']
 numRows=3
-numCols=5
+numCols=4
 var Module_Number="17"
-quests=[0,0,0,0,0,0,0,0,0,0,0]
+quests=[0,0,0,0,0,0,0,0,0,0]
 the_time=Date.now()
 make_grades(Module_Number)
 
