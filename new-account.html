@@ -69,23 +69,28 @@ input[type=submit]:hover {
 </body>
 <script>
 
-function sub(){
-    user_name=document.getElementById("name").value
-password=document.getElementById("password").value
-repeat=document.getElementById("repeat").value
-
-fetch("create-account.php?user_name="+encodeURIComponent(user_name)+"&password="+encodeURIComponent(password)+"&repeat="+encodeURIComponent(repeat))
-
-
-.then(function(response){
-  return response.json()})
-  .then(function(data){
-alert(data)
-if (data=="New account creation successful"){
-window.location.href="index.html"}
+function sub() {
+  const user_name = document.getElementById("name").value;
+  const password = document.getElementById("password").value;
+  const repeat = document.getElementById("repeat").value;
+  fetch("create-account.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      user_name: user_name,
+      password: password,
+      repeat: repeat
+    })
   })
-
-
+  .then(x => x.json())
+  .then(function(data) {
+    alert(data)
+    if (data === "New account creation successful") {
+      window.location.href = "index.html";
+    }
+  });
 }
 
 inout()

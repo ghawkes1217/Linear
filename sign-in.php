@@ -1,39 +1,26 @@
 <?php // Get data from form 
 
-$user_name = rawurldecode($_GET['user_name']);
-$password= rawurldecode($_GET['password']);
+// Decode JSON body from POST
+$data = json_decode(file_get_contents("php://input"), true);
+$user_name = $data['user_name'];
+$password  = $data['password'];
 
- 
+// Connect to database
+$link = mysqli_connect('localhost', 'root', 'root', 'student_responses');
+$get  = "SELECT * FROM users";
+$resp = mysqli_query($link, $get);
 
+$result = "Invalid Credentials";
 
-$get= "SELECT * FROM users";
+// Check credentials
+while ($row = mysqli_fetch_row($resp)) {
+    if ($row[0] === $user_name && $row[1] === $password) {
+        $result = "Welcome back " . $user_name . "!";
+        break;
+    }
+}
 
-
-
-$link=mysqli_connect('localhost', 'root', 'root', 'student_responses'); 
-$resp=mysqli_query($link, $get);
-
-
-
-$exists=0;
-  while ($row = mysqli_fetch_row($resp)) {
-   if ($row[0]==$user_name and $row[1]==$password){
-    $exists=1;
-  }};
-
-
-    
-if ($exists==1){
-$result="Welcome back ".$user_name."!";
-};
-
-if ($exists==0){
-    $result="Invalid Credentials";
-    };
-
-
-
-
+// Send JSON response
 header('Content-Type: application/json');
-echo json_encode([$result]);
-php?>
+echo json_encode($result);
+?>

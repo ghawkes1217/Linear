@@ -1,54 +1,46 @@
-<?php // Get data from form 
+<?php
+$data = json_decode(file_get_contents("php://input"), true);
+$user_name = $data['user_name'];
+$password = $data['password'];
+$repeat   = $data['repeat'];
 
-$user_name = rawurldecode($_GET['user_name']);
-$password= rawurldecode($_GET['password']);
-$repeat= rawurldecode($_GET['repeat']);
- 
+// Connect to MySQL
+$link = mysqli_connect('localhost', 'root', 'root', 'student_responses');
+$get  = "SELECT * FROM users";
+$resp = mysqli_query($link, $get);
 
+$result = "";
+$exists = false;
 
-$get= "SELECT * FROM users";
-$insert= "INSERT INTO users VALUES('$user_name', '$password')";
+// Check if username already exists
+while ($row = mysqli_fetch_row($resp)) {
+    if ($row[0] === $user_name) {
+        $exists = true;
+        break;
+    }
+}
 
+// Validation checks
+if ($password !== $repeat) {
+    $result = "Passwords are not the same";
+} elseif ($exists) {
+    $result = "Username taken. Please select another username.";
+} elseif (strlen($user_name) < 3) {
+    $result = "Username too short";
+} elseif (strlen($password) < 3) {
+    $result = "Password too short";
+} else {
+    // If all checks pass, insert new user
+    $insert = "INSERT INTO users VALUES ('$user_name', '$password')";
+    $action = mysqli_query($link, $insert);
+    if ($action) {
+        $result = "New account creation successful";
+    } else {
+        $result = "Database error during account creation";
+    }
+}
 
-$link=mysqli_connect('localhost', 'root', 'root', 'student_responses'); 
-$resp=mysqli_query($link, $get);
-$success=1;
-$result="";
-
-$exists=0;
-  while ($row = mysqli_fetch_row($resp)) {
-   if ($row[0]==$user_name){
-    $exists=1;
-  }};
-
-if ($password!=$repeat){
-    $result="Passwords are not the same";
-    };
-    
-if ($exists==1){
-$result="Username taken. Please select another username.";
-};
-
-if (strlen($user_name)<3){
-  $result="Username too short";
-  };
-
-
-if (strlen($password)<3){
-  $result="Password too short";
-  };
-
-  if ($password!=$repeat){
-    $result="Passwords are not the same";
-    };
-
-
-
-if ($result==""){
-$action=mysqli_query($link, $insert);    
-$result="New account creation successful";
-};
-
+// Return result as JSON
 header('Content-Type: application/json');
 echo json_encode($result);
-php?>
+?>

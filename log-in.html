@@ -77,36 +77,36 @@ if (user!=undefined){
 }
 
 
-function sub(){
-  user=make_cookject()['user']
+function sub() {
 
-  if (user!=undefined){
-    document.cookie="user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;"
-    window.location.href="index.html"
-}
+  const user = make_cookject()['user'];
 
+  if (user !== undefined) {
+    document.cookie = "user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    window.location.href = "index.html";
+    return;
+  }
 
-if (user==undefined){
-    user_name=document.getElementById("name").value
-password=document.getElementById("password").value
-fetch("sign-in.php?user_name="+encodeURIComponent(user_name)+"&password="+encodeURIComponent(password))
-
-
-.then(function(response){
-  return response.json()})
-  .then(function(data){
-alert(data)
-if (data=="Welcome back " + user_name +"!"){
-    document.cookie="user="+user_name + ';expires=Thu, 01 Jan 2070 00:00:01 GMT;'
-    window.location.href="index.html"
-}
+  const user_name = document.getElementById("name").value;
+  const password = document.getElementById("password").value;
+  fetch("sign-in.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      user_name: user_name,
+      password: password
+    })
   })
-}
-
-
- 
-
-
+  .then(x => x.json())
+  .then(data => {
+    alert(data);
+    if (data === "Welcome back " + user_name + "!") {
+      document.cookie = "user=" + user_name + ";expires=Thu, 01 Jan 2070 00:00:01 GMT;";
+      window.location.href = "index.html";
+    }
+  })
 }
 
 inout()
