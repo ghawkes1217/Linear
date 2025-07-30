@@ -60,7 +60,7 @@ input[type=submit]:hover {
 <div id="login" class="container">
 
     <label> Username</label> <input id="name" name="name" type="text"  /> 
-    <label>Password</label> <input id="password" name="password" type="text"  /> 
+    <label>School Name</label> <input id="school" name="school" type="text"  /> 
     
 
 </div>
@@ -88,7 +88,7 @@ function sub() {
   }
 
   const user_name = document.getElementById("name").value;
-  const password = document.getElementById("password").value;
+  const school = document.getElementById("school").value;
   fetch("sign-in.php", {
     method: "POST",
     headers: {
@@ -96,7 +96,7 @@ function sub() {
     },
     body: JSON.stringify({
       user_name: user_name,
-      password: password
+      school: school
     })
   })
   .then(x => x.json())

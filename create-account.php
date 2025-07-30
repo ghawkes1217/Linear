@@ -1,8 +1,7 @@
 <?php
 $data = json_decode(file_get_contents("php://input"), true);
 $user_name = $data['user_name'];
-$password = $data['password'];
-$repeat   = $data['repeat'];
+$school = $data['school'];
 
 // Connect to MySQL
 $link = mysqli_connect('localhost', 'root', 'root', 'student_responses');
@@ -21,17 +20,16 @@ while ($row = mysqli_fetch_row($resp)) {
 }
 
 // Validation checks
-if ($password !== $repeat) {
-    $result = "Passwords are not the same";
-} elseif ($exists) {
+
+  if ($exists) {
     $result = "Username taken. Please select another username.";
 } elseif (strlen($user_name) < 3) {
     $result = "Username too short";
-} elseif (strlen($password) < 3) {
-    $result = "Password too short";
+} elseif (strlen($school) < 2) {
+    $result = "School name too short";
 } else {
     // If all checks pass, insert new user
-    $insert = "INSERT INTO users VALUES ('$user_name', '$password')";
+    $insert = "INSERT INTO users VALUES ('$user_name', '$school')";
     $action = mysqli_query($link, $insert);
     if ($action) {
         $result = "New account creation successful";

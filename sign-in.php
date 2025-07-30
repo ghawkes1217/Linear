@@ -3,7 +3,7 @@
 // Decode JSON body from POST
 $data = json_decode(file_get_contents("php://input"), true);
 $user_name = $data['user_name'];
-$password  = $data['password'];
+$school  = $data['school'];
 
 // Connect to database
 $link = mysqli_connect('localhost', 'root', 'root', 'student_responses');
@@ -14,7 +14,7 @@ $result = "Invalid Credentials";
 
 // Check credentials
 while ($row = mysqli_fetch_row($resp)) {
-    if ($row[0] === $user_name && $row[1] === $password) {
+    if ($row[0] === $user_name && $row[1] === $school) {
         $result = "Welcome back " . $user_name . "!";
         break;
     }
